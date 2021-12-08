@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const appRoutes = require('./routes/appRoutes');
+const outputRoutes = require('./routes/outputRoutes');
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/app', appRoutes); 
+app.use('/api/output', outputRoutes);
 
 __dirname = path.resolve();
 if (process.env.NODE_ENV === 'production') {

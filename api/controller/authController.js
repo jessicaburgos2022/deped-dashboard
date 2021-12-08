@@ -22,8 +22,6 @@ const connection = mysql.createConnection({
 const validate = asyncHander(async (req, res) => {
   const { username, password } = req.body;
   const queryString = `call ValidateLogin('${username}', '${password}')`;
-  console.log(queryString)
-
   connection.query(queryString, (error, results) => {
     var qResult = JSON.parse(JSON.stringify(results));
     if (qResult[0][0].Result === 'Success') {
