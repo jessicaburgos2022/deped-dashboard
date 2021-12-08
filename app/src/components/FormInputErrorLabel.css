@@ -1,0 +1,9 @@
+.form-input-error-label {
+    color: rgb(236, 89, 144);
+    text-align: end;
+    width: 100%;
+}
+.form-input-error-label-container {
+    margin-top: -10px;
+    display: flex;
+}
