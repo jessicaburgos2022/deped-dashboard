@@ -15,27 +15,23 @@ import PrivateRoute from "./components/PrivateRoute";
 import LoginScreen from "./screens/Login";
 import Dashboard from "./screens/Dashboard";
 import Maintenance from "./screens/Maintenance";
+import Output from "./screens/Output";
 
 //Required States
-import { listBusinessUnit } from "./actions/appActions";
-import { listActiveTicketTypes } from "./actions/ticketActions";
+// import { fetchOutputTypes } from "./actions/appActions";
 
 
 const App = () => {
-  const dispatch = useDispatch();
-  const marketState = useSelector((s) => s.businessUnitReducer);
-  const ticketState = useSelector((s) => s.tickets);
+  // const dispatch = useDispatch();
+  // const appState = useSelector(state => state.app)
   //load all required states
   // useEffect(() => {
-  //   if (
-  //     marketState.businessUnits &&
-  //     marketState.businessUnits.length === 0
-  //   ) {
-  //     dispatch(listBusinessUnit());
+  //   if (appState.OutputTypes.length === 0) {
+  //     setInterval(dispatch(fetchOutputTypes(), 2000));
   //   }
   // });
 
-  
+
   return (
     <Router>
       <MuiThemeProvider theme={theme}>
@@ -50,10 +46,11 @@ const App = () => {
             >
               <Switch>
                 <Route exact path="/" component={LoginScreen} />
+                <PrivateRoute path="/output" component={Output} />
                 <Route path="/login" component={LoginScreen} />
-                <Route path="/interfaces/:bu?" component={Interfaces} />
-                <Route path="/dashboard" component={Dashboard} />
-                <PrivateRoute path="/maintenance" component={Maintenance} />
+                {/* <Route path="/interfaces/:bu?" component={Interfaces} /> */}
+                <PrivateRoute path="/dashboard" component={Dashboard} />
+                {/* <PrivateRoute path="/maintenance" component={Maintenance} /> */}
               </Switch>
             </div>
           </StylesProvider>

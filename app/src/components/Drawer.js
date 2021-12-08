@@ -37,7 +37,7 @@ export default function PersistentDrawerLeft() {
         <div className="logo_content">
           <div className="logo">
             <AccountTreeOutlined />
-            <div className="logo_name">E2E MIS</div>
+            <div className="logo_name">Output Dashboard</div>
           </div>
           <i
             className="bx bx-menu pointer"
@@ -59,11 +59,11 @@ export default function PersistentDrawerLeft() {
             <span className="tooltip">Dashboard</span>
           </li>
           <li>
-            <a href="/interfaces"  className={document.location.pathname==="/interfaces"?'active-link':''}>
+            <a href="/output"  className={document.location.pathname==="/output"?'active-link':''}>
               <i className="bx bx-network-chart"></i>
-              <span className="links_name">E2E Interfaces</span>
+              <span className="links_name">Insert Output</span>
             </a>
-            <span className="tooltip">Search Interface</span>
+            <span className="tooltip">Insert Output</span>
           </li>
           {/* <li>
             <a href="/bapi"  className={document.location.pathname==="/bapi"?'active-link':''}>

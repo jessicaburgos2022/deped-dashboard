@@ -105,12 +105,12 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         <List>
-          <Link to="/interfaces">
-            <ListItem button key={"interfaces"}>
+          <Link to="/output">
+            <ListItem button key={"output"}>
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={"E2E Interfaces"} />
+              <ListItemText primary={"Insert Output"} />
             </ListItem>
           </Link>
         </List>

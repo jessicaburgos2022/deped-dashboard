@@ -1,58 +1,40 @@
 import {
-  LIST_BUSINESSUNIT_REQUEST,
-  LIST_BUSINESSUNIT_SUCCESS,
-  LIST_BUSINESSUNIT_FAILED,
-  GET_BU_DEPLOYMENTS_REQUEST,
-  GET_BU_DEPLOYMENTS_SUCCESS,
-  GET_BU_DEPLOYMENTS_FAILED,
-  GET_MOST_DEPLOYED_REQUEST,
-  GET_MOST_DEPLOYED_SUCCESS,
-  GET_MOST_DEPLOYED_FAILED
+  GET_OUTPUTTYPE_LIST_REQUEST,
+  GET_OUTPUTTYPE_LIST_SUCCESS,
+  GET_OUTPUTTYPE_LIST_FAILED,
+  GET_KRABYDEPARTMENT_REQUEST,
+  GET_KRABYDEPARTMENT_SUCCESS,
+  GET_KRABYDEPARTMENT_FAILED
 } from "../constants/appConstants";
 import axios from "../helpers/axios";
 
-export const listBusinessUnit = () => async (dispatch) => {
-  await dispatch({ type: LIST_BUSINESSUNIT_REQUEST });
+export const fetchOutputTypes = () => async (dispatch) => {
+  await dispatch({ type: GET_OUTPUTTYPE_LIST_REQUEST });
   try {
-    const { data } = await axios.get(`/api/app/businessunit`);
+    const { data } = await axios.get(`/api/app/outputtype`);
     dispatch({
-      type: LIST_BUSINESSUNIT_SUCCESS,
+      type: GET_OUTPUTTYPE_LIST_SUCCESS,
       payload: data,
     });
   } catch (e) {
     dispatch({
-      type: LIST_BUSINESSUNIT_FAILED,
+      type: GET_OUTPUTTYPE_LIST_FAILED,
       payload: ""
     });
   }
 };
 
-export const getBUDeployments = () => async (dispatch) => {
-  await dispatch({ type: GET_BU_DEPLOYMENTS_REQUEST });
+export const fetchKRAByDepartmentId = () => async (dispatch) => {
+  await dispatch({ type: GET_KRABYDEPARTMENT_REQUEST });
   try {
-    const { data } = await axios.get(`/api/app/businessunit/deployments`);
+    const { data } = await axios.get(`/api/app/kra/1/2`);
     dispatch({
-      type: GET_BU_DEPLOYMENTS_SUCCESS,
+      type: GET_KRABYDEPARTMENT_SUCCESS,
       payload: data,
     });
   } catch (e) {
     dispatch({
-      type: GET_BU_DEPLOYMENTS_FAILED,
-      payload: ""
-    });
-  }
-};
-export const getMostDeployed = (pageSize) => async (dispatch) => {
-  await dispatch({ type: GET_MOST_DEPLOYED_REQUEST });
-  try {
-    const { data } = await axios.get(`/api/app/businessunit/mostdeployed/` + pageSize);
-    dispatch({
-      type: GET_MOST_DEPLOYED_SUCCESS,
-      payload: data,
-    });
-  } catch (e) {
-    dispatch({
-      type: GET_MOST_DEPLOYED_FAILED,
+      type: GET_KRABYDEPARTMENT_FAILED,
       payload: ""
     });
   }

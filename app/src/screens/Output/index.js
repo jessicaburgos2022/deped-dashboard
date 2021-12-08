@@ -15,10 +15,10 @@ export default () => {
 
     return (
         <div>
-            <form onSubmit={}>
+            <form onSubmit={null}>
                 <label>
                    Select Output Type:
-                    <select value={} onChange={}>           
+                    <select onChange={null}>           
                         <option value="Minor">Minor</option>
                         <option value="Major">Major</option>
                         <option value="OO">OO</option>

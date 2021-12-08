@@ -11,8 +11,10 @@ const connection = mysql.createConnection({
   connectionLimit: process.env.DB_CISD_CONNECTION_LIMT,
   timeout: process.env.DB_CISD_TIMEOUT,
 });
+
 const listOutputTypeId = asyncHander(async (req, res) => {
   const queryString = `SELECT Id, Name, Description, CASE WHEN IsActive THEN 1 ELSE 0 END AS IsActive FROM ref_outputtype`;
+  
   connection.query(queryString, (error, results) => {
     if (error) {
       res.json({ result: 'Failed', message: 'Query Failed' });
