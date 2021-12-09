@@ -96,13 +96,13 @@ export default function PersistentDrawerLeft() {
                   <i className="bx bx-user bx-md"></i>
                   {userState &&
                     userState.userInfo &&
-                    userState.userInfo.details && (
+                    userState.userInfo.acc && (
                       <div className="name_job">
                         <div className="name">
-                          {userState.userInfo.details.Full_name}
+                          {userState.userInfo.acc[0].FirstName[0].toUpperCase()}{userState.userInfo.acc[0].Surname}
                         </div>
                         <div className="job">
-                          {userState.userInfo.details.Title}
+                          {userState.userInfo.role[0].RoleDescription}
                         </div>
                       </div>
                     )}

@@ -24,10 +24,10 @@ export const fetchOutputTypes = () => async (dispatch) => {
   }
 };
 
-export const fetchKRAByDepartmentId = () => async (dispatch) => {
+export const fetchKRAByDepartmentId = (deptId) => async (dispatch) => {
   await dispatch({ type: GET_KRABYDEPARTMENT_REQUEST });
   try {
-    const { data } = await axios.get(`/api/app/kra/1/2`);
+    const { data } = await axios.get(`/api/app/kra/${deptId}`);
     dispatch({
       type: GET_KRABYDEPARTMENT_SUCCESS,
       payload: data,

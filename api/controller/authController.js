@@ -10,7 +10,7 @@ const servers = require("../config/server.json");
 
 dotenv.config();
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   database: process.env.DB_CISD,
   user: process.env.DB_CISD_USER,
   password: process.env.DB_CISD_PASSWORD,
@@ -22,23 +22,36 @@ const connection = mysql.createConnection({
 const validate = asyncHander(async (req, res) => {
   const { username, password } = req.body;
   const queryString = `call ValidateLogin('${username}', '${password}')`;
-  connection.query(queryString, (error, results) => {
-    var qResult = JSON.parse(JSON.stringify(results));
-    if (qResult[0][0].Result === 'Success') {
-      res.json({
-        res: qResult[0][0],
-        acc: qResult[1],
-        role: qResult[2]
-      });
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.json({ result: 'Failed', message: 'Query Failed' });
+      return;
     }
-    else {
-      res.json({
-        res: qResult[0][0],
-        acc: [],
-        role: []
-      });
+    try {
+      connection.query(queryString, (error, results) => {
+        var qResult = JSON.parse(JSON.stringify(results));
+        if (qResult[0][0].Result === 'Success') {
+          res.json({
+            res: qResult[0][0],
+            acc: qResult[1],
+            role: qResult[2]
+          });
+        }
+        else {
+          res.json({
+            res: qResult[0][0],
+            acc: [],
+            role: []
+          });
+        }
+      })
+    } catch (error) {
+      res.json({ result: 'Failed', message: 'Query Failed' });
+      res.end();
     }
-  })
+    connection.release();
+  });
+
 });
 
 const auth = asyncHander(async (req, res) => {
