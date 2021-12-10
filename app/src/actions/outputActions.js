@@ -21,3 +21,19 @@ export const insertMajorOutput = (param) => async (dispatch) => {
         });
     }
 };
+
+export const insertMinorOutput = (param) => async (dispatch) => {
+    await dispatch({ type: INSERT_MINOR_OUTPUT_REQUEST });
+    try {
+        const { data } = await axios.post(`/api/output/minor`, param);
+        console.log(data);
+        return data;
+
+    }catch(e) {
+        dispatch({
+            type: INSERT_MINOR_OUTPUT_FAILED,
+            payload: ""
+        });
+    }
+
+};

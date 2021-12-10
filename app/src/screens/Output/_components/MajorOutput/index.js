@@ -1,9 +1,13 @@
-import { Button, Container, Divider, FormControl, FormGroup, FormHelperText, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField } from '@material-ui/core';
+import { Button, Container, FormControl, FormGroup, FormHelperText, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField } from '@material-ui/core';
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from "react-hook-form";
-import {insertMajorOutput} from '../../../../actions/outputActions';
+import { insertMajorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
+import { Divider } from '@mui/material';
+// import { Container, Row, Col } from 'reactstrap';
+// import { Field }
 
 export default () => {
     const appState = useSelector(state => state.app);
@@ -16,25 +20,31 @@ export default () => {
     const { handleSubmit, errors, control, setValue, register } = useForm();
     const onSubmit = async (data) => {
         if (data) {
-            if(userState.userInfo && userState.userInfo.acc && userState.userInfo.acc[0] && userState.userInfo.acc[0].Id)
-            {
+            if (userState.userInfo && userState.userInfo.acc && userState.userInfo.acc[0] && userState.userInfo.acc[0].Id) {
                 data.userId = userState.userInfo.acc[0].Id;
                 var ret = await dispatch(insertMajorOutput(data));
                 console.log(ret)
                 Swal.fire(
-                  ret.result,
-                  ret.message,
-                  ret.result === "Success" ? "success" : "error"
+                    ret.result,
+                    ret.message,
+                    ret.result === "Success" ? "success" : "error"
                 );
             }
         }
     };
     return (
-        <div style={{ height: "100vh", overflow: "auto" }}>
+        <div className='"' style={{ height: "100vh", overflow: "auto" }}>
             <div className="text">Insert Major Output</div>
+            {/* <div className="container"> */}
             <Paper style={{ padding: '2rem' }}>
                 <form onSubmit={handleSubmit(onSubmit)} id="insert-major-form">
                     <FormGroup>
+                        <Divider
+                            placeholder="OPCRF"
+                            label="OPCRF"
+                            variant="fullWidth"
+                            orientation="horizontal"
+                        ><span><b>OPCRF</b></span></Divider>
                         <FormControl variant="standard">
                             <InputLabel>Select KRA</InputLabel>
                             <Controller
@@ -68,7 +78,9 @@ export default () => {
                                 required: { value: true, message: "This field is required" },
                             }}
                             as={
-                                <TextField
+                                <TextareaAutosize
+                                    rows={4}
+                                    placeholder="Objective"
                                     label="Objective"
                                     variant="outlined"
                                     size="small"
@@ -78,7 +90,11 @@ export default () => {
                                 />
                             }
                         />
-                        <Controller
+
+                        <TextareaAutosize
+                            rows={4}
+                            placeholder="Program/Project"
+                            label="Program"
                             defaultValue=""
                             control={control}
                             name="program"
@@ -104,7 +120,9 @@ export default () => {
                                 required: { value: true, message: "This field is required" },
                             }}
                             as={
-                                <TextField
+                                <TextareaAutosize
+                                    rows={3}
+                                    placeholder="Output"
                                     label="Output"
                                     variant="outlined"
                                     size="small"
@@ -114,7 +132,23 @@ export default () => {
                                 />
                             }
                         />
+                        <br />
+                        <Divider
+                            placeholder="OPCRF"
+                            label="OPCRF"
+                            variant="fullWidth"
+                            orientation="horizontal"
 
+                        ></Divider>
+                        <br /><br />
+
+                        <Divider
+                            placeholder="OPCRF"
+                            label="OPCRF"
+                            variant="fullWidth"
+                            orientation="horizontal"
+
+                        ><span><b>PHYSICAL</b></span></Divider>
                         <Controller
                             defaultValue=""
                             control={control}
@@ -153,7 +187,7 @@ export default () => {
                                 />
                             }
                         />
-                        
+
                         <Controller
                             type="number"
                             defaultValue=""
@@ -226,6 +260,26 @@ export default () => {
                                 />
                             }
                         />
+                        <br /><br />
+
+                        {/* <Divider
+                            placeholder="PHYSICAL"
+                            label="Physical"
+                            variant="fullWidth"
+                            orientation="horizontal"
+
+                        ></Divider>
+                        <br/><br/> */}
+
+
+
+                        <Divider
+                            placeholder="FINANCIAL"
+                            label="Financial"
+                            variant="fullWidth"
+                            orientation="horizontal"
+
+                        ><span><b>FINANCIAL</b></span></Divider>
                         <Controller
                             type="number"
                             defaultValue=""
@@ -308,6 +362,7 @@ export default () => {
                                 />
                             }
                         />
+                        <br /><br />
                         <FormControl variant="standard">
 
                             <InputLabel>Funding Source</InputLabel>
@@ -352,7 +407,15 @@ export default () => {
                                 }
                             />
                         </FormControl>
+                        <br /><br />
 
+                        <Divider
+                            placeholder="FINANCIAL"
+                            label="Financial"
+                            variant="fullWidth"
+                            orientation="horizontal"
+
+                        ><span><b>QAME RATING DURING IMPLEMENTATION OF ACTIVITY</b></span></Divider>
                         <Controller
                             defaultValue=""
                             control={control}
@@ -396,8 +459,9 @@ export default () => {
                             rules={{
                             }}
                             as={
-                                <TextField
-                                    label="Operational Issue"
+                                <TextareaAutosize
+                                    rows={3}
+                                    placeholder="Operational Issue"
                                     variant="outlined"
                                     size="small"
                                     fullWidth
@@ -475,7 +539,7 @@ export default () => {
                             }
                         />
                     </FormGroup>
-
+                    <br /><br />
                     <Button
                         variant="contained"
                         style={{ width: '100%' }}
@@ -486,6 +550,7 @@ export default () => {
                     </Button>
                 </form>
             </Paper>
+            {/* </div> */}
         </div>
     )
 }
