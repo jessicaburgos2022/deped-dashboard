@@ -33,7 +33,7 @@ export default () => {
         }
     };
     return (
-        <div className='"' style={{ height: "100vh", overflow: "auto" }}>
+        <div className='"' style={{ height: "100vh"}}>
             <div className="text">Insert Major Output</div>
             {/* <div className="container"> */}
             <Paper style={{ padding: '2rem' }}>
@@ -301,7 +301,7 @@ export default () => {
                                 />
                             }
                         />
-                      
+
                         <Controller
                             defaultValue=""
                             control={control}
@@ -323,7 +323,7 @@ export default () => {
                                 />
                             }
                         />
-                        
+
                         <Controller
                             defaultValue=""
                             control={control}
@@ -345,7 +345,7 @@ export default () => {
                                 />
                             }
                         />
-                            {/* <br/> */}
+                        {/* <br/> */}
                         <Controller
                             defaultValue=""
                             control={control}

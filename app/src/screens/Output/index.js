@@ -28,7 +28,7 @@ export default () => {
         <div style={{ height: "100vh", overflow: "auto" }}>
             <Container fixed maxWidth={true}>
                 <FormControl variant="standard">
-                    <InputLabel id="demo-simple-select-standard-label">Output Type</InputLabel>
+                    <InputLabel id="demo-simple-select-standard-label">Type</InputLabel>
                     <Select
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"

@@ -39,20 +39,14 @@ const App = () => {
         <Drawer />
         <div className="home_content">
           <StylesProvider injectFirst>
-            <div
-              style={{
-                overflow: "auto"
-              }}
-            >
-              <Switch>
-                <Route exact path="/" component={LoginScreen} />
-                <PrivateRoute path="/output" component={Output} />
-                <Route path="/login" component={LoginScreen} />
-                {/* <Route path="/interfaces/:bu?" component={Interfaces} /> */}
-                <PrivateRoute path="/dashboard" component={Dashboard} />
-                {/* <PrivateRoute path="/maintenance" component={Maintenance} /> */}
-              </Switch>
-            </div>
+            <Switch>
+              <Route exact path="/" component={LoginScreen} />
+              <PrivateRoute path="/output" component={Output} />
+              <Route path="/login" component={LoginScreen} />
+              {/* <Route path="/interfaces/:bu?" component={Interfaces} /> */}
+              <PrivateRoute path="/dashboard" component={Dashboard} />
+              {/* <PrivateRoute path="/maintenance" component={Maintenance} /> */}
+            </Switch>
           </StylesProvider>
         </div>
       </MuiThemeProvider>
