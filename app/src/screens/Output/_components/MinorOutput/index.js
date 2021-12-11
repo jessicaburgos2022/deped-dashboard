@@ -1,10 +1,11 @@
-import { Button, Container, Divider, FormControl, FormGroup, FormHelperText, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField } from '@material-ui/core';
+import { Button, Container, FormControl, FormGroup, FormHelperText, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField } from '@material-ui/core';
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from "react-hook-form";
 import {insertMinorOutput} from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
+import { Divider } from '@mui/material';
 
 export default () => {
 
@@ -37,6 +38,12 @@ export default () => {
             <Paper style={{ padding: '2rem' }}>
                 <form onSubmit={handleSubmit(onSubmit)} id="insert-major-form">
                     <FormGroup>
+                    <Divider
+                            placeholder="OPCRF"
+                            label="OPCRF"
+                            variant="fullWidth"
+                            orientation="horizontal"
+                        ><span><b>Cross-Cutting KRAs not included in OPCRF</b></span></Divider>
                         <FormControl variant="standard">
                             <InputLabel>Select KRA</InputLabel>
                             <Controller
@@ -73,6 +80,8 @@ export default () => {
                             }}
                             as={
                                 <TextareaAutosize
+                                        rows={4}
+                                    placeholder="Objective"
                                     label="Objective"
                                     variant="outlined"
                                     size="small"
@@ -460,6 +469,52 @@ export default () => {
                                 />
                             }
                         />
+                         <Divider
+                            placeholder="RATING"
+                            label="Rating"
+                            variant="fullWidth"
+                            orientation="horizontal"
+
+                        ><span><b>QAME RATING DURING IMPLEMENTATION OF ACTIVITY</b></span></Divider>
+                        <br/><br/>
+
+                        <Controller
+                            defaultValue=""
+                            control={control}
+                            name="score"
+                            rules={{
+                            }}
+                            as={
+                                <TextField
+                                    type="number"
+                                    label="Score"
+                                    variant="outlined"
+                                    size="small"
+                                    fullWidth
+                                    error={errors.score != null}
+                                    helperText={errors.score ? errors.score.message : ""}
+                                />
+                            }
+                        />
+
+                        <Controller
+                            defaultValue=""
+                            control={control}
+                            name="scoredescription"
+                            rules={{
+                            }}
+                            as={
+                                <TextField
+                                    label="Descriptive Equivalent"
+                                    variant="outlined"
+                                    size="small"
+                                    fullWidth
+                                    error={errors.scoredescription != null}
+                                    helperText={errors.scoredescription ? errors.scoredescription.message : ""}
+                                />
+                            }
+                        />
+                        <br/><br/>
                         <Controller
                             defaultValue=""
                             control={control}
