@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { insertMajorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
 import { Divider } from '@mui/material';
+import { fetchProjectByKRAId } from "../../../../actions/appActions";
 // import { Container, Row, Col } from 'reactstrap';
 // import { Field }
 
@@ -15,6 +16,15 @@ export default () => {
     const dispatch = useDispatch();
     const OutputTypeId = 1; // ID for MAJOR output (refer to ref_outputtype table)
     const [KRAList, setKRAList] = useState(appState.KRA.filter(kra => kra.OutputTypeId === OutputTypeId));
+    const [selectedKRA, setSelectedKRA] = useState(null);
+    const [ProjectsByKRA, setProjectsByKRA] = useState([]);
+
+    const handleKRAChange = (event) => {
+        setValue('kraid',event.target.value)
+        setSelectedKRA(event.target.value);
+        dispatch(fetchProjectByKRAId(event.target.value));
+        setProjectsByKRA(appState.projectsByKRA);
+    }
 
     //react hook form
     const { handleSubmit, errors, control, setValue, register } = useForm();
@@ -22,8 +32,9 @@ export default () => {
         if (data) {
             if (userState.userInfo && userState.userInfo.acc && userState.userInfo.acc[0] && userState.userInfo.acc[0].Id) {
                 data.userId = userState.userInfo.acc[0].Id;
+                data.kraid=selectedKRA;
+                console.log(data)
                 var ret = await dispatch(insertMajorOutput(data));
-                console.log(ret)
                 Swal.fire(
                     ret.result,
                     ret.message,
@@ -33,7 +44,7 @@ export default () => {
         }
     };
     return (
-        <div className='"' style={{ height: "100vh"}}>
+        <div className='"' style={{ height: "100vh" }}>
             <div className="text">Insert Major Output</div>
             {/* <div className="container"> */}
             <Paper style={{ padding: '2rem' }}>
@@ -46,27 +57,47 @@ export default () => {
                             orientation="horizontal"
                         ><span><b>OPCRF</b></span></Divider>
                         <FormControl variant="standard">
-                            <InputLabel>Select KRA</InputLabel>
+                            <InputLabel>KRA</InputLabel>
+                            <Select
+                                name="kraid"
+                                label="Select KRA"
+                                ref={register}
+                                onChange={handleKRAChange}
+                            >
+                                {
+                                    KRAList.map((kra, id) => {
+                                        return <MenuItem key={id} value={kra.Id}>{kra.Description}</MenuItem>
+                                    })
+                                }
+                            </Select>
+                            <FormHelperText>
+                                {errors.kraid ? errors.kraid.message : ""}
+                            </FormHelperText>
+                        </FormControl>
+
+                        <FormControl variant="standard">
+                            <InputLabel>Project</InputLabel>
                             <Controller
                                 control={control}
-                                name="kraid"
+                                name="projectid"
                                 rules={{
                                     required: { value: true, message: "This field is required" },
                                 }}
                                 as={
                                     <Select
-                                        label="Select KRA"
+                                        label="Select Project"
                                     >
                                         {
-                                            KRAList.map((kra, id) => {
-                                                return <MenuItem key={id} value={kra.Id}>{kra.Description}</MenuItem>
+                                            ProjectsByKRA &&
+                                            ProjectsByKRA.map((project, id) => {
+                                                return <MenuItem key={id} value={project.Id}>{project.Project}</MenuItem>
                                             })
                                         }
                                     </Select>
                                 }
                             />
                             <FormHelperText>
-                                {errors.kraid ? errors.kraid.message : ""}
+                                {errors.projectid ? errors.projectid.message : ""}
                             </FormHelperText>
                         </FormControl>
 
@@ -87,28 +118,6 @@ export default () => {
                                     fullWidth
                                     error={errors.objective != null}
                                     helperText={errors.objective ? errors.objective.message : ""}
-                                />
-                            }
-                        />
-
-                        <TextareaAutosize
-                            rows={4}
-                            placeholder="Program/Project"
-                            label="Program"
-                            defaultValue=""
-                            control={control}
-                            name="program"
-                            rules={{
-                                required: { value: true, message: "This field is required" },
-                            }}
-                            as={
-                                <TextField
-                                    label="Program"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.program != null}
-                                    helperText={errors.program ? errors.program.message : ""}
                                 />
                             }
                         />
@@ -154,7 +163,6 @@ export default () => {
                             control={control}
                             name="plannedtarget"
                             rules={{
-                                required: { value: true, message: "This field is required" },
                             }}
                             as={
                                 <TextField

@@ -15,15 +15,16 @@ const pool = mysql.createPool({
 
 
 const insertMajorOutput = asyncHander(async (req, res) => {
-    const { kraid, objective, projectId, output, plannedtarget, timeline, physicalaccomplishment, accomplishment1, accomplishment2,
+    const { kraid, objective, projectid, output, plannedtarget, timeline, physicalaccomplishment, accomplishment1, accomplishment2,
         gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingsource, budgetstructure, score, scoredescription, opsissue, policyissue,
         recommendation, others, correctiveaction, userId
     } = req.body;
-    const queryString = `CALL InsertMajorOutput(${kraid}, '${objective}', ${projectId}, '${output}', 
+    const queryString = `CALL InsertMajorOutput(${kraid}, '${objective}', ${projectid}, '${output}', 
     ${plannedtarget}, '${timeline}', ${physicalaccomplishment}, ${accomplishment1}, ${accomplishment2}, 
         ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
         '${budgetstructure}', ${score}, '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
+        console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });

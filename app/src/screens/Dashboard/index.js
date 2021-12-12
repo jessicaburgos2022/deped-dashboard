@@ -1,12 +1,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchKRAByDepartmentId, fetchOutputTypes } from "../../actions/appActions";
-import RelatedTickets from "../Interface/_components/RelatedTickets";
-import CommonModal from "../../components/CommonModal";
 import "./styles.css";
-import { Button, Card, CardActions, CardContent, Grid, Typography } from "@material-ui/core";
-import { Box } from "@mui/system";
+import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -19,6 +15,9 @@ import {
 } from 'chart.js';
 
 import { Doughnut, Line, Pie } from 'react-chartjs-2';
+
+
+import { fetchKRAByDepartmentId, fetchOutputTypes } from "../../actions/appActions";
 
 
 ChartJS.register(

@@ -3,9 +3,10 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from "react-hook-form";
-import {insertMinorOutput} from '../../../../actions/outputActions';
+import { insertMinorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
 import { Divider } from '@mui/material';
+import { fetchProjectByKRAId } from "../../../../actions/appActions";
 
 export default () => {
 
@@ -14,20 +15,28 @@ export default () => {
     const dispatch = useDispatch();
     const OutputTypeId = 2; // ID for MINOR output (refer to ref_outputtype table)
     const [KRAList, setKRAList] = useState(appState.KRA.filter(kra => kra.OutputTypeId === OutputTypeId));
+    const [selectedKRA, setSelectedKRA] = useState(null);
+    const [ProjectsByKRA, setProjectsByKRA] = useState([]);
+
+    const handleKRAChange = (event) => {
+        setValue('kraid', event.target.value)
+        setSelectedKRA(event.target.value);
+        dispatch(fetchProjectByKRAId(event.target.value));
+        setProjectsByKRA(appState.projectsByKRA);
+    }
 
     //react hook form
     const { handleSubmit, errors, control, setValue, register } = useForm();
     const onSubmit = async (data) => {
         if (data) {
-            if(userState.userInfo && userState.userInfo.acc && userState.userInfo.acc[0] && userState.userInfo.acc[0].Id)
-            {
+            if (userState.userInfo && userState.userInfo.acc && userState.userInfo.acc[0] && userState.userInfo.acc[0].Id) {
                 data.userId = userState.userInfo.acc[0].Id;
                 var ret = await dispatch(insertMinorOutput(data));
                 console.log(ret)
                 Swal.fire(
-                  ret.result,
-                  ret.message,
-                  ret.result === "Success" ? "success" : "error"
+                    ret.result,
+                    ret.message,
+                    ret.result === "Success" ? "success" : "error"
                 );
             }
         }
@@ -38,40 +47,57 @@ export default () => {
             <Paper style={{ padding: '2rem' }}>
                 <form onSubmit={handleSubmit(onSubmit)} id="insert-minor-form">
                     <FormGroup>
-                    <Divider
+                        <Divider
                             placeholder="OPCRF"
                             label="OPCRF"
                             variant="fullWidth"
                             orientation="horizontal"
-                    ><span><b>Cross-Cutting KRAs not included in OPCRF</b></span>
-                    </Divider>
+                        ><span><b>Cross-Cutting KRAs not included in OPCRF</b></span>
+                        </Divider>
                         <FormControl variant="standard">
-                            <InputLabel>Select KRA</InputLabel>
+                            <InputLabel>KRA</InputLabel>
+                            <Select
+                                name="kraid"
+                                label="Select KRA"
+                                ref={register}
+                                onChange={handleKRAChange}
+                            >
+                                {
+                                    KRAList.map((kra, id) => {
+                                        return <MenuItem key={id} value={kra.Id}>{kra.Description}</MenuItem>
+                                    })
+                                }
+                            </Select>
+                            <FormHelperText>
+                                {errors.kraid ? errors.kraid.message : ""}
+                            </FormHelperText>
+                        </FormControl>
+
+                        <FormControl variant="standard">
+                            <InputLabel>Project</InputLabel>
                             <Controller
                                 control={control}
-                                name="kraid"
+                                name="projectid"
                                 rules={{
                                     required: { value: true, message: "This field is required" },
                                 }}
                                 as={
                                     <Select
-                                        label="Select KRA"
+                                        label="Select Project"
                                     >
                                         {
-                                         
-                                            KRAList.map((kra, id) => {
-                                                console.log('test')
-                                                return <MenuItem key={id} value={kra.Id}>{kra.Description}</MenuItem>
+                                            ProjectsByKRA &&
+                                            ProjectsByKRA.map((project, id) => {
+                                                return <MenuItem key={id} value={project.Id}>{project.Project}</MenuItem>
                                             })
                                         }
                                     </Select>
                                 }
                             />
                             <FormHelperText>
-                                {errors.kraid ? errors.kraid.message : ""}
+                                {errors.projectid ? errors.projectid.message : ""}
                             </FormHelperText>
                         </FormControl>
-
                         <Controller
                             defaultValue=""
                             control={control}
@@ -81,7 +107,7 @@ export default () => {
                             }}
                             as={
                                 <TextareaAutosize
-                                        rows={4}
+                                    rows={4}
                                     placeholder="Objective"
                                     label="Objective"
                                     variant="outlined"
@@ -89,24 +115,6 @@ export default () => {
                                     fullWidth
                                     error={errors.objective != null}
                                     helperText={errors.objective ? errors.objective.message : ""}
-                                />
-                            }
-                        />
-                        <Controller
-                            defaultValue=""
-                            control={control}
-                            name="program"
-                            rules={{
-                                required: { value: true, message: "This field is required" },
-                            }}
-                            as={
-                                <TextField
-                                    label="Program"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.program != null}
-                                    helperText={errors.program ? errors.program.message : ""}
                                 />
                             }
                         />
@@ -167,7 +175,7 @@ export default () => {
                                 />
                             }
                         />
-                        
+
                         {/* <Controller
                             type="number"
                             defaultValue=""
@@ -187,22 +195,22 @@ export default () => {
                             }
                         /> */}
                         <Controller
-                                defaultValue=""
-                                control={control}
-                                name="timeline"
-                                rules={{
-                                }}
-                                as={
-                                    <TextField
-                                        label="Timeline"
-                                        variant="outlined"
-                                        size="small"
-                                        fullWidth
-                                        error={errors.timeline != null}
-                                        helperText={errors.timeline ? errors.timeline.message : ""}
-                                    />
-                                }
-                            />
+                            defaultValue=""
+                            control={control}
+                            name="timeline"
+                            rules={{
+                            }}
+                            as={
+                                <TextField
+                                    label="Timeline"
+                                    variant="outlined"
+                                    size="small"
+                                    fullWidth
+                                    error={errors.timeline != null}
+                                    helperText={errors.timeline ? errors.timeline.message : ""}
+                                />
+                            }
+                        />
                         <Controller
                             type="number"
                             defaultValue=""
@@ -470,14 +478,14 @@ export default () => {
                                 />
                             }
                         />
-                         <Divider
+                        <Divider
                             placeholder="RATING"
                             label="Rating"
                             variant="fullWidth"
                             orientation="horizontal"
 
                         ><span><b>QAME RATING DURING IMPLEMENTATION OF ACTIVITY</b></span></Divider>
-                        <br/><br/>
+                        <br /><br />
 
                         <Controller
                             defaultValue=""
@@ -515,7 +523,7 @@ export default () => {
                                 />
                             }
                         />
-                        <br/><br/>
+                        <br /><br />
                         <Controller
                             defaultValue=""
                             control={control}

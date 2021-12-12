@@ -4,12 +4,16 @@ import {
   GET_OUTPUTTYPE_LIST_FAILED,
   GET_KRABYDEPARTMENT_REQUEST,
   GET_KRABYDEPARTMENT_SUCCESS,
-  GET_KRABYDEPARTMENT_FAILED
+  GET_KRABYDEPARTMENT_FAILED,
+  GET_PROJECTBYKRA_REQUEST,
+  GET_PROJECTBYKRA_SUCCESS,
+  GET_PROJECTBYKRA_FAILED
 } from "../constants/appConstants";
 
 const appState = {
   OutputTypes: [],
-  KRA: []
+  KRA: [],
+  projectsByKRA: []
 };
 
 export const appReducer = (state = appState, action) => {
@@ -34,7 +38,7 @@ export const appReducer = (state = appState, action) => {
     case GET_KRABYDEPARTMENT_REQUEST:
       return {
         ...state,
-        KRA : []
+        KRA: []
       }
     case GET_KRABYDEPARTMENT_SUCCESS:
       return {
@@ -45,6 +49,22 @@ export const appReducer = (state = appState, action) => {
       return {
         ...state,
         KRA: []
+      }
+
+    case GET_PROJECTBYKRA_REQUEST:
+      return {
+        ...state,
+        projectsByKRA: []
+      }
+    case GET_PROJECTBYKRA_SUCCESS:
+      return {
+        ...state,
+        projectsByKRA: payload
+      }
+    case GET_PROJECTBYKRA_FAILED:
+      return {
+        ...state,
+        projectsByKRA: []
       }
     default:
       return state;
