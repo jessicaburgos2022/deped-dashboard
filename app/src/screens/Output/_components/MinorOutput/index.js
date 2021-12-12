@@ -20,6 +20,8 @@ import { insertMinorOutput } from "../../../../actions/outputActions";
 import Swal from "sweetalert2";
 import { Checkbox, Divider } from "@mui/material";
 import { fetchProjectByKRAId } from "../../../../actions/appActions";
+import "../../styles.css";
+import { Grid } from "@mui/material";
 
 export default () => {
   const appState = useSelector((state) => state.app);
@@ -116,7 +118,10 @@ export default () => {
                 {errors.projectid ? errors.projectid.message : ""}
               </FormHelperText>
             </FormControl>
-            <Controller
+
+            <Grid container spacing={3}>
+                <Grid item xs={4}>
+                <Controller
               defaultValue=""
               control={control}
               name="objective"
@@ -124,9 +129,12 @@ export default () => {
                 required: { value: true, message: "This field is required" },
               }}
               as={
-                <TextareaAutosize
+                <TextField
+                type="text"
                   className="output-margin"
                   rows={4}
+                  maxrows={4}
+                  multiline
                   placeholder="Objective"
                   label="Objective"
                   variant="outlined"
@@ -137,7 +145,9 @@ export default () => {
                 />
               }
             />
-            <Controller
+                </Grid>
+                <Grid item xs={4}>
+                <Controller
               defaultValue=""
               control={control}
               name="output"
@@ -145,9 +155,15 @@ export default () => {
                 required: { value: true, message: "This field is required" },
               }}
               as={
-                <TextareaAutosize
+                <TextField
+                type="text"
                   className="output-margin"
                   rows={4}
+                  maxrows={4}
+                  multiline
+                rows={4}
+                maxrows={4}
+                multiline
                   placeholder="Ouput"
                   label="Output"
                   variant="outlined"
@@ -158,8 +174,10 @@ export default () => {
                 />
               }
             />
-
-            <Controller
+       
+                </Grid>
+                <Grid item xs={4}>
+                <Controller
               defaultValue=""
               control={control}
               name="target"
@@ -168,7 +186,11 @@ export default () => {
               }}
               as={
                 <TextField
-                  className="output-margin"
+                type="text"
+                className="output-margin"
+                rows={4}
+                maxrows={4}
+                multiline
                   label="Target"
                   variant="outlined"
                   size="small"
@@ -177,16 +199,21 @@ export default () => {
                   helperText={errors.target ? errors.target.message : ""}
                 />
               }
-            />
-
-            <Controller
+            />        
+                </Grid>
+                <Grid item xs={4}>
+                <Controller
               defaultValue=""
               control={control}
               name="accomplishment"
               rules={{}}
               as={
                 <TextField
-                  className="output-margin"
+                type="text"
+                className="output-margin"
+                rows={4}
+                maxrows={4}
+                multiline
                   label="Accomplishment"
                   variant="outlined"
                   size="small"
@@ -198,16 +225,20 @@ export default () => {
                 />
               }
             />
-
-            <Controller
+                </Grid>
+                <Grid item xs={4}>
+                <Controller
               defaultValue=""
               control={control}
               name="agency"
               rules={{}}
               as={
                 <TextField
-                  className="output-margin"
-                  placeholder="Agency In-Charge"
+                type="text"
+                className="output-margin"
+                rows={4}
+                maxrows={4}
+                multiline
                   label="Agency In-Charge"
                   variant="outlined"
                   size="small"
@@ -219,14 +250,20 @@ export default () => {
                 />
               }
             />
-            <Controller
+                </Grid>
+                <Grid item xs={4}>
+                <Controller
               defaultValue=""
               control={control}
               name="timeline"
               rules={{}}
               as={
                 <TextField
-                  className="output-margin"
+                type="text"
+                className="output-margin"
+                rows={4}
+                maxrows={4}
+                multiline
                   label="Timeline"
                   variant="outlined"
                   size="small"
@@ -236,7 +273,10 @@ export default () => {
                 />
               }
             />
-            <FormControlLabel
+
+                </Grid>
+                <Grid item xs={4}>
+                <FormControlLabel
               control={
                 <Controller
                   name="withinTimeframe"
@@ -251,7 +291,11 @@ export default () => {
                 />
               }
               label="Conducted within timeframe"
-            />
+            />                
+                </Grid>
+                </Grid>
+            
+            
             <Divider
               style={{ padding: "2rem 0 0 0" }}
               placeholder="Issues and Concerns Encountered"
@@ -263,15 +307,16 @@ export default () => {
                 <b>Issues and Concerns Encountered</b>
               </span>
             </Divider>
-
-            <Controller
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                <Controller
               defaultValue=""
               control={control}
               name="opsissue"
               rules={{}}
               as={
                 <TextField
-                  className="output-category-margin"
+                  className="output-margin"
                   label="Operational Issue"
                   variant="outlined"
                   size="small"
@@ -281,7 +326,9 @@ export default () => {
                 />
               }
             />
-            <Controller
+                    </Grid>
+                    <Grid item xs={6}>
+                    <Controller
               defaultValue=""
               control={control}
               name="policyissue"
@@ -300,8 +347,9 @@ export default () => {
                 />
               }
             />
-
-            <Controller
+                    </Grid>
+                    <Grid item xs={6}>
+                    <Controller
               defaultValue=""
               control={control}
               name="recommendation"
@@ -322,8 +370,9 @@ export default () => {
                 />
               }
             />
-
-            <Controller
+                    </Grid>
+                    <Grid item xs={6}>
+                    <Controller
               defaultValue=""
               control={control}
               name="others"
@@ -344,6 +393,14 @@ export default () => {
                 />
               }
             />
+                    </Grid>
+            </Grid>      
+            
+            
+
+            
+
+            
             <Divider
               style={{ padding: "2rem 0 0 0" }}
               placeholder="RATING"
