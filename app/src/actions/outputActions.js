@@ -4,7 +4,11 @@ import {
     INSERT_MAJOR_OUTPUT_FAILED,
     INSERT_MINOR_OUTPUT_REQUEST,
     INSERT_MINOR_OUTPUT_SUCCESS,
-    INSERT_MINOR_OUTPUT_FAILED
+    INSERT_MINOR_OUTPUT_FAILED,
+    INSERT_CONTRIBUTORY_OUTPUT_REQUEST,
+    INSERT_CONTRIBUTORY_OUTPUT_SUCCESS,
+    INSERT_CONTRIBUTORY_OUTPUT_FAILED
+
 } from "../constants/outputConstants";
 import axios from "../helpers/axios";
 
@@ -29,9 +33,25 @@ export const insertMinorOutput = (param) => async (dispatch) => {
         console.log(data);
         return data;
 
-    }catch(e) {
+    }catch (e) {
         dispatch({
             type: INSERT_MINOR_OUTPUT_FAILED,
+            payload: ""
+        });
+    }
+
+};
+
+export const insertContributoryOutput = (param) => async (dispatch) => {
+    await dispatch({ type: INSERT_CONTRIBUTORY_OUTPUT_REQUEST });
+    try {
+        const { data } = await axios.post(`/api/output/contributory`, param);
+        console.log(data);
+        return data;
+
+    }catch (e) {
+        dispatch({
+            type: INSERT_CONTRIBUTORY_OUTPUT_FAILED,
             payload: ""
         });
     }
