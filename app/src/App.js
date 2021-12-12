@@ -16,6 +16,7 @@ import LoginScreen from "./screens/Login";
 import Dashboard from "./screens/Dashboard";
 import Maintenance from "./screens/Maintenance";
 import Output from "./screens/Output";
+import OutputManagement from "./screens/OutputManagement";
 
 //Required States
 // import { fetchOutputTypes } from "./actions/appActions";
@@ -45,6 +46,7 @@ const App = () => {
               <Route path="/login" component={LoginScreen} />
               {/* <Route path="/interfaces/:bu?" component={Interfaces} /> */}
               <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PrivateRoute path="/outputmanagement" component={OutputManagement} />
               {/* <PrivateRoute path="/maintenance" component={Maintenance} /> */}
             </Switch>
           </StylesProvider>

@@ -46,11 +46,6 @@ export default function PersistentDrawerLeft() {
           ></i>
         </div>
         <ul className="nav_list">
-          {/* <li>
-            <i className="bx bx-search"></i>
-            <input type="text" placeholder="Search..." />
-            <span className="tooltip">Search</span>
-          </li> */}
           <li>
             <a href="/dashboard" className={document.location.pathname==="/dashboard"?'active-link':''}>
               <i className="bx bx-grid-alt"></i>
@@ -65,14 +60,14 @@ export default function PersistentDrawerLeft() {
             </a>
             <span className="tooltip">Insert Output</span>
           </li>
-          {/* <li>
-            <a href="/bapi"  className={document.location.pathname==="/bapi"?'active-link':''}>
-              <i className="bx bx-expand-alt"></i>
-              <span className="links_name">BAPI</span>
-            </a>
-            <span className="tooltip">Search BAPI</span>
-          </li>
           <li>
+            <a href="/outputmanagement"  className={document.location.pathname==="/outputmanagement"?'active-link':''}>
+              <i className="bx bx-expand-alt"></i>
+              <span className="links_name">Output Management</span>
+            </a>
+            <span className="tooltip">Output Management</span>
+          </li>
+          {/* <li>
             <a href="/maintenance" className={document.location.pathname==="/maintenance"?'active-link':''} >
               <i className="bx bx-cog"></i>
               <span className="links_name">Maintenance</span>

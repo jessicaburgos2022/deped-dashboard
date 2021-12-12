@@ -4,6 +4,7 @@ import { svnReducer, interfaceReducer } from './interfaceReducers';
 import { appReducer } from './appReducers';
 import { ticketReducer } from './ticketReducers';
 import { dashboardReducer } from './dashboardReducers';
+import { MajorOutputManagementReducer } from './majorOutputReducers';
 
 const combinedReducer = combineReducers({
   user,
@@ -11,7 +12,8 @@ const combinedReducer = combineReducers({
   interfaceReducer,
   tickets: ticketReducer,
   app: appReducer,
-  dashboard: dashboardReducer
+  dashboard: dashboardReducer,
+  majorOutputManagement: MajorOutputManagementReducer
 });
 
 export default combinedReducer;
