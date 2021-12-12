@@ -30,7 +30,7 @@ const validate = asyncHander(async (req, res) => {
     try {
       connection.query(queryString, (error, results) => {
         var qResult = JSON.parse(JSON.stringify(results));
-        if (qResult[0][0].Result === 'Success') {
+        if (qResult[0][0].result === 'Success') {
           res.json({
             res: qResult[0][0],
             acc: qResult[1],
