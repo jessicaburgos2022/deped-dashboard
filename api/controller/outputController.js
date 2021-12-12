@@ -55,6 +55,7 @@ const insertMinorOutput = asyncHander(async (req, res) => {
     } = req.body;
     const queryString = `CALL InsertMinorOutput('${kraid}', '${objective}', '${projectid}', '${output}', '${target}', '${accomplishment}', 
         '${agency}', '${timeline}', ${withinTimeframe},'${opsissue}','${policyissue}', '${recommendation}', '${others}', '${score}', '${scoredescription}', '${correctiveaction}', ${userId})`;
+        console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
