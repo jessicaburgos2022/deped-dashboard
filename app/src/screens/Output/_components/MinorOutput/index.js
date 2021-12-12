@@ -48,6 +48,7 @@ export default () => {
                 <form onSubmit={handleSubmit(onSubmit)} id="insert-minor-form">
                     <FormGroup>
                         <Divider
+                            style={{padding:'2rem 0 0 0'}}
                             placeholder="OPCRF"
                             label="OPCRF"
                             variant="fullWidth"
@@ -57,6 +58,7 @@ export default () => {
                         <FormControl variant="standard">
                             <InputLabel>KRA</InputLabel>
                             <Select
+                                className="output-category-margin"
                                 name="kraid"
                                 label="Select KRA"
                                 ref={register}
@@ -83,6 +85,7 @@ export default () => {
                                 }}
                                 as={
                                     <Select
+                                    className="output-margin"
                                         label="Select Project"
                                     >
                                         {
@@ -107,6 +110,7 @@ export default () => {
                             }}
                             as={
                                 <TextareaAutosize
+                                    className="output-margin"
                                     rows={4}
                                     placeholder="Objective"
                                     label="Objective"
@@ -127,6 +131,9 @@ export default () => {
                             }}
                             as={
                                 <TextareaAutosize
+                                className="output-margin"
+                                    rows={4}
+                                    placeholder="Ouput"
                                     label="Output"
                                     variant="outlined"
                                     size="small"
@@ -146,7 +153,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
-                                    type="number"
+                                className="output-margin"
                                     label="Target"
                                     variant="outlined"
                                     size="small"
@@ -166,6 +173,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Accomplishment"
                                     variant="outlined"
                                     size="small"
@@ -197,11 +205,31 @@ export default () => {
                         <Controller
                             defaultValue=""
                             control={control}
+                            name="agencyincharge"
+                            rules={{
+                            }}
+                            as={
+                                <TextField
+                                className="output-margin"
+                                    placeholder="Agency In-Charge"
+                                    label="Agency In-Charge"
+                                    variant="outlined"
+                                    size="small"
+                                    fullWidth
+                                    error={errors.timeline != null}
+                                    helperText={errors.agencyincharge ? errors.agencyincharge.message : ""}
+                                />
+                            }
+                        />
+                        <Controller
+                            defaultValue=""
+                            control={control}
                             name="timeline"
                             rules={{
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Timeline"
                                     variant="outlined"
                                     size="small"
@@ -211,205 +239,14 @@ export default () => {
                                 />
                             }
                         />
-                        <Controller
-                            type="number"
-                            defaultValue=""
-                            control={control}
-                            name="accomplishment2"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    label="% of Accomplishment according to Timeline"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.accomplishment2 != null}
-                                    helperText={errors.accomplishment2 ? errors.accomplishment2.message : ""}
-                                />
-                            }
-                        />
-                        <Controller
-                            type="number"
-                            defaultValue=""
-                            control={control}
-                            name="gaingap"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    label="Gains/Gaps"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.gaingap != null}
-                                    helperText={errors.gaingap ? errors.gaingap.message : ""}
-                                />
-                            }
-                        />
-                        <Controller
-                            type="number"
-                            defaultValue=""
-                            control={control}
-                            name="financialrequirement"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    label="Financial Requirement"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.financialrequirement != null}
-                                    helperText={errors.financialrequirement ? errors.financialrequirement.message : ""}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">₱</InputAdornment>,
-                                    }}
-                                />
-                            }
-                        />
-                        <Controller
-                            defaultValue=""
-                            control={control}
-                            name="amountutilized"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    type="number"
-                                    label="Amount Utilized"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.amountutilized != null}
-                                    helperText={errors.amountutilized ? errors.amountutilized.message : ""}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">₱</InputAdornment>,
-                                    }}
-                                />
-                            }
-                        />
-                        <Controller
-                            defaultValue=""
-                            control={control}
-                            name="balance"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    type="number"
-                                    label="Balance"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.balance != null}
-                                    helperText={errors.balance ? errors.balance.message : ""}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">₱</InputAdornment>,
-                                    }}
-                                />
-                            }
-                        />
-
-                        <Controller
-                            defaultValue=""
-                            control={control}
-                            name="utilizationrate"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    type="number"
-                                    label="Budget Utilization Rate (%)"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.utilizationrate != null}
-                                    helperText={errors.utilizationrate ? errors.utilizationrate.message : ""}
-                                />
-                            }
-                        />
-                        <FormControl variant="standard">
-
-                            <InputLabel>Funding Source</InputLabel>
-                            <Controller
-                                defaultValue=""
-                                control={control}
-                                name="fundingsource"
-                                defaultValue={0}
-                                rules={{
-                                    required: { value: true, message: "This field is required" },
-                                }}
-                                as={
-                                    <Select
-                                        label="Select KRA"
-                                    >
-                                        <MenuItem value="MOOE">MOOE</MenuItem>
-                                        <MenuItem value="CO">CO</MenuItem>
-                                        <MenuItem value="Downloaded">Downloaded</MenuItem>
-                                    </Select>
-                                }
-                            />
-                        </FormControl>
-
-                        <FormControl variant="standard">
-                            <InputLabel>Budget Structure</InputLabel>
-                            <Controller
-                                defaultValue=""
-                                control={control}
-                                name="budgetstructure"
-                                defaultValue={0}
-                                rules={{
-                                    required: { value: true, message: "This field is required" },
-                                }}
-                                as={
-                                    <Select
-                                        label="Budget Structure"
-                                    >
-                                        <MenuItem value="GASS">GASS</MenuItem>
-                                        <MenuItem value="STO">STO</MenuItem>
-                                        <MenuItem value="Operations">Operations</MenuItem>
-                                    </Select>
-                                }
-                            />
-                        </FormControl>
-
-                        <Controller
-                            defaultValue=""
-                            control={control}
-                            name="score"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    type="number"
-                                    label="Score"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.score != null}
-                                    helperText={errors.score ? errors.score.message : ""}
-                                />
-                            }
-                        />
-
-                        <Controller
-                            defaultValue=""
-                            control={control}
-                            name="scoredescription"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    label="Descriptive Equivalent"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.scoredescription != null}
-                                    helperText={errors.scoredescription ? errors.scoredescription.message : ""}
-                                />
-                            }
-                        />
+                         <Divider
+                        style={{padding:'2rem 0 0 0'}}
+                            placeholder="Issues and Concerns Encountered"
+                            label="Issues and Concerns Encountered"
+                            variant="fullWidth"
+                            orientation="horizontal"
+                        ><span><b>Issues and Concerns Encountered</b></span></Divider>
+                        
                         <Controller
                             defaultValue=""
                             control={control}
@@ -418,12 +255,14 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-category-margin"
                                     label="Operational Issue"
                                     variant="outlined"
                                     size="small"
                                     fullWidth
                                     error={errors.opsissue != null}
                                     helperText={errors.opsissue ? errors.opsissue.message : ""}
+
                                 />
                             }
                         />
@@ -435,57 +274,46 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Policy Issue"
                                     variant="outlined"
                                     size="small"
                                     fullWidth
                                     error={errors.policyissue != null}
                                     helperText={errors.policyissue ? errors.policyissue.message : ""}
+
                                 />
                             }
                         />
-                        <Controller
+
+                            <Controller
                             defaultValue=""
                             control={control}
-                            name="recommendation"
+                            name="managedecisionrecommendation"
                             rules={{
                             }}
                             as={
                                 <TextField
-                                    label="Issues needing Management decision and recommendation"
+                                className="output-margin"
+                                    label="Management decision and Recommendation"
                                     variant="outlined"
                                     size="small"
                                     fullWidth
-                                    error={errors.recommendation != null}
-                                    helperText={errors.recommendation ? errors.recommendation.message : ""}
+                                    error={errors.managedecisionrecommendation != null}
+                                    helperText={errors.managedecisionrecommendation ? errors.managedecisionrecommendation.message : ""}
+
                                 />
                             }
                         />
-                        <Controller
-                            defaultValue=""
-                            control={control}
-                            name="others"
-                            rules={{
-                            }}
-                            as={
-                                <TextField
-                                    label="Others"
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    error={errors.others != null}
-                                    helperText={errors.others ? errors.others.message : ""}
-                                />
-                            }
-                        />
+                        
                         <Divider
+                             style={{padding:'2rem 0 0 0'}}
                             placeholder="RATING"
                             label="Rating"
                             variant="fullWidth"
                             orientation="horizontal"
 
                         ><span><b>QAME RATING DURING IMPLEMENTATION OF ACTIVITY</b></span></Divider>
-                        <br /><br />
 
                         <Controller
                             defaultValue=""
@@ -495,6 +323,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                    className="output-category-margin"
                                     type="number"
                                     label="Score"
                                     variant="outlined"
@@ -514,6 +343,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Descriptive Equivalent"
                                     variant="outlined"
                                     size="small"
@@ -523,8 +353,8 @@ export default () => {
                                 />
                             }
                         />
-                        <br /><br />
                         <Controller
+                            
                             defaultValue=""
                             control={control}
                             name="correctiveaction"
@@ -532,6 +362,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                 className="output-margin"
                                     label="Planned corrective actions to address slippage before year ends."
                                     variant="outlined"
                                     size="small"
@@ -542,8 +373,10 @@ export default () => {
                             }
                         />
                     </FormGroup>
+                    {/* <br/> */}
 
                     <Button
+                          className="output-margin"
                         variant="contained"
                         style={{ width: '100%' }}
                         color="primary"
@@ -551,6 +384,7 @@ export default () => {
                     >
                         Submit
                     </Button>
+                    <br/>
                 </form>
             </Paper>
         </div>

@@ -7,6 +7,8 @@ import { insertMajorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
 import { Divider } from '@mui/material';
 import { fetchProjectByKRAId } from "../../../../actions/appActions";
+import '../../styles.css';
+import { Grid } from '@mui/material';
 // import { Container, Row, Col } from 'reactstrap';
 // import { Field }
 
@@ -51,14 +53,22 @@ export default () => {
                 <form onSubmit={handleSubmit(onSubmit)} id="insert-major-form">
                     <FormGroup>
                         <Divider
+                        style={{padding:'2rem 0 0 0'}}
                             placeholder="OPCRF"
                             label="OPCRF"
                             variant="fullWidth"
                             orientation="horizontal"
                         ><span><b>OPCRF</b></span></Divider>
+                        {/* <Grid container spacing={2}>
+                            <Grid>
+                                
+                            </Grid>
+
+                        </Grid> */}
                         <FormControl variant="standard">
                             <InputLabel>KRA</InputLabel>
                             <Select
+                             className="output-category-margin"
                                 name="kraid"
                                 label="Select KRA"
                                 ref={register}
@@ -85,6 +95,7 @@ export default () => {
                                 }}
                                 as={
                                     <Select
+                                    className="output-margin"
                                         label="Select Project"
                                     >
                                         {
@@ -110,6 +121,7 @@ export default () => {
                             }}
                             as={
                                 <TextareaAutosize
+                                className="output-margin"
                                     rows={4}
                                     placeholder="Objective"
                                     label="Objective"
@@ -130,6 +142,7 @@ export default () => {
                             }}
                             as={
                                 <TextareaAutosize
+                                className="output-margin"
                                     rows={3}
                                     placeholder="Output"
                                     label="Output"
@@ -141,24 +154,28 @@ export default () => {
                                 />
                             }
                         />
-                        <br />
-                        <Divider
+          
+                        {/* <Divider
                             placeholder="OPCRF"
                             label="OPCRF"
                             variant="fullWidth"
                             orientation="horizontal"
 
                         ></Divider>
-                        <br /><br />
+                        <br /><br /> */}
 
                         <Divider
+                             style={{padding:'2rem 0 0 0'}}
                             placeholder="OPCRF"
                             label="OPCRF"
                             variant="fullWidth"
                             orientation="horizontal"
 
                         ><span><b>PHYSICAL</b></span></Divider>
-                        <Controller
+
+<Grid container spacing={3}>
+        <Grid item xs={4}>
+        <Controller
                             defaultValue=""
                             control={control}
                             name="plannedtarget"
@@ -166,6 +183,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     type="number"
                                     label="Planned Target"
                                     variant="outlined"
@@ -176,9 +194,9 @@ export default () => {
                                 />
                             }
                         />
-
-
-                        <Controller
+        </Grid>
+        <Grid item xs={4}>
+        <Controller
                             defaultValue=""
                             control={control}
                             name="timeline"
@@ -186,6 +204,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Timeline"
                                     variant="outlined"
                                     size="small"
@@ -195,8 +214,9 @@ export default () => {
                                 />
                             }
                         />
-
-                        <Controller
+        </Grid>
+        <Grid item xs={4}>
+        <Controller
                             type="number"
                             defaultValue=""
                             control={control}
@@ -205,6 +225,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Physical Accomplishment"
                                     variant="outlined"
                                     size="small"
@@ -214,7 +235,9 @@ export default () => {
                                 />
                             }
                         />
-                        <Controller
+        </Grid>
+        <Grid item xs={4}>
+        <Controller
                             type="number"
                             defaultValue=""
                             control={control}
@@ -223,6 +246,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="% of Accomplishment vs Targets"
                                     variant="outlined"
                                     size="small"
@@ -232,7 +256,9 @@ export default () => {
                                 />
                             }
                         />
-                        <Controller
+        </Grid>
+        <Grid item xs={4}>
+        <Controller
                             type="number"
                             defaultValue=""
                             control={control}
@@ -241,6 +267,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="% of Accomplishment according to Timeline"
                                     variant="outlined"
                                     size="small"
@@ -250,7 +277,9 @@ export default () => {
                                 />
                             }
                         />
-                        <Controller
+        </Grid>
+        <Grid item xs={4}>
+        <Controller
                             type="number"
                             defaultValue=""
                             control={control}
@@ -259,6 +288,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Gains/Gaps"
                                     variant="outlined"
                                     size="small"
@@ -268,20 +298,21 @@ export default () => {
                                 />
                             }
                         />
-                        <br /><br />
+        </Grid>
+      </Grid>
 
-                        {/* <Divider
-                            placeholder="PHYSICAL"
-                            label="Physical"
-                            variant="fullWidth"
-                            orientation="horizontal"
-
-                        ></Divider>
-                        <br/><br/> */}
+                        
 
 
+                        
+
+                        
+                        
+                        
+                        
 
                         <Divider
+                        style={{padding:'2rem 0 0 00'}}
                             placeholder="FINANCIAL"
                             label="Financial"
                             variant="fullWidth"
@@ -297,6 +328,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Financial Requirement"
                                     variant="outlined"
                                     size="small"
@@ -318,6 +350,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     type="number"
                                     label="Amount Utilized"
                                     variant="outlined"
@@ -340,6 +373,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     type="number"
                                     label="Balance"
                                     variant="outlined"
@@ -362,6 +396,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     type="number"
                                     label="Budget Utilization Rate (%)"
                                     variant="outlined"
@@ -372,10 +407,12 @@ export default () => {
                                 />
                             }
                         />
-                        <br /><br />
-                        <FormControl variant="standard">
+                       
+                        <FormControl 
+                       
+                        variant="standard">
 
-                            <InputLabel>Funding Source</InputLabel>
+                            <InputLabel style={{padding:'2rem 0 0 0 '}}>Funding Source</InputLabel>
                             <Controller
                                 defaultValue=""
                                 control={control}
@@ -386,7 +423,8 @@ export default () => {
                                 }}
                                 as={
                                     <Select
-                                        label="Select KRA"
+                                    className="output-margin"
+                                        label="Select Funding Source"
                                     >
                                         <MenuItem value="MOOE">MOOE</MenuItem>
                                         <MenuItem value="CO">CO</MenuItem>
@@ -408,6 +446,7 @@ export default () => {
                                 }}
                                 as={
                                     <Select
+                                    className="output-margin"   
                                         label="Budget Structure"
                                     >
                                         <MenuItem value="GASS">GASS</MenuItem>
@@ -420,6 +459,7 @@ export default () => {
                         <br /><br />
 
                         <Divider
+                            style={{padding:'2rem 0 0 0'}}
                             placeholder="FINANCIAL"
                             label="Financial"
                             variant="fullWidth"
@@ -434,6 +474,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                    className="output-margin"
                                     type="number"
                                     label="Score"
                                     variant="outlined"
@@ -453,6 +494,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Descriptive Equivalent"
                                     variant="outlined"
                                     size="small"
@@ -470,6 +512,7 @@ export default () => {
                             }}
                             as={
                                 <TextareaAutosize
+                                className="output-margin"
                                     rows={3}
                                     placeholder="Operational Issue"
                                     variant="outlined"
@@ -488,6 +531,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Policy Issue"
                                     variant="outlined"
                                     size="small"
@@ -505,6 +549,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Issues needing Management decision and recommendation"
                                     variant="outlined"
                                     size="small"
@@ -522,6 +567,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Others"
                                     variant="outlined"
                                     size="small"
@@ -539,6 +585,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
+                                className="output-margin"
                                     label="Planned corrective actions to address slippage before year ends."
                                     variant="outlined"
                                     size="small"
@@ -549,8 +596,9 @@ export default () => {
                             }
                         />
                     </FormGroup>
-                    <br /><br />
+
                     <Button
+                     className="output-margin"
                         variant="contained"
                         style={{ width: '100%' }}
                         color="primary"
