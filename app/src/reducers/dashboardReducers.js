@@ -1,14 +1,18 @@
 import {
     GET_MONITOREDPPA_REQUEST,
     GET_MONITOREDPPA_SUCCESS,
-    GET_MONITOREDPPA_FAILED
+    GET_MONITOREDPPA_FAILED,
+    GET_CONDUCTEDWITHINTIMEFRAME_REQUEST,
+    GET_CONDUCTEDWITHINTIMEFRAME_SUCCESS,
+    GET_CONDUCTEDWITHINTIMEFRAME_FAILED
 }
     from '../constants/dashboardConstants';
 
 
 const dashboardState = {
     loading: false,
-    MonitoredPPA: []
+    MonitoredPPA: [],
+    ConductedWithinTimeframe: []
 };
 
 export const dashboardReducer = (state = dashboardState, action) => {
@@ -33,6 +37,24 @@ export const dashboardReducer = (state = dashboardState, action) => {
                 MonitoredPPA: []
             }
 
+        case GET_CONDUCTEDWITHINTIMEFRAME_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                ConductedWithinTimeframe: []
+            }
+        case GET_CONDUCTEDWITHINTIMEFRAME_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                ConductedWithinTimeframe: payload
+            }
+        case GET_CONDUCTEDWITHINTIMEFRAME_FAILED:
+            return {
+                ...state,
+                loading: false,
+                ConductedWithinTimeframe: []
+            }
         default:
             return state;
     }

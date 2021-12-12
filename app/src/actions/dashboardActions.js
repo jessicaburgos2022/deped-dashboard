@@ -1,7 +1,10 @@
 import {
     GET_MONITOREDPPA_REQUEST,
     GET_MONITOREDPPA_SUCCESS,
-    GET_MONITOREDPPA_FAILED
+    GET_MONITOREDPPA_FAILED,
+    GET_CONDUCTEDWITHINTIMEFRAME_REQUEST,
+    GET_CONDUCTEDWITHINTIMEFRAME_SUCCESS,
+    GET_CONDUCTEDWITHINTIMEFRAME_FAILED
 }
 from '../constants/dashboardConstants';
 
@@ -19,6 +22,23 @@ export const fetchChart1 = () => async (dispatch) => {
     } catch (e) {
       dispatch({
         type: GET_MONITOREDPPA_FAILED,
+        payload: ""
+      });
+    }
+  };
+
+  
+export const fetchChart3 = () => async (dispatch) => {
+    await dispatch({ type: GET_CONDUCTEDWITHINTIMEFRAME_REQUEST });
+    try {
+      const { data } = await axios.get(`/api/dashboard/chart3`);
+      dispatch({
+        type: GET_CONDUCTEDWITHINTIMEFRAME_SUCCESS,
+        payload: data,
+      });
+    } catch (e) {
+      dispatch({
+        type: GET_CONDUCTEDWITHINTIMEFRAME_FAILED,
         payload: ""
       });
     }

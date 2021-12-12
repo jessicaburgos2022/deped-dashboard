@@ -19,7 +19,7 @@ import { Doughnut, Line, Pie } from 'react-chartjs-2';
 
 import { fetchKRAByDepartmentId, fetchOutputTypes } from "../../actions/appActions";
 
-import { fetchChart1 } from "../../actions/dashboardActions";
+import { fetchChart1, fetchChart3 } from "../../actions/dashboardActions";
 
 
 ChartJS.register(
@@ -40,6 +40,7 @@ export default () => {
     dispatch(fetchKRAByDepartmentId(departmentId));
     dispatch(fetchOutputTypes());
     dispatch(fetchChart1());
+    dispatch(fetchChart3());
     // eslint-disable-next-line
   }, []);
   const data1 = {
@@ -76,24 +77,24 @@ export default () => {
         position: 'top',
       },
       title: {
-        display: true,
+        display: false,
         text: 'Chart.js Line Chart',
       },
     },
   };
 
   const data = {
-    labels: ['ASD', 'CLMD', 'ESSD', 'FD', 'FTAD', 'HRDD', 'ORD', 'PPRD', 'QAD'],
+    labels: dashboardState.ConductedWithinTimeframe.map(r => { return r.DepartmentName }),
     datasets: [
       {
         label: 'Project',
-        data: [12, 19, 3, 5, 2, 3, 6, 5, 2],
+        data: dashboardState.ConductedWithinTimeframe.map(r => { return r.TotalPPA }),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
         label: 'Within timeline',
-        data: [8, 10, 2, 5, 1, 1, 4, 3, 1],
+        data: dashboardState.ConductedWithinTimeframe.map(r => { return r.WithinTimeframe }),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
@@ -115,15 +116,11 @@ export default () => {
   const card = (
     <React.Fragment>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom style={{ textAlign: "center" }}>
           Number of PAPs Monitored and Analyzed
         </Typography>
-        <Typography component="div">
-          <Grid container spacing={2} style={{ padding: 20 }}>
-            <Grid item xs={6} >
-              <Pie data={data1} />
-            </Grid>
-          </Grid>
+        <Typography component="div" style={{ display: "flex", justifyContent: 'center', width:"50%", margin:'auto' }}>
+          <Pie data={data1} />
         </Typography>
       </CardContent>
     </React.Fragment>
@@ -131,7 +128,7 @@ export default () => {
   const card2 = (
     <React.Fragment>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom style={{ textAlign: "center" }}>
           Satisfactory accountability result on Physical and Financial Target
         </Typography>
         <Typography variant="h5" component="div">
@@ -151,7 +148,7 @@ export default () => {
   const card3 = (
     <React.Fragment>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom style={{ textAlign: "center" }}>
           PAPs conducted within the defined timeline
         </Typography>
         <Typography variant="h5" component="div">
@@ -165,7 +162,7 @@ export default () => {
   const card4 = (
     <React.Fragment>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom style={{ textAlign: "center" }}>
           Budget Utilization Rate
         </Typography>
         <Typography variant="h5" component="div">
@@ -177,19 +174,19 @@ export default () => {
     </React.Fragment>
   );
   return (
-    <div>
+    <div style={{ padding: 25 }}>
       <div className="text">Physical and Financial Targets Dashboard</div>
-      <Grid container spacing={2} style={{ padding: 20 }}>
-        <Grid item xs={6}>
+      <Grid container spacing={2}>
+        <Grid item xs={5}>
           <Card variant="outlined">{card}</Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Card variant="outlined">{card2}</Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Card variant="outlined">{card3}</Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Card variant="outlined">{card4}</Card>
         </Grid>
       </Grid>
