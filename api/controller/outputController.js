@@ -15,16 +15,15 @@ const pool = mysql.createPool({
 
 
 const insertMajorOutput = asyncHander(async (req, res) => {
-    const { kraid, objective, projectid, output, plannedtarget, timeline, physicalaccomplishment, accomplishment1, accomplishment2,
+    const { kraid, objective, projectid, output, plannedtarget, timeline, physicalaccomplishment, accomplishment1, accomplishment2, withinTimeframe,
         gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingsource, budgetstructure, score, scoredescription, opsissue, policyissue,
         recommendation, others, correctiveaction, userId
     } = req.body;
     const queryString = `CALL InsertMajorOutput(${kraid}, '${objective}', ${projectid}, '${output}', 
-    ${plannedtarget}, '${timeline}', ${physicalaccomplishment}, ${accomplishment1}, ${accomplishment2}, 
+    ${plannedtarget}, '${timeline}', ${physicalaccomplishment}, ${accomplishment1}, ${accomplishment2}, ${withinTimeframe}
         ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
         '${budgetstructure}', ${score}, '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
-        console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -51,11 +50,12 @@ const insertMajorOutput = asyncHander(async (req, res) => {
 });
 
 const insertMinorOutput = asyncHander(async (req, res) => {
-    const { kraid, objective, projectId, output, target, accomplishment, agency, timeline, opsissue,
+    const { kraid, objective, projectid, output, target, accomplishment, agency, timeline, withinTimeframe, opsissue,
         policyissue, recommendation, others, score, scoredescription, correctiveaction, userId
     } = req.body;
-    const queryString = `CALL InsertMinorOutput(${kraid}, '${objective}', ${projectId}, '${output}', ${target}, '${accomplishment}', 
-        '${agency}', '${timeline}', '${opsissue}','${policyissue}', '${recommendation}', '${others}', ${score}, '${scoredescription}', '${correctiveaction}', ${userId})`;
+    const queryString = `CALL InsertMinorOutput(${kraid}, '${objective}', ${projectid}, '${output}', ${target}, '${accomplishment}', 
+        '${agency}', '${timeline}', ${withinTimeframe},'${opsissue}','${policyissue}', '${recommendation}', '${others}', ${score}, '${scoredescription}', '${correctiveaction}', ${userId})`;
+        console.log(queryString)
 
     pool.getConnection((err, connection) => {
         if (err) {

@@ -19,6 +19,8 @@ import { Doughnut, Line, Pie } from 'react-chartjs-2';
 
 import { fetchKRAByDepartmentId, fetchOutputTypes } from "../../actions/appActions";
 
+import { fetchChart1 } from "../../actions/dashboardActions";
+
 
 ChartJS.register(
   CategoryScale,
@@ -32,19 +34,20 @@ ChartJS.register(
 export default () => {
   const dispatch = useDispatch();
   const accState = useSelector((state) => state.user)
-  const state = useSelector((state) => state.app);
+  const dashboardState = useSelector((state) => state.dashboard);
   useEffect(() => {
     var departmentId = accState.userInfo.acc[0] ? accState.userInfo.acc[0].DepartmentId : 0;
     dispatch(fetchKRAByDepartmentId(departmentId));
     dispatch(fetchOutputTypes());
+    dispatch(fetchChart1());
     // eslint-disable-next-line
   }, []);
   const data1 = {
-    labels: ['ASD', 'CLMD', 'ESSD', 'FINANCE DIVISION', 'FTAD', 'HRDD', 'ORD', 'PPRD', 'QAD'],
+    labels: dashboardState.MonitoredPPA.map(r => { return r.DepartmentName }),
     datasets: [
       {
         label: 'PAPs Monitored and Analyzed',
-        data: [12, 19, 3, 5, 2, 3, 6, 5, 2],
+        data: dashboardState.MonitoredPPA.map(r => { return r.PPACount }),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -111,63 +114,19 @@ export default () => {
 
   const card = (
     <React.Fragment>
-   <CardContent>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-      Number of PAPs Monitored and Analyzed
-      </Typography>
-      <Typography component="div">
-         <Grid container spacing={2} style={{ padding: 20 }}>
-         <Grid item xs={5}>
-            <Pie data={data1} />
-         </Grid>
-         <Grid item xs={3}>
-            <div className={{fontsize:12}}>
-               <ul class="list-group">
-                  <li class="list-group-item border-0  text-nowrap  d-flex align-items-center">
-                     <span class="badge bg-primary  rounded-pill">12</span>
-                     ASD
-                  </li>
-                  <li class="list-group-item d-flex text-nowrap border-0 align-items-center">
-                    <span class="badge bg-primary rounded-pill">19</span>
-                    CLMD
-                  </li>
-                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
-                  <span class="badge bg-primary rounded-pill">3</span>
-                     ESSD
-                  </li>
-                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
-                  <span class="badge bg-primary rounded-pill">5</span>
-                     FD
-                  </li>
-               </ul>
-            </div>
-         </Grid>
-         <Grid item xs={3}>
-            <div className={{fontsize:12}}>
-               <ul class="list-group">
-                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
-                  <span class="badge bg-primary rounded-pill">2</span>
-                     FTAD
-                  </li>
-                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
-                  <span class="badge bg-primary rounded-pill">3</span>
-                     HRDD
-                  </li>
-                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
-                  <span class="badge bg-primary rounded-pill">6</span>
-                     ORD
-                  </li>
-                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
-                  <span class="badge bg-primary rounded-pill">5</span>
-                     PPRD
-                  </li>
-               </ul>
-            </div>
-         </Grid>
-         </Grid>
-      </Typography>
-   </CardContent>
-</React.Fragment>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Number of PAPs Monitored and Analyzed
+        </Typography>
+        <Typography component="div">
+          <Grid container spacing={2} style={{ padding: 20 }}>
+            <Grid item xs={6} >
+              <Pie data={data1} />
+            </Grid>
+          </Grid>
+        </Typography>
+      </CardContent>
+    </React.Fragment>
   );
   const card2 = (
     <React.Fragment>

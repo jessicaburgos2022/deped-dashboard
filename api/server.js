@@ -8,6 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const appRoutes = require('./routes/appRoutes');
 const outputRoutes = require('./routes/outputRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/app', appRoutes); 
 app.use('/api/output', outputRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 __dirname = path.resolve();
 if (process.env.NODE_ENV === 'production') {
