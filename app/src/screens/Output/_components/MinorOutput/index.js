@@ -1,11 +1,11 @@
-import { Button, Container, FormControl, FormGroup, FormHelperText, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField } from '@material-ui/core';
+import { Button, Container, FormControl, FormControlLabel, FormGroup, FormHelperText, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField } from '@material-ui/core';
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Controller, useForm } from "react-hook-form";
 import { insertMinorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
-import { Divider } from '@mui/material';
+import { Checkbox, Divider } from '@mui/material';
 import { fetchProjectByKRAId } from "../../../../actions/appActions";
 
 export default () => {
@@ -31,6 +31,7 @@ export default () => {
         if (data) {
             if (userState.userInfo && userState.userInfo.acc && userState.userInfo.acc[0] && userState.userInfo.acc[0].Id) {
                 data.userId = userState.userInfo.acc[0].Id;
+                data.kraid = selectedKRA;
                 var ret = await dispatch(insertMinorOutput(data));
                 console.log(ret)
                 Swal.fire(
@@ -48,7 +49,7 @@ export default () => {
                 <form onSubmit={handleSubmit(onSubmit)} id="insert-minor-form">
                     <FormGroup>
                         <Divider
-                            style={{padding:'2rem 0 0 0'}}
+                            style={{ padding: '2rem 0 0 0' }}
                             placeholder="OPCRF"
                             label="OPCRF"
                             variant="fullWidth"
@@ -85,7 +86,7 @@ export default () => {
                                 }}
                                 as={
                                     <Select
-                                    className="output-margin"
+                                        className="output-margin"
                                         label="Select Project"
                                     >
                                         {
@@ -131,7 +132,7 @@ export default () => {
                             }}
                             as={
                                 <TextareaAutosize
-                                className="output-margin"
+                                    className="output-margin"
                                     rows={4}
                                     placeholder="Ouput"
                                     label="Output"
@@ -153,7 +154,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
-                                className="output-margin"
+                                    className="output-margin"
                                     label="Target"
                                     variant="outlined"
                                     size="small"
@@ -173,7 +174,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
-                                className="output-margin"
+                                    className="output-margin"
                                     label="Accomplishment"
                                     variant="outlined"
                                     size="small"
@@ -205,19 +206,19 @@ export default () => {
                         <Controller
                             defaultValue=""
                             control={control}
-                            name="agencyincharge"
+                            name="agency"
                             rules={{
                             }}
                             as={
                                 <TextField
-                                className="output-margin"
+                                    className="output-margin"
                                     placeholder="Agency In-Charge"
                                     label="Agency In-Charge"
                                     variant="outlined"
                                     size="small"
                                     fullWidth
                                     error={errors.timeline != null}
-                                    helperText={errors.agencyincharge ? errors.agencyincharge.message : ""}
+                                    helperText={errors.agency ? errors.agency.message : ""}
                                 />
                             }
                         />
@@ -229,7 +230,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
-                                className="output-margin"
+                                    className="output-margin"
                                     label="Timeline"
                                     variant="outlined"
                                     size="small"
@@ -239,14 +240,31 @@ export default () => {
                                 />
                             }
                         />
-                         <Divider
-                        style={{padding:'2rem 0 0 0'}}
+                        <FormControlLabel
+                            control={
+                                <Controller
+                                    name={"withinTimeframe"}
+                                    control={control}
+                                    render={(props) => (
+                                        <Checkbox
+                                            {...props}
+                                            checked={props.value}
+                                            onChange={(e) => props.onChange(e.target.checked)}
+                                        />
+                                    )}
+                                />
+                            }
+                            label={"Conducted within timeframe"}
+                        />
+
+                        <Divider
+                            style={{ padding: '2rem 0 0 0' }}
                             placeholder="Issues and Concerns Encountered"
                             label="Issues and Concerns Encountered"
                             variant="fullWidth"
                             orientation="horizontal"
                         ><span><b>Issues and Concerns Encountered</b></span></Divider>
-                        
+
                         <Controller
                             defaultValue=""
                             control={control}
@@ -255,7 +273,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
-                                className="output-category-margin"
+                                    className="output-category-margin"
                                     label="Operational Issue"
                                     variant="outlined"
                                     size="small"
@@ -274,7 +292,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
-                                className="output-margin"
+                                    className="output-margin"
                                     label="Policy Issue"
                                     variant="outlined"
                                     size="small"
@@ -286,28 +304,47 @@ export default () => {
                             }
                         />
 
-                            <Controller
+                        <Controller
                             defaultValue=""
                             control={control}
-                            name="managedecisionrecommendation"
+                            name="recommendation"
                             rules={{
                             }}
                             as={
                                 <TextField
-                                className="output-margin"
+                                    className="output-margin"
                                     label="Management decision and Recommendation"
                                     variant="outlined"
                                     size="small"
                                     fullWidth
-                                    error={errors.managedecisionrecommendation != null}
-                                    helperText={errors.managedecisionrecommendation ? errors.managedecisionrecommendation.message : ""}
+                                    error={errors.recommendation != null}
+                                    helperText={errors.recommendation ? errors.recommendation.message : ""}
 
                                 />
                             }
                         />
-                        
+
+                        <Controller
+                            defaultValue=""
+                            control={control}
+                            name="others"
+                            rules={{
+                            }}
+                            as={
+                                <TextField
+                                    className="output-margin"
+                                    label="Others"
+                                    variant="outlined"
+                                    size="small"
+                                    fullWidth
+                                    error={errors.others != null}
+                                    helperText={errors.others ? errors.others.message : ""}
+
+                                />
+                            }
+                        />
                         <Divider
-                             style={{padding:'2rem 0 0 0'}}
+                            style={{ padding: '2rem 0 0 0' }}
                             placeholder="RATING"
                             label="Rating"
                             variant="fullWidth"
@@ -343,7 +380,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
-                                className="output-margin"
+                                    className="output-margin"
                                     label="Descriptive Equivalent"
                                     variant="outlined"
                                     size="small"
@@ -354,7 +391,7 @@ export default () => {
                             }
                         />
                         <Controller
-                            
+
                             defaultValue=""
                             control={control}
                             name="correctiveaction"
@@ -362,7 +399,7 @@ export default () => {
                             }}
                             as={
                                 <TextField
-                                 className="output-margin"
+                                    className="output-margin"
                                     label="Planned corrective actions to address slippage before year ends."
                                     variant="outlined"
                                     size="small"
@@ -376,7 +413,7 @@ export default () => {
                     {/* <br/> */}
 
                     <Button
-                          className="output-margin"
+                        className="output-margin"
                         variant="contained"
                         style={{ width: '100%' }}
                         color="primary"
@@ -384,7 +421,7 @@ export default () => {
                     >
                         Submit
                     </Button>
-                    <br/>
+                    <br />
                 </form>
             </Paper>
         </div>
