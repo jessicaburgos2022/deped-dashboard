@@ -68,6 +68,7 @@ export default () => {
   };
 
   const options = {
+    responsive: true,
     plugins: {
       legend: {
         position: 'top',
@@ -78,20 +79,31 @@ export default () => {
       },
     },
   };
-  const labels3 = ['ASD', 'CLMD', 'ESSD', 'FINANCE DIVISION', 'FTAD', 'HRDD', 'ORD', 'PPRD', 'QAD'];
 
-  const data3 = {
-    labels3,
+  const data = {
+    labels: ['ASD', 'CLMD', 'ESSD', 'FD', 'FTAD', 'HRDD', 'ORD', 'PPRD', 'QAD'],
     datasets: [
       {
         label: 'Project',
         data: [12, 19, 3, 5, 2, 3, 6, 5, 2],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
         label: 'Within timeline',
         data: [8, 10, 2, 5, 1, 1, 4, 3, 1],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  };
+
+  const data2 = {
+    labels: ['ASD', 'CLMD', 'ESSD', 'FD', 'FTAD', 'HRDD', 'ORD', 'PPRD', 'QAD'],
+    datasets: [
+      {
+        label: 'Satisfactory Result',
+        data: [12, 19, 3, 5, 2, 3, 6, 5, 2],
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
@@ -100,22 +112,63 @@ export default () => {
 
   const card = (
     <React.Fragment>
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Number of PAPs Monitored and Analyzed
-        </Typography>
-        <Typography variant="h5" component="div">
-          <Grid container spacing={2} style={{ padding: 20 }}>
-            <Grid item xs={5}>
-              <Pie data={data1} />
-            </Grid>
-            <Grid item xs={6}>
-              Total: 213
-            </Grid>
-          </Grid>
-        </Typography>
-      </CardContent>
-    </React.Fragment>
+   <CardContent>
+      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+      Number of PAPs Monitored and Analyzed
+      </Typography>
+      <Typography component="div">
+         <Grid container spacing={2} style={{ padding: 20 }}>
+         <Grid item xs={5}>
+            <Pie data={data1} />
+         </Grid>
+         <Grid item xs={3}>
+            <div className={{fontsize:12}}>
+               <ul class="list-group">
+                  <li class="list-group-item border-0  text-nowrap  d-flex align-items-center">
+                     <span class="badge bg-primary  rounded-pill">12</span>
+                     ASD
+                  </li>
+                  <li class="list-group-item d-flex text-nowrap border-0 align-items-center">
+                    <span class="badge bg-primary rounded-pill">19</span>
+                    CLMD
+                  </li>
+                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
+                  <span class="badge bg-primary rounded-pill">3</span>
+                     ESSD
+                  </li>
+                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
+                  <span class="badge bg-primary rounded-pill">5</span>
+                     FD
+                  </li>
+               </ul>
+            </div>
+         </Grid>
+         <Grid item xs={3}>
+            <div className={{fontsize:12}}>
+               <ul class="list-group">
+                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
+                  <span class="badge bg-primary rounded-pill">2</span>
+                     FTAD
+                  </li>
+                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
+                  <span class="badge bg-primary rounded-pill">3</span>
+                     HRDD
+                  </li>
+                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
+                  <span class="badge bg-primary rounded-pill">6</span>
+                     ORD
+                  </li>
+                  <li class="list-group-item d-flex border-0  text-nowrap align-items-center">
+                  <span class="badge bg-primary rounded-pill">5</span>
+                     PPRD
+                  </li>
+               </ul>
+            </div>
+         </Grid>
+         </Grid>
+      </Typography>
+   </CardContent>
+</React.Fragment>
   );
   const card2 = (
     <React.Fragment>
@@ -126,8 +179,8 @@ export default () => {
         <Typography variant="h5" component="div">
           <Grid container spacing={2} style={{ padding: 20 }}>
             <Grid item xs={6}>
-              <div style={{ width: '40%' }}>
-                <Doughnut data={data1} />
+              <div style={{ width: '100%' }}>
+                <Line options={options} data={data2} />
               </div>
             </Grid>
             <Grid item xs={6}>
@@ -144,8 +197,8 @@ export default () => {
           PAPs conducted within the defined timeline
         </Typography>
         <Typography variant="h5" component="div">
-          <div style={{ width: '40%' }}>
-            <Line options={options} data={data3} />
+          <div style={{ width: '100%' }}>
+            <Line options={options} data={data} />
           </div>
         </Typography>
       </CardContent>
