@@ -6,6 +6,7 @@ import { login } from "../../../actions/userActions";
 import {useHistory} from "react-router-dom";
 import "../../../styles/global.css";
 import FormInputErrorLabel from "../../../components/FormInputErrorLabel";
+import Swal from "sweetalert2";
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -14,9 +15,17 @@ const LoginForm = () => {
     const { Username, Password } = data;
     dispatch(login(cb, Username, Password));
     function cb(data) {
-      if (data) {
+      if (data && data.res && data.res.result && data.res.result === "Success") {
         localStorage.setItem("token", data.token);
         history.push("/dashboard");
+      }
+      else
+      {
+        Swal.fire(
+          data.res.result,
+          data.res.message,
+          data.res.result === "Success" ? "success" : "error"
+        );
       }
     }
   };

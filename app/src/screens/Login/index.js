@@ -9,7 +9,7 @@ import "./_css/login.css";
 export default () => {
   const history = useHistory();
   if (localStorage.getItem("token")) {
-    history.push("/interfaces");
+    history.push("/dashboard");
   }
   return (
     <div className="contents">

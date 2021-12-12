@@ -1,7 +1,9 @@
 import {
   Button,
+  Checkbox,
   Container,
   FormControl,
+  FormControlLabel,
   FormGroup,
   FormHelperText,
   InputAdornment,
@@ -144,14 +146,15 @@ export default () => {
                 required: { value: true, message: "This field is required" },
               }}
               as={
-                <TextareaAutosize
-                  className="output-margin"
+                <TextField
+                  multiline
                   rows={4}
+                  maxRows={4}
+                  className="output-margin"
                   placeholder="Objective"
                   label="Objective"
                   variant="outlined"
                   size="small"
-                  fullWidth
                   error={errors.objective != null}
                   helperText={errors.objective ? errors.objective.message : ""}
                 />
@@ -165,9 +168,11 @@ export default () => {
                 required: { value: true, message: "This field is required" },
               }}
               as={
-                <TextareaAutosize
+                <TextField
+                  multiline
                   className="output-margin"
-                  rows={3}
+                  rows={4}
+                  maxRows={4}
                   placeholder="Output"
                   label="Output"
                   variant="outlined"
@@ -288,6 +293,11 @@ export default () => {
                           ? errors.accomplishment1.message
                           : ""
                       }
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">%</InputAdornment>
+                        ),
+                      }}
                     />
                   }
                 />
@@ -312,6 +322,11 @@ export default () => {
                           ? errors.accomplishment2.message
                           : ""
                       }
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">%</InputAdornment>
+                        ),
+                      }}
                     />
                   }
                 />
@@ -334,6 +349,25 @@ export default () => {
                       helperText={errors.gaingap ? errors.gaingap.message : ""}
                     />
                   }
+                />
+              </Grid>
+
+              <Grid item xs={4}>
+                <FormControlLabel
+                  control={
+                    <Controller
+                      name="withinTimeframe"
+                      control={control}
+                      render={(props) => (
+                        <Checkbox
+                          {...props}
+                          checked={props.value}
+                          onChange={(e) => props.onChange(e.target.checked)}
+                        />
+                      )}
+                    />
+                  }
+                  label="Conducted within timeframe"
                 />
               </Grid>
             </Grid>
@@ -453,64 +487,68 @@ export default () => {
                           ? errors.utilizationrate.message
                           : ""
                       }
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">%</InputAdornment>
+                        ),
+                      }}
                     />
                   }
                 />
               </Grid>
               <Grid item xs={4}>
-                {/* <FormControl variant="standard"> */}
-                  <InputLabel >
-                    Funding Source
-                  </InputLabel>
-                  <Controller
-                    defaultValue=""
-                    control={control}
-                    name="fundingsource"
-                    defaultValue={0}
-                    rules={{
-                      required: {
-                        value: true,
-                        message: "This field is required",
-                      },
-                    }}
-                    as={
-                      <Select
-                        className="output-margin"
-                        label="Select Funding Source"
-                      >
-                        <MenuItem value="MOOE">MOOE</MenuItem>
-                        <MenuItem value="CO">CO</MenuItem>
-                        <MenuItem value="Downloaded">Downloaded</MenuItem>
-                      </Select>
-                    }
-                  />
+                <InputLabel >
+                  Funding Source
+                </InputLabel>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="fundingsource"
+                  defaultValue={0}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "This field is required",
+                    },
+                  }}
+                  as={
+                    <Select
+                      className="output-margin"
+                      label="Select Funding Source"
+                    >
+                      <MenuItem value="MOOE">MOOE</MenuItem>
+                      <MenuItem value="CO">CO</MenuItem>
+                      <MenuItem value="Downloaded">Downloaded</MenuItem>
+                    </Select>
+                  }
+                />
                 {/* </FormControl> */}
               </Grid>
               <Grid item xs={4}>
                 {/* <FormControl variant="standard"> */}
-                  <InputLabel>Budget Structure</InputLabel>
-                  <Controller
-                    defaultValue=""
-                    control={control}
-                    name="budgetstructure"
-                    defaultValue={0}
-                    rules={{
-                      required: {
-                        value: true,
-                        message: "This field is required",
-                      },
-                    }}
-                    as={
-                      <Select
-                        className="output-margin"
-                        label="Budget Structure"
-                      >
-                        <MenuItem value="GASS">GASS</MenuItem>
-                        <MenuItem value="STO">STO</MenuItem>
-                        <MenuItem value="Operations">Operations</MenuItem>
-                      </Select>
-                    }
-                  />
+                <InputLabel>Budget Structure</InputLabel>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="budgetstructure"
+                  defaultValue={0}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "This field is required",
+                    },
+                  }}
+                  as={
+                    <Select
+                      className="output-margin"
+                      label="Budget Structure"
+                    >
+                      <MenuItem value="GASS">GASS</MenuItem>
+                      <MenuItem value="STO">STO</MenuItem>
+                      <MenuItem value="Operations">Operations</MenuItem>
+                    </Select>
+                  }
+                />
                 {/* </FormControl> */}
               </Grid>
             </Grid>
@@ -577,9 +615,11 @@ export default () => {
               name="opsissue"
               rules={{}}
               as={
-                <TextareaAutosize
+                <TextField
+                  multiline
+                  rows={4}
+                  maxRows={4}
                   className="output-margin"
-                  rows={3}
                   placeholder="Operational Issue"
                   variant="outlined"
                   size="small"

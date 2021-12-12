@@ -20,10 +20,11 @@ const insertMajorOutput = asyncHander(async (req, res) => {
         recommendation, others, correctiveaction, userId
     } = req.body;
     const queryString = `CALL InsertMajorOutput(${kraid}, '${objective}', ${projectid}, '${output}', 
-    ${plannedtarget}, '${timeline}', ${physicalaccomplishment}, ${accomplishment1}, ${accomplishment2}, ${withinTimeframe}
+    ${plannedtarget}, '${timeline}', ${physicalaccomplishment}, ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
         ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
         '${budgetstructure}', ${score}, '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
+        console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -55,7 +56,6 @@ const insertMinorOutput = asyncHander(async (req, res) => {
     } = req.body;
     const queryString = `CALL InsertMinorOutput('${kraid}', '${objective}', '${projectid}', '${output}', '${target}', '${accomplishment}', 
         '${agency}', '${timeline}', ${withinTimeframe},'${opsissue}','${policyissue}', '${recommendation}', '${others}', '${score}', '${scoredescription}', '${correctiveaction}', ${userId})`;
-        console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
