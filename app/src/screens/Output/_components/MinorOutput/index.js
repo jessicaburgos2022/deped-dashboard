@@ -36,14 +36,15 @@ export default () => {
         <div style={{ height: "100vh", overflow: "auto" }}>
             <div className="text">Insert Minor Output</div>
             <Paper style={{ padding: '2rem' }}>
-                <form onSubmit={handleSubmit(onSubmit)} id="insert-major-form">
+                <form onSubmit={handleSubmit(onSubmit)} id="insert-minor-form">
                     <FormGroup>
                     <Divider
                             placeholder="OPCRF"
                             label="OPCRF"
                             variant="fullWidth"
                             orientation="horizontal"
-                        ><span><b>Cross-Cutting KRAs not included in OPCRF</b></span></Divider>
+                    ><span><b>Cross-Cutting KRAs not included in OPCRF</b></span>
+                    </Divider>
                         <FormControl variant="standard">
                             <InputLabel>Select KRA</InputLabel>
                             <Controller
