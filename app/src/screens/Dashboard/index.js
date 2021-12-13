@@ -19,7 +19,7 @@ import { Doughnut, Line, Pie } from 'react-chartjs-2';
 
 import { fetchKRAByDepartmentId, fetchOutputTypes } from "../../actions/appActions";
 
-import { fetchChart1, fetchChart3 } from "../../actions/dashboardActions";
+import { fetchChart1, fetchChart3, fetchChart4 } from "../../actions/dashboardActions";
 
 
 ChartJS.register(
@@ -41,6 +41,7 @@ export default () => {
     dispatch(fetchOutputTypes());
     dispatch(fetchChart1());
     dispatch(fetchChart3());
+    dispatch(fetchChart4());
     // eslint-disable-next-line
   }, []);
   const data1 = {
@@ -113,13 +114,31 @@ export default () => {
     ],
   };
 
+  const BudgetUtilizationRate = {
+    labels: dashboardState.BudgetUtilizationRate.map(r => { return r.DepartmentName }),
+    datasets: [
+      {
+        label: 'Project',
+        data: dashboardState.BudgetUtilizationRate.map(r => { return r.AverateUtilizationRate }),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: 'Within timeline',
+        data: dashboardState.BudgetUtilizationRate.map(r => { return r.PPACount }),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  };
+
   const card = (
     <React.Fragment>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom style={{ textAlign: "center" }}>
           Number of PAPs Monitored and Analyzed
         </Typography>
-        <Typography component="div" style={{ display: "flex", justifyContent: 'center', width:"50%", margin:'auto' }}>
+        <Typography component="div" style={{ display: "flex", justifyContent: 'center', width: "50%", margin: 'auto' }}>
           <Pie data={data1} />
         </Typography>
       </CardContent>
@@ -166,8 +185,8 @@ export default () => {
           Budget Utilization Rate
         </Typography>
         <Typography variant="h5" component="div">
-          <div style={{ width: '40%' }}>
-            <Doughnut data={data1} />
+          <div style={{ width: '100%' }}>
+            <Line options={options} data={BudgetUtilizationRate} />
           </div>
         </Typography>
       </CardContent>

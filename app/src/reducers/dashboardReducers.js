@@ -4,7 +4,10 @@ import {
     GET_MONITOREDPPA_FAILED,
     GET_CONDUCTEDWITHINTIMEFRAME_REQUEST,
     GET_CONDUCTEDWITHINTIMEFRAME_SUCCESS,
-    GET_CONDUCTEDWITHINTIMEFRAME_FAILED
+    GET_CONDUCTEDWITHINTIMEFRAME_FAILED,
+    GET_BudgetUtilizationRate_REQUEST,
+    GET_BudgetUtilizationRate_SUCCESS,
+    GET_BudgetUtilizationRate_FAILED
 }
     from '../constants/dashboardConstants';
 
@@ -54,6 +57,25 @@ export const dashboardReducer = (state = dashboardState, action) => {
                 ...state,
                 loading: false,
                 ConductedWithinTimeframe: []
+            }
+
+        case GET_BudgetUtilizationRate_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                BudgetUtilizationRate: []
+            }
+        case GET_BudgetUtilizationRate_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                BudgetUtilizationRate: payload
+            }
+        case GET_BudgetUtilizationRate_FAILED:
+            return {
+                ...state,
+                loading: false,
+                BudgetUtilizationRate: []
             }
         default:
             return state;
