@@ -15,7 +15,7 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-import { insertMinorOutput } from "../../../../actions/outputActions";
+import {insertContributoryOutput } from "../../../../actions/outputActions";
 import Swal from "sweetalert2";
 import { Divider } from "@mui/material";
 import MuiGrid from "@mui/material/Grid";
@@ -33,14 +33,27 @@ const Grid = styled(MuiGrid)(({ theme }) => ({
 export default () => {
   const appState = useSelector((state) => state.app);
   const userState = useSelector((state) => state.user);
+  const ooState = useSelector((state) => state.ooManagement);
   const dispatch = useDispatch();
-  const OutputTypeId = 2; // ID for MINOR output (refer to ref_outputtype table)
-  const [KRAList, setKRAList] = useState(
-    appState.KRA.filter((kra) => kra.OutputTypeId === OutputTypeId)
-  );
-
+  const OutputTypeId = 3; // ID for Contributory output (refer to ref_outputtype table)
   //react hook form
   const { handleSubmit, errors, control, setValue, register } = useForm();
+  const [indicatorInput, setIndicator] = useState([]);
+  const handleIndicatorInput = (e) => {
+    const input = e.target.value;
+    const id = e.target.id;
+    var cIndicator = indicatorInput;
+    if(cIndicator.find(i=>i.id === id))
+    {
+      var index = cIndicator.findIndex(obj => obj.id === id);
+      cIndicator[index].value = input;
+    }
+    else
+    {
+      cIndicator.push({ id, value: input })
+    }
+    setIndicator(cIndicator);
+  }
   const onSubmit = async (data) => {
     if (data) {
       if (
@@ -50,8 +63,8 @@ export default () => {
         userState.userInfo.acc[0].Id
       ) {
         data.userId = userState.userInfo.acc[0].Id;
-        var ret = await dispatch(insertMinorOutput(data));
-        console.log(ret);
+        data.indicators = indicatorInput;
+        var ret = await dispatch(insertContributoryOutput(data));
         Swal.fire(
           ret.result,
           ret.message,
@@ -62,357 +75,112 @@ export default () => {
   };
   return (
     <div style={{ height: "100vh", overflow: "auto" }}>
-      <div className="text">Insert Contributory Output</div>
+      <div className="text">Insert Contributory Output to OO</div>
       <Paper style={{ padding: "2rem" }}>
         <form onSubmit={handleSubmit(onSubmit)} id="insert-contributory-form">
           <FormGroup>
-            <Controller
-              defaultValue=""
-              control={control}
-              name="program"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  label="Program"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.program != null}
-                  helperText={errors.program ? errors.program.message : ""}
-                />
-              }
-            />
+            <FormControl variant="standard">
+              <InputLabel>Project</InputLabel>
+              <Controller
+                control={control}
+                name="projectid"
+                rules={{
+                  required: { value: true, message: "This field is required" },
+                }}
+                as={
+                  <Select
+                    className="output-margin"
+                    label="Select Project"
+                  >
+                    {
+                      appState.projectsByDept &&
+                      appState.projectsByDept.map((project, id) => {
+                        return <MenuItem key={id} value={project.Id}>{project.Project}</MenuItem>
+                      })
+                    }
+                  </Select>
+                }
+              />
+              <FormHelperText>
+                {errors.projectid ? errors.projectid.message : ""}
+              </FormHelperText>
+            </FormControl>
             {/* <br/><br/> */}
             <Controller
               defaultValue=""
               control={control}
-              name="majorminor"
+              name="outputs"
               rules={{
                 required: { value: true, message: "This field is required" },
               }}
               as={
-                <TextareaAutosize
+                <TextField
+                  multiline
                   rows={4}
+                  maxRows={4}
                   className="output-margin"
-                  label="majorminor"
-                  placeholder="MAJOR AND MINOR OUTPUTS"
+                  label="Major and Minor Outputs"
                   variant="outlined"
                   size="small"
                   fullWidth
-                  error={errors.majorminor != null}
+                  error={errors.outputs != null}
                   helperText={
-                    errors.majorminor ? errors.majorminor.message : ""
-                  }
-                />
-              }
-            />
-            <Divider
-              style={{ padding: "2rem" }}
-              placeholder="Strategic"
-              label="Stragegic"
-              variant="fullWidth"
-              orientation="horizontal"
-            >
-              <span>
-                <b> Strategic Leadership and Management</b>
-              </span>
-            </Divider>
-
-            <Divider style={{ padding: "2rem 0 0 0" }} textAlign="left">
-              <i>RBEB AIP FY 2021 (PPRD)</i>
-            </Divider>
-
-            <Controller
-              defaultValue=""
-              control={control}
-              name="serviceapproved"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-category-margin"
-                  type="number"
-                  label="Number of services with approved PAPs and implementation strategies"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.serviceapproved != null}
-                  helperText={
-                    errors.serviceapproved ? errors.serviceapproved.message : ""
-                  }
-                />
-              }
-            />
-            <Controller
-              defaultValue=""
-              control={control}
-              name="servicedel"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  type="number"
-                  label="Percentage of Service Delivery Rated"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.servicedel != null}
-                  helperText={
-                    errors.servicedel ? errors.servicedel.message : ""
-                  }
-                />
-              }
-            />
-            <Controller
-              defaultValue=""
-              control={control}
-              name="serviceapproved"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  type="number"
-                  label="Percentage of approved services achieving target within the semester"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.serviceapproved != null}
-                  helperText={
-                    errors.serviceapproved ? errors.serviceapproved.message : ""
-                  }
-                />
-              }
-            />
-            <Controller
-              defaultValue=""
-              control={control}
-              name="aveservice"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  type="number"
-                  label="Average cost of service per implementatio"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.aveservice != null}
-                  helperText={
-                    errors.aveservice ? errors.aveservice.message : ""
+                    errors.outputs ? errors.outputs.message : ""
                   }
                 />
               }
             />
 
-            <Divider style={{ padding: "2rem 0 0 0" }} textAlign="left">
-              <i>MATURITY LEVEL III ACCREDITATION (HRDD)</i>
-            </Divider>
-            <Controller
-              defaultValue=""
-              control={control}
-              name="serviceapproved"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-category-margin"
-                  type="number"
-                  label="Number of services with approved PAPs and implementation strategies"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.serviceapproved != null}
-                  helperText={
-                    errors.serviceapproved ? errors.serviceapproved.message : ""
-                  }
-                />
-              }
-            />
-            <Controller
-              defaultValue=""
-              control={control}
-              name="servicedel"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  type="number"
-                  label="Percentage of Service Delivery Rated"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.servicedel != null}
-                  helperText={
-                    errors.servicedel ? errors.servicedel.message : ""
-                  }
-                />
-              }
-            />
-            <Controller
-              defaultValue=""
-              control={control}
-              name="serviceapproved"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  type="number"
-                  label="Percentage of approved services achieving target within the semester"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.serviceapproved != null}
-                  helperText={
-                    errors.serviceapproved ? errors.serviceapproved.message : ""
-                  }
-                />
-              }
-            />
-            <Controller
-              defaultValue=""
-              control={control}
-              name="aveservice"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  type="number"
-                  label="Average cost of service per implementatio"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.aveservice != null}
-                  helperText={
-                    errors.aveservice ? errors.aveservice.message : ""
-                  }
-                />
-              }
-            />
-
-            <Divider style={{ padding: "2rem 0 0 0" }} textAlign="left">
-              <i>PRIME NCR QMS MANUAL PREPARATORY STAGE (ASD)</i>
-            </Divider>
-
-            <Controller
-              defaultValue=""
-              control={control}
-              name="serviceapproved"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-category-margin"
-                  type="number"
-                  label="Number of services with approved PAPs and implementation strategies"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.serviceapproved != null}
-                  helperText={
-                    errors.serviceapproved ? errors.serviceapproved.message : ""
-                  }
-                />
-              }
-            />
-
-            <Controller
-              defaultValue=""
-              control={control}
-              name="servicedel"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  type="number"
-                  label="Percentage of Service Delivery Rated"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.servicedel != null}
-                  helperText={
-                    errors.servicedel ? errors.servicedel.message : ""
-                  }
-                />
-              }
-            />
-            <Controller
-              defaultValue=""
-              control={control}
-              name="serviceapproved"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  className="output-margin"
-                  type="number"
-                  label="Percentage of approved services achieving target within the semester"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.serviceapproved != null}
-                  helperText={
-                    errors.serviceapproved ? errors.serviceapproved.message : ""
-                  }
-                />
-              }
-            />
-            <br />
-            <Controller
-              defaultValue=""
-              control={control}
-              name="aveservice"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  type="number"
-                  label="Average cost of service per implementatio"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.aveservice != null}
-                  helperText={
-                    errors.aveservice ? errors.aveservice.message : ""
-                  }
-                />
-              }
-            />
-            <br />
-
-            <Grid container>
-              <Grid item xs>
-                testing lang muna testing lang muna testing lang muna testing
-                lang muna testing lang muna testing lang muna testing lang muna
-                testing lang muna testing lang muna
-              </Grid>
-              <Divider orientation="vertical" variant="fullWidth"></Divider>
-              <Grid item xs>
-                testing lang muna testing lang muna testing lang muna testing
-                lang muna testing lang muna
-              </Grid>
-            </Grid>
+            {
+              ooState.indicators &&
+              [... new Set(ooState.indicators.map(i => i.OutcomeTypeId))].map(otype => {
+                const outcomeType = ooState.indicators.find(ind => ind.OutcomeTypeId === otype).OutcomeType;
+                return (
+                  <React.Fragment>
+                    <Divider
+                      style={{ padding: "2rem" }}
+                      variant="fullWidth"
+                      orientation="horizontal"
+                    >
+                      <span>
+                        <b> {outcomeType}</b>
+                      </span>
+                    </Divider>
+                    {
+                      [... new Set(ooState.indicators.filter(i => i.OutcomeTypeId === otype).map(ind => ind.OutcomeId))].map(outcomeId => {
+                        const oTitle = ooState.indicators.find(ind => ind.OutcomeId === outcomeId).OutcomeTitle;
+                        return (
+                          <React.Fragment>
+                            <Divider style={{ padding: "1rem 0 0 0" }} textAlign="left">
+                              <i>{oTitle}</i>
+                            </Divider>
+                            {
+                              ooState.indicators.filter(ind => ind.OutcomeId === outcomeId).map(indicator => {
+                                return (
+                                  <TextField
+                                    multiline
+                                    rows={2}
+                                    maxRows={4}
+                                    id={indicator.IndicatorId}
+                                    className="output-category-margin"
+                                    type="number"
+                                    label={indicator.Indicator}
+                                    variant="outlined"
+                                    size="small"
+                                    fullWidth
+                                    onChange={(e) => { handleIndicatorInput(e) }}
+                                  />
+                                )
+                              })
+                            }
+                          </React.Fragment>
+                        )
+                      })
+                    }
+                  </React.Fragment>
+                )
+              })
+            }
           </FormGroup>
 
           <Button

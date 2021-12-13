@@ -24,7 +24,7 @@ const insertMajorOutput = asyncHander(async (req, res) => {
         ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
         '${budgetstructure}', '${score}', '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
-        console.log(queryString)
+    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -80,6 +80,28 @@ const insertMinorOutput = asyncHander(async (req, res) => {
     });
 });
 
+const insertContributoryOutput = asyncHander(async (req, res) => {
+    const { projectid, outputs, indicators, userId } = req.body;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            indicators.map(i => {
+                const queryString = `CALL InsertContributoryOutput(${i.id}, ${projectid}, '${i.value}', '${outputs}')`;
+                connection.query(queryString)
+            })
+            res.json({ result: 'Success', message: 'Contributory Outputs saved!' });
+            res.end();
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
 const searchMajorOutput = asyncHander(async (req, res) => {
     const { } = req.params;
     const queryString = `CALL searchMajorOutput()`;
@@ -107,4 +129,31 @@ const searchMajorOutput = asyncHander(async (req, res) => {
     });
 });
 
-module.exports = { insertMajorOutput, insertMinorOutput, searchMajorOutput };
+
+const ListIndicatorsByDepartmentId = asyncHander(async (req, res) => {
+    const { departmentid } = req.params;
+    const queryString = `CALL ListIndicatorsByDepartmentId(${departmentid})`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                }
+                else {
+                    var qResult = JSON.parse(JSON.stringify(results[0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            })
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+module.exports = { insertMajorOutput, insertMinorOutput, insertContributoryOutput, searchMajorOutput, ListIndicatorsByDepartmentId };

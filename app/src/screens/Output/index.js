@@ -36,9 +36,9 @@ export default () => {
                         onChange={(e) => handleOutputTypeChange(e.target.value)}
                         label="Age"
                     >
-                        <MenuItem value={'major'}>Major</MenuItem>
-                        <MenuItem value={'minor'}>Minor</MenuItem>
-                        <MenuItem value={'oo'}>OO</MenuItem>
+                        <MenuItem value={'major'}>Major Output</MenuItem>
+                        <MenuItem value={'minor'}>Minor Output</MenuItem>
+                        <MenuItem value={'oo'}>Contributory Output to OO</MenuItem>
                     </Select>
                 </FormControl>
                 <RenderOutputView />

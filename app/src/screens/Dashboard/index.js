@@ -17,9 +17,11 @@ import {
 import { Doughnut, Line, Pie } from 'react-chartjs-2';
 
 
-import { fetchKRAByDepartmentId, fetchOutputTypes } from "../../actions/appActions";
+import { fetchKRAByDepartmentId, fetchOutputTypes, fetchProjectByDepartment } from "../../actions/appActions";
 
 import { fetchChart1, fetchChart2, fetchChart3, fetchChart4 } from "../../actions/dashboardActions";
+
+import { fetchIndicatorsByDeptId } from "../../actions/outputActions";
 
 
 ChartJS.register(
@@ -43,6 +45,8 @@ export default () => {
     dispatch(fetchChart2());
     dispatch(fetchChart3());
     dispatch(fetchChart4());
+    dispatch(fetchIndicatorsByDeptId(departmentId));
+    dispatch(fetchProjectByDepartment(departmentId));
     // eslint-disable-next-line
   }, []);
   const data1 = {

@@ -96,4 +96,35 @@ const listProjectByKRAId = asyncHander(async (req, res) => {
   });
   
 });
-module.exports = { listOutputTypeId, listKRAByDepartmentId, listProjectByKRAId };
+
+
+const listProjectsByDepartmentId = asyncHander(async (req, res) => {
+  const { departmentId } = req.params;
+  const queryString = `call ListProjectsByDepartmentId(${departmentId})`;
+  console.log(queryString)
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.json({ result: 'Failed', message: 'Query Failed' });
+      return;
+    }
+    try {
+      connection.query(queryString, (error, results) => {
+        var qResult = JSON.parse(JSON.stringify(results));
+        if (error) {
+          res.json({ result: 'Failed', message: 'Query Failed' });
+        }
+        else {
+          var qResult = JSON.parse(JSON.stringify(results[0]));
+          res.json(qResult);
+          res.end();
+        }
+      });
+    } catch (error) {
+      res.json({ result: 'Failed', message: 'Query Failed' });
+      res.end();
+    }
+    connection.release();
+  });
+  
+});
+module.exports = { listOutputTypeId, listKRAByDepartmentId, listProjectByKRAId, listProjectsByDepartmentId };

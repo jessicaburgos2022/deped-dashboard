@@ -5,6 +5,7 @@ import { appReducer } from './appReducers';
 import { ticketReducer } from './ticketReducers';
 import { dashboardReducer } from './dashboardReducers';
 import { MajorOutputManagementReducer } from './majorOutputReducers';
+import {contributoryOutput} from './contributoryOutputReducers';
 
 const combinedReducer = combineReducers({
   user,
@@ -13,7 +14,8 @@ const combinedReducer = combineReducers({
   tickets: ticketReducer,
   app: appReducer,
   dashboard: dashboardReducer,
-  majorOutputManagement: MajorOutputManagementReducer
+  majorOutputManagement: MajorOutputManagementReducer,
+  ooManagement: contributoryOutput
 });
 
 export default combinedReducer;
