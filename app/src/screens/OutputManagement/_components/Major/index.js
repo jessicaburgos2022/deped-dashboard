@@ -11,7 +11,7 @@ export default () => {
     },[])
     return (
         <div style={{ padding: 25 }}>
-            <div className="text">Major</div>
+            <div className="text">Major Outputs</div>
             <Table SearchResult = {outputManagementState.searchResult} />
         </div>
     )

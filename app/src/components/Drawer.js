@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import "../styles/sidebar-style.css";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import {AccountTreeOutlined} from '@material-ui/icons';
 
 export default function PersistentDrawerLeft() {
   const user = localStorage.getItem("token");
@@ -36,8 +35,7 @@ export default function PersistentDrawerLeft() {
       <div className={`sidebar ${open ? "active" : ""}`}>
         <div className="logo_content">
           <div className="logo">
-            <AccountTreeOutlined />
-            <div className="logo_name">Output Dashboard</div>
+            <div className="logo_name">Satisfaction Rate Dashboard</div>
           </div>
           <i
             className="bx bx-menu pointer"
@@ -47,22 +45,29 @@ export default function PersistentDrawerLeft() {
         </div>
         <ul className="nav_list">
           <li>
-            <a href="/dashboard" className={document.location.pathname==="/dashboard"?'active-link':''}>
+            <a href="/dashboard" className={document.location.pathname === "/dashboard" ? 'active-link' : ''}>
               <i className="bx bx-grid-alt"></i>
-              <span className="links_name">Dashboard</span>
+              <span className="links_name">Dashboard - PPAs</span>
             </a>
-            <span className="tooltip">Dashboard</span>
+            <span className="tooltip">Dashboard - PPAs</span>
           </li>
           <li>
-            <a href="/output"  className={document.location.pathname==="/output"?'active-link':''}>
-              <i className="bx bx-network-chart"></i>
+            <a href="/dashboardoo" className={document.location.pathname === "/dashboardoo" ? 'active-link' : ''}>
+              <i className="bx bx-detail"></i>
+              <span className="links_name">Dashboard - OO</span>
+            </a>
+            <span className="tooltip">Dashboard - OO</span>
+          </li>
+          <li>
+            <a href="/output" className={document.location.pathname === "/output" ? 'active-link' : ''}>
+              <i className="bx bx-plus-circle"></i>
               <span className="links_name">Insert Output</span>
             </a>
             <span className="tooltip">Insert Output</span>
           </li>
           <li>
-            <a href="/outputmanagement"  className={document.location.pathname==="/outputmanagement"?'active-link':''}>
-              <i className="bx bx-expand-alt"></i>
+            <a href="/outputmanagement" className={document.location.pathname === "/outputmanagement" ? 'active-link' : ''}>
+              <i className="bx bx-columns"></i>
               <span className="links_name">Output Management</span>
             </a>
             <span className="tooltip">Output Management</span>

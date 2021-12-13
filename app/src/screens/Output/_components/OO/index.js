@@ -74,7 +74,7 @@ export default () => {
     }
   };
   return (
-    <div style={{ height: "100vh", overflow: "auto" }}>
+    <div style={{ height: "100vh"}}>
       <div className="text">Insert Contributory Output to OO</div>
       <Paper style={{ padding: "2rem" }}>
         <form onSubmit={handleSubmit(onSubmit)} id="insert-contributory-form">

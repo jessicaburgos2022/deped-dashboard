@@ -89,7 +89,7 @@ const insertContributoryOutput = asyncHander(async (req, res) => {
         }
         try {
             indicators.map(i => {
-                const queryString = `CALL InsertContributoryOutput(${i.id}, ${projectid}, '${i.value}', '${outputs}')`;
+                const queryString = `CALL InsertContributoryOutput(${i.id}, ${projectid}, '${i.value}', '${outputs}', ${userId})`;
                 connection.query(queryString)
             })
             res.json({ result: 'Success', message: 'Contributory Outputs saved!' });

@@ -10,7 +10,10 @@ import {
   GET_BudgetUtilizationRate_FAILED,
   GET_SATISFACTORYRESULT_REQUEST,
   GET_SATISFACTORYRESULT_SUCCESS,
-  GET_SATISFACTORYRESULT_FAILED
+  GET_SATISFACTORYRESULT_FAILED,
+  GET_DASHBOARDOO_INFO_REQUEST,
+  GET_DASHBOARDOO_INFO_SUCCESS,
+  GET_DASHBOARDOO_INFO_FAILED
 }
   from '../constants/dashboardConstants';
 
@@ -76,6 +79,22 @@ export const fetchChart4 = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_BudgetUtilizationRate_FAILED,
+      payload: ""
+    });
+  }
+};
+
+export const fetchDashboardOO = () => async (dispatch) => {
+  await dispatch({ type: GET_DASHBOARDOO_INFO_REQUEST });
+  try {
+    const { data } = await axios.get(`/api/dashboard/oo`);
+    dispatch({
+      type: GET_DASHBOARDOO_INFO_SUCCESS,
+      payload: data,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_DASHBOARDOO_INFO_FAILED,
       payload: ""
     });
   }

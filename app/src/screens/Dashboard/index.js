@@ -197,19 +197,19 @@ export default () => {
     </React.Fragment>
   );
   return (
-    <div style={{ padding: 25 }}>
+    <div style={{ overflow: 'auto', padding: 25, height: "100vh" }}>
       <div className="text">Physical and Financial Targets Dashboard</div>
       <Grid container spacing={2}>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Card variant="outlined">{card}</Card>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Card variant="outlined">{card2}</Card>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Card variant="outlined">{card3}</Card>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Card variant="outlined">{card4}</Card>
         </Grid>
       </Grid>

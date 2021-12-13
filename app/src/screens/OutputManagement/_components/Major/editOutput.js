@@ -21,7 +21,7 @@ export default (props) => {
                 fullWidth
             >
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    View Output
+                    Edit Output
                 </DialogTitle>
                 <DialogContent dividers>
                     <b>KRA:</b> {data.Department} <br />

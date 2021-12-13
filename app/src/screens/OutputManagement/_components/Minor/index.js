@@ -9,7 +9,7 @@ export default () => {
     },[])
     return (
         <div style={{ padding: 25 }}>
-            <div className="text">Minor</div>
+            <div className="text">Minor Outputs</div>
         </div>
     )
 }
