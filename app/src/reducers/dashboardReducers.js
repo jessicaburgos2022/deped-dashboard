@@ -15,7 +15,8 @@ import {
 const dashboardState = {
     loading: false,
     MonitoredPPA: [],
-    ConductedWithinTimeframe: []
+    ConductedWithinTimeframe: [],
+    BudgetUtilizationRate: []
 };
 
 export const dashboardReducer = (state = dashboardState, action) => {
