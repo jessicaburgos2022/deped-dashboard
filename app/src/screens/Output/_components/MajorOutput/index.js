@@ -322,6 +322,52 @@ export default () => {
               </Grid>
               <Grid item xs={4}>
                 <Controller
+                  defaultValue=""
+                  control={control}
+                  name="targettype"
+                  rules={{}}
+                  as={
+                    <TextField
+                      className="output-margin"
+                      label="Target Type"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.targettype != null}
+                      helperText={
+                        errors.targettype
+                          ? errors.targettype.message
+                          : ""
+                      }
+                    />
+                  }
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="targetdescription"
+                  rules={{}}
+                  as={
+                    <TextField
+                      className="output-margin"
+                      label="Target Description"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.targetdescription != null}
+                      helperText={
+                        errors.targetdescription
+                          ? errors.targetdescription.message
+                          : ""
+                      }
+                    />
+                  }
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
                   type="number"
                   defaultValue=""
                   control={control}
@@ -338,6 +384,29 @@ export default () => {
                       helperText={
                         errors.physicalaccomplishment
                           ? errors.physicalaccomplishment.message
+                          : ""
+                      }
+                    />
+                  }
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="accomplishmentdescription"
+                  rules={{}}
+                  as={
+                    <TextField
+                      className="output-margin"
+                      label="Physical Accomplishment Description"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.accomplishmentdescription != null}
+                      helperText={
+                        errors.accomplishmentdescription
+                          ? errors.accomplishmentdescription.message
                           : ""
                       }
                     />

@@ -5,10 +5,16 @@ import ViewOutput from './viewoutput';
 export default (data) => {
     const { SearchResult } = data;
     const [isViewOpen, setIsViewOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState({});
+
+    const handleViewOpen = (data) => {
+        setSelectedRow(data);
+        setIsViewOpen(true)
+    }
     return (
         <TableContainer component={Paper}>
             {
-                isViewOpen && <ViewOutput open={isViewOpen} handleClose={() => setIsViewOpen(false)} />
+                isViewOpen && <ViewOutput data={selectedRow} open={isViewOpen} handleClose={() => setIsViewOpen(false)} />
             }
             <Table aria-label="collapsible table">
                 <TableHead>
@@ -40,7 +46,7 @@ export default (data) => {
                                         {r.Output}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
-                                        <Button onClick={() => setIsViewOpen(true)}>View</Button>
+                                        <Button onClick={() => handleViewOpen(r)}>View</Button>
                                     </TableCell>
                                 </TableRow>
                             )

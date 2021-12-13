@@ -2,7 +2,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mate
 import React from 'react';
 export default (props) => {
 
-    const { open, handleClose } = props;
+    const { open, handleClose, data } = props;
+    console.log(data)
     return (
         <React.Fragment>
             <Dialog
@@ -16,12 +17,12 @@ export default (props) => {
                     View Output
                 </DialogTitle>
                 <DialogContent dividers>
-
+                    Objective: {data.Objective}
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus color="primary" type="submit">
+                    {/* <Button autoFocus color="primary" onClick={() => handleClose}>
                         Close
-                    </Button>
+                    </Button> */}
                 </DialogActions>
             </Dialog>
         </React.Fragment>
