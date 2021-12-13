@@ -19,7 +19,7 @@ import { Doughnut, Line, Pie } from 'react-chartjs-2';
 
 import { fetchKRAByDepartmentId, fetchOutputTypes } from "../../actions/appActions";
 
-import { fetchChart1, fetchChart3, fetchChart4 } from "../../actions/dashboardActions";
+import { fetchChart1, fetchChart2, fetchChart3, fetchChart4 } from "../../actions/dashboardActions";
 
 
 ChartJS.register(
@@ -40,6 +40,7 @@ export default () => {
     dispatch(fetchKRAByDepartmentId(departmentId));
     dispatch(fetchOutputTypes());
     dispatch(fetchChart1());
+    dispatch(fetchChart2());
     dispatch(fetchChart3());
     dispatch(fetchChart4());
     // eslint-disable-next-line
@@ -88,14 +89,8 @@ export default () => {
     labels: dashboardState.ConductedWithinTimeframe.map(r => { return r.DepartmentName }),
     datasets: [
       {
-        label: 'Project',
-        data: dashboardState.ConductedWithinTimeframe.map(r => { return r.TotalPPA }),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-      {
-        label: 'Within timeline',
-        data: dashboardState.ConductedWithinTimeframe.map(r => { return r.WithinTimeframe }),
+        label: 'Rate',
+        data: dashboardState.ConductedWithinTimeframe.map(r => { return r.AverageAccomplishmentRate }),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
@@ -126,6 +121,23 @@ export default () => {
     ],
   };
 
+  const SatisfactoryResult = {
+    labels: dashboardState.SatisfactoryResult.map(r => { return r.DepartmentName }),
+    datasets: [
+      {
+        label: 'Satisfactory Rate (%) - Physical',
+        data: dashboardState.SatisfactoryResult.map(r => { return r.AverageAccomplishmentRatePhysical ? r.AverageAccomplishmentRatePhysical : 0 }),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: 'Satisfactory Rate (%) - Financial',
+        data: dashboardState.SatisfactoryResult.map(r => { return r.AverageAccomplishmentRateFinancial ? r.AverageAccomplishmentRateFinancial : 0 }),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
   const card = (
     <React.Fragment>
       <CardContent>
@@ -145,15 +157,9 @@ export default () => {
           Satisfactory accountability result on Physical and Financial Target
         </Typography>
         <Typography variant="h5" component="div">
-          <Grid container spacing={2} style={{ padding: 20 }}>
-            <Grid item xs={6}>
-              <div style={{ width: '100%' }}>
-                <Line options={options} data={data2} />
-              </div>
-            </Grid>
-            <Grid item xs={6}>
-            </Grid>
-          </Grid>
+          <div style={{ width: '100%' }}>
+            <Line options={options} data={SatisfactoryResult} />
+          </div>
         </Typography>
       </CardContent>
     </React.Fragment>

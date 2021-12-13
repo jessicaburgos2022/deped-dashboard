@@ -7,7 +7,10 @@ import {
     GET_CONDUCTEDWITHINTIMEFRAME_FAILED,
     GET_BudgetUtilizationRate_REQUEST,
     GET_BudgetUtilizationRate_SUCCESS,
-    GET_BudgetUtilizationRate_FAILED
+    GET_BudgetUtilizationRate_FAILED,
+    GET_SATISFACTORYRESULT_REQUEST,
+    GET_SATISFACTORYRESULT_SUCCESS,
+    GET_SATISFACTORYRESULT_FAILED
 }
     from '../constants/dashboardConstants';
 
@@ -16,7 +19,8 @@ const dashboardState = {
     loading: false,
     MonitoredPPA: [],
     ConductedWithinTimeframe: [],
-    BudgetUtilizationRate: []
+    BudgetUtilizationRate: [],
+    SatisfactoryResult: []
 };
 
 export const dashboardReducer = (state = dashboardState, action) => {
@@ -77,6 +81,25 @@ export const dashboardReducer = (state = dashboardState, action) => {
                 ...state,
                 loading: false,
                 BudgetUtilizationRate: []
+            }
+
+        case GET_SATISFACTORYRESULT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                SatisfactoryResult: []
+            }
+        case GET_SATISFACTORYRESULT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                SatisfactoryResult: payload
+            }
+        case GET_SATISFACTORYRESULT_FAILED:
+            return {
+                ...state,
+                loading: false,
+                SatisfactoryResult: []
             }
         default:
             return state;

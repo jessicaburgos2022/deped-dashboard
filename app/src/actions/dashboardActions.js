@@ -7,7 +7,10 @@ import {
   GET_CONDUCTEDWITHINTIMEFRAME_FAILED,
   GET_BudgetUtilizationRate_REQUEST,
   GET_BudgetUtilizationRate_SUCCESS,
-  GET_BudgetUtilizationRate_FAILED
+  GET_BudgetUtilizationRate_FAILED,
+  GET_SATISFACTORYRESULT_REQUEST,
+  GET_SATISFACTORYRESULT_SUCCESS,
+  GET_SATISFACTORYRESULT_FAILED
 }
   from '../constants/dashboardConstants';
 
@@ -30,6 +33,21 @@ export const fetchChart1 = () => async (dispatch) => {
   }
 };
 
+export const fetchChart2 = () => async (dispatch) => {
+  await dispatch({ type: GET_SATISFACTORYRESULT_REQUEST });
+  try {
+    const { data } = await axios.get(`/api/dashboard/chart2`);
+    dispatch({
+      type: GET_SATISFACTORYRESULT_SUCCESS,
+      payload: data,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_SATISFACTORYRESULT_FAILED,
+      payload: ""
+    });
+  }
+};
 
 export const fetchChart3 = () => async (dispatch) => {
   await dispatch({ type: GET_CONDUCTEDWITHINTIMEFRAME_REQUEST });

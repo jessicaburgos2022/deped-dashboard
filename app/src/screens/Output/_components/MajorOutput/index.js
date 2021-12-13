@@ -45,7 +45,39 @@ export default () => {
 
   //react hook form
   const { handleSubmit, errors, control, setValue, getValues, register } = useForm();
-
+  function PhysicalTargetWatch({ control }) {
+    const target = useWatch({
+      control,
+      name: ['plannedtarget', 'physicalaccomplishment'],
+      defaultValue: "0"
+    });
+    return (
+      <Grid item xs={4}>
+        <TextField
+          defaultValue={0}
+          disabled={true}
+          type="number"
+          className="output-margin"
+          label="% of Accomplishment vs Targets"
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={(Number(parseFloat(target['physicalaccomplishment']) / parseFloat(target['plannedtarget'])) * 100).toFixed(2)}
+          error={errors.accomplishment1 != null}
+          helperText={
+            errors.accomplishment1
+              ? errors.accomplishment1.message
+              : ""
+          }
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">%</InputAdornment>
+            ),
+          }}
+        />
+      </Grid>
+    )
+  }
   function UtilizationWatch({ control }) {
     const utilization = useWatch({
       control,
@@ -64,7 +96,7 @@ export default () => {
             variant="outlined"
             size="small"
             fullWidth
-            value={parseFloat(utilization['financialrequirement']) - parseFloat(utilization['amountutilized'])}
+            value={Number(parseFloat(utilization['financialrequirement']) - parseFloat(utilization['amountutilized'])).toFixed(2)}
             error={errors.balance != null}
             helperText={errors.balance ? errors.balance.message : ""}
             InputProps={{
@@ -84,7 +116,7 @@ export default () => {
             variant="outlined"
             size="small"
             fullWidth
-            value={(parseFloat(utilization['amountutilized']) / parseFloat(utilization['financialrequirement'])) * 100}
+            value={Number((parseFloat(utilization['amountutilized']) / parseFloat(utilization['financialrequirement'])) * 100).toFixed(2)}
             error={errors.utilizationrate != null}
             helperText={
               errors.utilizationrate
@@ -115,6 +147,7 @@ export default () => {
         data.kraid = selectedKRA;
         data.balance = parseFloat(data.financialrequirement) - parseFloat(data.amountutilized);
         data.utilizationrate = (parseFloat(data['amountutilized']) / parseFloat(data['financialrequirement'])) * 100
+        data.accomplishment1 = (parseFloat(data['physicalaccomplishment']) / parseFloat(data['plannedtarget'])) * 100
         console.log(data);
         var ret = await dispatch(insertMajorOutput(data));
         Swal.fire(
@@ -289,27 +322,6 @@ export default () => {
               </Grid>
               <Grid item xs={4}>
                 <Controller
-                  defaultValue=""
-                  control={control}
-                  name="timeline"
-                  rules={{}}
-                  as={
-                    <TextField
-                      className="output-margin"
-                      label="Timeline"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      error={errors.timeline != null}
-                      helperText={
-                        errors.timeline ? errors.timeline.message : ""
-                      }
-                    />
-                  }
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Controller
                   type="number"
                   defaultValue=""
                   control={control}
@@ -332,31 +344,24 @@ export default () => {
                   }
                 />
               </Grid>
+              <PhysicalTargetWatch control={control} />
               <Grid item xs={4}>
                 <Controller
-                  type="number"
                   defaultValue=""
                   control={control}
-                  name="accomplishment1"
+                  name="timeline"
                   rules={{}}
                   as={
                     <TextField
                       className="output-margin"
-                      label="% of Accomplishment vs Targets"
+                      label="Timeline"
                       variant="outlined"
                       size="small"
                       fullWidth
-                      error={errors.accomplishment1 != null}
+                      error={errors.timeline != null}
                       helperText={
-                        errors.accomplishment1
-                          ? errors.accomplishment1.message
-                          : ""
+                        errors.timeline ? errors.timeline.message : ""
                       }
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">%</InputAdornment>
-                        ),
-                      }}
                     />
                   }
                 />
@@ -411,7 +416,7 @@ export default () => {
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={4} hidden>
                 <FormControlLabel
                   control={
                     <Controller
