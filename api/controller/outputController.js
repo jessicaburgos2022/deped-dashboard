@@ -22,7 +22,7 @@ const insertMajorOutput = asyncHander(async (req, res) => {
     const queryString = `CALL InsertMajorOutput(${kraid},  ${projectid}, '${objective}', '${output}', 
     ${plannedtarget}, '${timeline}', ${physicalaccomplishment}, ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
         ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
-        '${budgetstructure}', ${score}, '${scoredescription}','${opsissue}', '${policyissue}',
+        '${budgetstructure}', '${score}', '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
         console.log(queryString)
     pool.getConnection((err, connection) => {
