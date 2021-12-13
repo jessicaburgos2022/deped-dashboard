@@ -97,7 +97,7 @@ export default function PersistentDrawerLeft() {
                           {userState.userInfo.acc[0].FirstName[0].toUpperCase()}{userState.userInfo.acc[0].Surname}
                         </div>
                         <div className="job">
-                          {userState.userInfo.role[0].RoleDescription}
+                          [{userState.userInfo.acc[0].DepartmentName}] {userState.userInfo.role[0].RoleDescription}
                         </div>
                       </div>
                     )}

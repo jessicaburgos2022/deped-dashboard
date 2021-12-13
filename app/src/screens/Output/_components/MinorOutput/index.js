@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Container,
   FormControl,
   FormControlLabel,
@@ -32,13 +33,11 @@ export default () => {
     appState.KRA.filter((kra) => kra.OutputTypeId === OutputTypeId)
   );
   const [selectedKRA, setSelectedKRA] = useState(null);
-  const [ProjectsByKRA, setProjectsByKRA] = useState([]);
 
   const handleKRAChange = (event) => {
     setValue("kraid", event.target.value);
     setSelectedKRA(event.target.value);
     dispatch(fetchProjectByKRAId(event.target.value));
-    setProjectsByKRA(appState.projectsByKRA);
   };
 
   //react hook form
@@ -100,14 +99,21 @@ export default () => {
                 rules={{
                   required: { value: true, message: "This field is required" },
                 }}
+                endAdornment={
+                  appState.projectsByKRALoading &&
+                  <InputAdornment position="end" style={{marginRight: '3rem'}}>
+                    <CircularProgress size={20} />
+                  </InputAdornment>
+                }
                 as={
                   <Select
                     className="output-margin"
                     label="Select Project"
+                    disabled={appState.projectsByKRALoading}
                   >
                     {
-                      ProjectsByKRA &&
-                      ProjectsByKRA.map((project, id) => {
+                      appState.projectsByKRA &&
+                      appState.projectsByKRA.map((project, id) => {
                         return <MenuItem key={id} value={project.Id}>{project.Project}</MenuItem>
                       })
                     }
@@ -281,6 +287,7 @@ export default () => {
                 <Controller
                   name="withinTimeframe"
                   control={control}
+                  defaultValue={true}
                   render={(props) => (
                     <Checkbox
                       {...props}

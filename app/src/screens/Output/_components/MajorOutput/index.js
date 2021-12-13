@@ -1,6 +1,7 @@
 import {
   Button,
   Checkbox,
+  CircularProgress,
   Container,
   FormControl,
   FormControlLabel,
@@ -16,7 +17,7 @@ import {
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { insertMajorOutput } from "../../../../actions/outputActions";
 import Swal from "sweetalert2";
 import { Divider } from "@mui/material";
@@ -35,17 +36,73 @@ export default () => {
     appState.KRA.filter((kra) => kra.OutputTypeId === OutputTypeId)
   );
   const [selectedKRA, setSelectedKRA] = useState(null);
-  const [ProjectsByKRA, setProjectsByKRA] = useState([]);
 
-  const handleKRAChange = (event) => {
+  const handleKRAChange = async (event) => {
     setValue("kraid", event.target.value);
     setSelectedKRA(event.target.value);
     dispatch(fetchProjectByKRAId(event.target.value));
-    setProjectsByKRA(appState.projectsByKRA);
   };
 
   //react hook form
-  const { handleSubmit, errors, control, setValue, register } = useForm();
+  const { handleSubmit, errors, control, setValue, getValues, register } = useForm();
+
+  function UtilizationWatch({ control }) {
+    const utilization = useWatch({
+      control,
+      name: ['financialrequirement', 'amountutilized'],
+      defaultValue: "0"
+    });
+    return (
+      <React.Fragment>
+        <Grid item xs={6}>
+          <TextField
+            defaultValue={0}
+            disabled={true}
+            className="output-margin"
+            type="number"
+            label="Balance"
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={parseFloat(utilization['financialrequirement']) - parseFloat(utilization['amountutilized'])}
+            error={errors.balance != null}
+            helperText={errors.balance ? errors.balance.message : ""}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">₱</InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            defaultValue={0}
+            disabled={true}
+            className="output-margin"
+            type="number"
+            label="Budget Utilization Rate (%)"
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={(parseFloat(utilization['amountutilized']) / parseFloat(utilization['financialrequirement'])) * 100}
+            error={errors.utilizationrate != null}
+            helperText={
+              errors.utilizationrate
+                ? errors.utilizationrate.message
+                : ""
+            }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">%</InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+      </React.Fragment>
+    )
+  }
+
+
   const onSubmit = async (data) => {
     if (data) {
       if (
@@ -56,6 +113,8 @@ export default () => {
       ) {
         data.userId = userState.userInfo.acc[0].Id;
         data.kraid = selectedKRA;
+        data.balance = parseFloat(data.financialrequirement) - parseFloat(data.amountutilized);
+        data.utilizationrate = (parseFloat(data['amountutilized']) / parseFloat(data['financialrequirement'])) * 100
         console.log(data);
         var ret = await dispatch(insertMajorOutput(data));
         Swal.fire(
@@ -84,12 +143,6 @@ export default () => {
                 <b>OPCRF</b>
               </span>
             </Divider>
-            {/* <Grid container spacing={2}>
-                            <Grid>
-                                
-                            </Grid>
-
-                        </Grid> */}
             <FormControl variant="standard">
               <InputLabel>KRA</InputLabel>
               <Select
@@ -120,10 +173,16 @@ export default () => {
                 rules={{
                   required: { value: true, message: "This field is required" },
                 }}
+                endAdornment={
+                  appState.projectsByKRALoading &&
+                  <InputAdornment position="end" style={{ marginRight: '3rem' }}>
+                    <CircularProgress size={20} />
+                  </InputAdornment>
+                }
                 as={
-                  <Select className="output-margin" label="Select Project">
-                    {ProjectsByKRA &&
-                      ProjectsByKRA.map((project, id) => {
+                  <Select className="output-margin" label="Select Project" disabled={appState.projectsByKRALoading}>
+                    {appState.projectsByKRA &&
+                      appState.projectsByKRA.map((project, id) => {
                         return (
                           <MenuItem key={id} value={project.Id}>
                             {project.Project}
@@ -357,6 +416,7 @@ export default () => {
                   control={
                     <Controller
                       name="withinTimeframe"
+                      defaultValue={true}
                       control={control}
                       render={(props) => (
                         <Checkbox
@@ -442,60 +502,9 @@ export default () => {
                   }
                 />
               </Grid>
-              <Grid item xs={6}>
-                <Controller
-                  defaultValue=""
-                  control={control}
-                  name="balance"
-                  rules={{}}
-                  as={
-                    <TextField
-                      className="output-margin"
-                      type="number"
-                      label="Balance"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      error={errors.balance != null}
-                      helperText={errors.balance ? errors.balance.message : ""}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">₱</InputAdornment>
-                        ),
-                      }}
-                    />
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Controller
-                  defaultValue=""
-                  control={control}
-                  name="utilizationrate"
-                  rules={{}}
-                  as={
-                    <TextField
-                      className="output-margin"
-                      type="number"
-                      label="Budget Utilization Rate (%)"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      error={errors.utilizationrate != null}
-                      helperText={
-                        errors.utilizationrate
-                          ? errors.utilizationrate.message
-                          : ""
-                      }
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">%</InputAdornment>
-                        ),
-                      }}
-                    />
-                  }
-                />
-              </Grid>
+
+              <UtilizationWatch control={control} />
+
               <Grid item xs={4}>
                 <InputLabel >
                   Funding Source

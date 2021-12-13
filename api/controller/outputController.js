@@ -19,7 +19,7 @@ const insertMajorOutput = asyncHander(async (req, res) => {
         gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingsource, budgetstructure, score, scoredescription, opsissue, policyissue,
         recommendation, others, correctiveaction, userId
     } = req.body;
-    const queryString = `CALL InsertMajorOutput(${kraid}, '${objective}', ${projectid}, '${output}', 
+    const queryString = `CALL InsertMajorOutput(${kraid},  ${projectid}, '${objective}', '${output}', 
     ${plannedtarget}, '${timeline}', ${physicalaccomplishment}, ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
         ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
         '${budgetstructure}', ${score}, '${scoredescription}','${opsissue}', '${policyissue}',

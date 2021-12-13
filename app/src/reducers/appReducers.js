@@ -13,7 +13,8 @@ import {
 const appState = {
   OutputTypes: [],
   KRA: [],
-  projectsByKRA: []
+  projectsByKRA: [],
+  projectsByKRALoading: false
 };
 
 export const appReducer = (state = appState, action) => {
@@ -54,17 +55,20 @@ export const appReducer = (state = appState, action) => {
     case GET_PROJECTBYKRA_REQUEST:
       return {
         ...state,
-        projectsByKRA: []
+        projectsByKRA: [],
+        projectsByKRALoading: true
       }
     case GET_PROJECTBYKRA_SUCCESS:
       return {
         ...state,
-        projectsByKRA: payload
+        projectsByKRA: payload,
+        projectsByKRALoading: false
       }
     case GET_PROJECTBYKRA_FAILED:
       return {
         ...state,
-        projectsByKRA: []
+        projectsByKRA: [],
+        projectsByKRALoading: false
       }
     default:
       return state;
