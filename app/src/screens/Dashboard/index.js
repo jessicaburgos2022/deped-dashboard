@@ -118,17 +118,11 @@ export default () => {
     labels: dashboardState.BudgetUtilizationRate.map(r => { return r.DepartmentName }),
     datasets: [
       {
-        label: 'Project',
-        data: dashboardState.BudgetUtilizationRate.map(r => { return r.AverateUtilizationRate }),
+        label: 'Averate Utilization Rate (%)',
+        data: dashboardState.BudgetUtilizationRate.map(r => { return r.AverageUtilizationRate ? r.AverageUtilizationRate : 0 }),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-      {
-        label: 'Within timeline',
-        data: dashboardState.BudgetUtilizationRate.map(r => { return r.PPACount }),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
+      }
     ],
   };
 
