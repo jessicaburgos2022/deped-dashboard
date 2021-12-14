@@ -51,11 +51,12 @@ const insertMajorOutput = asyncHander(async (req, res) => {
 });
 
 const insertMinorOutput = asyncHander(async (req, res) => {
-    const { kraid, objective, projectid, output, target, accomplishment, agency, timeline, withinTimeframe, opsissue,
+    const { kraid, objective, projectid, output, target, accomplishment, targetcompletion, agency, timeline, withinTimeframe, opsissue,
         policyissue, recommendation, others, score, scoredescription, correctiveaction, userId
     } = req.body;
-    const queryString = `CALL InsertMinorOutput('${kraid}', '${objective}', '${projectid}', '${output}', '${target}', '${accomplishment}', 
+    const queryString = `CALL InsertMinorOutput('${kraid}', '${objective}', '${projectid}', '${output}', '${target}', '${accomplishment}', ${targetcompletion},
         '${agency}', '${timeline}', ${withinTimeframe},'${opsissue}','${policyissue}', '${recommendation}', '${others}', '${score}', '${scoredescription}', '${correctiveaction}', ${userId})`;
+        console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });

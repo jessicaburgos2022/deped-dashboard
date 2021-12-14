@@ -58,7 +58,7 @@ export default () => {
     }
   };
   return (
-    <div style={{ height: "100vh", overflow: "auto" }}>
+    <div className='"' style={{ height: "100vh" }}>
       <div className="text">Insert Minor Output</div>
       <Paper style={{ padding: '2rem' }}>
         <form onSubmit={handleSubmit(onSubmit)} id="insert-minor-form">
@@ -101,7 +101,7 @@ export default () => {
                 }}
                 endAdornment={
                   appState.projectsByKRALoading &&
-                  <InputAdornment position="end" style={{marginRight: '3rem'}}>
+                  <InputAdornment position="end" style={{ marginRight: '3rem' }}>
                     <CircularProgress size={20} />
                   </InputAdornment>
                 }
@@ -126,183 +126,205 @@ export default () => {
             </FormControl>
 
             <Grid container spacing={3}>
-                <Grid item xs={4}>
+              <Grid item xs={4}>
                 <Controller
-              defaultValue=""
-              control={control}
-              name="objective"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                type="text"
-                  className="output-margin"
-                  rows={4}
-                  maxrows={4}
-                  multiline
-                  placeholder="Objective"
-                  label="Objective"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.objective != null}
-                  helperText={errors.objective ? errors.objective.message : ""}
-                />
-              }
-            />
-                </Grid>
-                <Grid item xs={4}>
-                <Controller
-              defaultValue=""
-              control={control}
-              name="output"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                type="text"
-                  className="output-margin"
-                  rows={4}
-                  maxrows={4}
-                  multiline
-                rows={4}
-                maxrows={4}
-                multiline
-                  placeholder="Ouput"
-                  label="Output"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.output != null}
-                  helperText={errors.output ? errors.output.message : ""}
-                />
-              }
-            />
-       
-                </Grid>
-                <Grid item xs={4}>
-                <Controller
-              defaultValue=""
-              control={control}
-              name="target"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                type="text"
-                className="output-margin"
-                rows={4}
-                maxrows={4}
-                multiline
-                  label="Target"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.target != null}
-                  helperText={errors.target ? errors.target.message : ""}
-                />
-              }
-            />        
-                </Grid>
-                <Grid item xs={4}>
-                <Controller
-              defaultValue=""
-              control={control}
-              name="accomplishment"
-              rules={{}}
-              as={
-                <TextField
-                type="text"
-                className="output-margin"
-                rows={4}
-                maxrows={4}
-                multiline
-                  label="Accomplishment"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.accomplishment != null}
-                  helperText={
-                    errors.accomplishment ? errors.accomplishment.message : ""
-                  }
-                />
-              }
-            />
-                </Grid>
-                <Grid item xs={4}>
-                <Controller
-              defaultValue=""
-              control={control}
-              name="agency"
-              rules={{}}
-              as={
-                <TextField
-                type="text"
-                className="output-margin"
-                rows={4}
-                maxrows={4}
-                multiline
-                  label="Agency In-Charge"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.timeline != null}
-                  helperText={
-                    errors.agencyincharge ? errors.agencyincharge.message : ""
-                  }
-                />
-              }
-            />
-                </Grid>
-                <Grid item xs={4}>
-                <Controller
-              defaultValue=""
-              control={control}
-              name="timeline"
-              rules={{}}
-              as={
-                <TextField
-                type="text"
-                className="output-margin"
-                rows={4}
-                maxrows={4}
-                multiline
-                  label="Timeline"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.timeline != null}
-                  helperText={errors.timeline ? errors.timeline.message : ""}
-                />
-              }
-            />
-
-                </Grid>
-                <Grid item xs={4}>
-                <FormControlLabel
-              control={
-                <Controller
-                  name="withinTimeframe"
+                  defaultValue=""
                   control={control}
-                  defaultValue={true}
-                  render={(props) => (
-                    <Checkbox
-                      {...props}
-                      checked={props.value}
-                      onChange={(e) => props.onChange(e.target.checked)}
+                  name="objective"
+                  rules={{
+                    required: { value: true, message: "This field is required" },
+                  }}
+                  as={
+                    <TextField
+                      type="text"
+                      className="output-margin"
+                      rows={4}
+                      maxrows={4}
+                      multiline
+                      placeholder="Objective"
+                      label="Objective"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.objective != null}
+                      helperText={errors.objective ? errors.objective.message : ""}
                     />
-                  )}
+                  }
                 />
-              }
-              label="Conducted within timeframe"
-            />                
-                </Grid>
-                </Grid>
-            
-            
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="output"
+                  rules={{
+                    required: { value: true, message: "This field is required" },
+                  }}
+                  as={
+                    <TextField
+                      type="text"
+                      className="output-margin"
+                      rows={4}
+                      maxrows={4}
+                      multiline
+                      rows={4}
+                      maxrows={4}
+                      multiline
+                      placeholder="Ouput"
+                      label="Output"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.output != null}
+                      helperText={errors.output ? errors.output.message : ""}
+                    />
+                  }
+                />
+
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="target"
+                  rules={{
+                    required: { value: true, message: "This field is required" },
+                  }}
+                  as={
+                    <TextField
+                      type="text"
+                      className="output-margin"
+                      rows={4}
+                      maxrows={4}
+                      multiline
+                      label="Target"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.target != null}
+                      helperText={errors.target ? errors.target.message : ""}
+                    />
+                  }
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="timeline"
+                  rules={{}}
+                  as={
+                    <TextField
+                      type="text"
+                      className="output-margin"
+                      rows={4}
+                      maxrows={4}
+                      multiline
+                      label="Timeline"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.timeline != null}
+                      helperText={errors.timeline ? errors.timeline.message : ""}
+                    />
+                  }
+                />
+
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="accomplishment"
+                  rules={{}}
+                  as={
+                    <TextField
+                      type="text"
+                      className="output-margin"
+                      rows={4}
+                      maxrows={4}
+                      multiline
+                      label="Accomplishment"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.accomplishment != null}
+                      helperText={
+                        errors.accomplishment ? errors.accomplishment.message : ""
+                      }
+                    />
+                  }
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="targetcompletion"
+                  rules={{ required: true }, { max: 100 }}
+                  as={
+                    <TextField
+                      type="number"
+                      className="output-margin"
+                      label="% of Accomplishment according to Timeline"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">%</InputAdornment>
+                        ),
+                      }}
+                      error={errors.targetcompletion != null}
+                      helperText={
+                        errors.targetcompletion ? errors.targetcompletion.message : ""
+                      }
+                    />
+                  }
+                />
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="agency"
+                  rules={{}}
+                  as={
+                    <TextField
+                      type="text"
+                      className="output-margin"
+                      label="Agency In-Charge"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.agency != null}
+                      helperText={
+                        errors.agency ? errors.agency.message : ""
+                      }
+                    />
+                  }
+                />
+              </Grid>
+              <Grid item xs={4} hidden>
+                <FormControlLabel
+                  control={
+                    <Controller
+                      name="withinTimeframe"
+                      control={control}
+                      defaultValue={true}
+                      render={(props) => (
+                        <Checkbox
+                          {...props}
+                          checked={props.value}
+                          onChange={(e) => props.onChange(e.target.checked)}
+                        />
+                      )}
+                    />
+                  }
+                  label="Conducted within timeframe"
+                />
+              </Grid>
+            </Grid>
+
+
             <Divider
               style={{ padding: "2rem 0 0 0" }}
               placeholder="Issues and Concerns Encountered"
@@ -315,99 +337,99 @@ export default () => {
               </span>
             </Divider>
             <Grid container spacing={2}>
-                <Grid item xs={6}>
+              <Grid item xs={6}>
                 <Controller
-              defaultValue=""
-              control={control}
-              name="opsissue"
-              rules={{}}
-              as={
-                <TextField
-                  className="output-margin"
-                  label="Operational Issue"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.opsissue != null}
-                  helperText={errors.opsissue ? errors.opsissue.message : ""}
-                />
-              }
-            />
-                    </Grid>
-                    <Grid item xs={6}>
-                    <Controller
-              defaultValue=""
-              control={control}
-              name="policyissue"
-              rules={{}}
-              as={
-                <TextField
-                  className="output-margin"
-                  label="Policy Issue"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.policyissue != null}
-                  helperText={
-                    errors.policyissue ? errors.policyissue.message : ""
+                  defaultValue=""
+                  control={control}
+                  name="opsissue"
+                  rules={{}}
+                  as={
+                    <TextField
+                      className="output-margin"
+                      label="Operational Issue"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.opsissue != null}
+                      helperText={errors.opsissue ? errors.opsissue.message : ""}
+                    />
                   }
                 />
-              }
-            />
-                    </Grid>
-                    <Grid item xs={6}>
-                    <Controller
-              defaultValue=""
-              control={control}
-              name="recommendation"
-              rules={{}}
-              as={
-                <TextField
-                  className="output-margin"
-                  label="Management decision and Recommendation"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.managedecisionrecommendation != null}
-                  helperText={
-                    errors.managedecisionrecommendation
-                      ? errors.managedecisionrecommendation.message
-                      : ""
+              </Grid>
+              <Grid item xs={6}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="policyissue"
+                  rules={{}}
+                  as={
+                    <TextField
+                      className="output-margin"
+                      label="Policy Issue"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.policyissue != null}
+                      helperText={
+                        errors.policyissue ? errors.policyissue.message : ""
+                      }
+                    />
                   }
                 />
-              }
-            />
-                    </Grid>
-                    <Grid item xs={6}>
-                    <Controller
-              defaultValue=""
-              control={control}
-              name="others"
-              rules={{}}
-              as={
-                <TextField
-                  className="output-margin"
-                  label="Others"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.others != null}
-                  helperText={
-                    errors.others
-                      ? errors.others.message
-                      : ""
+              </Grid>
+              <Grid item xs={6}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="recommendation"
+                  rules={{}}
+                  as={
+                    <TextField
+                      className="output-margin"
+                      label="Management decision and Recommendation"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.managedecisionrecommendation != null}
+                      helperText={
+                        errors.managedecisionrecommendation
+                          ? errors.managedecisionrecommendation.message
+                          : ""
+                      }
+                    />
                   }
                 />
-              }
-            />
-                    </Grid>
-            </Grid>      
-            
-            
+              </Grid>
+              <Grid item xs={6}>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="others"
+                  rules={{}}
+                  as={
+                    <TextField
+                      className="output-margin"
+                      label="Others"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.others != null}
+                      helperText={
+                        errors.others
+                          ? errors.others.message
+                          : ""
+                      }
+                    />
+                  }
+                />
+              </Grid>
+            </Grid>
 
-            
 
-            
+
+
+
+
             <Divider
               style={{ padding: "2rem 0 0 0" }}
               placeholder="RATING"

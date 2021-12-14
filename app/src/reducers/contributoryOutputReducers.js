@@ -4,6 +4,7 @@ import {
     LIST_INDICATORSBYDEPT_FAILED
 } from "../constants/outputConstants";
 
+
 const contributoryOutputState = {
     indicators: []
 };
