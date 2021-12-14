@@ -5,7 +5,8 @@ import MinorView from './_components/Minor';
 
 export default () => {
 
-    const [outputType, setOutputType] = useState('major');
+    const [outputType, setOutputType] = useState('major', 'minor');
+    // const [outputType, setOutputType] = useState('minor');
 
     const RenderOutputView = () => {
         switch (outputType) {

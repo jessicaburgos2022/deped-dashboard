@@ -21,11 +21,25 @@ export default (props) => {
                 fullWidth
             >
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    View Major Output
+                    View Minor Output
                 </DialogTitle>
                 <DialogContent dividers>
-                    <b>Department:</b> {data.Department} <br />
-                    <b>KRA:</b> {data.KRAName} <br />
+                    <b>KRA:</b> {data.KRAName } <br />
+                    <b>Objective:</b> {data.Objective } <br />
+                    <b>Program/Project:</b> {data.Project } <br />
+                    <b>Program/Project:</b> {data.Output } <br />
+                    <b>Target:</b> {data.Target } <br />
+                    <b>Accomplishment:</b> {data.Accomplishment } <br />
+                    <b>Agency In-Charge(Internal/External) :</b> {data.Agency } <br />
+                    <b>Timeline :</b> {data.Timeline } <br />
+                    <b>Operational Issue :</b> {data.OpsIssue } <br />
+                    <b>Policy Issue :</b> {data.PolicyIssue } <br />
+                    <b>Issues that needing Management decision and recommendation :</b> {data.Recommendation } <br />
+                    <b>Others :</b> {data.Others } <br />
+                    <b>Score :</b> {data.Score } <br />
+                    <b>Descriptive Equivalent :</b> {data.ScoreDescription } <br />
+                    <b>Corrective Actions :</b> {data.CorrectiveAction } <br />
+                    {/* <b>Accomplishment:</b> {data.Accomplishment} <br />
                     <b>Objective:</b> {data.Objective} <br />
                     <b>Program/Project:</b> {data.Project} <br />
                     <b>Output:</b>{data.Output} <br />
@@ -47,7 +61,7 @@ export default (props) => {
                     <b>Policy Issue:</b>  {data.PolicyIssue} <br />
                     <b>Recommendation:</b>  {data.PolicyIssue} <br />
                     <b>Others:</b>  {data.Others} <br />
-                    <b>Corrective Action:</b>  {data.CorrectiveAction} <br />
+                    <b>Corrective Action:</b>  {data.CorrectiveAction} <br /> */}
                 </DialogContent>
                 <DialogActions>
                     {/* <Button autoFocus color="primary" onClick={() => handleClose}>

@@ -11,6 +11,9 @@ import {
     SEARCH_MAJOR_OUTPUT_REQUEST,
     SEARCH_MAJOR_OUTPUT_SUCCESS,
     SEARCH_MAJOR_OUTPUT_FAILED,
+    SEARCH_MINOR_OUTPUT_REQUEST,
+    SEARCH_MINOR_OUTPUT_SUCCESS,
+    SEARCH_MINOR_OUTPUT_FAILED,
     LIST_INDICATORSBYDEPT_REQUEST,
     LIST_INDICATORSBYDEPT_SUCCESS,
     LIST_INDICATORSBYDEPT_FAILED
@@ -71,11 +74,24 @@ export const searchMajorOutput = (param) => async (dispatch) => {
 
     } catch (e) {
         dispatch({
-            type: INSERT_CONTRIBUTORY_OUTPUT_FAILED,
+            type: SEARCH_MAJOR_OUTPUT_FAILED,
             payload: []
         });
     }
 
+};
+
+export const searchMinorOutput = (param) => async (dispatch) => {
+    await dispatch({ type: SEARCH_MINOR_OUTPUT_REQUEST });
+    try {
+        const { data } = await axios.get(`/api/output/minor`);
+        await dispatch({ type: SEARCH_MINOR_OUTPUT_SUCCESS, payload: data });
+    } catch (e) {
+        dispatch({
+            type: SEARCH_MINOR_OUTPUT_FAILED,
+            payload: []
+        })
+    }
 };
 
 
