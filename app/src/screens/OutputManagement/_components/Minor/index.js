@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {searchMajorOutput} from '../../../../actions/outputActions';
 import {searchMinorOutput} from '../../../../actions/outputActions';
 import Table from './table';
 
