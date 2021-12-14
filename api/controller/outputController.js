@@ -56,7 +56,6 @@ const insertMinorOutput = asyncHander(async (req, res) => {
     } = req.body;
     const queryString = `CALL InsertMinorOutput('${kraid}', '${objective}', '${projectid}', '${output}', '${target}', '${accomplishment}', ${targetcompletion},
         '${agency}', '${timeline}', ${withinTimeframe},'${opsissue}','${policyissue}', '${recommendation}', '${others}', '${score}', '${scoredescription}', '${correctiveaction}', ${userId})`;
-        console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -129,7 +128,59 @@ const searchMajorOutput = asyncHander(async (req, res) => {
         connection.release();
     });
 });
+const searchMinorOutput = asyncHander(async (req, res) => {
+    const { } = req.params;
+    const queryString = `CALL searchMinorOutput()`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                }
+                else {
+                    var qResult = JSON.parse(JSON.stringify(results[0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            })
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
 
+const searchContributoryOutput = asyncHander(async (req, res) => {
+    const { } = req.params;
+    const queryString = `CALL SearchContributoryOutput()`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                }
+                else {
+                    var qResult = JSON.parse(JSON.stringify(results[0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            })
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
 
 const ListIndicatorsByDepartmentId = asyncHander(async (req, res) => {
     const { departmentid } = req.params;
@@ -157,4 +208,4 @@ const ListIndicatorsByDepartmentId = asyncHander(async (req, res) => {
         connection.release();
     });
 });
-module.exports = { insertMajorOutput, insertMinorOutput, insertContributoryOutput, searchMajorOutput, ListIndicatorsByDepartmentId };
+module.exports = { insertMajorOutput, insertMinorOutput, insertContributoryOutput, searchMajorOutput, searchMinorOutput, searchContributoryOutput, ListIndicatorsByDepartmentId };

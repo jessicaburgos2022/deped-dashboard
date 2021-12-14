@@ -2,29 +2,32 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import React, { useState } from 'react';
 import ViewOutput from './viewoutput';
 import ViewEdit from './editOutput';
+import { useSelector } from 'react-redux';
 
 export default (data) => {
+    const userState = useSelector(state => state.user);
+    const departmentId = userState.userInfo.acc[0].DepartmentId;
     const { SearchResult } = data;
     const [isViewOpen, setIsViewOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState({});
-console.log(data)
+    console.log(data)
     const handleViewOpen = (data) => {
         setSelectedRow(data);
         setIsViewOpen(true)
-       
+
     }
     const handleViewEdit = (data) => {
         setSelectedRow(data);
-        setIsViewOpen(true)
-       
+        setIsEditOpen(true)
     }
     return (
         <TableContainer component={Paper}>
             {
                 isViewOpen && <ViewOutput data={selectedRow} open={isViewOpen} handleClose={() => setIsViewOpen(false)} />
             }
-             {
-                isViewOpen && <ViewEdit data={selectedRow} open={isViewOpen} handleClose={() => setIsViewOpen(false)} />
+            {
+                isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} />
             }
             <Table aria-label="collapsible table">
                 <TableHead>
@@ -58,9 +61,9 @@ console.log(data)
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
                                         <Button onClick={() => handleViewOpen(r)}>View</Button>
-                                        <Button onClick={() => handleViewEdit(r)}>Edit</Button>
+                                        <Button onClick={() => handleViewEdit(r)} hidden={parseInt(departmentId) !== parseInt(r.DepartmentId)}>Edit</Button>
                                     </TableCell>
-                                    
+
                                 </TableRow>
                             )
                         })
