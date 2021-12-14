@@ -1,5 +1,6 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import React from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem } from '@material-ui/core';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,7 +9,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 export default (props) => {
-
     const { open, handleClose, data } = props;
     console.log(data)
     return (
@@ -24,7 +24,8 @@ export default (props) => {
                     View Output
                 </DialogTitle>
                 <DialogContent dividers>
-                    <b>KRA:</b> {data.Department} <br />
+                    <b>Department:</b> {data.Department} <br />
+                    <b>KRA:</b> {data.KRAName} <br />
                     <b>Objective:</b> {data.Objective} <br />
                     <b>Program/Project:</b> {data.Project} <br />
                     <b>Output:</b>{data.Output} <br />
