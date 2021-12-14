@@ -46,7 +46,7 @@ export default (props) => {
         return (
             <Grid item xs={4}>
                 <TextField
-                    defaultValue={0}
+                    defaultValue={data["Accomplishment1"]}
                     disabled={true}
                     type="number"
                     className="output-margin"
@@ -176,6 +176,27 @@ export default (props) => {
                                         <b>OPCRF</b>
                                     </span>
                                 </Divider>
+                                <TextField
+                                            disabled
+                                            defaultValue={data["KRAName"]}
+                                            rows={4}
+                                            maxRows={4}
+                                            className="output-margin"
+                                            variant="outlined"
+                                            size="small"
+                                            
+                                />
+                                <TextField
+                                            disabled
+                                            defaultValue={data["Project"]}
+                                            rows={4}
+                                            maxRows={4}
+                                            className="output-margin"
+                                            variant="outlined"
+                                            size="small"
+                                            
+                                />
+                                
                                 <Controller
                                     defaultValue={data["Objective"]}
                                     control={control}
@@ -199,7 +220,7 @@ export default (props) => {
                                     }
                                 />
                                 <Controller
-                                    defaultValue=""
+                                    defaultValue={data["Output"]}
                                     control={control}
                                     name="output"
                                     rules={{
@@ -246,7 +267,7 @@ export default (props) => {
                                 <Grid container spacing={3}>
                                     <Grid item xs={4}>
                                         <Controller
-                                            defaultValue=""
+                                            defaultValue={data["PlannedTarget"]}
                                             control={control}
                                             name="plannedtarget"
                                             rules={{}}
@@ -268,7 +289,7 @@ export default (props) => {
                                     </Grid>
                                     <Grid item xs={4}>
                                         <Controller
-                                            defaultValue=""
+                                            defaultValue={data["TargetType"]}
                                             control={control}
                                             name="targettype"
                                             rules={{}}
@@ -291,7 +312,7 @@ export default (props) => {
                                     </Grid>
                                     <Grid item xs={4}>
                                         <Controller
-                                            defaultValue=""
+                                            defaultValue={data["TargetDescription"]}
                                             control={control}
                                             name="targetdescription"
                                             rules={{}}
@@ -315,7 +336,7 @@ export default (props) => {
                                     <Grid item xs={4}>
                                         <Controller
                                             type="number"
-                                            defaultValue=""
+                                            defaultValue={data["PhysicalAccomplishment"]}
                                             control={control}
                                             name="physicalaccomplishment"
                                             rules={{}}
@@ -338,7 +359,7 @@ export default (props) => {
                                     </Grid>
                                     <Grid item xs={4}>
                                         <Controller
-                                            defaultValue=""
+                                            defaultValue={data["AccomplishmentDescription"]}
                                             control={control}
                                             name="accomplishmentdescription"
                                             rules={{}}
@@ -362,7 +383,7 @@ export default (props) => {
                                     <PhysicalTargetWatch control={control} />
                                     <Grid item xs={4}>
                                         <Controller
-                                            defaultValue=""
+                                            defaultValue={data["Timeline"]}
                                             control={control}
                                             name="timeline"
                                             rules={{}}
@@ -384,7 +405,7 @@ export default (props) => {
                                     <Grid item xs={4}>
                                         <Controller
                                             type="number"
-                                            defaultValue=""
+                                            defaultValue={data["Accomplishment2"]}
                                             control={control}
                                             name="accomplishment2"
                                             rules={{}}
@@ -413,7 +434,7 @@ export default (props) => {
                                     <Grid item xs={4}>
                                         <Controller
                                             type="number"
-                                            defaultValue=""
+                                            defaultValue={data["GainGap"]}
                                             control={control}
                                             name="gaingap"
                                             rules={{}}
@@ -467,7 +488,7 @@ export default (props) => {
                                     <Grid item xs={6}>
                                         <Controller
                                             type="number"
-                                            defaultValue=""
+                                            defaultValue={data["FinancialRequirement"]}
                                             control={control}
                                             name="financialrequirement"
                                             rules={{}}
@@ -495,7 +516,7 @@ export default (props) => {
                                     </Grid>
                                     <Grid item xs={6}>
                                         <Controller
-                                            defaultValue=""
+                                            defaultValue={data["AmountUtilized"]}
                                             control={control}
                                             name="amountutilized"
                                             rules={{}}
@@ -530,10 +551,10 @@ export default (props) => {
                                             Funding Source
                                         </InputLabel>
                                         <Controller
-                                            defaultValue=""
+                                            
                                             control={control}
                                             name="fundingsource"
-                                            defaultValue={0}
+                                            defaultValue={data["FundingSource"]}
                                             rules={{
                                                 required: {
                                                     value: true,
@@ -557,10 +578,10 @@ export default (props) => {
                                         {/* <FormControl variant="standard"> */}
                                         <InputLabel>Budget Structure</InputLabel>
                                         <Controller
-                                            defaultValue=""
+                                           
                                             control={control}
                                             name="budgetstructure"
-                                            defaultValue={0}
+                                            defaultValue={data["BurdgetStructure"]}
                                             rules={{
                                                 required: {
                                                     value: true,
@@ -599,7 +620,7 @@ export default (props) => {
                                     </span>
                                 </Divider>
                                 <Controller
-                                    defaultValue=""
+                                    defaultValue={data["Score"]}
                                     control={control}
                                     name="score"
                                     rules={{}}
@@ -618,7 +639,7 @@ export default (props) => {
                                 />
 
                                 <Controller
-                                    defaultValue=""
+                                    defaultValue={data["ScoreDescription"]}
                                     control={control}
                                     name="scoredescription"
                                     rules={{}}
@@ -639,7 +660,7 @@ export default (props) => {
                                     }
                                 />
                                 <Controller
-                                    defaultValue=""
+                                    defaultValue={data["OpsIssue"]}
                                     control={control}
                                     name="opsissue"
                                     rules={{}}
@@ -659,7 +680,7 @@ export default (props) => {
                                     }
                                 />
                                 <Controller
-                                    defaultValue=""
+                                    defaultValue={data["PolicyIssue"]}
                                     control={control}
                                     name="policyissue"
                                     rules={{}}
@@ -678,7 +699,7 @@ export default (props) => {
                                     }
                                 />
                                 <Controller
-                                    defaultValue=""
+                                    defaultValue={data["Recommendation"]}
                                     control={control}
                                     name="recommendation"
                                     rules={{}}
@@ -697,7 +718,7 @@ export default (props) => {
                                     }
                                 />
                                 <Controller
-                                    defaultValue=""
+                                    defaultValue={data["Others"]}
                                     control={control}
                                     name="others"
                                     rules={{}}
@@ -714,7 +735,7 @@ export default (props) => {
                                     }
                                 />
                                 <Controller
-                                    defaultValue=""
+                                    defaultValue={data["CorrectiveAction"]}
                                     control={control}
                                     name="correctiveaction"
                                     rules={{}}
