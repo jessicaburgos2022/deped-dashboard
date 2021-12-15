@@ -21,14 +21,13 @@ import {
   import React, { useEffect, useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { Controller, useForm } from "react-hook-form";
-  import { insertMinorOutput } from "../../../../actions/outputActions";
   import Swal from "sweetalert2";
   import { Checkbox, Divider } from "@mui/material";
-  import { fetchProjectByKRAId } from "../../../../actions/appActions";
   import { Grid } from "@mui/material";
   
+import { searchMinorOutput, editOutputStatus, editMinorOutput } from '../../../../actions/outputActions';
   export default (props) => {
-    const { open, handleClose, data } = props;
+    const { open, handleClose, handleRefresh, data } = props;
 
     console.log(data)
     //react hook form
@@ -48,16 +47,19 @@ import {
                 input.userId = userState.userInfo.acc[0].Id;
                 input.kraid = data.KRAId;
                 input.projectid = data.projectId;
+                input.outputminorheaderid = data.OutputMinorHeaderId;
                 input.balance = parseFloat(input.financialrequirement) - parseFloat(input.amountutilized);
                 input.utilizationrate = (parseFloat(input['amountutilized']) / parseFloat(input['financialrequirement'])) * 100
                 input.accomplishment1 = (parseFloat(input['physicalaccomplishment']) / parseFloat(input['plannedtarget'])) * 100
                 console.log(input);
-                var ret = ""; //await dispatch(insertMajorOutput(data));
+                var ret = await dispatch(editMinorOutput(input));
                 Swal.fire(
                     ret.result,
                     ret.message,
                     ret.result === "Success" ? "success" : "error"
                 );
+                handleRefresh();
+                handleClose();
             }
         }
     };

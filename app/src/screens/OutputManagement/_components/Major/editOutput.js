@@ -22,18 +22,20 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm, useWatch } from "react-hook-form";
-import { insertMajorOutput } from "../../../../actions/outputActions";
+import { editMajorOutput } from "../../../../actions/outputActions";
 import Swal from "sweetalert2";
 import { Divider } from "@mui/material";
-import { fetchProjectByKRAId } from "../../../../actions/appActions";
 import { Grid } from "@mui/material";
 export default (props) => {
     const appState = useSelector((state) => state.app);
     const userState = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
-    const { open, handleClose, data } = props;
-    console.log(data)
+    const { open, handleClose, handleRefresh, data } = props;
+    const [plannedtarget, setplannedtarget] = useState(data['PlannedTarget']);
+    const [physicalaccomplishment, setphysicalaccomplishment] = useState(data['PhysicalAccomplishment']);
+    const [financialrequirement, setfinancialrequirement] =useState(data['FinancialRequirement']);
+    const [amountutilized, setamountutilized] =useState(data['AmountUtilized']);
 
     //react hook form
     const { handleSubmit, errors, control, setValue, getValues, register } = useForm();
@@ -46,7 +48,7 @@ export default (props) => {
         return (
             <Grid item xs={4}>
                 <TextField
-                    defaultValue={data["Accomplishment1"]}
+                    defaultValue={0}
                     disabled={true}
                     type="number"
                     className="output-margin"
@@ -54,7 +56,7 @@ export default (props) => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    value={(Number(parseFloat(target['physicalaccomplishment']) / parseFloat(target['plannedtarget'])) * 100).toFixed(2)}
+                    value={target['physicalaccomplishment'] === undefined ? (Number(physicalaccomplishment / plannedtarget) * 100).toFixed(2) : (Number(parseFloat(target['physicalaccomplishment']) / parseFloat(target['plannedtarget'])) * 100).toFixed(2)}
                     error={errors.accomplishment1 != null}
                     helperText={
                         errors.accomplishment1
@@ -88,7 +90,7 @@ export default (props) => {
                         variant="outlined"
                         size="small"
                         fullWidth
-                        value={Number(parseFloat(utilization['financialrequirement']) - parseFloat(utilization['amountutilized'])).toFixed(2)}
+                        value={utilization['financialrequirement'] === undefined ? Number(financialrequirement - amountutilized).toFixed(2) : Number(parseFloat(utilization['financialrequirement']) - parseFloat(utilization['amountutilized'])).toFixed(2)}
                         error={errors.balance != null}
                         helperText={errors.balance ? errors.balance.message : ""}
                         InputProps={{
@@ -108,7 +110,7 @@ export default (props) => {
                         variant="outlined"
                         size="small"
                         fullWidth
-                        value={Number((parseFloat(utilization['amountutilized']) / parseFloat(utilization['financialrequirement'])) * 100).toFixed(2)}
+                        value={utilization['financialrequirement'] === undefined ? Number((amountutilized / financialrequirement) * 100).toFixed(2) : Number((parseFloat(utilization['amountutilized']) / parseFloat(utilization['financialrequirement'])) * 100).toFixed(2)}
                         error={errors.utilizationrate != null}
                         helperText={
                             errors.utilizationrate
@@ -134,18 +136,21 @@ export default (props) => {
                 userState.userInfo.acc[0].Id
             ) {
                 input.userId = userState.userInfo.acc[0].Id;
+                input.outputmajorheaderid = data.OutputMajorHeaderId;
                 input.kraid = data.KRAId;
                 input.projectid = data.projectId;
                 input.balance = parseFloat(input.financialrequirement) - parseFloat(input.amountutilized);
                 input.utilizationrate = (parseFloat(input['amountutilized']) / parseFloat(input['financialrequirement'])) * 100
                 input.accomplishment1 = (parseFloat(input['physicalaccomplishment']) / parseFloat(input['plannedtarget'])) * 100
                 console.log(input);
-                var ret = ""; //await dispatch(insertMajorOutput(data));
+                var ret = await dispatch(editMajorOutput(input));
                 Swal.fire(
                     ret.result,
                     ret.message,
                     ret.result === "Success" ? "success" : "error"
                 );
+                handleRefresh();
+                handleClose();
             }
         }
     };
@@ -165,6 +170,28 @@ export default (props) => {
                     <Paper style={{ padding: "2rem" }}>
                         <form onSubmit={handleSubmit(onSubmit)} id="update-major-form">
                             <FormGroup>
+                                <TextField
+                                    label="KRA"
+                                    disabled
+                                    defaultValue={data["KRAName"]}
+                                    rows={4}
+                                    maxRows={4}
+                                    className="output-margin"
+                                    variant="outlined"
+                                    size="small"
+
+                                />
+                                <TextField
+                                    label="Project"
+                                    disabled
+                                    defaultValue={data["Project"]}
+                                    rows={4}
+                                    maxRows={4}
+                                    className="output-margin"
+                                    variant="outlined"
+                                    size="small"
+
+                                />
                                 <Divider
                                     style={{ padding: "2rem 0 0 0" }}
                                     placeholder="OPCRF"
@@ -176,27 +203,7 @@ export default (props) => {
                                         <b>OPCRF</b>
                                     </span>
                                 </Divider>
-                                <TextField
-                                            disabled
-                                            defaultValue={data["KRAName"]}
-                                            rows={4}
-                                            maxRows={4}
-                                            className="output-margin"
-                                            variant="outlined"
-                                            size="small"
-                                            
-                                />
-                                <TextField
-                                            disabled
-                                            defaultValue={data["Project"]}
-                                            rows={4}
-                                            maxRows={4}
-                                            className="output-margin"
-                                            variant="outlined"
-                                            size="small"
-                                            
-                                />
-                                
+
                                 <Controller
                                     defaultValue={data["Objective"]}
                                     control={control}
@@ -551,7 +558,7 @@ export default (props) => {
                                             Funding Source
                                         </InputLabel>
                                         <Controller
-                                            
+
                                             control={control}
                                             name="fundingsource"
                                             defaultValue={data["FundingSource"]}
@@ -578,7 +585,7 @@ export default (props) => {
                                         {/* <FormControl variant="standard"> */}
                                         <InputLabel>Budget Structure</InputLabel>
                                         <Controller
-                                           
+
                                             control={control}
                                             name="budgetstructure"
                                             defaultValue={data["BurdgetStructure"]}

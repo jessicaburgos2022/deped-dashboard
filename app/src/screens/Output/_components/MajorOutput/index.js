@@ -148,7 +148,6 @@ export default () => {
         data.balance = parseFloat(data.financialrequirement) - parseFloat(data.amountutilized);
         data.utilizationrate = (parseFloat(data['amountutilized']) / parseFloat(data['financialrequirement'])) * 100
         data.accomplishment1 = (parseFloat(data['physicalaccomplishment']) / parseFloat(data['plannedtarget'])) * 100
-        console.log(data);
         var ret = await dispatch(insertMajorOutput(data));
         Swal.fire(
           ret.result,
@@ -188,7 +187,7 @@ export default () => {
                 {KRAList.map((kra, id) => {
                   return (
                     <MenuItem key={id} value={kra.Id}>
-                      {kra.Description}
+                      {kra.Name}
                     </MenuItem>
                   );
                 })}

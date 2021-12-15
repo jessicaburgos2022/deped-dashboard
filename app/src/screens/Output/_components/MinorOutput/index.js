@@ -48,7 +48,6 @@ export default () => {
         data.userId = userState.userInfo.acc[0].Id;
         data.kraid = selectedKRA;
         var ret = await dispatch(insertMinorOutput(data));
-        console.log(ret)
         Swal.fire(
           ret.result,
           ret.message,
@@ -82,7 +81,7 @@ export default () => {
               >
                 {
                   KRAList.map((kra, id) => {
-                    return <MenuItem key={id} value={kra.Id}>{kra.Description}</MenuItem>
+                    return <MenuItem key={id} value={kra.Id}>{kra.Name}</MenuItem>
                   })
                 }
               </Select>

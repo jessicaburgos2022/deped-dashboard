@@ -20,7 +20,43 @@ const insertMajorOutput = asyncHander(async (req, res) => {
         recommendation, others, correctiveaction, userId
     } = req.body;
     const queryString = `CALL InsertMajorOutput(${kraid},  ${projectid}, '${objective}', '${output}', 
-    ${plannedtarget}, '${targettype}', '${targetdescription}', '${timeline}', ${physicalaccomplishment}, ${accomplishmentdescription}, ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
+    ${plannedtarget}, '${targettype}', '${targetdescription}', '${timeline}', ${physicalaccomplishment}, '${accomplishmentdescription}', ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
+        ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
+        '${budgetstructure}', '${score}', '${scoredescription}','${opsissue}', '${policyissue}',
+        '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
+    console.log(queryString)
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                }
+                else {
+                    var qResult = JSON.parse(JSON.stringify(results[0][0]));
+                    res.json(qResult);
+                    res.end();
+                }
+
+            })
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
+const editMajorOutput = asyncHander(async (req, res) => {
+    const { outputmajorheaderid, objective, output, plannedtarget, targettype, targetdescription, timeline, physicalaccomplishment, accomplishmentdescription, accomplishment1, accomplishment2, withinTimeframe,
+        gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingsource, budgetstructure, score, scoredescription, opsissue, policyissue,
+        recommendation, others, correctiveaction, userId
+    } = req.body;
+    const queryString = `CALL EditMajorOutput(${outputmajorheaderid}, '${objective}', '${output}', 
+    ${plannedtarget}, '${targettype ? targettype : ''}', '${targetdescription ? targetdescription : ''}', '${timeline}', ${physicalaccomplishment}, ${accomplishmentdescription}, ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
         ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
         '${budgetstructure}', '${score}', '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
@@ -80,6 +116,37 @@ const insertMinorOutput = asyncHander(async (req, res) => {
     });
 });
 
+const editMinorOutput = asyncHander(async (req, res) => {
+    const { outputminorheaderid, objective, output, target, accomplishment, targetcompletion, agency, timeline, withinTimeframe, opsissue,
+        policyissue, recommendation, others, score, scoredescription, correctiveaction, userId
+    } = req.body;
+    const queryString = `CALL EditMinorOutput('${outputminorheaderid}', '${objective}', '${output}', '${target}', '${accomplishment}', ${targetcompletion},
+        '${agency}', '${timeline}', ${withinTimeframe},'${opsissue}','${policyissue}', '${recommendation}', '${others}', '${score}', '${scoredescription}', '${correctiveaction}', ${userId})`;
+        console.log(queryString)
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                }
+                else {
+                    var qResult = JSON.parse(JSON.stringify(results[0][0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            })
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
 const insertContributoryOutput = asyncHander(async (req, res) => {
     const { projectid, outputs, indicators, userId } = req.body;
     pool.getConnection((err, connection) => {
@@ -101,6 +168,8 @@ const insertContributoryOutput = asyncHander(async (req, res) => {
         connection.release();
     });
 });
+
+
 
 const searchMajorOutput = asyncHander(async (req, res) => {
     const { } = req.params;
@@ -208,4 +277,32 @@ const ListIndicatorsByDepartmentId = asyncHander(async (req, res) => {
         connection.release();
     });
 });
-module.exports = { insertMajorOutput, insertMinorOutput, insertContributoryOutput, searchMajorOutput, searchMinorOutput, searchContributoryOutput, ListIndicatorsByDepartmentId };
+
+const editOutputStatus = asyncHander(async (req, res) => {
+    const { outputtype, headerid, statusid } = req.body;
+    const queryString = `CALL EditOutputStatus(${outputtype},${headerid},${statusid})`;
+    console.log(queryString)
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                }
+                else {
+                    var qResult = JSON.parse(JSON.stringify(results[0][0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            })
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+module.exports = { insertMajorOutput, editMajorOutput, insertMinorOutput, editMinorOutput, insertContributoryOutput, searchMajorOutput, searchMinorOutput, searchContributoryOutput, ListIndicatorsByDepartmentId, editOutputStatus };
