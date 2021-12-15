@@ -49,6 +49,7 @@ const App = () => {
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/dashboardoo" component={ContributoryDashboard} />
               <PrivateRoute path="/outputmanagement" component={OutputManagement} />
+              <PrivateRoute path="/maintenance" component={Maintenance} />
               {/* <PrivateRoute path="/maintenance" component={Maintenance} /> */}
             </Switch>
           </StylesProvider>

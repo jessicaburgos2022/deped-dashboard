@@ -7,6 +7,7 @@ import { dashboardReducer } from './dashboardReducers';
 import { MajorOutputManagementReducer } from './majorOutputReducers';
 import { MinorOutputManagementReducer } from './minorOutputReducers';
 import {contributoryOutput} from './contributoryOutputReducers';
+import { KraReducer } from './kraReducers';
 
 const combinedReducer = combineReducers({
   user,
@@ -17,7 +18,8 @@ const combinedReducer = combineReducers({
   dashboard: dashboardReducer,
   majorOutputManagement: MajorOutputManagementReducer,
   minorOutputManagement : MinorOutputManagementReducer,
-  ooManagement: contributoryOutput
+  ooManagement: contributoryOutput,
+  kra: KraReducer
 });
 
 export default combinedReducer;

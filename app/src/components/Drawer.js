@@ -72,13 +72,14 @@ export default function PersistentDrawerLeft() {
             </a>
             <span className="tooltip">Output Management</span>
           </li>
-          {/* <li>
+          
+          <li>
             <a href="/maintenance" className={document.location.pathname==="/maintenance"?'active-link':''} >
               <i className="bx bx-cog"></i>
               <span className="links_name">Maintenance</span>
             </a>
             <span className="tooltip">Maintenance</span>
-          </li> */}
+          </li>
         </ul>
 
         <div className="profile_content">
