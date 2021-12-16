@@ -465,13 +465,15 @@ export default () => {
               </Grid>
               <Grid item xs={4}>
                 <Controller
-                  type="number"
                   defaultValue=""
                   control={control}
                   name="gaingap"
                   rules={{}}
                   as={
                     <TextField
+                      multiline
+                      rows={3}
+                      maxRows={3}
                       className="output-margin"
                       label="Gains/Gaps"
                       variant="outlined"
@@ -578,60 +580,62 @@ export default () => {
 
               <UtilizationWatch control={control} />
 
-              <Grid item xs={4}>
-                <InputLabel >
-                  Funding Source
-                </InputLabel>
-                <Controller
-                  defaultValue=""
-                  control={control}
-                  name="fundingsource"
-                  defaultValue={0}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "This field is required",
-                    },
-                  }}
-                  as={
-                    <Select
-                      className="output-margin"
-                      label="Select Funding Source"
-                    >
-                      <MenuItem value="MOOE">MOOE</MenuItem>
-                      <MenuItem value="CO">CO</MenuItem>
-                      <MenuItem value="Downloaded">Downloaded</MenuItem>
-                    </Select>
-                  }
-                />
-                {/* </FormControl> */}
+              <Grid item xs={6}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel id="funding-source-label">
+                    Funding Source
+                  </InputLabel>
+                  <Controller
+                    defaultValue=""
+                    control={control}
+                    name="fundingsource"
+                    defaultValue={0}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "This field is required",
+                      },
+                    }}
+                    as={
+                      <Select
+                        variant="standard"
+                        className="output-margin"
+                        labelId="funding-source-label"
+                      >
+                        <MenuItem value="MOOE">MOOE</MenuItem>
+                        <MenuItem value="CO">CO</MenuItem>
+                        <MenuItem value="Downloaded">Downloaded</MenuItem>
+                      </Select>
+                    }
+                  />
+                </FormControl>
               </Grid>
-              <Grid item xs={4}>
-                {/* <FormControl variant="standard"> */}
-                <InputLabel>Budget Structure</InputLabel>
-                <Controller
-                  defaultValue=""
-                  control={control}
-                  name="budgetstructure"
-                  defaultValue={0}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "This field is required",
-                    },
-                  }}
-                  as={
-                    <Select
-                      className="output-margin"
-                      label="Budget Structure"
-                    >
-                      <MenuItem value="GASS">GASS</MenuItem>
-                      <MenuItem value="STO">STO</MenuItem>
-                      <MenuItem value="Operations">Operations</MenuItem>
-                    </Select>
-                  }
-                />
-                {/* </FormControl> */}
+              <Grid item xs={6}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Budget Structure</InputLabel>
+                  <Controller
+                    defaultValue=""
+                    control={control}
+                    name="budgetstructure"
+                    defaultValue={0}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "This field is required",
+                      },
+                    }}
+                    as={
+                      <Select
+                        className="output-margin"
+                        label="Budget Structure"
+                      >
+                        <MenuItem value="GASS">GASS</MenuItem>
+                        <MenuItem value="STO">STO</MenuItem>
+                        <MenuItem value="Operations">Operations</MenuItem>
+                      </Select>
+                    }
+                  />
+                </FormControl>
               </Grid>
             </Grid>
 

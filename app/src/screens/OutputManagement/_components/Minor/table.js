@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ViewOutput from './viewoutput';
 import ViewEdit from './editOutput';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchMajorOutput, editOutputStatus } from '../../../../actions/outputActions';
+import { editOutputStatus, searchMinorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
 
 export default (data) => {
@@ -14,7 +14,6 @@ export default (data) => {
     const [isViewOpen, setIsViewOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState({});
-    console.log(data)
     const handleViewOpen = (data) => {
         setSelectedRow(data);
         setIsViewOpen(true)
@@ -25,7 +24,7 @@ export default (data) => {
         setIsEditOpen(true)
     }
     const handleRefresh = () => {
-        dispatch(searchMajorOutput());
+        dispatch(searchMinorOutput());
     }
     const handleEditOutputStatus = (oType, hId, sId) => {
         Swal.fire({
@@ -90,7 +89,7 @@ export default (data) => {
                                         {console.log(userState.userInfo.acc[0].RoleId)}
                                         <Button onClick={() => handleViewOpen(r)}>View</Button>
                                         <Button onClick={() => handleViewEdit(r)} hidden={parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1}>Edit</Button>
-                                        <Button onClick={() => handleEditOutputStatus(1, r.OutputMinorHeaderId, 2)} hidden={userState.userInfo.acc[0].RoleId !== 1 && r.StatusId === 2 && parseInt(departmentId) !== parseInt(r.DepartmentId)}>Approve</Button>
+                                        <Button onClick={() => handleEditOutputStatus(2, r.OutputMinorHeaderId, 2)} hidden={userState.userInfo.acc[0].RoleId !== 1 || r.StatusId !== 1 || parseInt(departmentId) !== parseInt(r.DepartmentId)}>Approve</Button>
                                     </TableCell>
 
                                 </TableRow>
