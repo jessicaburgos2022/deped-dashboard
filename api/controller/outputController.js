@@ -149,6 +149,7 @@ const editMinorOutput = asyncHander(async (req, res) => {
 
 const insertContributoryOutput = asyncHander(async (req, res) => {
     const { projectid, outputs, indicators, userId } = req.body;
+    console.log(req.body)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -157,6 +158,7 @@ const insertContributoryOutput = asyncHander(async (req, res) => {
         try {
             indicators.map(i => {
                 const queryString = `CALL InsertContributoryOutput(${i.id}, ${projectid}, '${i.value}', '${outputs}', ${userId})`;
+                console.log(queryString)
                 connection.query(queryString)
             })
             res.json({ result: 'Success', message: 'Contributory Outputs saved!' });
