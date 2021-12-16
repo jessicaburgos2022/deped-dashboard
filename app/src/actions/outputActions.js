@@ -25,7 +25,10 @@ import {
     EDIT_MINOR_OUTPUT_FAILED,
     EDIT_OUTPUTSTATUS_REQUEST,
     EDIT_OUTPUTSTATUS_SUCCESS,
-    EDIT_OUTPUTSTATUS_FAILED
+    EDIT_OUTPUTSTATUS_FAILED,
+    SEARCH_CONTRIBUTORY_OUTPUT_REQUEST,
+    SEARCH_CONTRIBUTORY_OUTPUT_SUCCESS,
+    SEARCH_CONTRIBUTORY_OUTPUT_FAILED
 } from "../constants/outputConstants";
 import axios from "../helpers/axios";
 
@@ -131,6 +134,18 @@ export const searchMinorOutput = (param) => async (dispatch) => {
     }
 };
 
+export const searchContributoryOutput = (param) => async (dispatch) => {
+    await dispatch({ type: SEARCH_CONTRIBUTORY_OUTPUT_REQUEST });
+    try {
+        const { data } = await axios.get(`/api/output/contributory`);
+        await dispatch({ type: SEARCH_CONTRIBUTORY_OUTPUT_SUCCESS, payload: data });
+    } catch (e) {
+        dispatch({
+            type: SEARCH_CONTRIBUTORY_OUTPUT_FAILED,
+            payload: []
+        })
+    }
+};
 
 export const fetchIndicatorsByDeptId = (deptId) => async (dispatch) => {
     await dispatch({ type: LIST_INDICATORSBYDEPT_REQUEST });

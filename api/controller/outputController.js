@@ -21,7 +21,7 @@ const insertMajorOutput = asyncHander(async (req, res) => {
     } = req.body;
     const queryString = `CALL InsertMajorOutput(${kraid},  ${projectid}, '${objective}', '${output}', 
     ${plannedtarget}, '${targettype}', '${targetdescription}', '${timeline}', ${physicalaccomplishment}, '${accomplishmentdescription}', ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
-        ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
+        '${gaingap}', ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
         '${budgetstructure}', '${score}', '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
     console.log(queryString)
@@ -57,7 +57,7 @@ const editMajorOutput = asyncHander(async (req, res) => {
     } = req.body;
     const queryString = `CALL EditMajorOutput(${outputmajorheaderid}, '${objective}', '${output}', 
     ${plannedtarget}, '${targettype ? targettype : ''}', '${targetdescription ? targetdescription : ''}', '${timeline}', ${physicalaccomplishment}, ${accomplishmentdescription}, ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
-        ${gaingap}, ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
+        '${gaingap}', ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
         '${budgetstructure}', '${score}', '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
     console.log(queryString)

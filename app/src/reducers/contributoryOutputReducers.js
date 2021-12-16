@@ -1,12 +1,16 @@
 import {
     LIST_INDICATORSBYDEPT_REQUEST,
     LIST_INDICATORSBYDEPT_SUCCESS,
-    LIST_INDICATORSBYDEPT_FAILED
+    LIST_INDICATORSBYDEPT_FAILED,
+    SEARCH_CONTRIBUTORY_OUTPUT_REQUEST,
+    SEARCH_CONTRIBUTORY_OUTPUT_SUCCESS,
+    SEARCH_CONTRIBUTORY_OUTPUT_FAILED
 } from "../constants/outputConstants";
 
 
 const contributoryOutputState = {
-    indicators: []
+    indicators: [],
+    searchResult: []
 };
 
 export const contributoryOutput = (state = contributoryOutputState, action) => {
@@ -26,6 +30,21 @@ export const contributoryOutput = (state = contributoryOutputState, action) => {
             return {
                 ...state,
                 indicators: []
+            }
+        case SEARCH_CONTRIBUTORY_OUTPUT_REQUEST:
+            return {
+                ...state,
+                searchResult: []
+            }
+        case SEARCH_CONTRIBUTORY_OUTPUT_SUCCESS:
+            return {
+                ...state,
+                searchResult: payload
+            }
+        case SEARCH_CONTRIBUTORY_OUTPUT_FAILED:
+            return {
+                ...state,
+                searchResult: []
             }
         default:
             return state;

@@ -72,7 +72,9 @@ export default () => {
     <div style={{ overflow: 'auto', padding: 25, height: "100vh" }}>
       <div className="text">Dashboard - OO</div>
       {
+        dashboardState &&
         dashboardState.oo &&
+        Array.isArray(dashboardState.oo) &&
         [... new Set(dashboardState.oo.map(res => res.OutcomeTypeId))].map(otypeId => {
           var outcomeType = dashboardState.oo.find(res => res.OutcomeTypeId === otypeId);
           return (

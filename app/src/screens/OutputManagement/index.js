@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import MajorView from './_components/Major';
 import MinorView from './_components/Minor';
+import ContributoryView from './_components/Contributory';
 
 export default () => {
 
@@ -15,7 +16,7 @@ export default () => {
             case 'minor':
                 return <MinorView />;
             default:
-                return <MajorView />;
+                return <ContributoryView />;
         }
     }
     const handleOutputTypeChange = (type) => {
