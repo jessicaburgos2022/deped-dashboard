@@ -23,6 +23,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { editMajorOutput } from "../../../../actions/outputActions";
+import Target from "../../../Output/_components/MajorOutput/Target";
 import Swal from "sweetalert2";
 import { Divider } from "@mui/material";
 import { Grid } from "@mui/material";
@@ -34,17 +35,55 @@ export default (props) => {
     const { open, handleClose, handleRefresh, data } = props;
     const [plannedtarget, setplannedtarget] = useState(data['PlannedTarget']);
     const [physicalaccomplishment, setphysicalaccomplishment] = useState(data['PhysicalAccomplishment']);
-    const [financialrequirement, setfinancialrequirement] =useState(data['FinancialRequirement']);
-    const [amountutilized, setamountutilized] =useState(data['AmountUtilized']);
+    const [financialrequirement, setfinancialrequirement] = useState(data['FinancialRequirement']);
+    const [amountutilized, setamountutilized] = useState(data['AmountUtilized']);
 
+    const [targets, setTargets] = useState(
+        [
+            {
+                PlannedTarget: "",
+                TargetType: "",
+                TargetDescription: "",
+                Accomplishment: "",
+                AccomplishmentDescription: ""
+            }
+        ]
+    )
+    function handleChange(i, event) {
+        const values = [...targets];
+        values[i][event.target.name] = event.target.value;
+        setTargets(values);
+    }
+
+    const handleTargetIncrease = () => {
+        setTargets(oldArray => [...oldArray, {
+            PlannedTarget: "",
+            TargetType: "",
+            TargetDescription: "",
+            Accomplishment: "",
+            AccomplishmentDescription: ""
+        }]);
+    }
+
+    const handleTargetRemove = (index) => {
+        let newList = [...targets]
+        newList.splice(index, 1)
+        setTargets(newList)
+    }
     //react hook form
     const { handleSubmit, errors, control, setValue, getValues, register } = useForm();
+
+    function getTargetPercentage(items) {
+        return items.reduce(function (a, b) {
+            return Number(a) + ((Number(b['Accomplishment']) / Number(b['PlannedTarget']) * 100));
+        }, 0);
+    };
     function PhysicalTargetWatch({ control }) {
-        const target = useWatch({
-            control,
-            name: ['plannedtarget', 'physicalaccomplishment'],
-            defaultValue: "0"
-        });
+        // const target = useWatch({
+        //   control,
+        //   name: ['plannedtarget', 'physicalaccomplishment'],
+        //   defaultValue: "0"
+        // });
         return (
             <Grid item xs={4}>
                 <TextField
@@ -56,7 +95,7 @@ export default (props) => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    value={target['physicalaccomplishment'] === undefined ? (Number(physicalaccomplishment / plannedtarget) * 100).toFixed(2) : (Number(parseFloat(target['physicalaccomplishment']) / parseFloat(target['plannedtarget'])) * 100).toFixed(2)}
+                    value={getTargetPercentage(targets) / targets.length}
                     error={errors.accomplishment1 != null}
                     helperText={
                         errors.accomplishment1
@@ -272,120 +311,8 @@ export default (props) => {
                                 </Divider>
 
                                 <Grid container spacing={3}>
-                                    <Grid item xs={4}>
-                                        <Controller
-                                            defaultValue={data["PlannedTarget"]}
-                                            control={control}
-                                            name="plannedtarget"
-                                            rules={{}}
-                                            as={
-                                                <TextField
-                                                    className="output-margin"
-                                                    type="number"
-                                                    label="Planned Target"
-                                                    variant="outlined"
-                                                    size="small"
-                                                    fullWidth
-                                                    error={errors.plannedtarget != null}
-                                                    helperText={
-                                                        errors.plannedtarget ? errors.plannedtarget.message : ""
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Controller
-                                            defaultValue={data["TargetType"]}
-                                            control={control}
-                                            name="targettype"
-                                            rules={{}}
-                                            as={
-                                                <TextField
-                                                    className="output-margin"
-                                                    label="Target Type"
-                                                    variant="outlined"
-                                                    size="small"
-                                                    fullWidth
-                                                    error={errors.targettype != null}
-                                                    helperText={
-                                                        errors.targettype
-                                                            ? errors.targettype.message
-                                                            : ""
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Controller
-                                            defaultValue={data["TargetDescription"]}
-                                            control={control}
-                                            name="targetdescription"
-                                            rules={{}}
-                                            as={
-                                                <TextField
-                                                    className="output-margin"
-                                                    label="Target Description"
-                                                    variant="outlined"
-                                                    size="small"
-                                                    fullWidth
-                                                    error={errors.targetdescription != null}
-                                                    helperText={
-                                                        errors.targetdescription
-                                                            ? errors.targetdescription.message
-                                                            : ""
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Controller
-                                            type="number"
-                                            defaultValue={data["PhysicalAccomplishment"]}
-                                            control={control}
-                                            name="physicalaccomplishment"
-                                            rules={{}}
-                                            as={
-                                                <TextField
-                                                    className="output-margin"
-                                                    label="Physical Accomplishment"
-                                                    variant="outlined"
-                                                    size="small"
-                                                    fullWidth
-                                                    error={errors.physicalaccomplishment != null}
-                                                    helperText={
-                                                        errors.physicalaccomplishment
-                                                            ? errors.physicalaccomplishment.message
-                                                            : ""
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Controller
-                                            defaultValue={data["AccomplishmentDescription"]}
-                                            control={control}
-                                            name="accomplishmentdescription"
-                                            rules={{}}
-                                            as={
-                                                <TextField
-                                                    className="output-margin"
-                                                    label="Physical Accomplishment Description"
-                                                    variant="outlined"
-                                                    size="small"
-                                                    fullWidth
-                                                    error={errors.accomplishmentdescription != null}
-                                                    helperText={
-                                                        errors.accomplishmentdescription
-                                                            ? errors.accomplishmentdescription.message
-                                                            : ""
-                                                    }
-                                                />
-                                            }
-                                        />
+                                    <Grid item xs={12} style={{ paddingTop: 5 }}>
+                                        <Target data={targets} handleTargetRemove={handleTargetRemove} handleChange={handleChange} handleTargetIncrease={handleTargetIncrease} />
                                     </Grid>
                                     <PhysicalTargetWatch control={control} />
                                     <Grid item xs={4}>

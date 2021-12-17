@@ -21,11 +21,11 @@ const MenuItem = ({ item }) => {
 
 const SingleLevel = ({ item }) => {
     return (
-        <ListItem button>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <a href={item.to}>
-                <ListItemText primary={item.title} /></a>
-        </ListItem>
+        <a href={item.to}>
+            <ListItem button>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} />
+            </ListItem></a>
     );
 };
 

@@ -337,9 +337,6 @@ export default () => {
               </span>
             </Divider>
             <Grid container spacing={3}>
-              <Grid item xs={12} style={{paddingBottom: 5, justifyContent:'right'}}>
-                
-              </Grid>
               <Grid item xs={12} style={{paddingTop: 5}}>
                 <Target data={targets} handleTargetRemove={handleTargetRemove} handleChange={handleChange} handleTargetIncrease={handleTargetIncrease}/>
               </Grid>
