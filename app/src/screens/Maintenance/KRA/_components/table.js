@@ -5,6 +5,7 @@ import ViewEdit from './editOutput';
 import { useDispatch, useSelector } from 'react-redux';
 import { editOutputStatus, searchMinorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
+import { searchKRA } from '../../../../actions/kraActions';
 
 export default (data) => {
     const userState = useSelector(state => state.user);
@@ -24,7 +25,7 @@ export default (data) => {
         setIsEditOpen(true)
     }
     const handleRefresh = () => {
-        dispatch(searchMinorOutput());
+        dispatch(searchKRA());
     }
     const handleEditOutputStatus = (oType, hId, sId) => {
         Swal.fire({
