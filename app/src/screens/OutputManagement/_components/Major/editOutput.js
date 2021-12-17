@@ -199,7 +199,7 @@ export default (props) => {
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={open}
-                maxWidth="md"
+                maxWidth="lg"
                 fullWidth
             >
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
