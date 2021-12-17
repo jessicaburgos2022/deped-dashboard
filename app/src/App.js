@@ -43,13 +43,13 @@ const App = () => {
           <StylesProvider injectFirst>
             <Switch>
               <Route exact path="/" component={LoginScreen} />
-              <PrivateRoute path="/output" component={Output} />
+              <PrivateRoute path="/output/:type" component={Output} />
               <Route path="/login" component={LoginScreen} />
               {/* <Route path="/interfaces/:bu?" component={Interfaces} /> */}
               <PrivateRoute path="/dashboard" component={Dashboard} />
-              <PrivateRoute path="/dashboardoo" component={ContributoryDashboard} />
-              <PrivateRoute path="/outputmanagement" component={OutputManagement} />
-              <PrivateRoute path="/maintenance" component={Maintenance} />
+              <PrivateRoute path="/contributorydashboard" component={ContributoryDashboard} />
+              <PrivateRoute path="/outputmanagement/:type" component={OutputManagement} />
+              <PrivateRoute path="/maintenance/:type" component={Maintenance} />
               {/* <PrivateRoute path="/maintenance" component={Maintenance} /> */}
             </Switch>
           </StylesProvider>

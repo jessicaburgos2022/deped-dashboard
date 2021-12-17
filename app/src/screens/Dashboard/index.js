@@ -263,9 +263,11 @@ export default () => {
     </React.Fragment>
   );
   return (
-    <div style={{ overflow: "auto", padding: 25, height: "100vh" }}>
-      <div className="text">Physical and Financial Targets Dashboard</div>
+    <div style={{ display: 'flex', overflow: "auto", padding: '0 25px 50px 25px', height: 'calc(100vh - 48px)'}}>
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <div className="text">Physical and Financial Targets Dashboard</div>
+        </Grid>
         <Grid item xs={6}>
           <Card variant="outlined">{card}</Card>
         </Grid>

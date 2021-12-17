@@ -24,6 +24,7 @@ import { Divider } from "@mui/material";
 import { fetchProjectByKRAId } from "../../../../actions/appActions";
 import "../../styles.css";
 import { Grid } from "@mui/material";
+import Target from './Target';
 // import { Container, Row, Col } from 'reactstrap';
 // import { Field }
 
@@ -32,10 +33,43 @@ export default () => {
   const userState = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const OutputTypeId = 1; // ID for MAJOR output (refer to ref_outputtype table)
+  const [targets, setTargets] = useState(
+    [
+      {
+        PlannedTarget: "",
+        TargetType: "",
+        TargetDescription: "",
+        Accomplishment: "",
+        AccomplishmentDescription: ""
+      }
+    ]
+  )
   const [KRAList, setKRAList] = useState(
     appState.KRA.filter((kra) => kra.OutputTypeId === OutputTypeId)
   );
   const [selectedKRA, setSelectedKRA] = useState(null);
+
+  function handleChange(i, event) {
+    const values = [...targets];
+    values[i][event.target.name] = event.target.value;
+    setTargets(values);
+  }
+
+  const handleTargetIncrease = () => {
+    setTargets(oldArray => [...oldArray, {
+      PlannedTarget: "",
+      TargetType: "",
+      TargetDescription: "",
+      Accomplishment: "",
+      AccomplishmentDescription: ""
+    }]);
+  }
+
+  const handleTargetRemove = (index) => {
+    let newList = [...targets]
+    newList.splice(index, 1)
+    setTargets(newList)
+  }
 
   const handleKRAChange = async (event) => {
     setValue("kraid", event.target.value);
@@ -45,12 +79,18 @@ export default () => {
 
   //react hook form
   const { handleSubmit, errors, control, setValue, getValues, register } = useForm();
+
+  function getTargetPercentage(items) {
+    return items.reduce(function (a, b) {
+      return Number(a) + ((Number(b['Accomplishment']) / Number(b['PlannedTarget']) * 100));
+    }, 0);
+  };
   function PhysicalTargetWatch({ control }) {
-    const target = useWatch({
-      control,
-      name: ['plannedtarget', 'physicalaccomplishment'],
-      defaultValue: "0"
-    });
+    // const target = useWatch({
+    //   control,
+    //   name: ['plannedtarget', 'physicalaccomplishment'],
+    //   defaultValue: "0"
+    // });
     return (
       <Grid item xs={4}>
         <TextField
@@ -62,7 +102,7 @@ export default () => {
           variant="outlined"
           size="small"
           fullWidth
-          value={(Number(parseFloat(target['physicalaccomplishment']) / parseFloat(target['plannedtarget'])) * 100).toFixed(2)}
+          value={getTargetPercentage(targets) / targets.length}
           error={errors.accomplishment1 != null}
           helperText={
             errors.accomplishment1
@@ -145,9 +185,10 @@ export default () => {
       ) {
         data.userId = userState.userInfo.acc[0].Id;
         data.kraid = selectedKRA;
+        data.targets = targets;
         data.balance = parseFloat(data.financialrequirement) - parseFloat(data.amountutilized);
-        data.utilizationrate = (parseFloat(data['amountutilized']) / parseFloat(data['financialrequirement'])) * 100
-        data.accomplishment1 = (parseFloat(data['physicalaccomplishment']) / parseFloat(data['plannedtarget'])) * 100
+        data.utilizationrate = (parseFloat(data['amountutilized']) / parseFloat(data['financialrequirement'])) * 100;
+        data.accomplishment1 = getTargetPercentage(targets) / targets.length;
         var ret = await dispatch(insertMajorOutput(data));
         Swal.fire(
           ret.result,
@@ -295,122 +336,12 @@ export default () => {
                 <b>PHYSICAL</b>
               </span>
             </Divider>
-
             <Grid container spacing={3}>
-              <Grid item xs={4}>
-                <Controller
-                  defaultValue=""
-                  control={control}
-                  name="plannedtarget"
-                  rules={{}}
-                  as={
-                    <TextField
-                      className="output-margin"
-                      type="number"
-                      label="Planned Target"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      error={errors.plannedtarget != null}
-                      helperText={
-                        errors.plannedtarget ? errors.plannedtarget.message : ""
-                      }
-                    />
-                  }
-                />
+              <Grid item xs={12} style={{paddingBottom: 5, justifyContent:'right'}}>
+                
               </Grid>
-              <Grid item xs={4}>
-                <Controller
-                  defaultValue=""
-                  control={control}
-                  name="targettype"
-                  rules={{}}
-                  as={
-                    <TextField
-                      className="output-margin"
-                      label="Target Type"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      error={errors.targettype != null}
-                      helperText={
-                        errors.targettype
-                          ? errors.targettype.message
-                          : ""
-                      }
-                    />
-                  }
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Controller
-                  defaultValue=""
-                  control={control}
-                  name="targetdescription"
-                  rules={{}}
-                  as={
-                    <TextField
-                      className="output-margin"
-                      label="Target Description"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      error={errors.targetdescription != null}
-                      helperText={
-                        errors.targetdescription
-                          ? errors.targetdescription.message
-                          : ""
-                      }
-                    />
-                  }
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Controller
-                  type="number"
-                  defaultValue=""
-                  control={control}
-                  name="physicalaccomplishment"
-                  rules={{}}
-                  as={
-                    <TextField
-                      className="output-margin"
-                      label="Physical Accomplishment"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      error={errors.physicalaccomplishment != null}
-                      helperText={
-                        errors.physicalaccomplishment
-                          ? errors.physicalaccomplishment.message
-                          : ""
-                      }
-                    />
-                  }
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Controller
-                  defaultValue=""
-                  control={control}
-                  name="accomplishmentdescription"
-                  rules={{}}
-                  as={
-                    <TextField
-                      className="output-margin"
-                      label="Physical Accomplishment Description"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      error={errors.accomplishmentdescription != null}
-                      helperText={
-                        errors.accomplishmentdescription
-                          ? errors.accomplishmentdescription.message
-                          : ""
-                      }
-                    />
-                  }
-                />
+              <Grid item xs={12} style={{paddingTop: 5}}>
+                <Target data={targets} handleTargetRemove={handleTargetRemove} handleChange={handleChange} handleTargetIncrease={handleTargetIncrease}/>
               </Grid>
               <PhysicalTargetWatch control={control} />
               <Grid item xs={4}>

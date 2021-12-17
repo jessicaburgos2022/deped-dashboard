@@ -36,8 +36,8 @@ export default () => {
     // eslint-disable-next-line
   }, []);
   const GenerateBarGraph = (props) => {
-    const {data} = props;
-    const filteredData = dashboardState.oo.filter(r=>r.OutcomeTypeId === data.OutcomeTypeId && r.OutcomeId === data.OutcomeId).filter(r=>r.IsComputed === 1);
+    const { data } = props;
+    const filteredData = dashboardState.oo.filter(r => r.OutcomeTypeId === data.OutcomeTypeId && r.OutcomeId === data.OutcomeId).filter(r => r.IsComputed === 1);
     const graphData = {
       labels: filteredData.map(r => r.IndicatorTitle + " (%)"),
       datasets: [{
@@ -64,13 +64,13 @@ export default () => {
         borderWidth: 1
       }]
     };
-    return <PolarArea data={ graphData } />
+    return <PolarArea data={graphData} />
 
   }
 
   return (
     <div style={{ overflow: 'auto', padding: 25, height: "100vh" }}>
-      <div className="text">Dashboard - OO</div>
+      <div className="text">Contributory Outputs To Organizational Outcome</div>
       {
         dashboardState &&
         dashboardState.oo &&
@@ -79,7 +79,7 @@ export default () => {
           var outcomeType = dashboardState.oo.find(res => res.OutcomeTypeId === otypeId);
           return (
             <Paper style={{ padding: '15px' }}>
-              <h5 style={{ background: '#f0f0f0', padding: 5 }}>{outcomeType.OutcomeType}</h5>
+              <h5 style={{ background: '#f1faee', padding: 5 }}>{outcomeType.OutcomeType}</h5>
               <Divider />
               <Grid container spacing={1}>
                 {
@@ -88,7 +88,7 @@ export default () => {
                     return (
                       <Grid item xs={4} style={{ padding: 15 }}>
                         <Grid container spacing={2}>
-                          <GenerateBarGraph data = {outcome} />
+                          <GenerateBarGraph data={outcome} />
                           {/* {
                             dashboardState.oo.filter(res => res.OutcomeId === outcomeId).map(res => {
                               return (

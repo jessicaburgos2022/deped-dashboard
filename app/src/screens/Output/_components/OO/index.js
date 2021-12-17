@@ -15,7 +15,7 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-import {insertContributoryOutput } from "../../../../actions/outputActions";
+import { insertContributoryOutput } from "../../../../actions/outputActions";
 import Swal from "sweetalert2";
 import { Divider } from "@mui/material";
 import MuiGrid from "@mui/material/Grid";
@@ -43,13 +43,11 @@ export default () => {
     const input = e.target.value;
     const id = e.target.id;
     var cIndicator = indicatorInput;
-    if(cIndicator.find(i=>i.id === id))
-    {
+    if (cIndicator.find(i => i.id === id)) {
       var index = cIndicator.findIndex(obj => obj.id === id);
       cIndicator[index].value = input;
     }
-    else
-    {
+    else {
       cIndicator.push({ id, value: input })
     }
     setIndicator(cIndicator);
@@ -74,7 +72,7 @@ export default () => {
     }
   };
   return (
-    <div style={{ height: "100vh"}}>
+    <div style={{ height: "100vh" }}>
       <div className="text">Insert Contributory Output to OO</div>
       <Paper style={{ padding: "2rem" }}>
         <form onSubmit={handleSubmit(onSubmit)} id="insert-contributory-form">
@@ -105,7 +103,6 @@ export default () => {
                 {errors.projectid ? errors.projectid.message : ""}
               </FormHelperText>
             </FormControl>
-            {/* <br/><br/> */}
             <Controller
               defaultValue=""
               control={control}
@@ -138,42 +135,64 @@ export default () => {
                 return (
                   <React.Fragment>
                     <Divider
-                      style={{ padding: "2rem" }}
+                      style={{ padding: "1rem" }}
                       variant="fullWidth"
                       orientation="horizontal"
                     >
                       <span>
-                        <b> {outcomeType}</b>
+                        <h5>{outcomeType}</h5>
                       </span>
                     </Divider>
                     {
                       [... new Set(ooState.indicators.filter(i => i.OutcomeTypeId === otype).map(ind => ind.OutcomeId))].map(outcomeId => {
                         const oTitle = ooState.indicators.find(ind => ind.OutcomeId === outcomeId).OutcomeTitle;
                         return (
-                          <React.Fragment>
-                            <Divider style={{ padding: "1rem 0 0 0" }} textAlign="left">
-                              <i>{oTitle}</i>
-                            </Divider>
-                            {
-                              ooState.indicators.filter(ind => ind.OutcomeId === outcomeId).map(indicator => {
-                                return (
-                                  <TextField
-                                    multiline
-                                    rows={2}
-                                    maxRows={4}
-                                    id={indicator.IndicatorId}
-                                    className="output-category-margin"
-                                    type="number"
-                                    label={indicator.Indicator}
-                                    variant="outlined"
-                                    size="small"
-                                    fullWidth
-                                    onChange={(e) => { handleIndicatorInput(e) }}
-                                  />
-                                )
-                              })
-                            }
-                          </React.Fragment>
+                          <div style={{ marginBottom: 25 }}>
+                            <h6>{oTitle}</h6>
+                            <Grid container spacing={3} padding={2}>
+                              {
+                                ooState.indicators.filter(ind => ind.OutcomeId === outcomeId).map(indicator => {
+                                  if (indicator.IsComputed === 0) {
+                                    return (
+                                      <Grid item>
+                                        <TextField
+                                          multiline
+                                          rows={2}
+                                          maxRows={4}
+                                          id={indicator.IndicatorId}
+                                          className="output-margin"
+                                          type="number"
+                                          label={indicator.Indicator}
+                                          variant="outlined"
+                                          size="small"
+                                          fullWidth
+                                          onChange={(e) => { handleIndicatorInput(e) }}
+                                        />
+                                      </Grid>
+                                    )
+                                  }
+                                  else {
+                                    return (
+                                      <Grid item xs={4}>
+                                        <TextField
+                                          type="number"
+                                          defaultValue={0}
+                                          id={indicator.IndicatorId}
+                                          className="output-margin"
+                                          type="number"
+                                          label={indicator.Indicator}
+                                          variant="outlined"
+                                          size="small"
+                                          fullWidth
+                                          onChange={(e) => { handleIndicatorInput(e) }}
+                                        />
+                                      </Grid>
+                                    )
+                                  }
+                                })
+                              }
+                            </Grid>
+                          </div>
                         )
                       })
                     }

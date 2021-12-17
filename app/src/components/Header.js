@@ -8,7 +8,7 @@ import {
   Typography,
   withStyles,
 } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
+import { IconButton } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useLocation } from "react-router-dom";
 const styles = (theme) => ({
@@ -19,12 +19,9 @@ const styles = (theme) => ({
 });
 
 const Header = (props) => {
-  const { classes, setOpen } = props;
+  const { classes, handleDrawerOpen } = props;
   const user = localStorage.getItem("token");
   const location = useLocation();
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
   const handleLogout = () => {
     localStorage.setItem("token", "");
     localStorage.setItem("state", "");
@@ -36,17 +33,9 @@ const Header = (props) => {
         <Toolbar variant="dense">
           <Box display="flex" justifyContent="space-between" width="100%">
             <div style={{ display: "flex" }}>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-              >
-                <MenuIcon />
-              </IconButton>
               <Box display="flex" alignItems="center">
                 <Typography className={classes.brandText}>
-                  E2E Interface Management System and Dashboard
+                  PRIME NCR PID
                 </Typography>
               </Box>
             </div>
@@ -55,11 +44,6 @@ const Header = (props) => {
                 <Link href="/login" style={{ color: "#fff", margin: "auto" }}>
                   Login
                 </Link>
-              </div>
-            )}
-            {user && location.pathname !== "/login" && (
-              <div style={{ display: "flex", float: "right" }}>
-                <Button onClick={() => handleLogout()} style={{color:"#fff"}}>Logout</Button>
               </div>
             )}
           </Box>
