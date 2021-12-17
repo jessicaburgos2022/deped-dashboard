@@ -17,7 +17,7 @@ export default () => {
     return (
         <div style={{ padding: 25 }}>
         {isAddOpen &&   <AddOutput open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh}/>}
-            <div className="text">KRA  &nbsp; <Button variant="contained" color="success" onClick={() => setIsAddOpen(true)} >Add KRA</Button></div>
+            <div className="text">INDICATOR  &nbsp; <Button variant="contained" color="success" onClick={() => setIsAddOpen(true)} >Add KRA</Button></div>
             <Table SearchResult = {kraState.searchResult} />
            
         </div>

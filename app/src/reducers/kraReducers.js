@@ -1,7 +1,10 @@
 import {
     SEARCH_KRA_REQUEST,
     SEARCH_KRA_OUTPUT_SUCCESS,
-    SEARCH_KRA_OUTPUT_FAILED
+    SEARCH_KRA_OUTPUT_FAILED,
+    ADD_KRA_OUTPUT_REQUEST,
+    ADD_KRA_OUTPUT_SUCCESS,
+    ADD_KRA_OUTPUT_FAILED
     
     } from "../constants/kraConstants";
 
@@ -27,7 +30,9 @@ import {
               ...state,
               searchResult: []
             }
+            
           default:
             return state;
         }
       };
+      

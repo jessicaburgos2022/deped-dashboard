@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import KRAModule from './KRA'
+import KRAModule from './KRA';
+import PROJECTModule from './Project';
+import INDICATORModule from './Indicator';
 import { Container, FormControl, IconButton, InputLabel, MenuItem, Select } from "@material-ui/core";
 export default (props) => {
   const [outputType, setOutputType] = useState('major');
@@ -10,9 +12,9 @@ export default (props) => {
       case '/maintenance/kra':
         return <KRAModule />;
       case '/maintenance/project':
-        return <KRAModule />;
+        return <PROJECTModule />;
       case '/maintenance/indicator':
-        return <KRAModule />;
+        return <INDICATORModule />;
       default:
         return <KRAModule />;
     }
