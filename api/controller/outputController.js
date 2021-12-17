@@ -17,14 +17,12 @@ const pool = mysql.createPool({
 const insertMajorOutput = asyncHander(async (req, res) => {
     const { kraid, objective, projectid, output, plannedtarget, targettype, targetdescription, timeline, physicalaccomplishment, accomplishmentdescription, accomplishment1, accomplishment2, withinTimeframe,
         gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingsource, budgetstructure, score, scoredescription, opsissue, policyissue,
-        recommendation, others, correctiveaction, userId
+        recommendation, others, correctiveaction, userId, targets
     } = req.body;
-    const queryString = `CALL InsertMajorOutput(${kraid},  ${projectid}, '${objective}', '${output}', 
-    ${plannedtarget}, '${targettype}', '${targetdescription}', '${timeline}', ${physicalaccomplishment}, '${accomplishmentdescription}', ${accomplishment1}, ${accomplishment2}, ${withinTimeframe},
-        '${gaingap}', ${financialrequirement}, ${amountutilized}, ${balance}, ${utilizationrate}, '${fundingsource}', 
+    const queryString = `CALL InsertMajorOutput('${kraid}',  '${projectid}', '${objective}', '${output}', '${timeline}', '${accomplishment1}', '${accomplishment2}', '${withinTimeframe}',
+        '${gaingap}', '${financialrequirement}', '${amountutilized}', '${balance}', '${utilizationrate}', '${fundingsource}', 
         '${budgetstructure}', '${score}', '${scoredescription}','${opsissue}', '${policyissue}',
         '${recommendation}', '${others}', '${correctiveaction}', ${userId})`;
-    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -37,6 +35,10 @@ const insertMajorOutput = asyncHander(async (req, res) => {
                 }
                 else {
                     var qResult = JSON.parse(JSON.stringify(results[0][0]));
+                    targets.map(t => {
+                        var InsertMajorOutput = `CALL InsertPhysicalTarget('${results[1][0].HeadId}','${t.PlannedTarget}','${t.TargetType}','${t.TargetDescription}','${t.Accomplishment}','${t.AccomplishmentDescription}', '${userId}')`
+                        connection.query(InsertMajorOutput)
+                    })
                     res.json(qResult);
                     res.end();
                 }
@@ -122,7 +124,7 @@ const editMinorOutput = asyncHander(async (req, res) => {
     } = req.body;
     const queryString = `CALL EditMinorOutput('${outputminorheaderid}', '${objective}', '${output}', '${target}', '${accomplishment}', ${targetcompletion},
         '${agency}', '${timeline}', ${withinTimeframe},'${opsissue}','${policyissue}', '${recommendation}', '${others}', '${score}', '${scoredescription}', '${correctiveaction}', ${userId})`;
-        console.log(queryString)
+    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
