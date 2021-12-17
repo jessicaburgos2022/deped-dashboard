@@ -63,11 +63,14 @@ export default (data) => {
                             Department
                         </TableCell>
                         <TableCell className="interface-table-header">
-                            Project
+                            KRA
                         </TableCell>
                         <TableCell className="interface-table-header">
-                            Output
+                            Project
                         </TableCell>
+                        {/* <TableCell className="interface-table-header">
+                            Output
+                        </TableCell> */}
                         <TableCell className="interface-table-header">Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -80,11 +83,14 @@ export default (data) => {
                                         {r.Department}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
-                                        {r.Project}
+                                        {r.KRAName}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
-                                        {r.Output}
+                                        {r.Project}
                                     </TableCell>
+                                    {/* <TableCell component="th" className="interface-table-cell">
+                                        {r.Output}
+                                    </TableCell> */}
                                     <TableCell component="th" className="interface-table-cell">
                                         <Button onClick={() => handleViewOpen(r)}>View</Button>
                                         <Button onClick={() => handleViewEdit(r)} hidden={parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1}>Edit</Button>

@@ -52,11 +52,11 @@ export default (data) => {
 
     return (
         <TableContainer component={Paper}>
-             {
+            {
                 isViewOpen && <ViewOutput data={selectedRow} open={isViewOpen} handleClose={() => setIsViewOpen(false)} />
             }
             {
-                isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh = {() => handleRefresh()} />
+                isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh={() => handleRefresh()} />
             }
             <Table aria-label="collapsible table">
                 <TableHead>

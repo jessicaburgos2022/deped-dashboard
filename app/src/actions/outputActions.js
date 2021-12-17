@@ -28,9 +28,40 @@ import {
     EDIT_OUTPUTSTATUS_FAILED,
     SEARCH_CONTRIBUTORY_OUTPUT_REQUEST,
     SEARCH_CONTRIBUTORY_OUTPUT_SUCCESS,
-    SEARCH_CONTRIBUTORY_OUTPUT_FAILED
+    SEARCH_CONTRIBUTORY_OUTPUT_FAILED,
+    GET_TARGETBYOUTPUTID_REQUEST,
+    GET_TARGETBYOUTPUTID_SUCCESS,
+    GET_TARGETBYOUTPUTID_FAILED,
+    DELETE_TARGETBYID_REQUEST,
+    DELETE_TARGETBYID_SUCCESS,
+    DELETE_TARGETBYID_FAILED
 } from "../constants/outputConstants";
 import axios from "../helpers/axios";
+export const getTargetById = (id) => async (dispatch) => {
+    await dispatch({ type: GET_TARGETBYOUTPUTID_REQUEST });
+    try {
+        const { data } = await axios.get(`/api/output/target/${id}`);
+        await dispatch({ type: GET_TARGETBYOUTPUTID_SUCCESS, payload: data });
+    } catch (e) {
+        dispatch({
+            type: GET_TARGETBYOUTPUTID_FAILED,
+            payload: ""
+        });
+    }
+};
+export const deleteTargetById = (id) => async (dispatch) => {
+    await dispatch({ type: DELETE_TARGETBYID_REQUEST });
+    try {
+        const { data } = await axios.delete(`/api/output/target/${id}`);
+        await dispatch({ type: DELETE_TARGETBYID_SUCCESS });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: DELETE_TARGETBYID_FAILED,
+            payload: ""
+        });
+    }
+};
 
 export const insertMajorOutput = (param) => async (dispatch) => {
     await dispatch({ type: INSERT_MAJOR_OUTPUT_REQUEST });

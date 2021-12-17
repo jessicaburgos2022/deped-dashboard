@@ -40,8 +40,9 @@ const searchKRA = asyncHander(async (req, res) => {
 
 
 const insertKRA = asyncHander(async (req, res) => {
-  const {outputtypeid, departmentid, name, description} = req.body;
+  const { outputtypeid, departmentid, name, description } = req.body;
   const queryString = `CALL InsertKRA('${outputtypeid}','${departmentid}','${name}','${description}')`;
+  console.log(queryString)
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -68,8 +69,9 @@ const insertKRA = asyncHander(async (req, res) => {
 
 
 const editKRA = asyncHander(async (req, res) => {
-  const {kraid, outputtypeid, departmentid, name, description} = req.body;
-  const queryString = `CALL EditKRA('${kraid}','${outputtypeid}','${departmentid}','${name}','${description}')`;
+  const { kraid, outputtypeid, name, description } = req.body;
+  const queryString = `CALL EditKRA('${kraid}','${outputtypeid}','${name}','${description}')`;
+  console.log(queryString)
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });

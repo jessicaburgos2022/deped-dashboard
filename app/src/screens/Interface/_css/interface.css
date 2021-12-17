@@ -6,6 +6,8 @@
     padding: 0 0 0 10px;
     font-size: 12px;
     border-right: solid 1px #f2f2f2;
+    text-overflow: ellipsis;
+    max-width: 300px;
 }
 .interface-table-list-menu-item {
     padding-top: 4px!important;

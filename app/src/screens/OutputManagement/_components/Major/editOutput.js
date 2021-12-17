@@ -22,13 +22,13 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm, useWatch } from "react-hook-form";
-import { editMajorOutput } from "../../../../actions/outputActions";
-import Target from "../../../Output/_components/MajorOutput/Target";
+import { editMajorOutput, getTargetById, deleteTargetById } from "../../../../actions/outputActions";
+import Target from "./Target";
 import Swal from "sweetalert2";
 import { Divider } from "@mui/material";
 import { Grid } from "@mui/material";
 export default (props) => {
-    const appState = useSelector((state) => state.app);
+    const majorOutputState = useSelector((state) => state.majorOutputManagement);
     const userState = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
@@ -37,18 +37,10 @@ export default (props) => {
     const [physicalaccomplishment, setphysicalaccomplishment] = useState(data['PhysicalAccomplishment']);
     const [financialrequirement, setfinancialrequirement] = useState(data['FinancialRequirement']);
     const [amountutilized, setamountutilized] = useState(data['AmountUtilized']);
-
-    const [targets, setTargets] = useState(
-        [
-            {
-                PlannedTarget: "",
-                TargetType: "",
-                TargetDescription: "",
-                Accomplishment: "",
-                AccomplishmentDescription: ""
-            }
-        ]
-    )
+    useEffect(() => {
+        dispatch(getTargetById(data["OutputMajorHeaderId"]));
+    }, [])
+    const [targets, setTargets] = useState(majorOutputState.targetByOutputId)
     function handleChange(i, event) {
         const values = [...targets];
         values[i][event.target.name] = event.target.value;
@@ -66,13 +58,35 @@ export default (props) => {
     }
 
     const handleTargetRemove = (index) => {
-        let newList = [...targets]
-        newList.splice(index, 1)
-        setTargets(newList)
+
+        Swal.fire({
+            title: "Confirmation",
+            text: "Do you want to approve?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: "No"
+        }).then(async (r) => {
+            if (r.isConfirmed) {
+                if (targets[index].TargetId) {
+                    var ret = await dispatch(deleteTargetById(targets[index].TargetId))
+                    Swal.fire(
+                        ret.result,
+                        ret.message,
+                        ret.result === "Success" ? "success" : "error"
+                    );
+                }
+
+                let newList = [...targets]
+                newList.splice(index, 1)
+                setTargets(newList)
+            }
+        });
     }
     //react hook form
     const { handleSubmit, errors, control, setValue, getValues, register } = useForm();
-
     function getTargetPercentage(items) {
         return items.reduce(function (a, b) {
             return Number(a) + ((Number(b['Accomplishment']) / Number(b['PlannedTarget']) * 100));
@@ -167,7 +181,7 @@ export default (props) => {
         )
     }
     const onSubmit = async (input) => {
-        if (data) {
+        if (input) {
             if (
                 userState.userInfo &&
                 userState.userInfo.acc &&
@@ -178,9 +192,10 @@ export default (props) => {
                 input.outputmajorheaderid = data.OutputMajorHeaderId;
                 input.kraid = data.KRAId;
                 input.projectid = data.projectId;
+                input.targets = targets;
                 input.balance = parseFloat(input.financialrequirement) - parseFloat(input.amountutilized);
                 input.utilizationrate = (parseFloat(input['amountutilized']) / parseFloat(input['financialrequirement'])) * 100
-                input.accomplishment1 = (parseFloat(input['physicalaccomplishment']) / parseFloat(input['plannedtarget'])) * 100
+                input.accomplishment1 = getTargetPercentage(targets) / targets.length;
                 console.log(input);
                 var ret = await dispatch(editMajorOutput(input));
                 Swal.fire(
@@ -288,16 +303,6 @@ export default (props) => {
                                         />
                                     }
                                 />
-
-                                {/* <Divider
-                            placeholder="OPCRF"
-                            label="OPCRF"
-                            variant="fullWidth"
-                            orientation="horizontal"
-
-                        ></Divider>
-                        <br /><br /> */}
-
                                 <Divider
                                     style={{ padding: "2rem 0 0 0" }}
                                     placeholder="OPCRF"
@@ -311,7 +316,7 @@ export default (props) => {
                                 </Divider>
 
                                 <Grid container spacing={3}>
-                                    <Grid item xs={12} style={{ paddingTop: 5 }}>
+                                    <Grid item xs={12} style={{ paddingTop: 25 }}>
                                         <Target data={targets} handleTargetRemove={handleTargetRemove} handleChange={handleChange} handleTargetIncrease={handleTargetIncrease} />
                                     </Grid>
                                     <PhysicalTargetWatch control={control} />
@@ -367,13 +372,15 @@ export default (props) => {
                                     </Grid>
                                     <Grid item xs={4}>
                                         <Controller
-                                            type="number"
                                             defaultValue={data["GainGap"]}
                                             control={control}
                                             name="gaingap"
                                             rules={{}}
                                             as={
                                                 <TextField
+                                                    multiline
+                                                    rows={3}
+                                                    maxRows={3}
                                                     className="output-margin"
                                                     label="Gains/Gaps"
                                                     variant="outlined"

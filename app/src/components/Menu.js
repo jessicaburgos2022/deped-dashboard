@@ -1,15 +1,16 @@
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import {AddCircleOutlineOutlined} from "@material-ui/icons";
+import { BubbleChartOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined} from '@mui/icons-material';
 import React from "react";
 
 export const menu = [
     {
-        icon: <HomeOutlinedIcon />,
+        icon: <InsightsOutlined />,
         title: "Dashboard - PPA",
         to: '/dashboard'
     },
     {
-        icon: <HomeOutlinedIcon />,
+        icon: <BubbleChartOutlined />,
         title: "Dashboard - OO",
         to: '/contributorydashboard'
     },
@@ -32,7 +33,7 @@ export const menu = [
         ]
     },
     {
-        icon: <AddCircleOutlineOutlined />,
+        icon: <DashboardOutlined />,
         title: "Output Management",
         items: [
             {
@@ -50,7 +51,7 @@ export const menu = [
         ]
     },
     {
-        icon: <AddCircleOutlineOutlined />,
+        icon: <SettingsOutlined />,
         title: "Maintenance",
         items: [
             {

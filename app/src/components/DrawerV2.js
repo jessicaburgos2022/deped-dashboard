@@ -23,8 +23,8 @@ const SingleLevel = ({ item }) => {
     return (
         <a href={item.to}>
             <ListItem button>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
+                <ListItemIcon style={{color:'#fff', textDecoration:'none'}}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} style={{color:'#fff', textDecoration:'none'}}/>
             </ListItem></a>
     );
 };
@@ -40,9 +40,9 @@ const MultiLevel = ({ item }) => {
     return (
         <React.Fragment>
             <ListItem button onClick={handleClick}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
-                {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                <ListItemIcon style={{color:'#fff', textDecoration:'none'}}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title}  style={{color:'#fff', textDecoration:'none'}}/>
+                {open ? <ExpandLessIcon color="#fff"/> : <ExpandMoreIcon color="#fff"/>}
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>

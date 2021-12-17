@@ -78,7 +78,7 @@ export default () => {
         [... new Set(dashboardState.oo.map(res => res.OutcomeTypeId))].map(otypeId => {
           var outcomeType = dashboardState.oo.find(res => res.OutcomeTypeId === otypeId);
           return (
-            <Paper style={{ padding: '15px' }}>
+            <Paper style={{ padding: '15px', marginBottom:25 }}>
               <h5 style={{ background: '#f1faee', padding: 5 }}>{outcomeType.OutcomeType}</h5>
               <Divider />
               <Grid container spacing={1}>
@@ -86,7 +86,7 @@ export default () => {
                   [... new Set(dashboardState.oo.filter(i => i.OutcomeTypeId === outcomeType.OutcomeTypeId).map(ind => ind.OutcomeId))].map(outcomeId => {
                     var outcome = dashboardState.oo.find(res => res.OutcomeId === outcomeId)
                     return (
-                      <Grid item xs={4} style={{ padding: 15 }}>
+                      <Grid item xs={3} style={{ padding: 15 }}>
                         <Grid container spacing={2}>
                           <GenerateBarGraph data={outcome} />
                           {/* {
