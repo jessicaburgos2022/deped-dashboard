@@ -26,10 +26,8 @@ import { Checkbox, Divider } from "@mui/material";
 import { Grid } from "@mui/material";
 
 import {
-  searchMinorOutput,
-  editOutputStatus,
-  editMinorOutput,
-} from "../../../../actions/outputActions";
+  editKRA
+} from "../../../../actions/kraActions";
 export default (props) => {
   const { open, handleClose, handleRefresh, data } = props;
 
@@ -51,21 +49,7 @@ export default (props) => {
       ) {
         input.userId = userState.userInfo.acc[0].Id;
         input.kraid = data.KRAId;
-        input.projectid = data.projectId;
-        input.outputminorheaderid = data.OutputMinorHeaderId;
-        input.balance =
-          parseFloat(input.financialrequirement) -
-          parseFloat(input.amountutilized);
-        input.utilizationrate =
-          (parseFloat(input["amountutilized"]) /
-            parseFloat(input["financialrequirement"])) *
-          100;
-        input.accomplishment1 =
-          (parseFloat(input["physicalaccomplishment"]) /
-            parseFloat(input["plannedtarget"])) *
-          100;
-        console.log(input);
-        var ret = await dispatch(editMinorOutput(input));
+        var ret = await dispatch(editKRA(input));
         Swal.fire(
           ret.result,
           ret.message,
@@ -90,11 +74,11 @@ export default (props) => {
         </DialogTitle>
         <DialogContent dividers>
           <Paper style={{ padding: "2rem" }}>
-            <form onSubmit={handleSubmit(onSubmit)} id="edit-interface">
+            <form onSubmit={handleSubmit(onSubmit)} id="edit-kra">
               <FormGroup>
                 <Controller
                   control={control}
-                  name="outputype"
+                  name="outputtypeid"
                   defaultValue={data["OutputTypeId"]}
                   rules={{
                     required: {
@@ -105,7 +89,7 @@ export default (props) => {
                   as={
                     <Select
                       className="output-category-margin"
-                      name="outputype"
+                      name="outputtypeid"
                       label="Select Output Type"
                     >
                       <MenuItem value={1}>Major Output</MenuItem>
@@ -114,17 +98,45 @@ export default (props) => {
                   }
                 />
                 
+                <Controller
+                  control={control}
+                  name="name"
+                  defaultValue={data["KRAName"]}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "This field is required",
+                    },
+                  }}
+                  as={
                 <TextField
                   label="Name"
                   defaultValue={data["KRAName"]}
                   rows={4}
                   maxRows={4}
+                  name="name"
                   className="output-margin"
                   variant="outlined"
                   size="small"
+                  
                 />
+                }
+              />
+
+            <Controller
+                  control={control}
+                  name="description"
+                  defaultValue={data["KRADescription"]}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "This field is required",
+                    },
+                  }}
+                  as={
                 <TextField
                   label="Description"
+                  name="description"
                   defaultValue={data["KRADescription"]}
                   rows={4}
                   maxRows={4}
@@ -132,6 +144,8 @@ export default (props) => {
                   variant="outlined"
                   size="small"
                 />
+                  }
+                  />
               </FormGroup>
               <Button
                 className="output-margin"

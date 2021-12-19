@@ -24,12 +24,14 @@ export default (props) => {
                     View Output
                 </DialogTitle>
                 <DialogContent dividers>
-                    <b>Department:</b> {data.DepartmentDescription} <br />
-                    <b>Output Type:</b> {data.OutputTypeDescription} <br />
-                    <b>KRA:</b> {data.KRAName} <br />
-                    <b>Description:</b> {data.KRADescription} <br />
+                    <b>KRA ID:</b> {data.KRAId} <br />
+                    <b>Project ID Type:</b> {data.ProjectId} <br />
+                    <b>Deparment:</b> {data.DepartmentDescription} <br />
+                    <b>KRA Name:</b> {data.KRADescription} <br />
+                    <b>Project Name:</b> {data.ProjectName} <br />
+                    {/* <b>Description:</b> {data.KRADescription} <br /> */}
                     
-
+                    
                     
                 </DialogContent>
                 <DialogActions>
