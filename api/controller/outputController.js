@@ -213,8 +213,8 @@ const insertContributoryOutput = asyncHander(async (req, res) => {
 
 
 const searchMajorOutput = asyncHander(async (req, res) => {
-    const { } = req.params;
-    const queryString = `CALL searchMajorOutput()`;
+    const { departmentid, kraname } = req.body;
+    const queryString = `CALL searchMajorOutput(${departmentid},'${kraname}')`;
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });

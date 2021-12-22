@@ -13,11 +13,11 @@ export default (data) => {
     const userState = useSelector(state => state.user);
     const dispatch = useDispatch();
     const departmentId = userState.userInfo.acc[0].DepartmentId;
-    const perPage = 15;
     const { SearchResult } = data;
     const [isViewOpen, setIsViewOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState({});
+    const perPage = 15;
     const [currentPage, setCurrentPage] = useState(0);
 
     const currentData = SearchResult

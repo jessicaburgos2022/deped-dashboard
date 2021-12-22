@@ -19,6 +19,7 @@ import {
   fetchKRAByDepartmentId,
   fetchOutputTypes,
   fetchProjectByDepartment,
+  fetchDepartmentList
 } from "../../actions/appActions";
 
 import {
@@ -55,6 +56,7 @@ export default () => {
     dispatch(fetchChart4());
     dispatch(fetchIndicatorsByDeptId(departmentId));
     dispatch(fetchProjectByDepartment(departmentId));
+    dispatch(fetchDepartmentList());
     // eslint-disable-next-line
   }, []);
   const data1 = {

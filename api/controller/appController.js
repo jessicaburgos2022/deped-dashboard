@@ -12,6 +12,32 @@ const pool = mysql.createPool({
   timeout: process.env.DB_CISD_TIMEOUT,
 });
 
+const listDepartment = asyncHander(async (req, res) => {
+  const queryString = `CALL ListDepartment()`;
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.json({ result: 'Failed', message: 'Query Failed' });
+      return;
+    }
+    try {
+      connection.query(queryString, (error, results) => {
+        if (error) {
+          res.json({ result: 'Failed', message: 'Query Failed' });
+          res.end();
+        } else {
+          var qResult = JSON.parse(JSON.stringify(results[0]));
+          res.json(qResult);
+          res.end();
+        }
+      });
+    } catch (error) {
+      res.json({ result: 'Failed', message: 'Query Failed' });
+      res.end();
+    }
+    connection.release();
+  });
+});
+
 const listOutputTypeId = asyncHander(async (req, res) => {
   const queryString = `SELECT Id, Name, Description, CASE WHEN IsActive THEN 1 ELSE 0 END AS IsActive FROM ref_outputtype`;
   pool.getConnection((err, connection) => {
@@ -127,4 +153,4 @@ const listProjectsByDepartmentId = asyncHander(async (req, res) => {
   });
   
 });
-module.exports = { listOutputTypeId, listKRAByDepartmentId, listProjectByKRAId, listProjectsByDepartmentId };
+module.exports = { listDepartment,listOutputTypeId, listKRAByDepartmentId, listProjectByKRAId, listProjectsByDepartmentId };

@@ -10,7 +10,10 @@ import {
   GET_PROJECTBYKRA_FAILED,
   GET_PROJECTBYDEPARTMENT_REQUEST,
   GET_PROJECTBYDEPARTMENT_SUCCESS,
-  GET_PROJECTBYDEPARTMENT_FAILED
+  GET_PROJECTBYDEPARTMENT_FAILED,
+  GET_DEPARTMENTLIST_REQUEST,
+  GET_DEPARTMENTLIST_SUCCESS,
+  GET_DEPARTMENTLIST_FAILED
 } from "../constants/appConstants";
 import axios from "../helpers/axios";
 
@@ -74,6 +77,22 @@ export const fetchProjectByDepartment = (deptId) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_PROJECTBYDEPARTMENT_FAILED,
+      payload: ""
+    });
+  }
+};
+
+export const fetchDepartmentList = () => async (dispatch) => {
+  await dispatch({ type: GET_DEPARTMENTLIST_REQUEST });
+  try {
+    const { data } = await axios.get(`/api/app/department`);
+    dispatch({
+      type: GET_DEPARTMENTLIST_SUCCESS,
+      payload: data,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_DEPARTMENTLIST_FAILED,
       payload: ""
     });
   }
