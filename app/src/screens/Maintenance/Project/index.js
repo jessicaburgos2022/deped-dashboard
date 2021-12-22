@@ -3,7 +3,7 @@ import React, { useEffect , useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProject } from '../../../actions/projectActions';
 import Table from './_components/table';
-import AddOutput from './_components/addOutput'; 
+import AddProject from './_components/addProject'; 
  
 export default () => {
     const [isAddOpen, setIsAddOpen] = useState(false);
@@ -16,7 +16,7 @@ export default () => {
     const handleRefresh = () => dispatch(searchProject());
     return (
         <div style={{ padding: 25 }}>
-        {isAddOpen &&   <AddOutput open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh}/>}
+        {isAddOpen &&   <AddProject open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh}/>}
             <div className="text">PROJECT  &nbsp; <Button variant="contained" color="success" onClick={() => setIsAddOpen(true)} >Add PROJECT</Button></div>
             <Table SearchResult = {projectState.searchResult} />
            

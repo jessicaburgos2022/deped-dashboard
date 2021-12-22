@@ -40,9 +40,8 @@ const searchProject = asyncHander(async (req, res) => {
 
 
 const insertProject = asyncHander(async (req, res) => {
-  const { outputtypeid, departmentid, name, description } = req.body;
-  const queryString = `CALL insertProject('${outputtypeid}','${departmentid}','${name}','${description}')`;
-  console.log(queryString)
+  const { kraid, project } = req.body;
+  const queryString = `CALL InsertProject('${kraid}','${project}')`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });

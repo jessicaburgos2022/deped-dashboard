@@ -25,7 +25,7 @@ import Swal from "sweetalert2";
 import { Checkbox, Divider } from "@mui/material";
 import { Grid } from "@mui/material";
 
-import { addKRA } from "../../../../actions/kraActions";
+import { addProject } from "../../../../actions/projectActions";
 
 export default (props) => {
   const { open, handleClose, handleRefresh } = props;
@@ -35,7 +35,9 @@ export default (props) => {
   const appState = useSelector((state) => state.app);
   const userState = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [outputTypeId, setOutputTypeId] = useState(0);
+  const [KRAList, setKRAList] = useState(
+    appState.KRA
+  );
 
   const onSubmit = async (input) => {
     if (input) {
@@ -45,9 +47,7 @@ export default (props) => {
         userState.userInfo.acc[0] &&
         userState.userInfo.acc[0].Id
       ) {
-        input.departmentid = userState.userInfo.acc[0].DepartmentId;
-        input.outputtypeid = outputTypeId;
-        var ret = await dispatch(addKRA(input));
+        var ret = await dispatch(addProject(input));
         Swal.fire(
           ret.result,
           ret.message,
@@ -68,26 +68,43 @@ export default (props) => {
         fullWidth
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Add Output
+          Add Project
         </DialogTitle>
         <DialogContent dividers>
           <Paper style={{ padding: "2rem" }}>
             <form onSubmit={handleSubmit(onSubmit)} id="add-kra">
               <FormGroup>
-                  
-                    <Select
-                      className="output-category-margin"
-                      label="Select Output Type"
-                      name="outputtype"
-                      onChange={(e) => setOutputTypeId(e.target.value)}
-                    >
-                      <MenuItem value={1}>Major Output</MenuItem>
-                      <MenuItem value={2}>Minor Output</MenuItem>
-                    </Select>
-                  
+                <FormControl variant="standard">
+                  <InputLabel>KRA</InputLabel>
+                  <Controller
+                    control={control}
+                    name="kraid"
+                    rules={{
+                      required: { value: true, message: "This field is required" },
+                    }}
+                    as={
+                      <Select
+                        className="output-category-margin"
+                        name="kraid"
+                        label="Select KRA"
+                        ref={register}
+                      >
+                        {KRAList.map((kra, id) => {
+                          return (
+                            <MenuItem key={id} value={kra.Id}>
+                              {kra.Name}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    } />
+                  <FormHelperText>
+                    {errors.kraid ? errors.kraid.message : ""}
+                  </FormHelperText>
+                </FormControl>
                 <Controller
                   control={control}
-                  name="name"
+                  name="project"
                   rules={{
                     required: {
                       value: true,
@@ -96,6 +113,7 @@ export default (props) => {
                   }}
                   as={
                     <TextField
+                    multiline
                       label="Name"
                       name="name"
                       rows={4}
@@ -106,37 +124,7 @@ export default (props) => {
                     />
                   }
                 />
-                <Controller
-                  control={control}
-                  name="description"
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "This field is required",
-                    },
-                  }}
-                  as={
-                    <TextField
-                      label="Description"
-                      name="description"
-                      rows={4}
-                      maxRows={4}
-                      className="output-margin"
-                      variant="outlined"
-                      size="small"
-                    />
-                  }
-                />
 
-                {/* <TextField
-                    label="Description"
-                    name="description"
-                    rows={4}
-                    maxRows={4}
-                    className="output-margin"
-                    variant="outlined"
-                    size="small"
-                  /> */}
               </FormGroup>
               <Button
                 className="output-margin"
@@ -152,9 +140,6 @@ export default (props) => {
         </DialogContent>
 
         <DialogActions>
-          {/* <Button autoFocus color="primary" type="submit">
-                  Save
-                </Button> */}
         </DialogActions>
       </Dialog>
     </React.Fragment>
