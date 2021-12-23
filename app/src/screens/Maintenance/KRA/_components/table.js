@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { editOutputStatus, searchMinorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
 import { searchKRA } from '../../../../actions/kraActions';
+import CustomPagination from '../../../../components/CustomPagination';
 
 export default (data) => {
     const userState = useSelector(state => state.user);
@@ -15,6 +16,12 @@ export default (data) => {
     const [isViewOpen, setIsViewOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState({});
+    const perPage = 15;
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const currentData = SearchResult
+        .slice(currentPage * perPage, currentPage * perPage + perPage);
+        
     const handleViewOpen = (data) => {
         setSelectedRow(data);
         setIsViewOpen(true)
@@ -75,7 +82,8 @@ export default (data) => {
                 </TableHead>
                 <TableBody>
                     {
-                        SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
+                         currentData && Array.isArray(currentData) && currentData.map(r => {
+                        // SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
                             return (
                                 <TableRow>
                                     <TableCell component="th" className="interface-table-cell">
@@ -98,6 +106,14 @@ export default (data) => {
                     }
                 </TableBody>
             </Table>
+            <CustomPagination
+                perPage={perPage}
+                total={
+                    SearchResult.length
+                }
+                paginate={(e, pageNumber) => setCurrentPage(pageNumber - 1)}
+                currentPage={currentPage + 1}
+            />
         </TableContainer>
     )
 }
