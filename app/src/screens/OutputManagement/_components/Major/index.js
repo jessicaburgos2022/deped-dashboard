@@ -55,7 +55,7 @@ export default () => {
                         fullWidth
                         className="output-margin"
                         placeholder="KRA"
-                        label="Objective"
+                        label="KRA"
                         variant="outlined"
                         size="small"
                         onChange={(e) => setKraName(e.target.value)}
