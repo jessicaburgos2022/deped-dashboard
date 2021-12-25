@@ -17,6 +17,7 @@ import {
 } from "../constants/appConstants";
 import axios from "../helpers/axios";
 
+
 export const fetchOutputTypes = () => async (dispatch) => {
   await dispatch({ type: GET_OUTPUTTYPE_LIST_REQUEST });
   try {

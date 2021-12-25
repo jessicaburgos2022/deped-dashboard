@@ -22,7 +22,7 @@ const appState = {
   projectsByKRA: [],
   projectsByKRALoading: false,
   projectsByDept: [],
-  departments: []
+  departments: [],
 };
 
 export const appReducer = (state = appState, action) => {

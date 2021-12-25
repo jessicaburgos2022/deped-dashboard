@@ -9,6 +9,7 @@ import { MinorOutputManagementReducer } from './minorOutputReducers';
 import {contributoryOutput} from './contributoryOutputReducers';
 import { KraReducer } from './kraReducers';
 import { ProjectReducer } from './projectReducers';
+import { outcomeReducer } from './outcomeReducers';
 
 
 const combinedReducer = combineReducers({
@@ -22,7 +23,8 @@ const combinedReducer = combineReducers({
   minorOutputManagement : MinorOutputManagementReducer,
   ooManagement: contributoryOutput,
   kra: KraReducer,
-  project: ProjectReducer
+  project: ProjectReducer,
+  outcome: outcomeReducer
 });
 
 export default combinedReducer;

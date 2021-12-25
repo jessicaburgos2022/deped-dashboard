@@ -62,6 +62,10 @@ export const menu = [
                 to: "/maintenance/project"
             },
             {
+                title: "Outcome",
+                to: "/maintenance/outcome"
+            },
+            {
                 title: "Indicator",
                 to: "/maintenance/indicator"
             },
