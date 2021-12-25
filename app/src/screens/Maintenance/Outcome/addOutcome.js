@@ -68,7 +68,7 @@ export default (props) => {
                 </DialogTitle>
                 <DialogContent dividers>
                     <Paper style={{ padding: "2rem" }}>
-                        <form onSubmit={handleSubmit(onSubmit)} id="add-kra">
+                        <form onSubmit={handleSubmit(onSubmit)} id="add-outcome">
                             <FormGroup>
                                 <FormGroup>
                                     <InputLabel>Department</InputLabel>

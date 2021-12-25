@@ -17,63 +17,77 @@ export default () => {
     );
     const [selectedKRA, setSelectedKRA] = useState(null);
 
-    // const handleKRAChange = async (event) => {
-    //     setValue("kraid", event.target.value);
-    //     setSelectedKRA(event.target.value);
-    //     dispatch(fetchProjectByKRAId(event.target.value));
-    //   };
     useEffect(() => {
         dispatch(searchMajorOutput(selectedDepartmentId, kraName))
     }, [])
     return (
-        <div style={{ padding: 25 }}>
-            <div className="text">Major Outputs</div>
-            <Grid container spacing={3} style={{ padding: 10 }}>
-                <Grid item xs={3}>
-                    <FormGroup>
-                        <InputLabel>Department</InputLabel>
-                        <Select
-                            label="Department"
-                            fullWidth
-                            className="output-category-margin"
-                            name="departmentId"
-                            label="Select Department"
-                            onChange={(e) => setSelectedDepartmentId(e.target.value)}
-                        >
-                            {departmentList.map((department, id) => {
-                                return (
-                                    <MenuItem key={id} value={department.Id}>
-                                        {department.Name}
-                                    </MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormGroup>
-                </Grid>
-                <Grid item xs={3}>
-                    <TextField
-                        fullWidth
-                        className="output-margin"
-                        placeholder="KRA"
-                        label="KRA"
-                        variant="outlined"
-                        size="small"
-                        onChange={(e) => setKraName(e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={3} >
-                    <Button
-                        className="output-margin"
-                        variant="contained"
-                        style={{ width: "100%" }}
-                        color="primary"
-                        onClick={() => dispatch(searchMajorOutput(selectedDepartmentId, kraName))}
-                    >
-                        Search
-                    </Button>
-                </Grid>
-            </Grid>
-            <Table SearchResult={outputManagementState.searchResult} />
+
+        <div className="content-wrapper">
+            <div className="content-header">
+                <div className="container-fluid">
+                    <div className="row mb-2">
+                        <div className="col-sm-6">
+                            <h1 className="m-0">Major Output Management</h1>
+                        </div>
+                        <div className="col-sm-6">
+                            <ol className="breadcrumb float-sm-right">
+                                <li className="breadcrumb-item"><a href="#">Output Management</a></li>
+                                <li className="breadcrumb-item active">Major Output Management</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="content">
+                <div className="container-fluid">
+                    <Grid container spacing={3} style={{ padding: 10 }}>
+                        <Grid item xs={3}>
+                            <FormGroup>
+                                <InputLabel>Department</InputLabel>
+                                <Select
+                                    label="Department"
+                                    fullWidth
+                                    className="output-category-margin"
+                                    name="departmentId"
+                                    label="Select Department"
+                                    onChange={(e) => setSelectedDepartmentId(e.target.value)}
+                                >
+                                    {departmentList.map((department, id) => {
+                                        return (
+                                            <MenuItem key={id} value={department.Id}>
+                                                {department.Name}
+                                            </MenuItem>
+                                        );
+                                    })}
+                                </Select>
+                            </FormGroup>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField
+                                fullWidth
+                                className="output-margin"
+                                placeholder="KRA"
+                                label="KRA"
+                                variant="outlined"
+                                size="small"
+                                onChange={(e) => setKraName(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={3} >
+                            <Button
+                                className="output-margin"
+                                variant="contained"
+                                style={{ width: "100%" }}
+                                color="primary"
+                                onClick={() => dispatch(searchMajorOutput(selectedDepartmentId, kraName))}
+                            >
+                                Search
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Table SearchResult={outputManagementState.searchResult} />
+                </div>
+            </div>
         </div>
     )
 }

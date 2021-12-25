@@ -1,0 +1,20 @@
+.profile_content {
+	color: #fff;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.profile {
+	display: flex;
+}
+.profile_details {
+	display: flex;
+}
+.pointer {
+	cursor: pointer;
+}
+.bx-log-out {
+    right: 1rem;
+    position: absolute;
+    font-size: 25px!important;
+}

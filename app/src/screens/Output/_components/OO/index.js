@@ -72,146 +72,165 @@ export default () => {
     }
   };
   return (
-    <div style={{ height: "100vh" }}>
-      <div className="text">Insert Contributory Output to OO</div>
-      <Paper style={{ padding: "2rem" }}>
-        <form onSubmit={handleSubmit(onSubmit)} id="insert-contributory-form">
-          <FormGroup>
-            <FormControl variant="standard">
-              <InputLabel>Project</InputLabel>
-              <Controller
-                control={control}
-                name="projectid"
-                rules={{
-                  required: { value: true, message: "This field is required" },
-                }}
-                as={
-                  <Select
-                    className="output-margin"
-                    label="Select Project"
-                  >
-                    {
-                      appState.projectsByDept &&
-                      appState.projectsByDept.map((project, id) => {
-                        return <MenuItem key={id} value={project.Id}>{project.Project}</MenuItem>
-                      })
+
+    <div className="content-wrapper">
+      <div className="content-header">
+        <div className="container-fluid">
+          <div className="row mb-2">
+            <div className="col-sm-6">
+              <h1 className="m-0">Insert Contibutory Output to Organizational Outcome</h1>
+            </div>
+            <div className="col-sm-6">
+              <ol className="breadcrumb float-sm-right">
+                <li className="breadcrumb-item"><a href="#">Insert Output</a></li>
+                <li className="breadcrumb-item active">Contibutory Output to Organizational Outcome</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="content">
+        <div className="container-fluid">
+          <Paper style={{ padding: "2rem" }}>
+            <form onSubmit={handleSubmit(onSubmit)} id="insert-contributory-form">
+              <FormGroup>
+                <FormControl variant="standard">
+                  <InputLabel>Project</InputLabel>
+                  <Controller
+                    control={control}
+                    name="projectid"
+                    rules={{
+                      required: { value: true, message: "This field is required" },
+                    }}
+                    as={
+                      <Select
+                        className="output-margin"
+                        label="Select Project"
+                      >
+                        {
+                          appState.projectsByDept &&
+                          appState.projectsByDept.map((project, id) => {
+                            return <MenuItem key={id} value={project.Id}>{project.Project}</MenuItem>
+                          })
+                        }
+                      </Select>
                     }
-                  </Select>
-                }
-              />
-              <FormHelperText>
-                {errors.projectid ? errors.projectid.message : ""}
-              </FormHelperText>
-            </FormControl>
-            <Controller
-              defaultValue=""
-              control={control}
-              name="outputs"
-              rules={{
-                required: { value: true, message: "This field is required" },
-              }}
-              as={
-                <TextField
-                  multiline
-                  rows={4}
-                  maxRows={4}
-                  className="output-margin"
-                  label="Major and Minor Outputs"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  error={errors.outputs != null}
-                  helperText={
-                    errors.outputs ? errors.outputs.message : ""
+                  />
+                  <FormHelperText>
+                    {errors.projectid ? errors.projectid.message : ""}
+                  </FormHelperText>
+                </FormControl>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  name="outputs"
+                  rules={{
+                    required: { value: true, message: "This field is required" },
+                  }}
+                  as={
+                    <TextField
+                      multiline
+                      rows={4}
+                      maxRows={4}
+                      className="output-margin"
+                      label="Major and Minor Outputs"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      error={errors.outputs != null}
+                      helperText={
+                        errors.outputs ? errors.outputs.message : ""
+                      }
+                    />
                   }
                 />
-              }
-            />
 
-            {
-              ooState.indicators &&
-              [... new Set(ooState.indicators.map(i => i.OutcomeTypeId))].map(otype => {
-                const outcomeType = ooState.indicators.find(ind => ind.OutcomeTypeId === otype).OutcomeType;
-                return (
-                  <React.Fragment>
-                    <Divider
-                      style={{ padding: "1rem" }}
-                      variant="fullWidth"
-                      orientation="horizontal"
-                    >
-                      <span>
-                        <h5>{outcomeType}</h5>
-                      </span>
-                    </Divider>
-                    {
-                      [... new Set(ooState.indicators.filter(i => i.OutcomeTypeId === otype).map(ind => ind.OutcomeId))].map(outcomeId => {
-                        const oTitle = ooState.indicators.find(ind => ind.OutcomeId === outcomeId).OutcomeTitle;
-                        return (
-                          <div style={{ marginBottom: 25 }}>
-                            <h6>{oTitle}</h6>
-                            <Grid container spacing={3} padding={2}>
-                              {
-                                ooState.indicators.filter(ind => ind.OutcomeId === outcomeId).map(indicator => {
-                                  if (indicator.IsComputed === 0) {
-                                    return (
-                                      <Grid item>
-                                        <TextField
-                                          multiline
-                                          rows={2}
-                                          maxRows={4}
-                                          id={indicator.IndicatorId}
-                                          className="output-margin"
-                                          type="number"
-                                          label={indicator.Indicator}
-                                          variant="outlined"
-                                          size="small"
-                                          fullWidth
-                                          onChange={(e) => { handleIndicatorInput(e) }}
-                                        />
-                                      </Grid>
-                                    )
+                {
+                  ooState.indicators &&
+                  [... new Set(ooState.indicators.map(i => i.OutcomeTypeId))].map(otype => {
+                    const outcomeType = ooState.indicators.find(ind => ind.OutcomeTypeId === otype).OutcomeType;
+                    return (
+                      <React.Fragment>
+                        <Divider
+                          style={{ padding: "1rem" }}
+                          variant="fullWidth"
+                          orientation="horizontal"
+                        >
+                          <span>
+                            <h5>{outcomeType}</h5>
+                          </span>
+                        </Divider>
+                        {
+                          [... new Set(ooState.indicators.filter(i => i.OutcomeTypeId === otype).map(ind => ind.OutcomeId))].map(outcomeId => {
+                            const oTitle = ooState.indicators.find(ind => ind.OutcomeId === outcomeId).OutcomeTitle;
+                            return (
+                              <div style={{ marginBottom: 25 }}>
+                                <h6>{oTitle}</h6>
+                                <Grid container spacing={3} padding={2}>
+                                  {
+                                    ooState.indicators.filter(ind => ind.OutcomeId === outcomeId).map(indicator => {
+                                      if (indicator.IsComputed === 0) {
+                                        return (
+                                          <Grid item>
+                                            <TextField
+                                              multiline
+                                              rows={2}
+                                              maxRows={4}
+                                              id={indicator.IndicatorId}
+                                              className="output-margin"
+                                              type="number"
+                                              label={indicator.Indicator}
+                                              variant="outlined"
+                                              size="small"
+                                              fullWidth
+                                              onChange={(e) => { handleIndicatorInput(e) }}
+                                            />
+                                          </Grid>
+                                        )
+                                      }
+                                      else {
+                                        return (
+                                          <Grid item xs={4}>
+                                            <TextField
+                                              type="number"
+                                              defaultValue={0}
+                                              id={indicator.IndicatorId}
+                                              className="output-margin"
+                                              type="number"
+                                              label={indicator.Indicator}
+                                              variant="outlined"
+                                              size="small"
+                                              fullWidth
+                                              onChange={(e) => { handleIndicatorInput(e) }}
+                                            />
+                                          </Grid>
+                                        )
+                                      }
+                                    })
                                   }
-                                  else {
-                                    return (
-                                      <Grid item xs={4}>
-                                        <TextField
-                                          type="number"
-                                          defaultValue={0}
-                                          id={indicator.IndicatorId}
-                                          className="output-margin"
-                                          type="number"
-                                          label={indicator.Indicator}
-                                          variant="outlined"
-                                          size="small"
-                                          fullWidth
-                                          onChange={(e) => { handleIndicatorInput(e) }}
-                                        />
-                                      </Grid>
-                                    )
-                                  }
-                                })
-                              }
-                            </Grid>
-                          </div>
-                        )
-                      })
-                    }
-                  </React.Fragment>
-                )
-              })
-            }
-          </FormGroup>
+                                </Grid>
+                              </div>
+                            )
+                          })
+                        }
+                      </React.Fragment>
+                    )
+                  })
+                }
+              </FormGroup>
 
-          <Button
-            variant="contained"
-            style={{ width: "100%" }}
-            color="primary"
-            type="submit"
-          >
-            Submit
-          </Button>
-        </form>
-      </Paper>
+              <Button
+                variant="contained"
+                style={{ width: "100%" }}
+                color="primary"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </form>
+          </Paper>
+        </div>
+      </div>
     </div>
   );
 };

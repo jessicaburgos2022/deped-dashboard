@@ -21,80 +21,98 @@ export default () => {
         dispatch(searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle))
     }, [dispatch, fetchOutcomeTypes])
     return (
-        <div style={{ padding: 25 }}>
-            <div className="text">Project Outcomes</div>
-            {isAddOpen && <AddOutcome open={isAddOpen} handleClose={() => setisAddOpen(false)} handleRefresh={() => searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle)} />}
-            <Button variant="contained" color="success" onClick={() => setisAddOpen(true)} >Add Outcome</Button>
-            <Grid container spacing={3} style={{ padding: 10 }}>
-                <Grid item xs={3}>
-                    <FormGroup>
-                        <InputLabel>Department</InputLabel>
-                        <Select
-                            label="Department"
-                            fullWidth
-                            className="output-category-margin"
-                            name="departmentId"
-                            label="Select Department"
-                            onChange={(e) => setSelectedDepartmentId(e.target.value)}
-                        >
-                            <MenuItem value={0}>
-                                None
-                            </MenuItem>
-                            {departmentList.map((department, id) => {
-                                return (
-                                    <MenuItem key={id} value={department.Id}>
-                                        {department.Name}
+        <div className="content-wrapper">
+            <div className="content-header">
+                <div className="container-fluid">
+                    <div className="row mb-2">
+                        <div className="col-sm-6">
+                            <h1 className="m-0">Outcome Management</h1>
+                        </div>
+                        <div className="col-sm-6">
+                            <ol className="breadcrumb float-sm-right">
+                                <li className="breadcrumb-item"><a href="#">Maintenance</a></li>
+                                <li className="breadcrumb-item active">Outcome</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="content">
+                <div className="container-fluid">
+                    {isAddOpen && <AddOutcome open={isAddOpen} handleClose={() => setisAddOpen(false)} handleRefresh={() => searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle)} />}
+                    <Button variant="contained" color="success" onClick={() => setisAddOpen(true)} >Add Outcome</Button>
+                    <Grid container spacing={3} style={{ padding: 10 }}>
+                        <Grid item xs={3}>
+                            <FormGroup>
+                                <InputLabel>Department</InputLabel>
+                                <Select
+                                    label="Department"
+                                    fullWidth
+                                    className="output-category-margin"
+                                    name="departmentId"
+                                    label="Select Department"
+                                    onChange={(e) => setSelectedDepartmentId(e.target.value)}
+                                >
+                                    <MenuItem value={0}>
+                                        None
                                     </MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormGroup>
-                </Grid>
-                <Grid item xs={3}>
-                    <FormGroup>
-                        <InputLabel>Outcome Type</InputLabel>
-                        <Select
-                            label="Outcome Type"
-                            fullWidth
-                            className="output-category-margin"
-                            name="outcomeTypeId"
-                            label="Select Department"
-                            onChange={(e) => setselectedOutcomeTypeId(e.target.value)}
-                        >
-                            {outcomeState.outcometypes && Array.isArray(outcomeState.outcometypes) && outcomeState.outcometypes.map((outcomeType, id) => {
-                                return (
-                                    <MenuItem key={id} value={outcomeType.Id}>
-                                        {outcomeType.Outcome}
-                                    </MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormGroup>
-                </Grid>
-                <Grid item xs={3}>
-                    <TextField
-                        fullWidth
-                        className="output-margin"
-                        placeholder="Keyword"
-                        label="Outcome"
-                        variant="outlined"
-                        size="small"
-                        onChange={(e) => setOutcomeTitle(e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={3} >
-                    <Button
-                        className="output-margin"
-                        variant="contained"
-                        style={{ width: "100%" }}
-                        color="primary"
-                        onClick={() => dispatch(searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle))}
-                    >
-                        Search
-                    </Button>
-                </Grid>
-            </Grid>
-            <Table SearchResult={outcomeState.outcome} />
+                                    {departmentList.map((department, id) => {
+                                        return (
+                                            <MenuItem key={id} value={department.Id}>
+                                                {department.Name}
+                                            </MenuItem>
+                                        );
+                                    })}
+                                </Select>
+                            </FormGroup>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <FormGroup>
+                                <InputLabel>Outcome Type</InputLabel>
+                                <Select
+                                    label="Outcome Type"
+                                    fullWidth
+                                    className="output-category-margin"
+                                    name="outcomeTypeId"
+                                    label="Select Department"
+                                    onChange={(e) => setselectedOutcomeTypeId(e.target.value)}
+                                >
+                                    {outcomeState.outcometypes && Array.isArray(outcomeState.outcometypes) && outcomeState.outcometypes.map((outcomeType, id) => {
+                                        return (
+                                            <MenuItem key={id} value={outcomeType.Id}>
+                                                {outcomeType.Outcome}
+                                            </MenuItem>
+                                        );
+                                    })}
+                                </Select>
+                            </FormGroup>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField
+                                fullWidth
+                                className="output-margin"
+                                placeholder="Keyword"
+                                label="Outcome"
+                                variant="outlined"
+                                size="small"
+                                onChange={(e) => setOutcomeTitle(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={3} >
+                            <Button
+                                className="output-margin"
+                                variant="contained"
+                                style={{ width: "100%" }}
+                                color="primary"
+                                onClick={() => dispatch(searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle))}
+                            >
+                                Search
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Table SearchResult={outcomeState.outcome} />
+                </div >
+            </div >
         </div >
     )
 }

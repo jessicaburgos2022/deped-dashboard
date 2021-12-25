@@ -28,13 +28,7 @@ export default (props) => {
 
 
   return (
-    <>
-      <div className="text">Maintenance / Administrator</div>
-
-      <div style={{ overflow: 'auto', padding: 25, height: "100vh" }}>
-        <RenderOutputView />
-      </div>
-    </>
+    <RenderOutputView />
   );
 
 }

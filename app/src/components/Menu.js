@@ -64,11 +64,7 @@ export const menu = [
             {
                 title: "Outcome",
                 to: "/maintenance/outcome"
-            },
-            {
-                title: "Indicator",
-                to: "/maintenance/indicator"
-            },
+            }
         ]
     }
 ];

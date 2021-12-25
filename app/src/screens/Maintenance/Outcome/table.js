@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { searchOutcome } from '../../../actions/outcomeActions';
 import Swal from 'sweetalert2';
 import CustomPagination from '../../../components/CustomPagination';
+import ViewOutcome from './viewOutcome';
 
 export default (data) => {
     const userState = useSelector(state => state.user);
@@ -13,11 +14,20 @@ export default (data) => {
     const { SearchResult } = data;
     const perPage = 15;
     const [currentPage, setCurrentPage] = useState(0);
+    const [isViewOpen, setIsViewOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState({});
     const currentData = SearchResult
         .slice(currentPage * perPage, currentPage * perPage + perPage);
 
+    const handleViewOpen = (data) => {
+        setSelectedRow(data);
+        setIsViewOpen(true)
+    }
     return (
         <TableContainer component={Paper}>
+            {
+                isViewOpen && <ViewOutcome data={selectedRow} open={isViewOpen} handleClose={() => setIsViewOpen(false)} />
+            }
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
@@ -48,8 +58,8 @@ export default (data) => {
                                         {r.OutcomeTitle}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
+                                        <Button onClick={() => handleViewOpen(r)}>View</Button>
                                     </TableCell>
-
                                 </TableRow>
                             )
                         })

@@ -20,9 +20,6 @@ export default (props) => {
         }
     }
     return (
-        <div style={{ overflow: 'auto', padding: 25, height: "100vh" }}>
-            <Container fixed maxWidth={true}>
-                <RenderOutputView />
-            </Container>
-        </div>)
+        <RenderOutputView />
+    )
 }

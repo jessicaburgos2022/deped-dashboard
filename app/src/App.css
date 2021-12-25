@@ -21,3 +21,8 @@ a {
   margin-top: 25px;
 }
 
+
+.content-wrapper {
+  overflow: auto;
+    height: 90vh;
+}

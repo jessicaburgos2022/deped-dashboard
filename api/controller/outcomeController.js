@@ -38,6 +38,32 @@ const listOutcomeType = asyncHander(async (req, res) => {
     });
 });
 
+const listIndicatorsByOutcomeId = asyncHander(async (req, res) => {
+    const { outcomeid } = req.params;
+    const queryString = `CALL ListIndicatorsByOutcomeId(${outcomeid})`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    var qResult = JSON.parse(JSON.stringify(results[0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
 const searchOutcome = asyncHander(async (req, res) => {
     const { departmentid, outcometypeid, title } = req.body;
     const queryString = `CALL SearchOutcome(${departmentid}, ${outcometypeid}, '${title}')`;
@@ -91,4 +117,33 @@ const insertOutcome = asyncHander(async (req, res) => {
         connection.release();
     });
 });
-module.exports = { listOutcomeType, searchOutcome, insertOutcome };
+
+const updateIsGraphDataByIndicatorId = asyncHander(async (req, res) => {
+    const { indicatorid, status } = req.body;
+    console.log(req.body)
+    const queryString = `UPDATE indicator SET IsComputed = ${status} WHERE Id = ${indicatorid}`;
+    console.log(queryString)
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    res.json({ result: 'Success', message: 'Data updated' });
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
+module.exports = { listOutcomeType, searchOutcome, insertOutcome, listIndicatorsByOutcomeId, updateIsGraphDataByIndicatorId };

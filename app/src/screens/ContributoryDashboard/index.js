@@ -69,27 +69,43 @@ export default () => {
   }
 
   return (
-    <div style={{ overflow: 'auto', padding: 25, height: "100vh" }}>
-      <div className="text">Contributory Outputs To Organizational Outcome</div>
-      {
-        dashboardState &&
-        dashboardState.oo &&
-        Array.isArray(dashboardState.oo) &&
-        [... new Set(dashboardState.oo.map(res => res.OutcomeTypeId))].map(otypeId => {
-          var outcomeType = dashboardState.oo.find(res => res.OutcomeTypeId === otypeId);
-          return (
-            <Paper style={{ padding: '15px', marginBottom:25 }}>
-              <h5 style={{ background: '#f1faee', padding: 5 }}>{outcomeType.OutcomeType}</h5>
-              <Divider />
-              <Grid container spacing={1}>
-                {
-                  [... new Set(dashboardState.oo.filter(i => i.OutcomeTypeId === outcomeType.OutcomeTypeId).map(ind => ind.OutcomeId))].map(outcomeId => {
-                    var outcome = dashboardState.oo.find(res => res.OutcomeId === outcomeId)
-                    return (
-                      <Grid item xs={3} style={{ padding: 15 }}>
-                        <Grid container spacing={2}>
-                          <GenerateBarGraph data={outcome} />
-                          {/* {
+    <div className="content-wrapper">
+      <div className="content-header">
+        <div className="container-fluid">
+          <div className="row mb-2">
+            <div className="col-sm-6">
+              <h1 className="m-0">KRA Management</h1>
+            </div>
+            <div className="col-sm-6">
+              <ol className="breadcrumb float-sm-right">
+                <li className="breadcrumb-item"><a href="#">Maintenance</a></li>
+                <li className="breadcrumb-item active">KRA</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="content">
+        <div className="container-fluid">
+          {
+            dashboardState &&
+            dashboardState.oo &&
+            Array.isArray(dashboardState.oo) &&
+            [... new Set(dashboardState.oo.map(res => res.OutcomeTypeId))].map(otypeId => {
+              var outcomeType = dashboardState.oo.find(res => res.OutcomeTypeId === otypeId);
+              return (
+                <Paper style={{ padding: '15px', marginBottom: 25 }}>
+                  <h5 style={{ background: '#f1faee', padding: 5 }}>{outcomeType.OutcomeType}</h5>
+                  <Divider />
+                  <Grid container spacing={1}>
+                    {
+                      [... new Set(dashboardState.oo.filter(i => i.OutcomeTypeId === outcomeType.OutcomeTypeId).map(ind => ind.OutcomeId))].map(outcomeId => {
+                        var outcome = dashboardState.oo.find(res => res.OutcomeId === outcomeId)
+                        return (
+                          <Grid item xs={3} style={{ padding: 15 }}>
+                            <Grid container spacing={2}>
+                              <GenerateBarGraph data={outcome} />
+                              {/* {
                             dashboardState.oo.filter(res => res.OutcomeId === outcomeId).map(res => {
                               return (
                                 <React.Fragment>
@@ -103,18 +119,19 @@ export default () => {
                               )
                             })
                           } */}
-                        </Grid>
-                      </Grid>
-                    )
-                  })
-                }
-              </Grid>
-            </Paper>
-          )
-        })
+                            </Grid>
+                          </Grid>
+                        )
+                      })
+                    }
+                  </Grid>
+                </Paper>
+              )
+            })
 
-      }
-
+          }
+        </div>
+      </div>
     </div>
   );
 };
