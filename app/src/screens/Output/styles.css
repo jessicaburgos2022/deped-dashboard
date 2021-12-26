@@ -5,3 +5,42 @@
 .output-category-margin {
     margin-bottom: 0.5rem;
 }
+
+.custom-form .MuiFormControl-root{
+    margin-bottom: 1rem;
+}
+
+.custom-form .group-title{
+    margin-bottom: 1.5rem !important;
+}
+
+.custom-form .MuiOutlinedInput-inputMarginDense{
+    /* padding-top: unset;
+    padding-bottom: unset; */
+    /* padding: 18.5px 14px !important; */
+    height: auto !important;
+}
+.custom-form .MuiGrid-item{
+    padding-top: 0px !important;
+}
+
+
+.custom-form .output-margin.text-left .MuiFormLabel-root{
+    text-align: left !important;
+}
+
+.custom-form .MuiGrid-container{
+    margin-top: unset !important;
+}
+
+.btn-cancel{
+    background-color: #343a40 !important;
+    color: white !important
+}
+
+.btn-cancel:hover{
+    background-color: #242424 !important;
+}
+.border-end-1{
+border-right: 1px solid #dee2e6!important
+}

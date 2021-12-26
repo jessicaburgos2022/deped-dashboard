@@ -1,19 +1,26 @@
 import { Button } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Register from './register';
+import Table from './table';
+import { searchUsers } from '../../../actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
 export default () => {
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-
+    const dispatch = useDispatch();
+    const userState = useSelector(state => state.user);
     const handleRegisterClick = () => {
         setIsRegisterOpen(true);
     }
     const handleUserLoad = () => {
 
     }
+    useEffect(() => {
+        dispatch(searchUsers());
+    }, [])
     return (
         <div className="content-wrapper">
             {
-                isRegisterOpen && <Register open={isRegisterOpen} handleRefresh={() => handleUserLoad()} handleClose = {() => setIsRegisterOpen(false)}/>
+                isRegisterOpen && <Register open={isRegisterOpen} handleRefresh={() => handleUserLoad()} handleClose={() => setIsRegisterOpen(false)} />
             }
             <div className="content-header">
                 <div className="container-fluid">
@@ -33,6 +40,7 @@ export default () => {
             <div className="content">
                 <div className="container-fluid">
                     <Button variant="contained" color="primary" onClick={() => handleRegisterClick(true)} >Register</Button>
+                    <Table SearchResult={userState.users} />
                 </div>
             </div>
         </div>

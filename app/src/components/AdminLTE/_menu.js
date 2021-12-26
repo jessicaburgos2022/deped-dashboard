@@ -58,38 +58,8 @@ const MultiLevel = ({ item }) => {
                     {children.map((child, key) => (
                         <MenuItem key={key} item={child} />
                     ))}
-                    {/* <li className="nav-item">
-                        <a href="./index.html" className="nav-link active">
-                            <i className="far fa-circle nav-icon"></i>
-                            <p>Dashboard v1</p>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="./index2.html" className="nav-link">
-                            <i className="far fa-circle nav-icon"></i>
-                            <p>Dashboard v2</p>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="./index3.html" className="nav-link">
-                            <i className="far fa-circle nav-icon"></i>
-                            <p>Dashboard v3</p>
-                        </a>
-                    </li> */}
                 </ul>
             </li>
-            {/* <ListItem button onClick={handleClick}>
-                <ListItemIcon style={{ color: '#fff', textDecoration: 'none' }}>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} style={{ color: '#fff', textDecoration: 'none' }} />
-                {open ? <ExpandLessIcon color="#fff" /> : <ExpandMoreIcon color="#fff" />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    {children.map((child, key) => (
-                        <MenuItem key={key} item={child} />
-                    ))}
-                </List>
-            </Collapse> */}
         </React.Fragment>
     );
 };

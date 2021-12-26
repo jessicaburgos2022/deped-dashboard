@@ -2,12 +2,14 @@ import { Button, Grid, IconButton, Paper, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import "../../styles.css";
+
 
 export default (props) => {
     const { data, handleTargetRemove, handleChange, handleTargetIncrease } = props;
     return (
         <React.Fragment>
-            <Paper elevation={3} style={{ padding: 10, marginTop: 10 }}>
+            <Paper elevation={3} style={{ padding: 15 }}>
                 <h6>
                     Targets
                     <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => handleTargetIncrease()}>
@@ -20,13 +22,14 @@ export default (props) => {
                     data.map((i, index) => {
                         return (
                             <Grid container spacing={2}>
-                                <Grid item>
+                                <Grid item className='col-xl-1'>
                                     <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => handleTargetRemove(index)} >
                                         <DeleteIcon />
                                     </IconButton>
                                     {/* <Button className="output-margin" onClick={() => handleTargetRemove(index)} variant="contained" color="primary">Remove</Button> */}
                                 </Grid>
-                                <Grid item xs={2}>
+                                {/* <Grid item xs={2}> */}
+                                <Grid item className='col-xl-5'>
                                     <TextField
                                         placeholder='0'
                                         name="PlannedTarget"
@@ -40,7 +43,7 @@ export default (props) => {
                                         value={data[index]["PlannedTarget"]}
                                     />
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item className='col-xl-6'>
                                     <TextField
                                         name="TargetType"
                                         className="output-margin"
@@ -52,7 +55,7 @@ export default (props) => {
                                         value={data[index]["TargetType"]}
                                     />
                                 </Grid>
-                                <Grid item xs={3}>
+                                <Grid item className='col-xl-12'>
                                     <TextField
                                         name="TargetDescription"
                                         className="output-margin"
@@ -64,12 +67,12 @@ export default (props) => {
                                         value={data[index]["TargetDescription"]}
                                     />
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item className='col-xl-6'>
                                     <TextField
                                         placeholder='0'
                                         name="Accomplishment"
                                         type="number"
-                                        className="output-margin"
+                                        className="output-margin text-left"
                                         label="Physical Accomplishment"
                                         variant="outlined"
                                         size="small"
@@ -78,10 +81,10 @@ export default (props) => {
                                         value={data[index]["Accomplishment"]}
                                     />
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item className='col-xl-6'>
                                     <TextField
                                         name="AccomplishmentDescription"
-                                        className="output-margin"
+                                        className="output-margin text-left"
                                         label="Accomplishment Description"
                                         variant="outlined"
                                         size="small"

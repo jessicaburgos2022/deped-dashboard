@@ -24,7 +24,6 @@ export const searchProject = (param) => async (dispatch) => {
             payload: []
         });
     }
-
 };
 export const addProject = (param) => async (dispatch) => {
     await dispatch({ type: ADD_PROJECT_OUTPUT_REQUEST });
