@@ -12,12 +12,15 @@ import { fetchIndicatorsByOutcomeId, updateGraphData, deleteIndicator } from '..
 import { Checkbox, Divider } from '@mui/material';
 
 import InsertIndicator from './insertIndicator';
+import EditIndicator from './editIndicator';
 import Swal from 'sweetalert2';
 export default (props) => {
     const { open, handleClose, data } = props;
     const dispatch = useDispatch();
     const [indicators, setIndicators] = useState([]);
     const [isAddIndicatorOpen, setIsAddIndicatorOpen] = useState(false);
+    const [isEditIndicatorOpen, setIsEditIndicatorOpen] = useState(false);
+    const [selectedIndicator, setSelectedIndicator] = useState({});
 
     useEffect(() => {
         async function fetchData() {
@@ -37,6 +40,10 @@ export default (props) => {
     const handleRefreshIndicator = async () => {
         var ret = await dispatch(fetchIndicatorsByOutcomeId(data.Id));
         setIndicators(ret);
+    }
+    const handleEditClick = (indicator) => {
+        setSelectedIndicator(indicator)
+        setIsEditIndicatorOpen(true);
     }
     const handleNewClick = () => {
         setIsAddIndicatorOpen(true);
@@ -68,6 +75,10 @@ export default (props) => {
             {
                 isAddIndicatorOpen &&
                 <InsertIndicator open={isAddIndicatorOpen} handleRefresh={() => handleRefreshIndicator()} handleClose={() => setIsAddIndicatorOpen(false)} outcomeid={data.Id} />
+            }
+            {
+                isEditIndicatorOpen &&
+                <EditIndicator open={isEditIndicatorOpen} handleRefresh={() => handleRefreshIndicator()} handleClose={() => setIsEditIndicatorOpen(false)} indicator={selectedIndicator} />
             }
             <Dialog
                 onClose={handleClose}
@@ -109,7 +120,7 @@ export default (props) => {
                                                 </TableCell>
                                                 <TableCell component="th" className="interface-table-cell">
                                                     <FormControlLabel control={<Checkbox checked={indicator.IsComputed} onChange={(e) => handleGraphDataUpdate(indicator.IndicatorId, e.target.checked ? 1 : 0)} />} label="Graph Data" />
-                                                    <Button>Edit</Button>
+                                                    <Button onClick={() => handleEditClick(indicator)}>Edit</Button>
                                                     <Button onClick={() => handleDelete(indicator.IndicatorId)}>Delete</Button>
                                                 </TableCell>
                                             </TableRow>

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { listOutcomeType, searchOutcome, insertOutcome, listIndicatorsByOutcomeId, insertIndicator, deleteIndicator, updateIsGraphDataByIndicatorId } = require('../controller/outcomeController');
+const { listOutcomeType, searchOutcome, insertOutcome, listIndicatorsByOutcomeId, insertIndicator, editIndicator, deleteIndicator, updateIsGraphDataByIndicatorId } = require('../controller/outcomeController');
 router.route('/outcometype/').get(listOutcomeType);
 router.route('/indicator').post(insertIndicator);
+router.route('/indicator').put(editIndicator);
 router.route('/indicator/:indicatorid').delete(deleteIndicator);
 router.route('/indicator/:outcomeid').get(listIndicatorsByOutcomeId);
 router.route('/indicator/graphdata').post(updateIsGraphDataByIndicatorId);

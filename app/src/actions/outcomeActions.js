@@ -19,7 +19,10 @@ import {
     INSERT_INDICATOR_FAILED,
     DELETE_INDICATOR_REQUEST,
     DELETE_INDICATOR_SUCCESS,
-    DELETE_INDICATOR_FAILED
+    DELETE_INDICATOR_FAILED,
+    EDIT_INDICATOR_REQUEST,
+    EDIT_INDICATOR_SUCCESS,
+    EDIT_INDICATOR_FAILED
 } from "../constants/outcomeConstants";
 import axios from "../helpers/axios";
 
@@ -107,6 +110,22 @@ export const insertIndicator = (param) => async (dispatch) => {
     }
 };
 
+export const editIndicator = (param) => async (dispatch) => {
+    await dispatch({ type: EDIT_INDICATOR_REQUEST });
+    try {
+        const { data } = await axios.put(`/api/outcome/indicator`, param);
+        dispatch({
+            type: EDIT_INDICATOR_SUCCESS,
+            payload: data,
+        });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: EDIT_INDICATOR_FAILED,
+            payload: ""
+        });
+    }
+};
 export const deleteIndicator = (indicatorid) => async (dispatch) => {
     await dispatch({ type: DELETE_INDICATOR_REQUEST });
     try {

@@ -8,11 +8,32 @@ import {
   USER_LOG_REQUEST,
   USER_LOG_SUCCESS,
   USER_LOG_FAIL,
-  USER_LOGOUT
+  USER_LOGOUT,
+  REGISTER_USER_REQUEST,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_FAILED
 } from "../constants/userConstants";
 import service from "../helpers/axios";
 import Swal from 'sweetalert2';
 
+export const register = (param) => async (dispatch) => {
+  try {
+    dispatch({ type: REGISTER_USER_REQUEST });
+    const { data } = await service.post(
+      '/api/auth/register',
+      param
+    );
+    dispatch({
+      type: REGISTER_USER_SUCCESS,
+      payload: data,
+    });
+    return data;
+  } catch (error) {
+    dispatch({
+      type: REGISTER_USER_FAILED
+    });
+  }
+};
 export const login = (callback, username, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });

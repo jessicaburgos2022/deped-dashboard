@@ -146,6 +146,33 @@ const insertIndicator = asyncHander(async (req, res) => {
     });
 });
 
+const editIndicator = asyncHander(async (req, res) => {
+    const { indicatorid, indicator } = req.body;
+    const queryString = `UPDATE indicator SET indicator = '${indicator}' WHERE Id = ${indicatorid}`;
+    console.log(queryString)
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    res.json({ result: 'Success', message: 'Indicator updated.' });
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
 const deleteIndicator = asyncHander(async (req, res) => {
     const { indicatorid } = req.params;
     const queryString = `DELETE FROM indicator WHERE Id = ${indicatorid}`;
@@ -200,4 +227,4 @@ const updateIsGraphDataByIndicatorId = asyncHander(async (req, res) => {
     });
 });
 
-module.exports = { listOutcomeType, searchOutcome, insertOutcome, listIndicatorsByOutcomeId, insertIndicator, deleteIndicator, updateIsGraphDataByIndicatorId };
+module.exports = { listOutcomeType, searchOutcome, insertOutcome, listIndicatorsByOutcomeId, insertIndicator, editIndicator, deleteIndicator, updateIsGraphDataByIndicatorId };

@@ -35,7 +35,6 @@ export default () => {
                 {/* <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> */}
                 <span class="brand-text font-weight-light">PRIME NCR PID</span>
             </a>
-
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div className="profile_content">
@@ -79,7 +78,6 @@ export default () => {
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <MenuGenerator />
-
                     </ul>
                 </nav>
             </div>

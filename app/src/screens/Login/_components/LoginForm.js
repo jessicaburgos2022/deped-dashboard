@@ -14,6 +14,7 @@ const LoginForm = () => {
     const { Username, Password } = data;
     dispatch(login(cb, Username, Password));
     function cb(data) {
+      console.log(data);
       if (data && data.res && data.res.result && data.res.result === "Success") {
         localStorage.setItem("token", data.token);
         history.push("/dashboard");

@@ -56,7 +56,7 @@ const validate = asyncHander(async (req, res) => {
 
 const auth = asyncHander(async (req, res) => {
   const { username, password } = req.body;
-  const queryString = `call ValidateLogin('${username}', '${password}')`;
+  const queryString = `call ValidateLoginV2('${username}')`;
   pool.getConnection((err, connection) => {
     if (err) {
       console.log("AUQE2A: Network Error");
@@ -71,47 +71,41 @@ const auth = asyncHander(async (req, res) => {
           res.end();
         } else {
           if (!_.isEmpty(results[0])) {
-            const user = _.mapValues(JSON.parse(JSON.stringify(results[0])))[0];
+            const qResult = JSON.parse(JSON.stringify(results[0][0]));
+            const user = JSON.parse(JSON.stringify(results[1][0]));
+            const roles = JSON.parse(JSON.stringify(results[2]));
             const {
-              Status,
-              Message,
-              user_id,
-              user_pwd,
-              user_grp_id,
-              business_unit
+              Id
             } = user;
-
             const payload = {
               user: {
-                id: user_id,
-                user_grp_id: user_grp_id,
+                id: Id,
               },
             };
 
-            if (Status === "Failed") {
-              res.status(200).json({ status: Status, message: Message });
+            if (qResult.result !== "Success") {
+              res.status(200).json(qResult);
               res.end();
             } else {
-              const isMatch = bcrypt.compareSync(password, user_pwd);
+              const isMatch = bcrypt.compareSync(password, user.Password);
               if (!isMatch) {
-                res.status(200).json({ status: "Failed", message: "Incorrect password" });
+                res.status(200).json({ result: "Failed", message: "Incorrect password" });
                 res.end();
               } else {
                 jwt.sign(
                   payload,
-                  'secret',
+                  process.env.JWT_SECRET,
                   { expiresIn: 60 * 60 * 8 },
                   (err, token) => {
                     // if (err) throw err;
                     if (err) console.log(err);
+                    results[1][0].Password = null;
                     res.json({
-                      server: servers[hostname],
-                      user_id,
-                      details: results[1][0],
-                      role: results[2],
-                      user_grp_id,
-                      business_unit,
-                      token
+                      role: roles,
+                      token,
+                      userid: Id,
+                      acc: results[1],
+                      res: qResult
                     });
                   }
                 );
@@ -132,4 +126,57 @@ const auth = asyncHander(async (req, res) => {
   });
 });
 
-module.exports = { auth, validate };
+const register = asyncHander(async (req, res) => {
+  var ip = req.header["x-forwarded-for"] || req.connection.remoteAddress;
+  if (ip.substr(0, 7) == "::ffff:") {
+    ip = ip.substr(7);
+  }
+  const username = req.body.username;
+  const password = req.body.password;
+  const departmentid = req.body.departmentid;
+  const roleid = req.body.roleid;
+  const firstname = req.body.firstname;
+  const middlename = req.body.middlename;
+  const surname = req.body.surname;
+  const saltRounds = 10;
+  const hashPassword = bcrypt.hashSync(password, saltRounds);
+  const queryString = `CALL InsertUserAccount('${username}','${hashPassword}',${departmentid},${roleid},'${firstname}','${middlename}','${surname}')`;
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log("Network Error");
+    }
+    try {
+      connection.query(queryString, (error, results) => {
+        if (error) {
+          res.sendStatus(500).json({ msg: "Server Error" });
+          res.end();
+        } else {
+          var qResult = JSON.parse(JSON.stringify(results[0][0]));
+          if (results[0][0].result === "Success") {
+            var accId = results[1][0].accountid
+            const payload = {
+              user: {
+                id: accId,
+              },
+            };
+            jwt.sign(
+              payload,
+              process.env.JWT_SECRET,
+              { expiresIn: 60 * 60 * 8 },
+              (err, token) => {
+                if (err) throw err;
+                qResult.token = token
+                res.json(qResult);
+              }
+            );
+          }
+          res.json(qResult);
+          connection.release();
+        }
+      });
+    } catch (error) {
+      res.status(400).json({ msg: "Network Error" });
+    }
+  });
+});
+module.exports = { auth, validate, register };
