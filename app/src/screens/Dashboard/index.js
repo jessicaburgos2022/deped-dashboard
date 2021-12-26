@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 
 import { Doughnut, Line, Pie } from "react-chartjs-2";
 
@@ -63,8 +64,8 @@ export default () => {
   useEffect(() => {
     setTotalPPACount(dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) && Array.isArray(dashboardState.MonitoredPPA.map(item => item.PPACount)) ? dashboardState.MonitoredPPA.map(item => item.PPACount).reduce((prev, cur) => prev + cur) : 0);
   }, [])
-  
-  const colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan' ];
+
+  const colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'cyan'];
   const graph1Colors = [];
   const data1 = {
     labels: dashboardState.MonitoredPPA.map((r) => {
@@ -74,7 +75,11 @@ export default () => {
       {
         label: "PAPs Monitored and Analyzed",
         data: dashboardState.MonitoredPPA.map((r) => {
-          graph1Colors.push(colors[Math.floor(Math.random() * colors.length)])
+          var color = colors[Math.floor(Math.random() * colors.length)];
+          while (graph1Colors.filter(c => c === color).length > 0) {
+            color = colors[Math.floor(Math.random() * colors.length)];
+          }
+          graph1Colors.push(color)
           return r.PPACount;
         }),
         backgroundColor: graph1Colors,
@@ -148,7 +153,7 @@ export default () => {
         label: "Averate Utilization Rate (%)",
         fill: false,
         borderColor: "rgb(255, 255, 255)",
-        backgroundColor: "rgba(255, 255, 255, 1)", 
+        backgroundColor: "rgba(255, 255, 255, 1)",
         datalabels: {
           color: '#FFCE56'
         },
@@ -264,7 +269,7 @@ export default () => {
       </CardContent>
     </React.Fragment>
   );
-  
+
 
   return (
     <div className="content-wrapper">
@@ -287,12 +292,13 @@ export default () => {
         <div className="container-fluid">
           <div class="row">
             <div class="col-lg-3 col-6">
-              <div class="small-box bg-info">
+              <div class="small-box bg-warning">
                 <div class="inner">
                   <h3>{totalPPACount}</h3>
                   <p>Monitored PPA</p>
                 </div>
                 <div class="icon">
+                  <AccessibilityNewIcon />
                   <i class="ion ion-bag"></i>
                 </div>
                 <a href="/outputmanagement/major" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -305,7 +311,7 @@ export default () => {
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    Monitored PPA per office
+                    Monitored PPA
                   </h3>
                 </div>
                 <div class="card-body">
@@ -320,7 +326,7 @@ export default () => {
                           <strong>Offices</strong>
                         </p>
                         {
-                          dashboardState.MonitoredPPA.map((item,i) => {
+                          dashboardState.MonitoredPPA.map((item, i) => {
                             return (
                               <div class="progress-group">
                                 {item.DepartmentName}
@@ -362,8 +368,55 @@ export default () => {
                 </div>
               </div>
             </section>
+
+            <section class="col-lg-6 connectedSortable">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Satisfactory accountability result on Physical and Financial Target
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content p-0">
+                    <div class="chart tab-pane active" id="revenue-chart"
+                      style={{ position: 'relative', display: 'flex' }}>
+                      <div class="col-md-12">
+                        <Line options={options} data={SatisfactoryResult} />
+                      </div>
+                    </div>
+                    <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
+                      {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="col-lg-6 connectedSortable">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    PPAs conducted within the defined timeline
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content p-0">
+                    <div class="chart tab-pane active" id="revenue-chart"
+                      style={{ position: 'relative', display: 'flex' }}>
+                      <div class="col-md-12">
+                        <Line options={options} data={data} />
+                      </div>
+                    </div>
+                    <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
+                      {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
-          <div class="row">
+          {/* <div class="row">
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Card variant="outlined">{card2}</Card>
@@ -372,7 +425,7 @@ export default () => {
                 <Card variant="outlined">{card3}</Card>
               </Grid>
             </Grid>
-          </div>
+          </div> */}
         </div>
       </div >
     </div>

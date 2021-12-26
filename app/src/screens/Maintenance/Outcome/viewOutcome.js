@@ -8,13 +8,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { fetchIndicatorsByOutcomeId, updateGraphData } from '../../../actions/outcomeActions';
+import { fetchIndicatorsByOutcomeId, updateGraphData, deleteIndicator } from '../../../actions/outcomeActions';
 import { Checkbox, Divider } from '@mui/material';
+
+import InsertIndicator from './insertIndicator';
+import Swal from 'sweetalert2';
 export default (props) => {
     const { open, handleClose, data } = props;
     const dispatch = useDispatch();
     const [indicators, setIndicators] = useState([]);
-    console.log(data)
+    const [isAddIndicatorOpen, setIsAddIndicatorOpen] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -31,9 +34,41 @@ export default (props) => {
             setIndicators(ret);
         }
     }
-
+    const handleRefreshIndicator = async () => {
+        var ret = await dispatch(fetchIndicatorsByOutcomeId(data.Id));
+        setIndicators(ret);
+    }
+    const handleNewClick = () => {
+        setIsAddIndicatorOpen(true);
+    }
+    const handleDelete = async (id) => {
+        Swal.fire({
+            title: "Confirmation",
+            text: "Do you want to delete this indicator?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: "No"
+        }).then(async (r) => {
+            if (r.isConfirmed) {
+                var ret = await dispatch(deleteIndicator(id));
+                Swal.fire(
+                    ret.result,
+                    ret.message,
+                    ret.result === "Success" ? "success" : "error"
+                );
+                handleRefreshIndicator();
+            }
+        });
+    }
     return (
         <React.Fragment>
+            {
+                isAddIndicatorOpen &&
+                <InsertIndicator open={isAddIndicatorOpen} handleRefresh={() => handleRefreshIndicator()} handleClose={() => setIsAddIndicatorOpen(false)} outcomeid={data.Id} />
+            }
             <Dialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
@@ -59,6 +94,9 @@ export default (props) => {
                             <b>Indicators</b>
                         </span>
                     </Divider>
+                    <Button onClick={() => handleNewClick()} variant="contained" color="primary">
+                        New
+                    </Button>
                     <TableContainer component={Paper}>
                         <Table aria-label="collapsible table">
                             <TableBody>
@@ -72,7 +110,7 @@ export default (props) => {
                                                 <TableCell component="th" className="interface-table-cell">
                                                     <FormControlLabel control={<Checkbox checked={indicator.IsComputed} onChange={(e) => handleGraphDataUpdate(indicator.IndicatorId, e.target.checked ? 1 : 0)} />} label="Graph Data" />
                                                     <Button>Edit</Button>
-                                                    <Button>Delete</Button>
+                                                    <Button onClick={() => handleDelete(indicator.IndicatorId)}>Delete</Button>
                                                 </TableCell>
                                             </TableRow>
                                         )

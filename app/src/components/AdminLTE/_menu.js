@@ -9,6 +9,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { menu } from "../Menu";
 import { hasChildren } from "../utils";
+import { useLocation } from "react-router-dom";
 
 export default function App() {
     return menu.map((item, key) => <MenuItem key={key} item={item} />);
@@ -29,18 +30,16 @@ const SingleLevel = ({ item }) => {
                 </p>
             </a>
         </li>
-        // <a href={item.to}>
-        //     <ListItem button>
-        //         <ListItemIcon style={{color:'#fff', textDecoration:'none'}}>{item.icon}</ListItemIcon>
-        //         <ListItemText primary={item.title} style={{color:'#fff', textDecoration:'none'}}/>
-        //     </ListItem></a>
     );
 };
 
 const MultiLevel = ({ item }) => {
     const { items: children } = item;
     const [open, setOpen] = useState(false);
-
+    const location = useLocation();
+    if (location.pathname === item.to) {
+        setOpen(true);
+    }
     const handleClick = () => {
         setOpen((prev) => !prev);
     };

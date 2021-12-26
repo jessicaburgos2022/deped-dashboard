@@ -64,83 +64,79 @@ export default (props) => {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        maxWidth="lg"
+        maxWidth="sm"
         fullWidth
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Add Project
-        </DialogTitle>
-        <DialogContent dividers>
-          <Paper style={{ padding: "2rem" }}>
-            <form onSubmit={handleSubmit(onSubmit)} id="add-kra">
-              <FormGroup>
-                <FormControl variant="standard">
-                  <InputLabel>KRA</InputLabel>
-                  <Controller
-                    control={control}
-                    name="kraid"
-                    rules={{
-                      required: { value: true, message: "This field is required" },
-                    }}
-                    as={
-                      <Select
-                        className="output-category-margin"
-                        name="kraid"
-                        label="Select KRA"
-                        ref={register}
-                      >
-                        {KRAList.map((kra, id) => {
-                          return (
-                            <MenuItem key={id} value={kra.Id}>
-                              {kra.Name}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                    } />
-                  <FormHelperText>
-                    {errors.kraid ? errors.kraid.message : ""}
-                  </FormHelperText>
-                </FormControl>
+        <form onSubmit={handleSubmit(onSubmit)} id="add-kra">
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Add Project
+          </DialogTitle>
+          <DialogContent dividers>
+            <FormGroup>
+              <FormControl variant="standard">
+                <InputLabel>KRA</InputLabel>
                 <Controller
                   control={control}
-                  name="project"
+                  name="kraid"
                   rules={{
-                    required: {
-                      value: true,
-                      message: "This field is required",
-                    },
+                    required: { value: true, message: "This field is required" },
                   }}
                   as={
-                    <TextField
+                    <Select
+                      className="output-category-margin"
+                      name="kraid"
+                      label="Select KRA"
+                      ref={register}
+                    >
+                      {KRAList.map((kra, id) => {
+                        return (
+                          <MenuItem key={id} value={kra.Id}>
+                            {kra.Name}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  } />
+                <FormHelperText>
+                  {errors.kraid ? errors.kraid.message : ""}
+                </FormHelperText>
+              </FormControl>
+              <Controller
+                control={control}
+                name="project"
+                rules={{
+                  required: {
+                    value: true,
+                    message: "This field is required",
+                  },
+                }}
+                as={
+                  <TextField
                     multiline
-                      label="Name"
-                      name="name"
-                      rows={4}
-                      maxRows={4}
-                      className="output-margin"
-                      variant="outlined"
-                      size="small"
-                    />
-                  }
-                />
+                    label="Name"
+                    name="name"
+                    rows={4}
+                    maxRows={4}
+                    className="output-margin"
+                    variant="outlined"
+                    size="small"
+                  />
+                }
+              />
 
-              </FormGroup>
-              <Button
-                className="output-margin"
-                variant="contained"
-                style={{ width: "100%" }}
-                color="primary"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </form>
-          </Paper>
-        </DialogContent>
-
-        <DialogActions>
-        </DialogActions>
+            </FormGroup>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              className="output-margin"
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </React.Fragment>
   );

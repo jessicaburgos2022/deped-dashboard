@@ -13,7 +13,13 @@ import {
     LIST_INDICATORSBYOUTCOMEID_FAILED,
     UPDATE_GRAPHDATA_REQUEST,
     UPDATE_GRAPHDATA_SUCCESS,
-    UPDATE_GRAPHDATA_FAILED
+    UPDATE_GRAPHDATA_FAILED,
+    INSERT_INDICATOR_REQUEST,
+    INSERT_INDICATOR_SUCCESS,
+    INSERT_INDICATOR_FAILED,
+    DELETE_INDICATOR_REQUEST,
+    DELETE_INDICATOR_SUCCESS,
+    DELETE_INDICATOR_FAILED
 } from "../constants/outcomeConstants";
 import axios from "../helpers/axios";
 
@@ -84,6 +90,39 @@ export const insertOutcome = (param) => async (dispatch) => {
     }
 };
 
+export const insertIndicator = (param) => async (dispatch) => {
+    await dispatch({ type: INSERT_INDICATOR_REQUEST });
+    try {
+        const { data } = await axios.post(`/api/outcome/indicator`, param);
+        dispatch({
+            type: INSERT_INDICATOR_SUCCESS,
+            payload: data,
+        });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: INSERT_INDICATOR_FAILED,
+            payload: ""
+        });
+    }
+};
+
+export const deleteIndicator = (indicatorid) => async (dispatch) => {
+    await dispatch({ type: DELETE_INDICATOR_REQUEST });
+    try {
+        const { data } = await axios.delete(`/api/outcome/indicator/${indicatorid}`);
+        dispatch({
+            type: DELETE_INDICATOR_SUCCESS,
+            payload: data,
+        });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: DELETE_INDICATOR_FAILED,
+            payload: ""
+        });
+    }
+};
 
 export const updateGraphData = (param) => async (dispatch) => {
     await dispatch({ type: UPDATE_GRAPHDATA_REQUEST });

@@ -60,78 +60,20 @@ export default (props) => {
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={open}
-                maxWidth="lg"
+                maxWidth="sm"
                 fullWidth
             >
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Add Output
-                </DialogTitle>
-                <DialogContent dividers>
-                    <Paper style={{ padding: "2rem" }}>
-                        <form onSubmit={handleSubmit(onSubmit)} id="add-outcome">
+                <form onSubmit={handleSubmit(onSubmit)} id="add-outcome">
+                    <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                        Add Outcome
+                    </DialogTitle>
+                    <DialogContent dividers>
+                        <FormGroup>
                             <FormGroup>
-                                <FormGroup>
-                                    <InputLabel>Department</InputLabel>
-                                    <Controller
-                                        control={control}
-                                        name="departmentid"
-                                        rules={{
-                                            required: {
-                                                value: true,
-                                                message: "This field is required",
-                                            },
-                                        }}
-                                        as={
-                                            <Select
-                                                label="Department"
-                                                fullWidth
-                                                className="output-category-margin"
-                                                name="departmentid"
-                                                label="Select Department"
-                                            >
-                                                {appState.departments.map((department, id) => {
-                                                    return (
-                                                        <MenuItem key={id} value={department.Id}>
-                                                            {department.Name}
-                                                        </MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        }
-                                    />
-                                </FormGroup>
-                                <FormGroup>
-                                    <InputLabel>Outcome Type</InputLabel>
-                                    <Controller
-                                        control={control}
-                                        name="outcometypeid"
-                                        rules={{
-                                            required: {
-                                                value: true,
-                                                message: "This field is required",
-                                            },
-                                        }}
-                                        as={
-                                            <Select
-                                                label="Outcome Type"
-                                                fullWidth
-                                                className="output-category-margin"
-                                                name="outcomeTypeId"
-                                                label="Select Department"
-                                            >
-                                                {outcomeState.outcometypes && Array.isArray(outcomeState.outcometypes) && outcomeState.outcometypes.map((outcomeType, id) => {
-                                                    return (
-                                                        <MenuItem key={id} value={outcomeType.Id}>
-                                                            {outcomeType.Outcome}
-                                                        </MenuItem>
-                                                    );
-                                                })}
-                                            </Select>
-                                        } />
-                                </FormGroup>
+                                <InputLabel>Department</InputLabel>
                                 <Controller
                                     control={control}
-                                    name="title"
+                                    name="departmentid"
                                     rules={{
                                         required: {
                                             value: true,
@@ -139,37 +81,89 @@ export default (props) => {
                                         },
                                     }}
                                     as={
-                                        <TextField
-                                            multiline
-                                            label="Title"
-                                            name="title"
-                                            rows={4}
-                                            maxRows={4}
-                                            className="output-margin"
-                                            variant="outlined"
-                                            size="small"
-                                        />
+                                        <Select
+                                            label="Department"
+                                            fullWidth
+                                            className="output-category-margin"
+                                            name="departmentid"
+                                            label="Select Department"
+                                        >
+                                            {appState.departments.map((department, id) => {
+                                                return (
+                                                    <MenuItem key={id} value={department.Id}>
+                                                        {department.Name}
+                                                    </MenuItem>
+                                                );
+                                            })}
+                                        </Select>
                                     }
                                 />
                             </FormGroup>
-                            <Button
-                                className="output-margin"
-                                variant="contained"
-                                style={{ width: "100%" }}
-                                color="primary"
-                                type="submit"
-                            >
-                                Submit
-                            </Button>
-                        </form>
-                    </Paper>
-                </DialogContent>
-
-                <DialogActions>
-                    {/* <Button autoFocus color="primary" type="submit">
-                    Save
-                  </Button> */}
-                </DialogActions>
+                            <FormGroup>
+                                <InputLabel>Outcome Type</InputLabel>
+                                <Controller
+                                    control={control}
+                                    name="outcometypeid"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "This field is required",
+                                        },
+                                    }}
+                                    as={
+                                        <Select
+                                            label="Outcome Type"
+                                            fullWidth
+                                            className="output-category-margin"
+                                            name="outcomeTypeId"
+                                            label="Select Department"
+                                        >
+                                            {outcomeState.outcometypes && Array.isArray(outcomeState.outcometypes) && outcomeState.outcometypes.map((outcomeType, id) => {
+                                                return (
+                                                    <MenuItem key={id} value={outcomeType.Id}>
+                                                        {outcomeType.Outcome}
+                                                    </MenuItem>
+                                                );
+                                            })}
+                                        </Select>
+                                    } />
+                            </FormGroup>
+                            <Controller
+                                control={control}
+                                name="title"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "This field is required",
+                                    },
+                                }}
+                                as={
+                                    <TextField
+                                        multiline
+                                        label="Title"
+                                        name="title"
+                                        rows={4}
+                                        maxRows={4}
+                                        className="output-margin"
+                                        variant="outlined"
+                                        size="small"
+                                    />
+                                }
+                            />
+                        </FormGroup>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            className="output-margin"
+                            variant="contained"
+                            style={{ width: "100%" }}
+                            color="primary"
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         </React.Fragment>
     );

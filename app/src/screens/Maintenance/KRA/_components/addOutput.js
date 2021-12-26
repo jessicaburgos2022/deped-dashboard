@@ -64,27 +64,25 @@ export default (props) => {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        maxWidth="lg"
+        maxWidth="sm"
         fullWidth
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Add Output
-        </DialogTitle>
-        <DialogContent dividers>
-          <Paper style={{ padding: "2rem" }}>
-            <form onSubmit={handleSubmit(onSubmit)} id="add-kra">
+        <form onSubmit={handleSubmit(onSubmit)} id="add-kra">
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Add Output
+          </DialogTitle>
+          <DialogContent dividers>
               <FormGroup>
-                  
-                    <Select
-                      className="output-category-margin"
-                      label="Select Output Type"
-                      name="outputtype"
-                      onChange={(e) => setOutputTypeId(e.target.value)}
-                    >
-                      <MenuItem value={1}>Major Output</MenuItem>
-                      <MenuItem value={2}>Minor Output</MenuItem>
-                    </Select>
-                  
+                <Select
+                  className="output-category-margin"
+                  label="Select Output Type"
+                  name="outputtype"
+                  onChange={(e) => setOutputTypeId(e.target.value)}
+                >
+                  <MenuItem value={1}>Major Output</MenuItem>
+                  <MenuItem value={2}>Minor Output</MenuItem>
+                </Select>
+
                 <Controller
                   control={control}
                   name="name"
@@ -127,36 +125,22 @@ export default (props) => {
                     />
                   }
                 />
-
-                {/* <TextField
-                    label="Description"
-                    name="description"
-                    rows={4}
-                    maxRows={4}
-                    className="output-margin"
-                    variant="outlined"
-                    size="small"
-                  /> */}
               </FormGroup>
-              <Button
-                className="output-margin"
-                variant="contained"
-                style={{ width: "100%" }}
-                color="primary"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </form>
-          </Paper>
-        </DialogContent>
+          </DialogContent>
 
-        <DialogActions>
-          {/* <Button autoFocus color="primary" type="submit">
-                  Save
-                </Button> */}
-        </DialogActions>
+          <DialogActions>
+            <Button
+              className="output-margin"
+              variant="contained"
+              style={{ width: "100%" }}
+              color="primary"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
-    </React.Fragment>
+    </React.Fragment >
   );
 };

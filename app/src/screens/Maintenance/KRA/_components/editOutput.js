@@ -69,12 +69,12 @@ export default (props) => {
         maxWidth="lg"
         fullWidth
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Edit Output
-        </DialogTitle>
-        <DialogContent dividers>
-          <Paper style={{ padding: "2rem" }}>
-            <form onSubmit={handleSubmit(onSubmit)} id="edit-kra">
+        <form onSubmit={handleSubmit(onSubmit)} id="edit-kra">
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Edit Output
+          </DialogTitle>
+          <DialogContent dividers>
+            <Paper style={{ padding: "2rem" }}>
               <FormGroup>
                 <Controller
                   control={control}
@@ -97,7 +97,7 @@ export default (props) => {
                     </Select>
                   }
                 />
-                
+
                 <Controller
                   control={control}
                   name="name"
@@ -109,21 +109,21 @@ export default (props) => {
                     },
                   }}
                   as={
-                <TextField
-                  label="Name"
-                  defaultValue={data["KRAName"]}
-                  rows={4}
-                  maxRows={4}
-                  name="name"
-                  className="output-margin"
-                  variant="outlined"
-                  size="small"
-                  
-                />
-                }
-              />
+                    <TextField
+                      label="Name"
+                      defaultValue={data["KRAName"]}
+                      rows={4}
+                      maxRows={4}
+                      name="name"
+                      className="output-margin"
+                      variant="outlined"
+                      size="small"
 
-            <Controller
+                    />
+                  }
+                />
+
+                <Controller
                   control={control}
                   name="description"
                   defaultValue={data["KRADescription"]}
@@ -134,37 +134,33 @@ export default (props) => {
                     },
                   }}
                   as={
-                <TextField
-                  label="Description"
-                  name="description"
-                  defaultValue={data["KRADescription"]}
-                  rows={4}
-                  maxRows={4}
-                  className="output-margin"
-                  variant="outlined"
-                  size="small"
-                />
+                    <TextField
+                      label="Description"
+                      name="description"
+                      defaultValue={data["KRADescription"]}
+                      rows={4}
+                      maxRows={4}
+                      className="output-margin"
+                      variant="outlined"
+                      size="small"
+                    />
                   }
-                  />
+                />
               </FormGroup>
-              <Button
-                className="output-margin"
-                variant="contained"
-                style={{ width: "100%" }}
-                color="primary"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </form>
-          </Paper>
-        </DialogContent>
-
-        <DialogActions>
-          {/* <Button autoFocus color="primary" type="submit">
-                Save
-              </Button> */}
-        </DialogActions>
+            </Paper>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              className="output-margin"
+              variant="contained"
+              style={{ width: "100%" }}
+              color="primary"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </React.Fragment>
   );

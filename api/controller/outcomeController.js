@@ -118,9 +118,63 @@ const insertOutcome = asyncHander(async (req, res) => {
     });
 });
 
+const insertIndicator = asyncHander(async (req, res) => {
+    const { outcomeid, indicator, iscomputed } = req.body;
+    const queryString = `CALL InsertIndicator(${outcomeid},'${indicator}',${iscomputed})`;
+    console.log(queryString)
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    var qResult = JSON.parse(JSON.stringify(results[0][0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
+const deleteIndicator = asyncHander(async (req, res) => {
+    const { indicatorid } = req.params;
+    const queryString = `DELETE FROM indicator WHERE Id = ${indicatorid}`;
+    console.log(queryString)
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    res.json({ result: 'Success', message: 'Indicator deleted.' });
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
 const updateIsGraphDataByIndicatorId = asyncHander(async (req, res) => {
     const { indicatorid, status } = req.body;
-    console.log(req.body)
     const queryString = `UPDATE indicator SET IsComputed = ${status} WHERE Id = ${indicatorid}`;
     console.log(queryString)
     pool.getConnection((err, connection) => {
@@ -146,4 +200,4 @@ const updateIsGraphDataByIndicatorId = asyncHander(async (req, res) => {
     });
 });
 
-module.exports = { listOutcomeType, searchOutcome, insertOutcome, listIndicatorsByOutcomeId, updateIsGraphDataByIndicatorId };
+module.exports = { listOutcomeType, searchOutcome, insertOutcome, listIndicatorsByOutcomeId, insertIndicator, deleteIndicator, updateIsGraphDataByIndicatorId };

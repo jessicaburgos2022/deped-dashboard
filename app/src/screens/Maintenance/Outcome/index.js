@@ -40,7 +40,7 @@ export default () => {
             <div className="content">
                 <div className="container-fluid">
                     {isAddOpen && <AddOutcome open={isAddOpen} handleClose={() => setisAddOpen(false)} handleRefresh={() => searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle)} />}
-                    <Button variant="contained" color="success" onClick={() => setisAddOpen(true)} >Add Outcome</Button>
+                    <Button variant="contained" color="primary" onClick={() => setisAddOpen(true)} >Add Outcome</Button>
                     <Grid container spacing={3} style={{ padding: 10 }}>
                         <Grid item xs={3}>
                             <FormGroup>

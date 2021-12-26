@@ -21,7 +21,7 @@ export default (props) => {
                 fullWidth
             >
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    View Output
+                    View Project
                 </DialogTitle>
                 <DialogContent dividers>
                     <b>KRA ID:</b> {data.KRAId} <br />
@@ -29,10 +29,6 @@ export default (props) => {
                     <b>Deparment:</b> {data.DepartmentDescription} <br />
                     <b>KRA Name:</b> {data.KRADescription} <br />
                     <b>Project Name:</b> {data.ProjectName} <br />
-                    {/* <b>Description:</b> {data.KRADescription} <br /> */}
-                    
-                    
-                    
                 </DialogContent>
                 <DialogActions>
                     {/* <Button autoFocus color="primary" onClick={() => handleClose}>

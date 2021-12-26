@@ -93,7 +93,7 @@ export default (data) => {
                                     <TableCell component="th" className="interface-table-cell">
                                         {console.log(userState.userInfo.acc[0].RoleId)}
                                         <Button onClick={() => handleViewOpen(r)}>View</Button>
-                                        <Button onClick={() => handleViewEdit(r)} hidden={parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1}>Edit</Button>
+                                        <Button onClick={() => handleViewEdit(r)} hidden={userState.userInfo.acc[0].RoleId !== 1 && (parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1)}>Edit</Button>
                                         <Button onClick={() => handleEditOutputStatus(2, r.OutputMinorHeaderId, 2)} hidden={userState.userInfo.acc[0].RoleId !== 1 || r.StatusId !== 1 || parseInt(departmentId) !== parseInt(r.DepartmentId)}>Approve</Button>
                                     </TableCell>
 

@@ -66,106 +66,100 @@ export default (props) => {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        maxWidth="lg"
+        maxWidth="sm"
         fullWidth
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Edit Output
-        </DialogTitle>
-        <DialogContent dividers>
-          <Paper style={{ padding: "2rem" }}>
-            <form onSubmit={handleSubmit(onSubmit)} id="edit-kra">
-              <FormGroup>
-                <Controller
-                  control={control}
-                  name="outputtypeid"
-                  defaultValue={data["OutputTypeId"]}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "This field is required",
-                    },
-                  }}
-                  as={
-                    <Select
-                      className="output-category-margin"
-                      name="outputtypeid"
-                      label="Select Output Type"
-                    >
-                      <MenuItem value={1}>Major Output</MenuItem>
-                      <MenuItem value={2}>Minor Output</MenuItem>
-                    </Select>
-                  }
-                />
-                
-                <Controller
-                  control={control}
-                  name="name"
-                  defaultValue={data["KRAName"]}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "This field is required",
-                    },
-                  }}
-                  as={
-                <TextField
-                  label="Name"
-                  defaultValue={data["KRAName"]}
-                  rows={4}
-                  maxRows={4}
-                  name="name"
-                  className="output-margin"
-                  variant="outlined"
-                  size="small"
-                  
-                />
+        <form onSubmit={handleSubmit(onSubmit)} id="edit-project">
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Edit Output
+          </DialogTitle>
+          <DialogContent dividers>
+            <FormGroup>
+              <Controller
+                control={control}
+                name="outputtypeid"
+                defaultValue={data["OutputTypeId"]}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "This field is required",
+                  },
+                }}
+                as={
+                  <Select
+                    className="output-category-margin"
+                    name="outputtypeid"
+                    label="Select Output Type"
+                  >
+                    <MenuItem value={1}>Major Output</MenuItem>
+                    <MenuItem value={2}>Minor Output</MenuItem>
+                  </Select>
                 }
               />
 
-            <Controller
-                  control={control}
-                  name="description"
-                  defaultValue={data["KRADescription"]}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "This field is required",
-                    },
-                  }}
-                  as={
-                <TextField
-                  label="Description"
-                  name="description"
-                  defaultValue={data["KRADescription"]}
-                  rows={4}
-                  maxRows={4}
-                  className="output-margin"
-                  variant="outlined"
-                  size="small"
-                />
-                  }
-                  />
-              </FormGroup>
-              <Button
-                className="output-margin"
-                variant="contained"
-                style={{ width: "100%" }}
-                color="primary"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </form>
-          </Paper>
-        </DialogContent>
+              <Controller
+                control={control}
+                name="name"
+                defaultValue={data["KRAName"]}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "This field is required",
+                  },
+                }}
+                as={
+                  <TextField
+                    label="Name"
+                    defaultValue={data["KRAName"]}
+                    rows={4}
+                    maxRows={4}
+                    name="name"
+                    className="output-margin"
+                    variant="outlined"
+                    size="small"
 
-        <DialogActions>
-          {/* <Button autoFocus color="primary" type="submit">
-                Save
-              </Button> */}
-        </DialogActions>
+                  />
+                }
+              />
+
+              <Controller
+                control={control}
+                name="description"
+                defaultValue={data["KRADescription"]}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "This field is required",
+                  },
+                }}
+                as={
+                  <TextField
+                    label="Description"
+                    name="description"
+                    defaultValue={data["KRADescription"]}
+                    rows={4}
+                    maxRows={4}
+                    className="output-margin"
+                    variant="outlined"
+                    size="small"
+                  />
+                }
+              />
+            </FormGroup>
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              className="output-margin"
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
-    </React.Fragment>
+    </React.Fragment >
   );
 };

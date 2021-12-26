@@ -35,7 +35,7 @@ export default () => {
             <div className="content">
                 <div className="container-fluid">
                     {isAddOpen && <AddProject open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh} />}
-                    <div className="text">PROJECT  &nbsp; <Button variant="contained" color="success" onClick={() => setIsAddOpen(true)} >Add PROJECT</Button></div>
+                    <Button variant="contained" color="primary" onClick={() => setIsAddOpen(true)} >Add PROJECT</Button>
                     <Table SearchResult={projectState.searchResult} />
                 </div>
             </div>
