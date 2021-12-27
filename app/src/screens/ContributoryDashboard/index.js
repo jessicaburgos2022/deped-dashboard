@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
+// import "../../styles";
 import { Card, CardContent, Container, Divider, Grid, Typography } from "@material-ui/core";
 
 import { fetchDashboardOO } from "../../actions/dashboardActions";
@@ -74,12 +75,12 @@ export default () => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1 className="m-0">KRA Management</h1>
+              <h1 className="m-0">Contributory Dashboard to Organizational Outcome</h1>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item"><a href="#">Maintenance</a></li>
-                <li className="breadcrumb-item active">KRA</li>
+                <li className="breadcrumb-item"><a href="#">Home</a></li>
+                <li className="breadcrumb-item active">Contributory Dashboard to Organizational Outcome</li>
               </ol>
             </div>
           </div>
@@ -97,34 +98,36 @@ export default () => {
                 <Paper style={{ padding: '15px', marginBottom: 25 }}>
                   <h5 style={{ background: '#f1faee', padding: 5 }}>{outcomeType.OutcomeType}</h5>
                   <Divider />
-                  <Grid container spacing={1}>
+                  <div className="row">
                     {
                       [... new Set(dashboardState.oo.filter(i => i.OutcomeTypeId === outcomeType.OutcomeTypeId).map(ind => ind.OutcomeId))].map(outcomeId => {
                         var outcome = dashboardState.oo.find(res => res.OutcomeId === outcomeId)
                         return (
-                          <Grid item xs={3} style={{ padding: 15 }}>
-                            <Grid container spacing={2}>
-                              <GenerateBarGraph data={outcome} />
-                              {/* {
-                            dashboardState.oo.filter(res => res.OutcomeId === outcomeId).map(res => {
-                              return (
-                                <React.Fragment>
-                                  <Grid item xs={6} style={{ fontSize: 10, textAlign: 'right' }}>
-                                    <b>{res.IndicatorTitle}</b>
-                                  </Grid>
-                                  <Grid item xs={6} style={{ fontSize: 11 }}>
-                                    {res.Result}
-                                  </Grid>
-                                </React.Fragment>
-                              )
-                            })
-                          } */}
-                            </Grid>
-                          </Grid>
+                          <div className="col-xl-4">
+                            <div className="card card-danger">
+                              <div className="card-header">
+                                <h3 className="card-title">Chart {outcome.OutcomeId}</h3>
+
+                                <div className="card-tools">
+                                  <button type="button" className="btn btn-tool" data-card-widget="collapse">
+                                    <i className="fas fa-minus"></i>
+                                  </button>
+                                  <button type="button" className="btn btn-tool" data-card-widget="remove">
+                                    <i className="fas fa-times"></i>
+                                  </button>
+                                </div>
+                              </div>
+                              <div className="card-body">
+                                {/* <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas> */}
+                                <GenerateBarGraph data={outcome} />
+                              </div>
+                            </div>
+                          </div>
+
                         )
-                      })
+                      }) // end of iteration
                     }
-                  </Grid>
+                  </div>
                 </Paper>
               )
             })

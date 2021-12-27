@@ -10,9 +10,13 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { menu } from "../Menu";
 import { hasChildren } from "../utils";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function App() {
-    return menu.map((item, key) => <MenuItem key={key} item={item} />);
+    const userState = useSelector(state => state.user)
+    return menu
+    .filter(menu => menu.title !== "Maintenance" || (userState && userState.userInfo && userState.userInfo.acc && Array.isArray(userState.userInfo.acc) && userState.userInfo.acc[0].RoleId === 1))
+    .map((item, key) => <MenuItem key={key} item={item} />);
 }
 
 const MenuItem = ({ item }) => {

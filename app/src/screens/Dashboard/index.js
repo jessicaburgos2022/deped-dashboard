@@ -332,7 +332,7 @@ export default () => {
                                 {item.DepartmentName}
                                 <span class="float-right">{item.PPACount}</span>
                                 <div class="progress progress-sm">
-                                  <div class={`progress-bar bg-${graph1Colors[i]}`} style={{ width: (item.PPACount / totalPPACount) * 100 + '%' }}></div>
+                                  <div class={`progress-bar bg-${graph1Colors[i]} progress-bar-striped`} style={{ width: (item.PPACount / totalPPACount) * 100 + '%' }}></div>
                                 </div>
                               </div>
                             )
