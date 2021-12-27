@@ -1,5 +1,4 @@
-import { Button, FormGroup, MenuItem, Select } from '@material-ui/core';
-import { Container, Grid, InputLabel, TextField } from '@mui/material';
+import { Button, FormControl, FormGroup, MenuItem, Select, Container, Grid, InputLabel, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchMajorOutput } from '../../../../actions/outputActions';
@@ -43,23 +42,25 @@ export default () => {
                     <Grid container spacing={3} style={{ padding: 10 }}>
                         <Grid item xs={3}>
                             <FormGroup>
-                                <InputLabel>Department</InputLabel>
-                                <Select
-                                    label="Department"
-                                    fullWidth
-                                    className="output-category-margin"
-                                    name="departmentId"
-                                    label="Select Department"
-                                    onChange={(e) => setSelectedDepartmentId(e.target.value)}
-                                >
-                                    {departmentList.map((department, id) => {
-                                        return (
-                                            <MenuItem key={id} value={department.Id}>
-                                                {department.Name}
-                                            </MenuItem>
-                                        );
-                                    })}
-                                </Select>
+
+                                <FormControl variant="standard" className=" w-100">
+                                    <InputLabel>Department</InputLabel>
+                                    <Select
+                                        label="Department"
+                                        fullWidth
+                                        className="output-category-margin"
+                                        name="departmentId"
+                                        onChange={(e) => setSelectedDepartmentId(e.target.value)}
+                                    >
+                                        {departmentList.map((department, id) => {
+                                            return (
+                                                <MenuItem key={id} value={department.Id}>
+                                                    {department.Name}
+                                                </MenuItem>
+                                            );
+                                        })}
+                                    </Select>
+                                </FormControl>
                             </FormGroup>
                         </Grid>
                         <Grid item xs={3}>

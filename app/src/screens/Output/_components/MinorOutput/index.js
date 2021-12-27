@@ -81,20 +81,21 @@ export default () => {
                 <form onSubmit={handleSubmit(onSubmit)} id="insert-minor-form" className="custom-form">
                   <FormGroup>
 
-                    <div className="row mb-5">
+                    <div className="row mb-4">
 
                       <Divider
-                        className="group-title"
+                        className="group-title col-12"
                         placeholder="OPCRF"
                         label="OPCRF"
                         variant="fullWidth"
                         orientation="horizontal"
                       ><span><b>Cross-Cutting KRAs not included in OPCRF</b></span>
                       </Divider>
-                      <FormControl variant="standard">
-                        <InputLabel>KRA</InputLabel>
+
+                      <FormControl variant="standard" className="col-lg-4">
+                        <InputLabel className="custom-mat-select-label">KRA</InputLabel>
                         <Select
-                          className="output-category-margin"
+                          className="output-category-margin w-100"
                           name="kraid"
                           label="Select KRA"
                           ref={register}
@@ -110,8 +111,7 @@ export default () => {
                           {errors.kraid ? errors.kraid.message : ""}
                         </FormHelperText>
                       </FormControl>
-
-                      <FormControl variant="standard">
+                      <FormControl variant="standard" className="col-lg-8">
                         <InputLabel>Project</InputLabel>
                         <Controller
                           control={control}
@@ -146,7 +146,7 @@ export default () => {
                       </FormControl>
 
                       <Grid container spacing={3}>
-                        <Grid item xs={4}>
+                        <Grid item className="col-12 col-lg-6 col-xl-4">
                           <Controller
                             defaultValue=""
                             control={control}
@@ -172,7 +172,7 @@ export default () => {
                             }
                           />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item className="col-12 col-lg-6 col-xl-4">
                           <Controller
                             defaultValue=""
                             control={control}
@@ -184,9 +184,6 @@ export default () => {
                               <TextField
                                 type="text"
                                 className="output-margin"
-                                rows={4}
-                                maxrows={4}
-                                multiline
                                 rows={4}
                                 maxrows={4}
                                 multiline
@@ -202,7 +199,7 @@ export default () => {
                           />
 
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item className="col-12 col-lg-6 col-xl-4">
                           <Controller
                             defaultValue=""
                             control={control}
@@ -227,7 +224,7 @@ export default () => {
                             }
                           />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item className="col-12 col-lg-6 col-xl-4">
                           <Controller
                             defaultValue=""
                             control={control}
@@ -251,7 +248,7 @@ export default () => {
                           />
 
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item className="col-12 col-lg-6 col-xl-4">
                           <Controller
                             defaultValue=""
                             control={control}
@@ -276,7 +273,7 @@ export default () => {
                             }
                           />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item className="col-12 col-lg-6 col-xl-4">
                           <Controller
                             defaultValue=""
                             control={control}
@@ -323,7 +320,7 @@ export default () => {
                             }
                           />
                         </Grid>
-                        <Grid item xs={4} hidden>
+                        <Grid item className="col-12 col-lg-6 col-xl-4" hidden>
                           <FormControlLabel
                             control={
                               <Controller
@@ -346,207 +343,232 @@ export default () => {
 
                     </div>
 
-                    <Divider
-                      className="group-title"
-                      placeholder="Issues and Concerns Encountered"
-                      label="Issues and Concerns Encountered"
-                      variant="fullWidth"
-                      orientation="horizontal"
-                    >
-                      <span>
-                        <b>Issues and Concerns Encountered</b>
-                      </span>
-                    </Divider>
-                    <Grid container>
-                      <Grid item className="col-xl-6">
-                        <Controller
-                          defaultValue=""
-                          control={control}
-                          name="opsissue"
-                          rules={{}}
-                          as={
-                            <TextField
-                              multiline
-                              row={4}
-                              maxRows={4}
-                              className="output-margin"
-                              label="Operational Issue"
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                              error={errors.opsissue != null}
-                              helperText={errors.opsissue ? errors.opsissue.message : ""}
-                            />
-                          }
-                        />
-                      </Grid>
-                      <Grid item className="col-xl-6">
-                        <Controller
-                          defaultValue=""
-                          control={control}
-                          name="policyissue"
-                          rules={{}}
-                          as={
-                            <TextField
-                              multiline
-                              row={4}
-                              maxRows={4}
-                              className="output-margin"
-                              label="Policy Issue"
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                              error={errors.policyissue != null}
-                              helperText={
-                                errors.policyissue ? errors.policyissue.message : ""
+<hr />
+                    <div className="row mb-4">
+
+                      {/* Issues and Concerns Encountered */}
+                      <div className="col-xl-4">
+                        <Divider
+                          className="group-title col-12"
+                          placeholder="Issues and Concerns Encountered"
+                          label="Issues and Concerns Encountered"
+                          variant="fullWidth"
+                          orientation="horizontal"
+                        >
+                          <span>
+                            <b>Issues and Concerns Encountered</b>
+                          </span>
+                        </Divider>
+                        <Grid container>
+                          <Grid item className="col-12">
+                            <Controller
+                              defaultValue=""
+                              control={control}
+                              name="opsissue"
+                              rules={{}}
+                              as={
+                                <TextField
+                                  multiline
+                                  row={4}
+                                  maxRows={4}
+                                  className="output-margin"
+                                  label="Operational Issue"
+                                  variant="outlined"
+                                  size="small"
+                                  fullWidth
+                                  error={errors.opsissue != null}
+                                  helperText={errors.opsissue ? errors.opsissue.message : ""}
+                                />
                               }
                             />
-                          }
-                        />
-                      </Grid>
-                      <Grid item className="col-xl-6">
+                          </Grid>
+                          <Grid item className="col-12">
+                            <Controller
+                              defaultValue=""
+                              control={control}
+                              name="policyissue"
+                              rules={{}}
+                              as={
+                                <TextField
+                                  multiline
+                                  row={4}
+                                  maxRows={4}
+                                  className="output-margin"
+                                  label="Policy Issue"
+                                  variant="outlined"
+                                  size="small"
+                                  fullWidth
+                                  error={errors.policyissue != null}
+                                  helperText={
+                                    errors.policyissue ? errors.policyissue.message : ""
+                                  }
+                                />
+                              }
+                            />
+                          </Grid>
+                          <Grid item className="col-12">
+                            <Controller
+                              defaultValue=""
+                              control={control}
+                              name="recommendation"
+                              rules={{}}
+                              as={
+                                <TextField
+                                  multiline
+                                  row={4}
+                                  maxRows={4}
+                                  className="output-margin"
+                                  label="Management decision and Recommendation"
+                                  variant="outlined"
+                                  size="small"
+                                  fullWidth
+                                  error={errors.managedecisionrecommendation != null}
+                                  helperText={
+                                    errors.managedecisionrecommendation
+                                      ? errors.managedecisionrecommendation.message
+                                      : ""
+                                  }
+                                />
+                              }
+                            />
+                          </Grid>
+                          <Grid item className="col-xl-12">
+                            <Controller
+                              defaultValue=""
+                              control={control}
+                              name="others"
+                              rules={{}}
+                              as={
+                                <TextField
+                                  multiline
+                                  row={4}
+                                  maxRows={4}
+                                  className="output-margin"
+                                  label="Others"
+                                  variant="outlined"
+                                  size="small"
+                                  fullWidth
+                                  error={errors.others != null}
+                                  helperText={
+                                    errors.others
+                                      ? errors.others.message
+                                      : ""
+                                  }
+                                />
+                              }
+                            />
+                          </Grid>
+                        </Grid>
+                      </div>
+
+                      {/* QAME RATING DURING IMPLEMENTATION OF ACTIVITY */}
+                      <div className="col-xl-8">
+                        <Divider
+                          className="group-title col-12"
+                          placeholder="RATING"
+                          label="Rating"
+                          variant="fullWidth"
+                          orientation="horizontal"
+                        >
+                          <span>
+                            <b>QAME RATING DURING IMPLEMENTATION OF ACTIVITY</b>
+                          </span>
+                        </Divider>
+
                         <Controller
                           defaultValue=""
                           control={control}
-                          name="recommendation"
+                          name="score"
                           rules={{}}
                           as={
                             <TextField
-                              multiline
-                              row={4}
-                              maxRows={4}
-                              className="output-margin"
-                              label="Management decision and Recommendation"
+                              className="output-category-margin"
+                              type="number"
+                              label="Score"
                               variant="outlined"
                               size="small"
                               fullWidth
-                              error={errors.managedecisionrecommendation != null}
+                              error={errors.score != null}
+                              helperText={errors.score ? errors.score.message : ""}
+                            />
+                          }
+                        />
+
+                        <Controller
+                          defaultValue=""
+                          control={control}
+                          name="scoredescription"
+                          rules={{}}
+                          as={
+                            <TextField
+                              className="output-margin"
+                              label="Descriptive Equivalent"
+                              variant="outlined"
+                              size="small"
+                              fullWidth
+                              error={errors.scoredescription != null}
                               helperText={
-                                errors.managedecisionrecommendation
-                                  ? errors.managedecisionrecommendation.message
+                                errors.scoredescription
+                                  ? errors.scoredescription.message
                                   : ""
                               }
                             />
                           }
                         />
-                      </Grid>
-                      <Grid item className="col-xl-6">
                         <Controller
                           defaultValue=""
                           control={control}
-                          name="others"
+                          name="correctiveaction"
                           rules={{}}
                           as={
                             <TextField
-                            multiline
-                            row={4}
-                            maxRows={4}
+                              multiline
+                              row={4}
+                              maxRows={4}
                               className="output-margin"
-                              label="Others"
+                              label="Planned corrective actions to address slippage before year ends."
                               variant="outlined"
                               size="small"
                               fullWidth
-                              error={errors.others != null}
+                              error={errors.correctiveaction != null}
                               helperText={
-                                errors.others
-                                  ? errors.others.message
+                                errors.correctiveaction
+                                  ? errors.correctiveaction.message
                                   : ""
                               }
                             />
                           }
                         />
-                      </Grid>
-                    </Grid>
-
-
-                    <Divider
-                      className="group-title"
-                      placeholder="RATING"
-                      label="Rating"
-                      variant="fullWidth"
-                      orientation="horizontal"
-                    >
-                      <span>
-                        <b>QAME RATING DURING IMPLEMENTATION OF ACTIVITY</b>
-                      </span>
-                    </Divider>
-
-                    <Controller
-                      defaultValue=""
-                      control={control}
-                      name="score"
-                      rules={{}}
-                      as={
-                        <TextField
-                          className="output-category-margin"
-                          type="number"
-                          label="Score"
-                          variant="outlined"
-                          size="small"
-                          fullWidth
-                          error={errors.score != null}
-                          helperText={errors.score ? errors.score.message : ""}
-                        />
-                      }
-                    />
-
-                    <Controller
-                      defaultValue=""
-                      control={control}
-                      name="scoredescription"
-                      rules={{}}
-                      as={
-                        <TextField
-                          className="output-margin"
-                          label="Descriptive Equivalent"
-                          variant="outlined"
-                          size="small"
-                          fullWidth
-                          error={errors.scoredescription != null}
-                          helperText={
-                            errors.scoredescription
-                              ? errors.scoredescription.message
-                              : ""
-                          }
-                        />
-                      }
-                    />
-                    <Controller
-                      defaultValue=""
-                      control={control}
-                      name="correctiveaction"
-                      rules={{}}
-                      as={
-                        <TextField
-                          multiline
-                          row={4}
-                          maxRows={4}
-                          className="output-margin"
-                          label="Planned corrective actions to address slippage before year ends."
-                          variant="outlined"
-                          size="small"
-                          fullWidth
-                          error={errors.correctiveaction != null}
-                          helperText={
-                            errors.correctiveaction
-                              ? errors.correctiveaction.message
-                              : ""
-                          }
-                        />
-                      }
-                    />
+                      </div>
+                    </div>
                   </FormGroup>
 
-                  <Button
-                    className="output-margin"
-                    variant="contained"
-                    style={{ width: "100%" }}
-                    color="primary"
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
-                  <br />
+                  <hr />
+                  <div className="row mb-3 justify-content-center">
+                    <div className="col-auto col-xl-2">
+                      <Button
+                        className="output-margin"
+                        variant="contained"
+                        style={{ width: "100%", padding: ".75rem" }}
+                        color="primary"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </div>
+
+                    <div className="col-auto col-xl-2">
+                      <Button
+                        className="output-margin btn-cancel"
+                        variant="contained"
+                        style={{ width: "100%", padding: ".75rem" }}
+                        type="submit"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+
+                  </div>
                 </form>
               </Paper>
             </div>
