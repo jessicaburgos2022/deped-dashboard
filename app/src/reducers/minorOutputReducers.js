@@ -7,7 +7,13 @@ import {
     INSERT_MINOR_OUTPUT_FAILED,
     SEARCH_MINOR_OUTPUT_REQUEST,
   SEARCH_MINOR_OUTPUT_SUCCESS,
-  SEARCH_MINOR_OUTPUT_FAILED
+  SEARCH_MINOR_OUTPUT_FAILED,
+  GET_TARGETBYOUTPUTID_REQUEST,
+  GET_TARGETBYOUTPUTID_SUCCESS,
+  GET_TARGETBYOUTPUTID_FAILED
+
+
+
 } from "../constants/outputConstants";
   
   const minorOutputState = {
@@ -33,6 +39,21 @@ import {
         ...state,
         searchResult: []
       }
+      case GET_TARGETBYOUTPUTID_REQUEST:
+        return {
+          ...state,
+          targetByOutputId: []
+        }
+      case GET_TARGETBYOUTPUTID_SUCCESS:
+        return {
+          ...state,
+          targetByOutputId: payload
+        }
+      case GET_TARGETBYOUTPUTID_FAILED:
+        return {
+          ...state,
+          targetByOutputId: []
+        }
     default:
       return state;
   }

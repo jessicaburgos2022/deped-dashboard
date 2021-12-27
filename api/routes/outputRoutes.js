@@ -9,6 +9,7 @@ router.route('/minor').post(insertMinorOutput);
 router.route('/minor').put(editMinorOutput);
 router.route('/contributory').post(insertContributoryOutput);
 router.route('/major/search').post(searchMajorOutput);
+router.route('/minor/search').post(searchMinorOutput);
 router.route('/minor').get(searchMinorOutput);
 router.route('/contributory').get(searchContributoryOutput);
 router.route('/indicator/:departmentid').get(ListIndicatorsByDepartmentId);

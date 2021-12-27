@@ -239,8 +239,8 @@ const searchMajorOutput = asyncHander(async (req, res) => {
     });
 });
 const searchMinorOutput = asyncHander(async (req, res) => {
-    const { } = req.params;
-    const queryString = `CALL searchMinorOutput()`;
+    const { departmentid, kraname } = req.body;
+    const queryString = `CALL searchMinorOutput(${departmentid},'${kraname}')`;
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
