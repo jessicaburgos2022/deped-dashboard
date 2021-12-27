@@ -37,8 +37,20 @@ export default () => {
   const dispatch = useDispatch();
   const OutputTypeId = 3; // ID for Contributory output (refer to ref_outputtype table)
   //react hook form
-  const { handleSubmit, errors, control, setValue, register } = useForm();
+  const { handleSubmit, errors, control, setValue, register, reset } = useForm();
   const [indicatorInput, setIndicator] = useState([]);
+
+  const handleFormReset = () => {
+    reset({
+    }, {
+      keepErrors: true,
+      keepDirty: true,
+      keepIsSubmitted: false,
+      keepTouched: false,
+      keepIsValid: false,
+      keepSubmitCount: false,
+    });
+  }
   const handleIndicatorInput = (e) => {
     const input = e.target.value;
     const id = e.target.id;
@@ -68,6 +80,7 @@ export default () => {
           ret.message,
           ret.result === "Success" ? "success" : "error"
         );
+        handleFormReset();
       }
     }
   };

@@ -68,8 +68,8 @@ export default (data) => {
                 </TableHead>
                 <TableBody>
                     {
-                           currentData && Array.isArray(currentData) && currentData.map(r => {
-                        // SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
+                        currentData && Array.isArray(currentData) && currentData.map(r => {
+                            // SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
                             return (
                                 <TableRow>
                                     <TableCell component="th" className="interface-table-cell">
@@ -93,7 +93,12 @@ export default (data) => {
                                     <TableCell component="th" className="interface-table-cell">
                                         {/* <Button >View</Button>
                                         <Button hidden={parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1}>Edit</Button> */}
-                                        <Button onClick={() => handleEditOutputStatus(3, r.OutcomeResultId, 2)} hidden={userState.userInfo.acc[0].RoleId !== 1 || r.StatusId !== 1 || parseInt(departmentId) !== parseInt(r.DepartmentId)}>Approve</Button>
+
+                                        {
+                                            (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
+                                            &&
+                                            <Button onClick={() => handleEditOutputStatus(3, r.OutcomeResultId, 2)} hidden={userState.userInfo.acc[0].RoleId !== 1 || r.StatusId !== 1 || parseInt(departmentId) !== parseInt(r.DepartmentId)}>Approve</Button>
+                                        }
                                     </TableCell>
                                 </TableRow>
                             )
@@ -108,7 +113,7 @@ export default (data) => {
                 }
                 paginate={(e, pageNumber) => setCurrentPage(pageNumber - 1)}
                 currentPage={currentPage + 1}
-            />       
+            />
         </TableContainer>
     )
 }

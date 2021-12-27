@@ -52,6 +52,9 @@ export default () => {
                                         name="departmentId"
                                         onChange={(e) => setSelectedDepartmentId(e.target.value)}
                                     >
+                                        <MenuItem value={0}>
+                                            Any
+                                        </MenuItem>
                                         {departmentList.map((department, id) => {
                                             return (
                                                 <MenuItem key={id} value={department.Id}>

@@ -41,7 +41,18 @@ export default () => {
   };
 
   //react hook form
-  const { handleSubmit, errors, control, setValue, register } = useForm();
+  const { handleSubmit, errors, control, setValue, register, reset } = useForm();
+  const handleFormReset = () => {
+    reset({
+    }, {
+      keepErrors: true,
+      keepDirty: true,
+      keepIsSubmitted: false,
+      keepTouched: false,
+      keepIsValid: false,
+      keepSubmitCount: false,
+    });
+  }
   const onSubmit = async (data) => {
     if (data) {
       if (userState.userInfo && userState.userInfo.acc && userState.userInfo.acc[0] && userState.userInfo.acc[0].Id) {
@@ -53,6 +64,7 @@ export default () => {
           ret.message,
           ret.result === "Success" ? "success" : "error"
         );
+        handleFormReset();
       }
     }
   };
@@ -343,7 +355,7 @@ export default () => {
 
                     </div>
 
-<hr />
+                    <hr />
                     <div className="row mb-4">
 
                       {/* Issues and Concerns Encountered */}
@@ -563,8 +575,9 @@ export default () => {
                         variant="contained"
                         style={{ width: "100%", padding: ".75rem" }}
                         type="submit"
+                        onClick={() => handleFormReset()}
                       >
-                        Cancel
+                        Reset
                       </Button>
                     </div>
 

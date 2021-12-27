@@ -37,7 +37,7 @@ export default function PersistentDrawerLeft() {
       <div className={`sidebar ${open ? "active" : ""}`}>
         <div className="logo_content">
           <div className="logo">
-            <div className="logo_name">Prime NCR PID</div>
+            <div className="logo_name">OP Dash</div>
           </div>
           <i
             className="bx bx-menu pointer"

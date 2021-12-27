@@ -59,13 +59,16 @@ export default (data) => {
                 isViewOpen && <ViewOutput data={selectedRow} open={isViewOpen} handleClose={() => setIsViewOpen(false)} />
             }
             {
-                isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh = {() => handleRefresh()} />
+                isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh={() => handleRefresh()} />
             }
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
                         <TableCell className="interface-table-header">
                             Department
+                        </TableCell>
+                        <TableCell className="interface-table-header">
+                            KRA
                         </TableCell>
                         <TableCell className="interface-table-header">
                             Project
@@ -77,29 +80,41 @@ export default (data) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {   currentData && Array.isArray(currentData) && currentData.map(r => {
+                    {currentData && Array.isArray(currentData) && currentData.map(r => {
                         // SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
-                            return (
-                                <TableRow>
-                                    <TableCell component="th" className="interface-table-cell">
-                                        {r.Department}
-                                    </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
-                                        {r.Project}
-                                    </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
-                                        {r.Output}
-                                    </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
-                                        {console.log(userState.userInfo.acc[0].RoleId)}
-                                        <Button onClick={() => handleViewOpen(r)}>View</Button>
-                                        <Button onClick={() => handleViewEdit(r)} hidden={userState.userInfo.acc[0].RoleId !== 1 && (parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1)}>Edit</Button>
-                                        <Button onClick={() => handleEditOutputStatus(2, r.OutputMinorHeaderId, 2)} hidden={userState.userInfo.acc[0].RoleId !== 1 || r.StatusId !== 1 || parseInt(departmentId) !== parseInt(r.DepartmentId)}>Approve</Button>
-                                    </TableCell>
+                        return (
+                            <TableRow>
+                                <TableCell component="th" className="interface-table-cell">
+                                    {r.Department}
+                                </TableCell>
+                                <TableCell component="th" className="interface-table-cell">
+                                    {r.KRAName}
+                                </TableCell>
+                                <TableCell component="th" className="interface-table-cell">
+                                    {r.Project}
+                                </TableCell>
+                                <TableCell component="th" className="interface-table-cell">
+                                    {r.Output}
+                                </TableCell>
+                                <TableCell component="th" className="interface-table-cell">
+                                    {console.log(userState.userInfo.acc[0].RoleId)}
+                                    <Button onClick={() => handleViewOpen(r)}>View</Button>
+                                    {
+                                        (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3))
+                                        &&
+                                        <Button onClick={() => handleViewEdit(r)}>Edit</Button>
+                                    }
 
-                                </TableRow>
-                            )
-                        })
+                                    {
+                                        (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
+                                        &&
+                                        <Button onClick={() => handleEditOutputStatus(2, r.OutputMinorHeaderId, 2)}>Approve</Button>
+                                    }
+                                </TableCell>
+
+                            </TableRow>
+                        )
+                    })
                     }
                 </TableBody>
             </Table>
@@ -110,7 +125,7 @@ export default (data) => {
                 }
                 paginate={(e, pageNumber) => setCurrentPage(pageNumber - 1)}
                 currentPage={currentPage + 1}
-            />       
+            />
         </TableContainer>
     )
 }

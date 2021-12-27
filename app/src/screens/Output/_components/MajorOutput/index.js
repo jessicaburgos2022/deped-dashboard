@@ -79,7 +79,7 @@ export default () => {
   };
 
   //react hook form
-  const { handleSubmit, errors, control, setValue, getValues, register } = useForm();
+  const { handleSubmit, errors, control, setValue, getValues, register, reset } = useForm();
 
   function getTargetPercentage(items) {
     return items.reduce(function (a, b) {
@@ -176,6 +176,17 @@ export default () => {
     )
   }
 
+  const handleFormReset = () => {
+    reset({
+    }, {
+      keepErrors: true,
+      keepDirty: true,
+      keepIsSubmitted: false,
+      keepTouched: false,
+      keepIsValid: false,
+      keepSubmitCount: false,
+    });
+  }
 
   const onSubmit = async (data) => {
     if (data) {
@@ -196,7 +207,8 @@ export default () => {
           ret.result,
           ret.message,
           ret.result === "Success" ? "success" : "error"
-        );
+        )
+        handleFormReset();
       }
     }
   };
@@ -790,8 +802,9 @@ export default () => {
                         variant="contained"
                         style={{ width: "100%", padding: ".75rem" }}
                         type="submit"
+                        onClick={() => handleFormReset()}
                       >
-                        Cancel
+                        Reset
                       </Button>
                     </div>
 

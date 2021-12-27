@@ -20,7 +20,6 @@ export default (data) => {
     const currentData = SearchResult
         .slice(currentPage * perPage, currentPage * perPage + perPage);
 
-    console.log(data)
     const handleViewOpen = (data) => {
         setSelectedRow(data);
         setIsViewOpen(true)
@@ -74,9 +73,9 @@ export default (data) => {
                         <TableCell className="interface-table-header">
                             Project
                         </TableCell>
-                        {/* <TableCell className="interface-table-header">
-                            Output
-                        </TableCell> */}
+                        <TableCell className="interface-table-header">
+                            Status
+                        </TableCell>
                         <TableCell className="interface-table-header">Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -94,13 +93,21 @@ export default (data) => {
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.Project}
                                     </TableCell>
-                                    {/* <TableCell component="th" className="interface-table-cell">
-                                        {r.Output}
-                                    </TableCell> */}
+                                    <TableCell component="th" className="interface-table-cell">
+                                        {r.Status}
+                                    </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
                                         <Button onClick={() => handleViewOpen(r)}>View</Button>
-                                        <Button onClick={() => handleViewEdit(r)} hidden={parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1}>Edit</Button>
-                                        <Button onClick={() => handleEditOutputStatus(1, r.OutputMajorHeaderId, 2)} hidden={userState.userInfo.acc[0].RoleId !== 1 || r.StatusId !== 1 || parseInt(departmentId) !== parseInt(r.DepartmentId)}>Approve</Button>
+                                        {
+                                            (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3))
+                                            &&
+                                            <Button onClick={() => handleViewEdit(r)}>Edit</Button>
+                                        }
+                                        {
+                                            (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
+                                            &&
+                                            <Button onClick={() => handleEditOutputStatus(1, r.OutputMajorHeaderId, 2)} >Approve</Button>
+                                        }
                                     </TableCell>
 
                                 </TableRow>
