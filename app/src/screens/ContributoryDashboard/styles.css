@@ -24,3 +24,12 @@
 .rounded-pill {
     color:#fff
 }
+
+
+/*New Update*/
+.card-title{
+    font-size: 14px;
+    font-weight: 600;
+    /* color: #6c757d; */
+    margin-bottom: 0;
+}
