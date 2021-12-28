@@ -147,36 +147,13 @@ export default () => {
                               <div className="card card-dark">
                                 <div className="card-header">
                                   <h5 className="card-title">
-                                    {/* <i className="fas fa-chart-pie mr-1"></i> */}
                                     {outcome.OutcomeTitle}
                                   </h5>
-                                  {/* <div className="card-tools">
-                                      <ul className="nav nav-pills ml-auto">
-                                        <li className="nav-item">
-                                          <a
-                                            className="nav-link active"
-                                            href="#revenue-chart"
-                                            data-toggle="tab"
-                                          >
-                                            Area
-                                          </a>
-                                        </li>
-                                        <li className="nav-item">
-                                          <a
-                                            className="nav-link"
-                                            href="#sales-chart"
-                                            data-toggle="tab"
-                                          >
-                                            Donut
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </div> */}
                                 </div>
                                 <div className="card-body">
                                   <div className="tab-content p-0">
                                     <div className="row">
-                                      <div className="col-12">
+                                      <div className="col-12 mb-3">
                                         <div
                                           className="chart tab-pane active"
                                           id="revenue-chart"
@@ -194,9 +171,9 @@ export default () => {
                                             .filter(
                                               (r) =>
                                                 r.OutcomeTypeId ===
-                                                  outcome.OutcomeTypeId &&
+                                                outcome.OutcomeTypeId &&
                                                 r.OutcomeId ===
-                                                  outcome.OutcomeId
+                                                outcome.OutcomeId
                                             )
                                             .filter((r) => r.IsComputed === 0)
                                             .map((row) => {
@@ -204,15 +181,13 @@ export default () => {
                                                 <div className="col-sm-6">
                                                   <div className="description-block">
                                                     <div className="description-percentage text-success">
-                                                      <i className="fas fa-caret-up"></i>{" "}
-                                                      {row.Result}
+                                                      <h3>{row.Result}</h3>
                                                     </div>
                                                     <div className="description-text">
                                                       {row.IndicatorTitle}
                                                     </div>
                                                   </div>
                                                 </div>
-                                                // Other Details for Chart End
                                               );
                                             })}
                                         </div>
