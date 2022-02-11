@@ -188,7 +188,6 @@ const editMinorOutput = asyncHander(async (req, res) => {
 
 const insertContributoryOutput = asyncHander(async (req, res) => {
     const { projectid, outputs, indicators, userId } = req.body;
-    console.log(req.body)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -197,7 +196,6 @@ const insertContributoryOutput = asyncHander(async (req, res) => {
         try {
             indicators.map(i => {
                 const queryString = `CALL InsertContributoryOutput(${i.id}, ${projectid}, '${i.value}', '${outputs}', ${userId})`;
-                console.log(queryString)
                 connection.query(queryString)
             })
             res.json({ result: 'Success', message: 'Contributory Outputs saved!' });
@@ -241,7 +239,6 @@ const searchMajorOutput = asyncHander(async (req, res) => {
 const searchMinorOutput = asyncHander(async (req, res) => {
     const { departmentid, kraname } = req.body;
     const queryString = `CALL searchMinorOutput(${departmentid},'${kraname}')`;
-    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -267,8 +264,9 @@ const searchMinorOutput = asyncHander(async (req, res) => {
 });
 
 const searchContributoryOutput = asyncHander(async (req, res) => {
-    const { } = req.params;
-    const queryString = `CALL SearchContributoryOutput()`;
+    const { departmentid, outcometypeid, title } = req.body;
+    const queryString = `CALL SearchContributoryOutput('${departmentid}','${outcometypeid}','${title}')`;
+    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });

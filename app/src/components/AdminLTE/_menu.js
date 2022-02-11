@@ -15,8 +15,8 @@ import { useSelector } from "react-redux";
 export default function App() {
     const userState = useSelector(state => state.user)
     return menu
-    .filter(menu => menu.title !== "Maintenance" || (userState && userState.userInfo && userState.userInfo.acc && Array.isArray(userState.userInfo.acc) && userState.userInfo.acc[0].RoleId === 1))
-    .map((item, key) => <MenuItem key={key} item={item} />);
+        .filter(menu => menu.title !== "Maintenance" || (userState && userState.userInfo && userState.userInfo.acc && Array.isArray(userState.userInfo.acc) && userState.userInfo.acc[0].RoleId === 1))
+        .map((item, key) => <MenuItem key={key} item={item} />);
 }
 
 const MenuItem = ({ item }) => {
@@ -27,11 +27,9 @@ const MenuItem = ({ item }) => {
 const SingleLevel = ({ item }) => {
     return (
         <li className="nav-item">
-            <a href={item.to} className="nav-link">
+            <a href={item.to} className="nav-link" style={{ display: 'flex' }}>
                 <ListItemIcon style={{ color: '#fff', textDecoration: 'none' }}>{item.icon}</ListItemIcon>
-                <p>
-                    {item.title}
-                </p>
+                {item.title}
             </a>
         </li>
     );
@@ -51,7 +49,7 @@ const MultiLevel = ({ item }) => {
     return (
         <React.Fragment>
             <li className={`nav-item ${open ? 'menu-open' : ''}`}>
-                <a href="#" className={`nav-link ${open ? 'active' : ''}`}>
+                <a href="#" className={`nav-link ${open ? 'active' : ''}`}  style={{ display: 'flex' }}>
                     <ListItemIcon style={{ color: '#fff', textDecoration: 'none' }}>{item.icon}</ListItemIcon>
                     <p>
                         {item.title}

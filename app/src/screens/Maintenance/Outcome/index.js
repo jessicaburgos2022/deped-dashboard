@@ -36,11 +36,13 @@ export default () => {
                         </div>
                     </div>
                 </div>
+                {isAddOpen && <AddOutcome open={isAddOpen} handleClose={() => setisAddOpen(false)} handleRefresh={() => searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle)} />}
+                <div className="container-fluid" style={{ marginTop: 20 }}>
+                    <Button variant="contained" color="primary" onClick={() => setisAddOpen(true)} >Add Outcome</Button>
+                </div>
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    {isAddOpen && <AddOutcome open={isAddOpen} handleClose={() => setisAddOpen(false)} handleRefresh={() => searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle)} />}
-                    <Button variant="contained" color="primary" onClick={() => setisAddOpen(true)} >Add Outcome</Button>
                     <Grid container spacing={3} style={{ padding: 10 }}>
                         <Grid item xs={3}>
                             <FormGroup>

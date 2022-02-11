@@ -12,8 +12,8 @@ export default (data) => {
     const { SearchResult } = data;
     const perPage = 15;
     const [currentPage, setCurrentPage] = useState(0);
-    const currentData = SearchResult
-        .slice(currentPage * perPage, currentPage * perPage + perPage);
+    const currentData = SearchResult && Array.isArray(SearchResult) ? SearchResult
+        .slice(currentPage * perPage, currentPage * perPage + perPage) : [];
 
     const handleRefresh = () => {
         dispatch(searchContributoryOutput());
@@ -94,11 +94,13 @@ export default (data) => {
                                         {/* <Button >View</Button>
                                         <Button hidden={parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1}>Edit</Button> */}
 
-                                        {
-                                            (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
-                                            &&
-                                            <Button onClick={() => handleEditOutputStatus(3, r.OutcomeResultId, 2)} hidden={userState.userInfo.acc[0].RoleId !== 1 || r.StatusId !== 1 || parseInt(departmentId) !== parseInt(r.DepartmentId)}>Approve</Button>
-                                        }
+                                        <div style={{ display: 'flex', padding: 5 }}>
+                                            {
+                                                (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
+                                                &&
+                                                <Button variant="contained" color="primary" onClick={() => handleEditOutputStatus(3, r.OutcomeResultId, 2)} >Approve</Button>
+                                            }
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             )

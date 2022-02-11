@@ -26,3 +26,7 @@ a {
   overflow: auto;
     height: 90vh;
 }
+
+.interface-table-header {
+  padding: 10px;
+}

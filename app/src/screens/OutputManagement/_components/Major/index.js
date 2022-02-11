@@ -1,6 +1,7 @@
 import { Button, FormControl, FormGroup, MenuItem, Select, Container, Grid, InputLabel, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { searchMajorOutput } from '../../../../actions/outputActions';
 import Table from './table';
 
@@ -35,6 +36,12 @@ export default () => {
                             </ol>
                         </div>
                     </div>
+                </div>
+
+                <div className="container-fluid" style={{ marginTop: 20 }}>
+                    <Link to="/output/major" style={{ color: "#fff", margin: "auto" }}>
+                        <Button variant="contained" color="primary">Insert Major Output</Button>
+                    </Link>
                 </div>
             </div>
             <div className="content">
@@ -92,6 +99,6 @@ export default () => {
                     <Table SearchResult={outputManagementState.searchResult} />
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

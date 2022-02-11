@@ -24,3 +24,7 @@
 .rounded-pill {
     color:#fff
 }
+
+.card-header {
+    background-color: #FFC000;
+}

@@ -3,7 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#289672',
+      main: '#FFC000',
       dark: '#333',
     },
     secondary: {
@@ -24,9 +24,9 @@ const theme = createMuiTheme({
   overrides: {
     MuiButton: {
       containedPrimary: {
-        color: '#fff',
+        color: '#000',
         '&:hover': {
-          backgroundColor: '#1E6F5C'
+          backgroundColor: '#f2b601',
         },
       },
     },

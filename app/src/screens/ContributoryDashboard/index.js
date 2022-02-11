@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
+import DashboardCard from './dashboardcard';
 // import "../../styles";
 import {
+  Button,
   Card,
   CardContent,
   Container,
@@ -95,7 +97,7 @@ export default () => {
           <div className="row mb-2">
             <div className="col-sm-6">
               <h1 className="m-0">
-                Contributory Dashboard to Organizational Outcome
+                Target Outputs Along Key Result Areas
               </h1>
             </div>
             <div className="col-sm-6">
@@ -104,7 +106,7 @@ export default () => {
                   <a href="#">Home</a>
                 </li>
                 <li className="breadcrumb-item active">
-                  Contributory Dashboard to Organizational Outcome
+                  Target Outputs Along Key Result Areas
                 </li>
               </ol>
             </div>
@@ -143,17 +145,27 @@ export default () => {
                             (res) => res.OutcomeId === outcomeId
                           );
                           return (
-                            <div className="col-xl-4 col-lg-5 col-md-6 col-12">
-                              <div className="card card-dark">
+                            <div className={`col-${12 / [
+                              ...new Set(
+                                dashboardState.oo
+                                  .filter(
+                                    (i) =>
+                                      i.OutcomeTypeId === outcomeType.OutcomeTypeId
+                                  )
+                                  .map((ind) => ind.OutcomeId)
+                              ),
+                            ].length}`}>
+                              <div className="card">
                                 <div className="card-header">
                                   <h5 className="card-title">
                                     {outcome.OutcomeTitle}
+                                    <Button variant="outllined" color="secondary" >Show Graph</Button>
                                   </h5>
                                 </div>
                                 <div className="card-body">
                                   <div className="tab-content p-0">
                                     <div className="row">
-                                      <div className="col-12 mb-3">
+                                      {/* <div className="col-12 mb-3">
                                         <div
                                           className="chart tab-pane active"
                                           id="revenue-chart"
@@ -163,9 +175,9 @@ export default () => {
                                             type="polar"
                                           />
                                         </div>
-                                      </div>
+                                      </div> */}
 
-                                      <div className="col-12">
+                                      <div className={`col-12`}>
                                         <div className="row justify-content-center">
                                           {dashboardState.oo
                                             .filter(
@@ -175,20 +187,31 @@ export default () => {
                                                 r.OutcomeId ===
                                                 outcome.OutcomeId
                                             )
-                                            .filter((r) => r.IsComputed === 0)
+                                            // .filter((r) => r.IsComputed === 0)
                                             .map((row) => {
+                                              // return (
+
+                                              //   <div className="col-sm-6">
+                                              //     <div className="description-block">
+                                              //       <div className="description-percentage text-success">
+                                              //         <h3>{row.Result}</h3>
+                                              //       </div>
+                                              //       <div className="description-text">
+                                              //         {row.IndicatorTitle}
+                                              //       </div>
+                                              //     </div>
+                                              //   </div>
+                                              // );
                                               return (
-                                                <div className="col-sm-6">
-                                                  <div className="description-block">
-                                                    <div className="description-percentage text-success">
-                                                      <h3>{row.Result}</h3>
-                                                    </div>
-                                                    <div className="description-text">
-                                                      {row.IndicatorTitle}
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              );
+                                                <DashboardCard columnSize={
+                                                  12 / dashboardState.oo.filter(
+                                                    (r) =>
+                                                      r.OutcomeTypeId ===
+                                                      outcome.OutcomeTypeId &&
+                                                      r.OutcomeId ===
+                                                      outcome.OutcomeId
+                                                  ).length} result={row.Result} title={row.IndicatorTitle} />
+                                              )
                                             })}
                                         </div>
                                       </div>
@@ -207,6 +230,6 @@ export default () => {
             )}
         </div>
       </div>
-    </div>
+    </div >
   );
 };

@@ -1,33 +1,19 @@
-import {AddCircleOutlineOutlined} from "@material-ui/icons";
-import { BubbleChartOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined} from '@mui/icons-material';
+import { AddCircleOutlineOutlined } from "@material-ui/icons";
+import { BubbleChartOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined } from '@mui/icons-material';
 import React from "react";
 
 export const menu = [
     {
         icon: <InsightsOutlined />,
-        title: "Dashboard - PPA",
-        to: '/dashboard'
-    },
-    {
-        icon: <BubbleChartOutlined />,
-        title: "Dashboard - OO",
-        to: '/contributorydashboard'
-    },
-    {
-        icon: <AddCircleOutlineOutlined />,
-        title: "Insert Output",
+        title: "Dashboard",
         items: [
             {
-                title: "Major",
-                to: "/output/major"
+                title: "PPA",
+                to: '/dashboard'
             },
             {
-                title: "Minor",
-                to: "/output/minor"
-            },
-            {
-                title: "Contributory",
-                to: "/output/oo"
+                title: "Target Outputs",
+                to: '/contributorydashboard'
             },
         ]
     },
@@ -44,7 +30,7 @@ export const menu = [
                 to: "/outputmanagement/minor"
             },
             {
-                title: "Contributory",
+                title: "Targets",
                 to: "/outputmanagement/oo"
             },
         ]

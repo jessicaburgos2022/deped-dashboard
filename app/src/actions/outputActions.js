@@ -168,7 +168,7 @@ export const searchMinorOutput = (selectedDepartmentId,kraName) => async (dispat
 export const searchContributoryOutput = (param) => async (dispatch) => {
     await dispatch({ type: SEARCH_CONTRIBUTORY_OUTPUT_REQUEST });
     try {
-        const { data } = await axios.get(`/api/output/contributory`);
+        const { data } = await axios.post(`/api/output/contributory/search`, param);
         await dispatch({ type: SEARCH_CONTRIBUTORY_OUTPUT_SUCCESS, payload: data });
     } catch (e) {
         dispatch({

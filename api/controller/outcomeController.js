@@ -67,6 +67,7 @@ const listIndicatorsByOutcomeId = asyncHander(async (req, res) => {
 const searchOutcome = asyncHander(async (req, res) => {
     const { departmentid, outcometypeid, title } = req.body;
     const queryString = `CALL SearchOutcome(${departmentid}, ${outcometypeid}, '${title}')`;
+    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });

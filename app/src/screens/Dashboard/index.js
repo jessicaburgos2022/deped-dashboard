@@ -14,7 +14,7 @@ import {
 } from "chart.js";
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 
-import { Doughnut, Line, Pie } from "react-chartjs-2";
+import { Bar, Doughnut, Line, Pie } from "react-chartjs-2";
 
 import {
   fetchKRAByDepartmentId,
@@ -62,7 +62,7 @@ export default () => {
   }, []);
   const [totalPPACount, setTotalPPACount] = useState(0);
   useEffect(() => {
-    setTotalPPACount(dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) && Array.isArray(dashboardState.MonitoredPPA.map(item => item.PPACount)) && dashboardState.MonitoredPPA.map(item => item.PPACount).length >0 ? dashboardState.MonitoredPPA.map(item => item.PPACount).reduce((prev, cur) => prev + cur) : 0);
+    setTotalPPACount(dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) && Array.isArray(dashboardState.MonitoredPPA.map(item => item.PPACount)) && dashboardState.MonitoredPPA.map(item => item.PPACount).length > 0 ? dashboardState.MonitoredPPA.map(item => item.PPACount).reduce((prev, cur) => prev + cur) : 0);
   }, [])
 
   const colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'cyan'];
@@ -125,41 +125,19 @@ export default () => {
       },
     ],
   };
-
-  const data2 = {
-    labels: ["ASD", "CLMD", "ESSD", "FD", "FTAD", "HRDD", "ORD", "PPRD", "QAD"],
-    datasets: [
-      {
-        label: "Satisfactory Result",
-        data: [12, 19, 3, 5, 2, 3, 6, 5, 2],
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-    ],
-  };
-  const BudgetUtilizationRateOptions = {
-    plugins: {
-      datalabels: {
-        color: '#36A2EB'
-      }
-    }
-  };
   const BudgetUtilizationRate = {
     labels: dashboardState.BudgetUtilizationRate.map((r) => {
       return r.DepartmentName;
     }),
     datasets: [
       {
-        label: "Averate Utilization Rate (%)",
+        label: "Averate Utilization Rate",
         fill: false,
-        borderColor: "rgb(255, 255, 255)",
-        backgroundColor: "rgba(255, 255, 255, 1)",
-        datalabels: {
-          color: '#FFCE56'
-        },
         data: dashboardState.BudgetUtilizationRate.map((r) => {
           return r.AverageUtilizationRate ? r.AverageUtilizationRate : 0;
-        })
+        }),
+        borderColor: "rgb(1,32,96)",
+        backgroundColor: "rgb(255,192,0)",
       },
     ],
   };
@@ -170,7 +148,7 @@ export default () => {
     }),
     datasets: [
       {
-        label: "Satisfactory Rate (%) - Physical",
+        label: "Satisfactory Rate - Physical",
         data: dashboardState.SatisfactoryResult.map((r) => {
           return r.AverageAccomplishmentRatePhysical
             ? r.AverageAccomplishmentRatePhysical
@@ -180,14 +158,14 @@ export default () => {
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
       {
-        label: "Satisfactory Rate (%) - Financial",
+        label: "Satisfactory Rate - Financial",
         data: dashboardState.SatisfactoryResult.map((r) => {
           return r.AverageAccomplishmentRateFinancial
             ? r.AverageAccomplishmentRateFinancial
             : 0;
         }),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgb(1,32,96)",
+        backgroundColor: "rgb(255,192,0)",
       },
     ],
   };
@@ -225,11 +203,11 @@ export default () => {
           gutterBottom
           style={{ textAlign: "center" }}
         >
-          Satisfactory accountability result on Physical and Financial Target
+          Satisfactory Accountability Result on Physical and Financial Target
         </Typography>
         <Typography variant="h5" component="div">
           <div style={{ width: "100%" }}>
-            <Line options={options} data={SatisfactoryResult} />
+            <Bar options={options} data={SatisfactoryResult} />
           </div>
         </Typography>
       </CardContent>
@@ -244,11 +222,11 @@ export default () => {
           gutterBottom
           style={{ textAlign: "center" }}
         >
-          PAPs conducted within the defined timeline
+          PAPs Conducted Within The Defined Timeline
         </Typography>
         <Typography variant="h5" component="div">
           <div style={{ width: "100%" }}>
-            <Line options={options} data={data} />
+            <Bar options={options} data={data} />
           </div>
         </Typography>
       </CardContent>
@@ -265,7 +243,7 @@ export default () => {
         >
           Budget Utilization Rate
         </Typography>
-        <Line options={options} data={BudgetUtilizationRate} />
+        <Bar options={options} data={BudgetUtilizationRate} />
       </CardContent>
     </React.Fragment>
   );
@@ -348,23 +326,34 @@ export default () => {
               </div>
             </section>
             <section class="col-lg-5 connectedSortable">
-              <div class="card bg-gradient-info">
+              <div class="card">
                 <div class="card-header border-0">
                   <h3 class="card-title">
                     <i class="fas fa-th mr-1"></i>
                     Budget Utilization Rate
                   </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                  {/* <div class="card-tools">
+                    <button type="button" class="btn btn-sm" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
                     </button>
-                    <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <button type="button" class="btn btn-sm" data-card-widget="remove">
                       <i class="fas fa-times"></i>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
                 <div class="card-body">
-                  <Line options={options} data={BudgetUtilizationRate} />
+                  <div class="tab-content p-0">
+                    <div class="chart tab-pane active" id="utilization-chart"
+                      style={{ position: 'relative', display: 'flex' }}>
+                      <div class="col-md-12">
+                        <Bar options={options} data={BudgetUtilizationRate} />
+                      </div>
+                    </div>
+
+                    <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
+                      {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
@@ -374,7 +363,7 @@ export default () => {
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    Satisfactory accountability result on Physical and Financial Target
+                    Satisfactory Accountability Result on Physical and Financial Target
                   </h3>
                 </div>
                 <div class="card-body">
@@ -382,7 +371,7 @@ export default () => {
                     <div class="chart tab-pane active" id="revenue-chart"
                       style={{ position: 'relative', display: 'flex' }}>
                       <div class="col-md-12">
-                        <Line options={options} data={SatisfactoryResult} />
+                        <Bar options={options} data={SatisfactoryResult} />
                       </div>
                     </div>
                     <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
@@ -397,7 +386,7 @@ export default () => {
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    PPAs conducted within the defined timeline
+                    PPAs Conducted Within The Defined Timeline
                   </h3>
                 </div>
                 <div class="card-body">
@@ -405,7 +394,7 @@ export default () => {
                     <div class="chart tab-pane active" id="revenue-chart"
                       style={{ position: 'relative', display: 'flex' }}>
                       <div class="col-md-12">
-                        <Line options={options} data={data} />
+                        <Bar options={options} data={data} />
                       </div>
                     </div>
                     <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
@@ -416,16 +405,6 @@ export default () => {
               </div>
             </section>
           </div>
-          {/* <div class="row">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Card variant="outlined">{card2}</Card>
-              </Grid>
-              <Grid item xs={6}>
-                <Card variant="outlined">{card3}</Card>
-              </Grid>
-            </Grid>
-          </div> */}
         </div>
       </div >
     </div>

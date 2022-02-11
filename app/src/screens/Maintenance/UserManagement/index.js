@@ -36,10 +36,12 @@ export default () => {
                         </div>
                     </div>
                 </div>
+                <div className="container-fluid" style={{ marginTop: 20 }}>
+                    <Button variant="contained" color="primary" onClick={() => handleRegisterClick(true)} >Register</Button>
+                </div>
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    <Button variant="contained" color="primary" onClick={() => handleRegisterClick(true)} >Register</Button>
                     <Table SearchResult={userState.users} />
                 </div>
             </div>

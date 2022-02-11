@@ -97,17 +97,19 @@ export default (data) => {
                                         {r.Status}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
-                                        <Button onClick={() => handleViewOpen(r)}>View</Button>
-                                        {
-                                            (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3))
-                                            &&
-                                            <Button onClick={() => handleViewEdit(r)}>Edit</Button>
-                                        }
-                                        {
-                                            (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
-                                            &&
-                                            <Button onClick={() => handleEditOutputStatus(1, r.OutputMajorHeaderId, 2)} >Approve</Button>
-                                        }
+                                        <div style={{ display: 'flex', padding: 5 }}>
+                                            <Button variant="contained" color="primary" onClick={() => handleViewOpen(r)}>View</Button>
+                                            {
+                                                (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3))
+                                                &&
+                                                <Button style={{marginLeft: 5}}  variant="contained" color="primary" onClick={() => handleViewEdit(r)}>Edit</Button>
+                                            }
+                                            {
+                                                (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
+                                                &&
+                                                <Button  style={{marginLeft: 5}} variant="contained" color="primary" onClick={() => handleEditOutputStatus(1, r.OutputMajorHeaderId, 2)} >Approve</Button>
+                                            }
+                                        </div>
                                     </TableCell>
 
                                 </TableRow>

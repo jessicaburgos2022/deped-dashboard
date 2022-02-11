@@ -31,11 +31,13 @@ export default () => {
                         </div>
                     </div>
                 </div>
+                {isAddOpen && <AddProject open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh} />}
+                <div className="container-fluid" style={{ marginTop: 20 }}>
+                    <Button variant="contained" color="primary" onClick={() => setIsAddOpen(true)} >Add PROJECT</Button>
+                </div>
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    {isAddOpen && <AddProject open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh} />}
-                    <Button variant="contained" color="primary" onClick={() => setIsAddOpen(true)} >Add PROJECT</Button>
                     <Table SearchResult={projectState.searchResult} />
                 </div>
             </div>

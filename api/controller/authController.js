@@ -57,6 +57,7 @@ const validate = asyncHander(async (req, res) => {
 const auth = asyncHander(async (req, res) => {
   const { username, password } = req.body;
   const queryString = `call ValidateLoginV2('${username}')`;
+  console.log(queryString)
   pool.getConnection((err, connection) => {
     if (err) {
       console.log("AUQE2A: Network Error");
@@ -69,9 +70,15 @@ const auth = asyncHander(async (req, res) => {
           console.log("AUQE2B: Failed to query");
           res.sendStatus(500).json({ msg: "AUQE2B: Failed to query" });
           res.end();
-        } else {
+        }
+        else {
           if (!_.isEmpty(results[0])) {
             const qResult = JSON.parse(JSON.stringify(results[0][0]));
+            if (qResult.result === 'Failed') {
+              res.status(200).json({ res: qResult });
+              res.end();
+              return;
+            }
             const user = JSON.parse(JSON.stringify(results[1][0]));
             const roles = JSON.parse(JSON.stringify(results[2]));
             const {

@@ -5,6 +5,7 @@ import MenuGenerator from "./_menu";
 import Swal from "sweetalert2";
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Logo from '../../media/prime-logo.png';
 import "./_css/sidebar.css";
 
 export default () => {
@@ -32,11 +33,16 @@ export default () => {
     return (
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="index3.html" class="brand-link">
-                {/* <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> */}
+                <img src={Logo} alt="AdminLTE Logo" class="brand-image" />
                 <span class="brand-text font-weight-light">OP Dash</span>
             </a>
             <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <MenuGenerator />
+                    </ul>
+                </nav>
+                <div class="user-panel" style={{position:'absolute', bottom: 0, borderBottom: 'none', borderTop: '1px solid #4f5962', width: '90%', padding: 20}}>
                     <div className="profile_content">
                         <div className="profile">
                             {!user && location.pathname !== "/login" && (
@@ -74,12 +80,6 @@ export default () => {
                         </div>
                     </div>
                 </div>
-
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <MenuGenerator />
-                    </ul>
-                </nav>
             </div>
         </aside>
     )
