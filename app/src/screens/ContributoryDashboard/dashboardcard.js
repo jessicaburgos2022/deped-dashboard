@@ -8,7 +8,7 @@ export default (props) => {
                 <div className="description-percentage text-success">
                     <h5>{result}</h5>
                 </div>
-                <div className="description-text">
+                <div className="description-text" style={{ textTransform: 'capitalize' }}>
                     {title}
                 </div>
             </div>

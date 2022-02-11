@@ -241,7 +241,7 @@ export default () => {
                   <FormGroup>
 
 
-                    <div className="row mb-5">
+                    <div className="row">
                       {/* ***** OPCRF ***** */}
                       <div className="col-xl-6 border-end-1">
                         <div style={{ paddingRight: '1.5rem' }}>
@@ -541,11 +541,8 @@ export default () => {
                             </span>
                           </Divider>
                           <Target data={targets} handleTargetRemove={handleTargetRemove} handleChange={handleChange} handleTargetIncrease={handleTargetIncrease} />
-
                           <Grid container spacing={3}>
                             {/* <Grid item xs={12} style={{ paddingTop: 5 }}> */}
-                            <Grid item xs={12}>
-                            </Grid>
                             <PhysicalTargetWatch control={control} />
                             {/* <Grid item xs={4}> */}
                             <Grid item className="col-xl-6">

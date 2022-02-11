@@ -32,9 +32,8 @@ export default () => {
     };
     return (
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="index3.html" class="brand-link d-flex">
+            <a href="/dashboard" class="brand-link d-flex">
                 <img src={Logo} alt="AdminLTE Logo" class="brand-image" />
-                {/* <span class="brand-text font-weight-light">OP Dash</span> */}
             </a>
             <div class="sidebar">
                 <nav class="mt-2">

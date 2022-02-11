@@ -9,7 +9,7 @@ export default (props) => {
     const { data, handleTargetRemove, handleChange, handleTargetIncrease } = props;
     return (
         <React.Fragment>
-            <Paper elevation={3} style={{ padding: 15 }}>
+            <Paper elevation={3} style={{ padding: 15, marginBottom: 30 }}>
                 <h6>
                     Targets
                     <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => handleTargetIncrease()}>

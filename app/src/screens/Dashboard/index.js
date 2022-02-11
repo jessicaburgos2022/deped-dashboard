@@ -260,7 +260,7 @@ export default () => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item"><a href="#">Home</a></li>
-                <li className="breadcrumb-item active">PPA Dashboard</li>
+                <li className="breadcrumb-item active">Physical and Financial Targets Dashboard</li>
               </ol>
             </div>
           </div>
