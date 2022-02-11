@@ -65,7 +65,7 @@ export const login = (callback, username, password) => async (dispatch) => {
       { username, password },
       config
     );
-    if (data.status && (data.result !== "Success")) {
+    if (data.result && (data.result !== "Success")) {
       Swal.fire({
         title: data.message,
         text: 'Please try again.',

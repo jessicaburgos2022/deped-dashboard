@@ -21,3 +21,8 @@
 .sidebar-dark-primary {
 	background-color: #012060
 }
+.brand-image {
+	float: unset!important;
+    margin: auto!important;
+    max-height: 20vh!important;
+}
