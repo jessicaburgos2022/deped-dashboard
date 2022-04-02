@@ -1,27 +1,22 @@
 import {
     Button,
-    CircularProgress,
-    Container,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
-    FormControl,
-    FormControlLabel,
     FormGroup,
     FormHelperText,
-    InputAdornment,
     InputLabel,
     MenuItem,
-    Paper,
     Select,
     TextField,
 } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { register as UserRegistration } from '../../../actions/userActions';
+import { fetchUnitByDepartmentId } from '../../../actions/appActions';
 
 
 export default (props) => {
@@ -30,8 +25,10 @@ export default (props) => {
     const { handleSubmit, errors, control, setValue, register } = useForm();
     const appState = useSelector((state) => state.app);
     const userState = useSelector((state) => state.user);
+    const [selectedDepartmentId, setSelectedDepartmentId] = useState(0);
     const dispatch = useDispatch();
     const onSubmit = async (input) => {
+        input.departmentid = selectedDepartmentId;
         if (input) {
             if (
                 userState.userInfo &&
@@ -52,6 +49,9 @@ export default (props) => {
             }
         }
     };
+    useEffect(() => {
+        dispatch(fetchUnitByDepartmentId(selectedDepartmentId))
+    }, [selectedDepartmentId])
     return (
         <React.Fragment>
             <Dialog
@@ -69,9 +69,30 @@ export default (props) => {
                         <FormGroup>
                             <FormGroup>
                                 <InputLabel>Department</InputLabel>
+                                <Select
+                                    fullWidth
+                                    className="output-category-margin"
+                                    name="departmentid"
+                                    onChange={(e) => setSelectedDepartmentId(e.target.value)}
+                                    value={selectedDepartmentId}
+                                >
+                                    {appState.departments.map((department, id) => {
+                                        return (
+                                            <MenuItem key={id} value={department.Id}>
+                                                {department.Name}
+                                            </MenuItem>
+                                        );
+                                    })}
+                                </Select>
+                                <FormHelperText>
+                                    {errors.departmentid ? errors.departmentid.message : ""}
+                                </FormHelperText>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputLabel>Unit</InputLabel>
                                 <Controller
                                     control={control}
-                                    name="departmentid"
+                                    name="unitid"
                                     rules={{
                                         required: {
                                             value: true,
@@ -80,19 +101,20 @@ export default (props) => {
                                     }}
                                     as={
                                         <Select
-                                            label="Department"
+                                            label="Unit"
                                             fullWidth
                                             className="output-category-margin"
-                                            name="departmentid"
-                                            label="Select Department"
+                                            name="unitid"
                                         >
-                                            {appState.departments.map((department, id) => {
-                                                return (
-                                                    <MenuItem key={id} value={department.Id}>
-                                                        {department.Name}
-                                                    </MenuItem>
-                                                );
-                                            })}
+                                            {
+                                                appState.unitsByActiveDepartment.data && Array.isArray(appState.unitsByActiveDepartment.data) && appState.unitsByActiveDepartment.data.map(d => {
+                                                    return (
+                                                        <MenuItem value={d.Id} key={`units-${d.DepartmentId}-${d.id}`}>
+                                                            {d.Name}
+                                                        </MenuItem>
+                                                    )
+                                                })
+                                            }
                                         </Select>
                                     }
                                 />
@@ -117,7 +139,6 @@ export default (props) => {
                                             fullWidth
                                             className="output-category-margin"
                                             name="roleid"
-                                            label="Select Role"
                                         >
                                             <MenuItem value={3}>
                                                 Administrator

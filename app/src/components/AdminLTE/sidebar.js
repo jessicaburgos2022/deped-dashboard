@@ -5,7 +5,7 @@ import MenuGenerator from "./_menu";
 import Swal from "sweetalert2";
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Logo from '../../media/prime-logo.png';
+import Logo from '../../media/3E-logo.png';
 import "./_css/sidebar.css";
 
 export default () => {

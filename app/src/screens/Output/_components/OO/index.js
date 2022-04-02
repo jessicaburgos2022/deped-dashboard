@@ -91,12 +91,12 @@ export default () => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1 className="m-0">Insert Contibutory Output to Organizational Outcome</h1>
+              <h1 className="m-0">Insert Target Outputs Along Key Result Areas</h1>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item"><a href="#">Insert Output</a></li>
-                <li className="breadcrumb-item active">Contibutory Output to Organizational Outcome</li>
+                <li className="breadcrumb-item active">Target Outputs Along Key Result Areas</li>
               </ol>
             </div>
           </div>

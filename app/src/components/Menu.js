@@ -1,5 +1,5 @@
 import { AddCircleOutlineOutlined } from "@material-ui/icons";
-import { BubbleChartOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined } from '@mui/icons-material';
+import { BubbleChartOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined, AssessmentOutlined } from '@mui/icons-material';
 import React from "react";
 
 export const menu = [
@@ -23,17 +23,22 @@ export const menu = [
         items: [
             {
                 title: "Major",
-                to: "/outputmanagement/major"
+                to: "/outputmajor"
             },
             {
                 title: "Minor",
-                to: "/outputmanagement/minor"
+                to: "/outputminor"
             },
             {
                 title: "KRAs",
-                to: "/outputmanagement/oo"
+                to: "/outputtokra"
             },
         ]
+    },
+    {
+        icon: <AssessmentOutlined />,
+        title: "PREXC",
+        to: "/prexc"
     },
     {
         icon: <SettingsOutlined />,
@@ -41,19 +46,19 @@ export const menu = [
         items: [
             {
                 title: "KRA",
-                to: "/maintenance/kra"
+                to: "/maintenance-kra"
             },
             {
                 title: "Project",
-                to: "/maintenance/project"
+                to: "/maintenance-project"
             },
             {
                 title: "Outcome",
-                to: "/maintenance/outcome"
+                to: "/maintenance-outcome"
             },
             {
                 title: "User Management",
-                to: "/maintenance/user"
+                to: "/maintenance-user"
             }
         ]
     }

@@ -11,15 +11,15 @@ export default (props) => {
 
   const RenderOutputView = () => {
     switch (props.location.pathname) {
-      case '/maintenance/kra':
+      case '/maintenance-kra':
         return <KRAModule />;
-      case '/maintenance/project':
+      case '/maintenance-project':
         return <PROJECTModule />;
-      case '/maintenance/outcome':
+      case '/maintenance-outcome':
         return <OutcomeModule />
-      case '/maintenance/indicator':
+      case '/maintenance-indicator':
         return <INDICATORModule />;
-        case '/maintenance/user':
+        case '/maintenance-user':
           return <UserManagement />;
       default:
         return <KRAModule />;

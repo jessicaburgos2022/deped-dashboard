@@ -137,10 +137,10 @@ export const insertContributoryOutput = (param) => async (dispatch) => {
 
 };
 
-export const searchMajorOutput = (selectedDepartmentId,kraName) => async (dispatch) => {
+export const searchMajorOutput = (kraYear, selectedDepartmentId,kraName) => async (dispatch) => {
     await dispatch({ type: SEARCH_MAJOR_OUTPUT_REQUEST });
     try {
-        const { data } = await axios.post(`/api/output/major/search`, {departmentid:selectedDepartmentId, kraname: kraName});
+        const { data } = await axios.post(`/api/output/major/search`, {krayear: kraYear, departmentid:selectedDepartmentId, kraname: kraName});
         await dispatch({ type: SEARCH_MAJOR_OUTPUT_SUCCESS, payload: data });
 
     } catch (e) {

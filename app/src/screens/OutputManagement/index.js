@@ -11,9 +11,9 @@ export default (props) => {
 
     const RenderOutputView = () => {
         switch (props.location.pathname) {
-            case '/outputmanagement/major':
+            case '/outputmajor':
                 return <MajorView />;
-            case '/outputmanagement/minor':
+            case '/outputminor':
                 return <MinorView />;
             default:
                 return <ContributoryView />;

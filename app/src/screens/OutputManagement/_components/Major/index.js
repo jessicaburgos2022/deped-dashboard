@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { searchMajorOutput } from '../../../../actions/outputActions';
 import Table from './table';
-
+import './style.css';
 export default () => {
     const dispatch = useDispatch();
     const outputManagementState = useSelector(state => state.majorOutputManagement);
     const appState = useSelector(state => state.app);
     const [selectedDepartmentId, setSelectedDepartmentId] = useState(0);
+    const [selectedYear, setSelectedYear] = useState(0);
     const [kraName, setKraName] = useState('');
     const [outputTypeId, setOutputTypeId] = useState(0);
     const [departmentList, setdepartmentList] = useState(
@@ -18,10 +19,9 @@ export default () => {
     const [selectedKRA, setSelectedKRA] = useState(null);
 
     useEffect(() => {
-        dispatch(searchMajorOutput(selectedDepartmentId, kraName))
+        dispatch(searchMajorOutput(selectedYear, selectedDepartmentId, kraName))
     }, [])
     return (
-
         <div className="content-wrapper">
             <div className="content-header">
                 <div className="container-fluid">
@@ -37,26 +37,47 @@ export default () => {
                         </div>
                     </div>
                 </div>
-
                 <div className="container-fluid" style={{ marginTop: 20 }}>
-                    <Link to="/output/major" style={{ color: "#fff", margin: "auto" }}>
+                    <Link to="/insertoutputmajor" style={{ color: "#fff", margin: "auto" }}>
                         <Button variant="contained" color="primary">Insert Major Output</Button>
                     </Link>
                 </div>
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    <Grid container spacing={3} style={{ padding: 10 }}>
-                        <Grid item xs={3}>
-                            <FormGroup>
-
-                                <FormControl variant="standard" className=" w-100">
+                    <div className='advance-search'>
+                        <span className='desc'>Search</span>
+                        <Grid container spacing={3}>
+                            <Grid item xs={3}>
+                                <FormControl variant="standard" className="w-100">
+                                    <InputLabel>Year</InputLabel>
+                                    <Select
+                                        fullWidth
+                                        label="Year"
+                                        name="selectedYear"
+                                        onChange={(e) => setSelectedYear(e.target.value)}
+                                        value={selectedYear}
+                                    >
+                                        <MenuItem value={0}>
+                                            Any
+                                        </MenuItem>
+                                        <MenuItem value={new Date().getFullYear() - 1}>
+                                            {new Date().getFullYear() - 1}
+                                        </MenuItem>
+                                        <MenuItem value={new Date().getFullYear()}>
+                                            {new Date().getFullYear()}
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <FormControl variant="standard" className="w-100">
                                     <InputLabel>Department</InputLabel>
                                     <Select
-                                        label="Department"
                                         fullWidth
-                                        className="output-category-margin"
+                                        label="Department"
                                         name="departmentId"
+                                        value={selectedDepartmentId}
                                         onChange={(e) => setSelectedDepartmentId(e.target.value)}
                                     >
                                         <MenuItem value={0}>
@@ -71,31 +92,27 @@ export default () => {
                                         })}
                                     </Select>
                                 </FormControl>
-                            </FormGroup>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <TextField
+                                    placeholder="KRA"
+                                    label="KRA"
+                                    variant="standard"
+                                    fullWidth
+                                    onChange={(e) => setKraName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => dispatch(searchMajorOutput(selectedYear, selectedDepartmentId, kraName))}
+                                >
+                                    Search
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={3}>
-                            <TextField
-                                fullWidth
-                                className="output-margin"
-                                placeholder="KRA"
-                                label="KRA"
-                                variant="outlined"
-                                size="small"
-                                onChange={(e) => setKraName(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={3} >
-                            <Button
-                                className="output-margin"
-                                variant="contained"
-                                style={{ width: "100%" }}
-                                color="primary"
-                                onClick={() => dispatch(searchMajorOutput(selectedDepartmentId, kraName))}
-                            >
-                                Search
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    </div>
                     <Table SearchResult={outputManagementState.searchResult} />
                 </div>
             </div>

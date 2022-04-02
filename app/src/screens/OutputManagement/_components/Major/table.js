@@ -68,6 +68,9 @@ export default (data) => {
                             Department
                         </TableCell>
                         <TableCell className="interface-table-header">
+                            Year
+                        </TableCell>
+                        <TableCell className="interface-table-header">
                             KRA
                         </TableCell>
                         <TableCell className="interface-table-header">
@@ -84,8 +87,11 @@ export default (data) => {
                         currentData && Array.isArray(currentData) && currentData.map(r => {
                             return (
                                 <TableRow>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="th" className="interface-table-cell  text-center">
                                         {r.Department}
+                                    </TableCell>
+                                    <TableCell component="th" className="interface-table-cell">
+                                        {r.KRAYear}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.KRAName}

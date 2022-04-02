@@ -55,18 +55,6 @@ export default (props) => {
                                         value={data[index]["TargetType"]}
                                     />
                                 </Grid>
-                                <Grid item className='col-xl-12'>
-                                    <TextField
-                                        name="TargetDescription"
-                                        className="output-margin"
-                                        label="Target Description"
-                                        variant="outlined"
-                                        size="small"
-                                        fullWidth
-                                        onChange={e => handleChange(index, e)}
-                                        value={data[index]["TargetDescription"]}
-                                    />
-                                </Grid>
                                 <Grid item className='col-xl-6'>
                                     <TextField
                                         placeholder='0'
@@ -91,6 +79,21 @@ export default (props) => {
                                         fullWidth
                                         onChange={e => handleChange(index, e)}
                                         value={data[index]["AccomplishmentDescription"]}
+                                    />
+                                </Grid>
+                                <Grid item className='col-xl-12'>
+                                    <TextField
+                                        multiline
+                                        rows={3}
+                                        maxRows={3}
+                                        name="TargetDescription"
+                                        className="output-margin"
+                                        label="Target Description/Remarks"
+                                        variant="outlined"
+                                        size="small"
+                                        fullWidth
+                                        onChange={e => handleChange(index, e)}
+                                        value={data[index]["TargetDescription"]}
                                     />
                                 </Grid>
                             </Grid>

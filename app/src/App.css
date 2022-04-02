@@ -30,3 +30,6 @@ a {
 .interface-table-header {
   padding: 10px;
 }
+.MuiInputBase-input {
+  height: 1.13rem!important;
+}

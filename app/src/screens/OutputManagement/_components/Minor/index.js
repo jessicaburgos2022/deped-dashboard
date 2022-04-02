@@ -37,7 +37,7 @@ export default () => {
                 </div>
 
                 <div className="container-fluid" style={{ marginTop: 20 }}>
-                    <Link to="/output/minor" style={{ color: "#fff", margin: "auto" }}>
+                    <Link to="/insertoutputminor" style={{ color: "#fff", margin: "auto" }}>
                         <Button variant="contained" color="primary">Insert Minor Output</Button>
                     </Link>
                 </div>
@@ -47,7 +47,7 @@ export default () => {
                     <Grid container spacing={3} style={{ padding: 10 }}>
                         <Grid item xs={3}>
                             <FormGroup>
-                                <FormControl variant="standard" className=" w-100">
+                                <FormControl variant="standard" className="w-100">
                                     <InputLabel>Department</InputLabel>
                                     <Select
                                         variant="standard"
@@ -55,7 +55,6 @@ export default () => {
                                         fullWidth
                                         className="output-category-margin"
                                         name="departmentId"
-                                        label="Select Department"
                                         onChange={(e) => setSelectedDepartmentId(e.target.value)}
                                     >
                                         <MenuItem value={0}>

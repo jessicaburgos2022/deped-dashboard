@@ -131,7 +131,7 @@ export default () => {
     }),
     datasets: [
       {
-        label: "Averate Utilization Rate",
+        label: "Utilization Rate",
         fill: false,
         data: dashboardState.BudgetUtilizationRate.map((r) => {
           return r.AverageUtilizationRate ? r.AverageUtilizationRate : 0;
@@ -273,7 +273,7 @@ export default () => {
               <div class="small-box bg-warning">
                 <div class="inner">
                   <h3>{totalPPACount}</h3>
-                  <p>Monitored PPA</p>
+                  <p>Approved PPAs</p>
                 </div>
                 <div class="icon">
                   <AccessibilityNewIcon />
@@ -289,7 +289,7 @@ export default () => {
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    Monitored PPA
+                    Approved PPA
                   </h3>
                 </div>
                 <div class="card-body">

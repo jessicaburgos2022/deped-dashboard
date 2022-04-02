@@ -13,7 +13,10 @@ import {
   GET_PROJECTBYDEPARTMENT_FAILED,
   GET_DEPARTMENTLIST_REQUEST,
   GET_DEPARTMENTLIST_SUCCESS,
-  GET_DEPARTMENTLIST_FAILED
+  GET_DEPARTMENTLIST_FAILED,
+  GET_UNITBYDEPARTMENT_REQUEST,
+  GET_UNITBYDEPARTMENT_SUCCESS,
+  GET_UNITBYDEPARTMENT_FAILED,
 } from "../constants/appConstants";
 
 const appState = {
@@ -23,6 +26,10 @@ const appState = {
   projectsByKRALoading: false,
   projectsByDept: [],
   departments: [],
+  unitsByActiveDepartment: {
+    isLoading: false,
+    data: []
+  }
 };
 
 export const appReducer = (state = appState, action) => {
@@ -108,6 +115,30 @@ export const appReducer = (state = appState, action) => {
       return {
         ...state,
         departments: []
+      }
+    case GET_UNITBYDEPARTMENT_REQUEST:
+      return {
+        ...state,
+        unitsByActiveDepartment: {
+          isLoading: true,
+          data: []
+        }
+      }
+    case GET_UNITBYDEPARTMENT_SUCCESS:
+      return {
+        ...state,
+        unitsByActiveDepartment: {
+          isLoading: false,
+          data: payload
+        }
+      }
+    case GET_UNITBYDEPARTMENT_REQUEST:
+      return {
+        ...state,
+        unitsByActiveDepartment: {
+          isLoading: false,
+          data: []
+        }
       }
     default:
       return state;

@@ -38,6 +38,39 @@ const listDepartment = asyncHander(async (req, res) => {
   });
 });
 
+const listUnitIdPerDepartmentId = asyncHander(async (req, res) => {
+  const { departmentId } = req.params;
+  if (departmentId) {
+    const queryString = `CALL ListUnitIdPerDepartmentId(${departmentId})`;
+    pool.getConnection((err, connection) => {
+      if (err) {
+        res.json({ result: 'Failed', message: 'Query Failed' });
+        return;
+      }
+      try {
+        connection.query(queryString, (error, results) => {
+          if (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+          } else {
+            var qResult = JSON.parse(JSON.stringify(results[0]));
+            res.json(qResult);
+            res.end();
+          }
+        });
+      } catch (error) {
+        res.json({ result: 'Failed', message: 'Query Failed' });
+        res.end();
+      }
+      connection.release();
+    });
+  }
+  else {
+    res.json({ result: 'Failed', message: 'Query Failed' });
+    res.end();
+  }
+});
+
 const listOutputTypeId = asyncHander(async (req, res) => {
   const queryString = `SELECT Id, Name, Description, CASE WHEN IsActive THEN 1 ELSE 0 END AS IsActive FROM ref_outputtype`;
   pool.getConnection((err, connection) => {
@@ -90,7 +123,7 @@ const listKRAByDepartmentId = asyncHander(async (req, res) => {
     }
     connection.release();
   });
-  
+
 });
 
 const listProjectByKRAId = asyncHander(async (req, res) => {
@@ -120,7 +153,7 @@ const listProjectByKRAId = asyncHander(async (req, res) => {
     }
     connection.release();
   });
-  
+
 });
 
 
@@ -151,6 +184,6 @@ const listProjectsByDepartmentId = asyncHander(async (req, res) => {
     }
     connection.release();
   });
-  
+
 });
-module.exports = { listDepartment,listOutputTypeId, listKRAByDepartmentId, listProjectByKRAId, listProjectsByDepartmentId };
+module.exports = { listDepartment, listUnitIdPerDepartmentId, listOutputTypeId, listKRAByDepartmentId, listProjectByKRAId, listProjectsByDepartmentId };

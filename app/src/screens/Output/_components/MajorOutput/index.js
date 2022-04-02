@@ -239,8 +239,6 @@ export default () => {
               <Paper className="p-3 p-lg-5">
                 <form onSubmit={handleSubmit(onSubmit)} id="insert-major-form" className="custom-form">
                   <FormGroup>
-
-
                     <div className="row">
                       {/* ***** OPCRF ***** */}
                       <div className="col-xl-6 border-end-1">
@@ -345,8 +343,8 @@ export default () => {
                               <TextField
                                 multiline
                                 className="output-margin "
-                                rows={2}
-                                maxRows={2}
+                                rows={3}
+                                maxRows={3}
                                 placeholder="Output"
                                 label="Output"
                                 variant="outlined"
@@ -358,19 +356,9 @@ export default () => {
                             }
                           />
                         </div>
-                        {/* <Divider
-                            placeholder="OPCRF"
-                            label="OPCRF"
-                            variant="fullWidth"
-                            orientation="horizontal"
-
-                        ></Divider>
-                        <br /><br /> */}
-
                       </div>
-                      {/* ***** QAME RATING ***** */}
-                      <div className="col-xl-6">
-
+                      <div className="col-xl-6"> 
+                        {/* ***** QAME RATING ***** */}
                         <div style={{ paddingLeft: '1.5rem' }}>
                           <Divider
                             className="group-title"
@@ -435,6 +423,7 @@ export default () => {
                                 maxRows={2}
                                 className="output-margin"
                                 placeholder="Operational Issue"
+                                label="Operational Issue"
                                 variant="outlined"
                                 size="small"
                                 fullWidth

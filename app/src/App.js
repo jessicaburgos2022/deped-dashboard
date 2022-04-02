@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import theme from "./theme";
-// import "./styles/sidebar-style.css";
+import "./App.css";
 
 // import Interfaces from "./screens/Interface";
 // import Drawer from "./components/Drawer";
@@ -18,6 +18,7 @@ import ContributoryDashboard from "./screens/ContributoryDashboard";
 import Maintenance from "./screens/Maintenance";
 import Output from "./screens/Output";
 import OutputManagement from "./screens/OutputManagement";
+import PREXC from "./screens/PREXC";
 
 
 import NavBar from "./components/AdminLTE/navbar";
@@ -46,14 +47,21 @@ const App = () => {
         <SideBar />
         <Switch>
           <Route exact path="/" component={LoginScreen} />
-          <PrivateRoute path="/output/:type" component={Output} />
+          <PrivateRoute path="/insertoutputmajor" component={Output} />
+          <PrivateRoute path="/insertoutputminor" component={Output} />
+          <PrivateRoute path="/insertoutputoo" component={Output} />
           <Route path="/login" component={LoginScreen} />
-          {/* <Route path="/interfaces/:bu?" component={Interfaces} /> */}
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/contributorydashboard" component={ContributoryDashboard} />
-          <PrivateRoute path="/outputmanagement/:type" component={OutputManagement} />
-          <PrivateRoute path="/maintenance/:type" component={Maintenance} />
-          {/* <PrivateRoute path="/maintenance" component={Maintenance} /> */}
+          <PrivateRoute path="/outputmajor" component={OutputManagement} />
+          <PrivateRoute path="/outputminor" component={OutputManagement} />
+          <PrivateRoute path="/outputtokra" component={OutputManagement} />
+          <PrivateRoute path="/prexc" component={PREXC} />
+          <PrivateRoute path="/maintenance-kra" component={Maintenance} />
+          <PrivateRoute path="/maintenance-project" component={Maintenance} />
+          <PrivateRoute path="/maintenance-outcome" component={Maintenance} />
+          <PrivateRoute path="/maintenance-indicator" component={Maintenance} />
+          <PrivateRoute path="/maintenance-user" component={Maintenance} />
         </Switch>
       </MuiThemeProvider>
     </Router>
