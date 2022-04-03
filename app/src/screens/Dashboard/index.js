@@ -63,7 +63,7 @@ export default () => {
   const [totalPPACount, setTotalPPACount] = useState(0);
   useEffect(() => {
     setTotalPPACount(dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) && Array.isArray(dashboardState.MonitoredPPA.map(item => item.PPACount)) && dashboardState.MonitoredPPA.map(item => item.PPACount).length > 0 ? dashboardState.MonitoredPPA.map(item => item.PPACount).reduce((prev, cur) => prev + cur) : 0);
-  }, [])
+  }, [dashboardState.MonitoredPPA])
 
   const colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'cyan'];
   const graph1Colors = [];
@@ -268,49 +268,49 @@ export default () => {
       </div>
       <div className="content">
         <div className="container-fluid">
-          <div class="row">
-            <div class="col-lg-3 col-6">
-              <div class="small-box bg-warning">
-                <div class="inner">
+          <div className="row">
+            <div className="col-lg-3 col-6">
+              <div className="small-box bg-warning">
+                <div className="inner">
                   <h3>{totalPPACount}</h3>
                   <p>Approved PPAs</p>
                 </div>
-                <div class="icon">
+                <div className="icon">
                   <AccessibilityNewIcon />
-                  <i class="ion ion-bag"></i>
+                  <i className="ion ion-bag"></i>
                 </div>
-                <a href="/outputmanagement/major" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="/outputmanagement/major" className="small-box-footer">More info <i className="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>
-          <div class="row">
-            <section class="col-lg-7 connectedSortable">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
+          <div className="row">
+            <section className="col-lg-7 connectedSortable">
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="card-title">
+                    <i className="fas fa-chart-pie mr-1"></i>
                     Approved PPA
                   </h3>
                 </div>
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <div class="chart tab-pane active" id="revenue-chart"
+                <div className="card-body">
+                  <div className="tab-content p-0">
+                    <div className="chart tab-pane active" id="revenue-chart"
                       style={{ position: 'relative', display: 'flex' }}>
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <Pie data={data1} />
                       </div>
-                      <div class="col-md-6">
-                        <p class="text-center">
+                      <div className="col-md-6">
+                        <p className="text-center">
                           <strong>Offices</strong>
                         </p>
                         {
                           dashboardState.MonitoredPPA.map((item, i) => {
                             return (
-                              <div class="progress-group">
+                              <div className="progress-group">
                                 {item.DepartmentName}
-                                <span class="float-right">{item.PPACount}</span>
-                                <div class="progress progress-sm">
-                                  <div class={`progress-bar bg-${graph1Colors[i]} progress-bar-striped`} style={{ width: (item.PPACount / totalPPACount) * 100 + '%' }}></div>
+                                <span className="float-right">{item.PPACount}</span>
+                                <div className="progress progress-sm">
+                                  <div className={`progress-bar bg-${graph1Colors[i]} progress-bar-striped`} style={{ width: (item.PPACount / totalPPACount) * 100 + '%' }}></div>
                                 </div>
                               </div>
                             )
@@ -318,39 +318,31 @@ export default () => {
                         }
                       </div>
                     </div>
-                    <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
+                    <div className="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
                       {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
                     </div>
                   </div>
                 </div>
               </div>
             </section>
-            <section class="col-lg-5 connectedSortable">
-              <div class="card">
-                <div class="card-header border-0">
-                  <h3 class="card-title">
-                    <i class="fas fa-th mr-1"></i>
+            <section className="col-lg-5 connectedSortable">
+              <div className="card">
+                <div className="card-header border-0">
+                  <h3 className="card-title">
+                    <i className="fas fa-th mr-1"></i>
                     Budget Utilization Rate
                   </h3>
-                  {/* <div class="card-tools">
-                    <button type="button" class="btn btn-sm" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-sm" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div> */}
                 </div>
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <div class="chart tab-pane active" id="utilization-chart"
+                <div className="card-body">
+                  <div className="tab-content p-0">
+                    <div className="chart tab-pane active" id="utilization-chart"
                       style={{ position: 'relative', display: 'flex' }}>
-                      <div class="col-md-12">
+                      <div className="col-md-12">
                         <Bar options={options} data={BudgetUtilizationRate} />
                       </div>
                     </div>
 
-                    <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
+                    <div className="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
                       {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
                     </div>
                   </div>
@@ -358,46 +350,46 @@ export default () => {
               </div>
             </section>
 
-            <section class="col-lg-6 connectedSortable">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
+            <section className="col-lg-6 connectedSortable">
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="card-title">
+                    <i className="fas fa-chart-pie mr-1"></i>
                     Satisfactory Accountability Result on Physical and Financial Target
                   </h3>
                 </div>
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <div class="chart tab-pane active" id="revenue-chart"
+                <div className="card-body">
+                  <div className="tab-content p-0">
+                    <div className="chart tab-pane active" id="revenue-chart"
                       style={{ position: 'relative', display: 'flex' }}>
-                      <div class="col-md-12">
+                      <div className="col-md-12">
                         <Bar options={options} data={SatisfactoryResult} />
                       </div>
                     </div>
-                    <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
+                    <div className="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
                       {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
                     </div>
                   </div>
                 </div>
               </div>
             </section>
-            <section class="col-lg-6 connectedSortable">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
+            <section className="col-lg-6 connectedSortable">
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="card-title">
+                    <i className="fas fa-chart-pie mr-1"></i>
                     PPAs Conducted Within The Defined Timeline
                   </h3>
                 </div>
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <div class="chart tab-pane active" id="revenue-chart"
+                <div className="card-body">
+                  <div className="tab-content p-0">
+                    <div className="chart tab-pane active" id="revenue-chart"
                       style={{ position: 'relative', display: 'flex' }}>
-                      <div class="col-md-12">
+                      <div className="col-md-12">
                         <Bar options={options} data={data} />
                       </div>
                     </div>
-                    <div class="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
+                    <div className="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
                       {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
                     </div>
                   </div>
