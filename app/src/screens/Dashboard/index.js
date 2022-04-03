@@ -45,6 +45,7 @@ export default () => {
   const dispatch = useDispatch();
   const accState = useSelector((state) => state.user);
   const dashboardState = useSelector((state) => state.dashboard);
+  const currentYear = new Date().getFullYear();
   useEffect(() => {
     var departmentId = accState.userInfo.acc[0]
       ? accState.userInfo.acc[0].DepartmentId
@@ -284,29 +285,36 @@ export default () => {
             </div>
           </div>
           <div className="row">
-            <section className="col-lg-7 connectedSortable">
+            <section className="col-lg-7 connectedSortable ui-sortable">
               <div className="card">
                 <div className="card-header">
                   <h3 className="card-title">
                     <i className="fas fa-chart-pie mr-1"></i>
                     Approved PPA
                   </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">{currentYear - 1}</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#sales-chart" data-toggle="tab">{currentYear}</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="card-body">
                   <div className="tab-content p-0">
                     <div className="chart tab-pane active" id="revenue-chart"
                       style={{ position: 'relative', display: 'flex' }}>
-                      <div className="col-md-6">
+                      <div className="col-md-5">
                         <Pie data={data1} />
                       </div>
-                      <div className="col-md-6">
-                        <p className="text-center">
-                          <strong>Offices</strong>
-                        </p>
+                      <div className="col-md-7">
                         {
                           dashboardState.MonitoredPPA.map((item, i) => {
                             return (
-                              <div className="progress-group">
+                              <div className="progress-group" style={{ marginBottom: '0.1rem' }}>
                                 {item.DepartmentName}
                                 <span className="float-right">{item.PPACount}</span>
                                 <div className="progress progress-sm">
@@ -333,7 +341,7 @@ export default () => {
                     Budget Utilization Rate
                   </h3>
                 </div>
-                <div className="card-body">
+                <div className="card-body" style={{ height: 340 }}>
                   <div className="tab-content p-0">
                     <div className="chart tab-pane active" id="utilization-chart"
                       style={{ position: 'relative', display: 'flex' }}>

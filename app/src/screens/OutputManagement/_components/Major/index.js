@@ -16,6 +16,7 @@ export default () => {
     const [departmentList, setdepartmentList] = useState(
         appState.departments
     );
+    const currentYear = new Date().getFullYear();
     const [selectedKRA, setSelectedKRA] = useState(null);
 
     useEffect(() => {
@@ -61,11 +62,11 @@ export default () => {
                                         <MenuItem value={0}>
                                             Any
                                         </MenuItem>
-                                        <MenuItem value={new Date().getFullYear() - 1}>
-                                            {new Date().getFullYear() - 1}
+                                        <MenuItem value={currentYear - 1}>
+                                            {currentYear - 1}
                                         </MenuItem>
-                                        <MenuItem value={new Date().getFullYear()}>
-                                            {new Date().getFullYear()}
+                                        <MenuItem value={currentYear}>
+                                            {currentYear}
                                         </MenuItem>
                                     </Select>
                                 </FormControl>
