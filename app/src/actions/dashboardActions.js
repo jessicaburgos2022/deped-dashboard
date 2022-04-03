@@ -39,26 +39,10 @@ export const fetchChart1 = (year) => async (dispatch) => {
   }
 };
 
-export const fetchChart1PreviousYear = (year) => async (dispatch) => {
-  await dispatch({ type: GET_MONITOREDPPA_PREVIOUSYEAR_REQUEST });
-  try {
-    const { data } = await axios.get(`/api/dashboard/chart1/${year - 1}`);
-    dispatch({
-      type: GET_MONITOREDPPA_PREVIOUSYEAR_SUCCESS,
-      payload: data,
-    });
-  } catch (e) {
-    dispatch({
-      type: GET_MONITOREDPPA_PREVIOUSYEAR_FAILED,
-      payload: ""
-    });
-  }
-};
-
-export const fetchChart2 = () => async (dispatch) => {
+export const fetchChart2 = (year) => async (dispatch) => {
   await dispatch({ type: GET_SATISFACTORYRESULT_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/chart2`);
+    const { data } = await axios.get(`/api/dashboard/chart2/${year}`);
     dispatch({
       type: GET_SATISFACTORYRESULT_SUCCESS,
       payload: data,
@@ -71,10 +55,10 @@ export const fetchChart2 = () => async (dispatch) => {
   }
 };
 
-export const fetchChart3 = () => async (dispatch) => {
+export const fetchChart3 = (year) => async (dispatch) => {
   await dispatch({ type: GET_CONDUCTEDWITHINTIMEFRAME_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/chart3`);
+    const { data } = await axios.get(`/api/dashboard/chart3/${year}`);
     dispatch({
       type: GET_CONDUCTEDWITHINTIMEFRAME_SUCCESS,
       payload: data,
@@ -87,10 +71,10 @@ export const fetchChart3 = () => async (dispatch) => {
   }
 };
 
-export const fetchChart4 = () => async (dispatch) => {
+export const fetchChart4 = (year) => async (dispatch) => {
   await dispatch({ type: GET_BudgetUtilizationRate_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/chart4`);
+    const { data } = await axios.get(`/api/dashboard/chart4/${year}`);
     dispatch({
       type: GET_BudgetUtilizationRate_SUCCESS,
       payload: data,

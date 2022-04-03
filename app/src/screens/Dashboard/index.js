@@ -53,22 +53,42 @@ export default () => {
     dispatch(fetchKRAByDepartmentId(departmentId));
     dispatch(fetchOutputTypes());
     dispatch(fetchChart1(currentYear));
-    dispatch(fetchChart2());
-    dispatch(fetchChart3());
-    dispatch(fetchChart4());
+    dispatch(fetchChart2(currentYear));
+    dispatch(fetchChart3(currentYear));
+    dispatch(fetchChart4(currentYear));
     dispatch(fetchIndicatorsByDeptId(departmentId));
     dispatch(fetchProjectByDepartment(departmentId));
     dispatch(fetchDepartmentList());
     // eslint-disable-next-line
   }, []);
   const [totalPPACount, setTotalPPACount] = useState(0);
-  const [Chart1ActiveYear, setChart1ActiveYear] = useState(currentYear)
+  const [Chart1ActiveYear, setChart1ActiveYear] = useState(currentYear);
+  const [Chart2ActiveYear, setChart2ActiveYear] = useState(currentYear);
+  const [Chart3ActiveYear, setChart3ActiveYear] = useState(currentYear);
+  const [Chart4ActiveYear, setChart4ActiveYear] = useState(currentYear);
+
   useEffect(() => {
     setTotalPPACount(dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) && Array.isArray(dashboardState.MonitoredPPA.map(item => item.PPACount)) && dashboardState.MonitoredPPA.map(item => item.PPACount).length > 0 ? dashboardState.MonitoredPPA.map(item => item.PPACount).reduce((prev, cur) => prev + cur) : 0);
   }, [dashboardState.MonitoredPPA])
+
   const chart1YearOnChange = (year) => {
     setChart1ActiveYear(year);
     dispatch(fetchChart1(year));
+  }
+
+  const chart2YearOnChange = (year) => {
+    setChart2ActiveYear(year);
+    dispatch(fetchChart4(year));
+  }
+
+  const chart3YearOnChange = (year) => {
+    setChart3ActiveYear(year);
+    dispatch(fetchChart2(year));
+  }
+
+  const chart4YearOnChange = (year) => {
+    setChart4ActiveYear(year);
+    dispatch(fetchChart3(year));
   }
   const colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'cyan'];
   const graph1Colors = [];
@@ -95,14 +115,9 @@ export default () => {
   };
 
   const options = {
-    responsive: true,
     plugins: {
       legend: {
-        position: "top",
-      },
-      title: {
         display: false,
-        text: "Chart.js Line Chart",
       },
     },
   };
@@ -284,7 +299,7 @@ export default () => {
                   <AccessibilityNewIcon />
                   <i className="ion ion-bag"></i>
                 </div>
-                <a href="/outputmanagement/major" className="small-box-footer">More info <i className="fas fa-arrow-circle-right"></i></a>
+                <a href="/outputmajor" className="small-box-footer">More info <i className="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>
@@ -311,10 +326,10 @@ export default () => {
                   <div className="tab-content p-0">
                     <div className="chart tab-pane active" id="revenue-chart"
                       style={{ position: 'relative', display: 'flex' }}>
-                      <div className="col-md-5">
-                        <Pie data={data1} />
-                      </div>
                       <div className="col-md-7">
+                        <Pie data={data1} options={options} />
+                      </div>
+                      <div className="col-md-5">
                         {
                           dashboardState.MonitoredPPA.map((item, i) => {
                             return (
@@ -344,6 +359,16 @@ export default () => {
                     <i className="fas fa-th mr-1"></i>
                     Budget Utilization Rate
                   </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart2ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart2YearOnChange(currentYear)}>{currentYear}</a>
+                      </li>
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart2ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart2YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="card-body">
                   <div className="tab-content p-0">
@@ -365,6 +390,16 @@ export default () => {
                     <i className="fas fa-chart-pie mr-1"></i>
                     Satisfactory Accountability Result on Physical and Financial Target
                   </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart3ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart3YearOnChange(currentYear)}>{currentYear}</a>
+                      </li>
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart3ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart3YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="card-body">
                   <div className="tab-content p-0">
@@ -388,6 +423,16 @@ export default () => {
                     <i className="fas fa-chart-pie mr-1"></i>
                     PPAs Conducted Within The Defined Timeline
                   </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart4ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart4YearOnChange(currentYear)}>{currentYear}</a>
+                      </li>
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart4ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart4YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="card-body">
                   <div className="tab-content p-0">

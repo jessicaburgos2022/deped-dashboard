@@ -6,11 +6,11 @@ const { DashboardPPAMonitored, ConductedWithinTimeframe, BudgetUtilizationRate, 
 
 router.route('/chart1/:year').get(DashboardPPAMonitored);
 
-router.route('/chart2').get(SatisfactoryResult);
+router.route('/chart2/:year').get(SatisfactoryResult);
 
-router.route('/chart3').get(ConductedWithinTimeframe);
+router.route('/chart3/:year').get(ConductedWithinTimeframe);
 
-router.route('/chart4').get(BudgetUtilizationRate);
+router.route('/chart4/:year').get(BudgetUtilizationRate);
 
 router.route('/oo').get(DashboardOO);
 

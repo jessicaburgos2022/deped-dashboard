@@ -40,7 +40,8 @@ const DashboardPPAMonitored = asyncHander(async (req, res) => {
 });
 
 const ConductedWithinTimeframe = asyncHander(async (req, res) => {
-  const queryString = `call ConductedWithinTimeframe();`;
+  const { year } = req.params;
+  const queryString = `call ConductedWithinTimeframe(${year});`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -68,7 +69,8 @@ const ConductedWithinTimeframe = asyncHander(async (req, res) => {
 
 
 const BudgetUtilizationRate = asyncHander(async (req, res) => {
-  const queryString = `call BudgetUtilizationRate();`;
+  const { year } = req.params;
+  const queryString = `call BudgetUtilizationRate(${year});`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -96,7 +98,8 @@ const BudgetUtilizationRate = asyncHander(async (req, res) => {
 
 
 const SatisfactoryResult = asyncHander(async (req, res) => {
-  const queryString = `call SatisfactoryResult();`;
+  const { year } = req.params;
+  const queryString = `call SatisfactoryResult(${year});`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
