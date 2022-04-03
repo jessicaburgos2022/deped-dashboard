@@ -100,6 +100,7 @@ export default () => {
                                     label="KRA"
                                     variant="standard"
                                     fullWidth
+                                    size="small"
                                     onChange={(e) => setKraName(e.target.value)}
                                 />
                             </Grid>

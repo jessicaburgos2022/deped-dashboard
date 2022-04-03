@@ -152,10 +152,10 @@ export const searchMajorOutput = (kraYear, selectedDepartmentId,kraName) => asyn
 
 };
 
-export const searchMinorOutput = (selectedDepartmentId,kraName) => async (dispatch) => {
+export const searchMinorOutput = (selectedYear, selectedDepartmentId,kraName) => async (dispatch) => {
     await dispatch({ type: SEARCH_MINOR_OUTPUT_REQUEST });
     try {
-        const { data } = await axios.post(`/api/output/minor/search`,{departmentid:selectedDepartmentId, kraname: kraName});
+        const { data } = await axios.post(`/api/output/minor/search`,{krayear: selectedYear, departmentid:selectedDepartmentId, kraname: kraName});
         await dispatch({ type: SEARCH_MINOR_OUTPUT_SUCCESS, payload: data });
     } catch (e) {
         dispatch({

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { searchMinorOutput } from '../../../../actions/outputActions';
 import Table from './table';
+import './style.css';
 
 export default () => {
     const dispatch = useDispatch();
@@ -11,13 +12,15 @@ export default () => {
     const appState = useSelector(state => state.app);
     const [selectedDepartmentId, setSelectedDepartmentId] = useState(0);
     const [kraName, setKraName] = useState('');
+    const currentYear = new Date().getFullYear();
+    const [selectedYear, setSelectedYear] = useState(0);
     const [outputTypeId, setOutputTypeId] = useState(0);
     const [departmentList, setdepartmentList] = useState(
         appState.departments
     );
     const [selectedKRA, setSelectedKRA] = useState(null);
     useEffect(() => {
-        dispatch(searchMinorOutput(selectedDepartmentId, kraName))
+        dispatch(searchMinorOutput(selectedYear, selectedDepartmentId, kraName))
     }, [])
     return (
         <div className="content-wrapper">
@@ -44,16 +47,38 @@ export default () => {
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    <Grid container spacing={3} style={{ padding: 10 }}>
-                        <Grid item xs={3}>
-                            <FormGroup>
+
+                    <div className='advance-search'>
+                        <span className='desc'>Search</span>
+                        <Grid container spacing={3}>
+                            <Grid item xs={3}>
+                                <FormControl variant="standard" className="w-100">
+                                    <InputLabel>Year</InputLabel>
+                                    <Select
+                                        fullWidth
+                                        label="Year"
+                                        name="selectedYear"
+                                        onChange={(e) => setSelectedYear(e.target.value)}
+                                        value={selectedYear}
+                                    >
+                                        <MenuItem value={0}>
+                                            Any
+                                        </MenuItem>
+                                        <MenuItem value={currentYear - 1}>
+                                            {currentYear - 1}
+                                        </MenuItem>
+                                        <MenuItem value={currentYear}>
+                                            {currentYear}
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={3}>
                                 <FormControl variant="standard" className="w-100">
                                     <InputLabel>Department</InputLabel>
                                     <Select
-                                        variant="standard"
                                         label="Department"
                                         fullWidth
-                                        className="output-category-margin"
                                         name="departmentId"
                                         onChange={(e) => setSelectedDepartmentId(e.target.value)}
                                     >
@@ -69,31 +94,30 @@ export default () => {
                                         })}
                                     </Select>
                                 </FormControl>
-                            </FormGroup>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <TextField
+                                    fullWidth
+                                    placeholder="KRA"
+                                    label="KRA"
+                                    variant="standard"
+                                    size="small"
+                                    onChange={(e) => setKraName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={3} >
+                                <Button
+                                    className="output-margin"
+                                    variant="contained"
+                                    style={{ width: "100%" }}
+                                    color="primary"
+                                    onClick={() => dispatch(searchMinorOutput(selectedYear, selectedDepartmentId, kraName))}
+                                >
+                                    Search
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={3}>
-                            <TextField
-                                fullWidth
-                                className="output-margin"
-                                placeholder="KRA"
-                                label="KRA"
-                                variant="outlined"
-                                size="small"
-                                onChange={(e) => setKraName(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={3} >
-                            <Button
-                                className="output-margin"
-                                variant="contained"
-                                style={{ width: "100%" }}
-                                color="primary"
-                                onClick={() => dispatch(searchMinorOutput(selectedDepartmentId, kraName))}
-                            >
-                                Search
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    </div>
                     <Table SearchResult={outputManagementState.searchResult} />
                 </div>
             </div>

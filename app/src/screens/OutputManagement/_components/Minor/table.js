@@ -68,6 +68,9 @@ export default (data) => {
                             Department
                         </TableCell>
                         <TableCell className="interface-table-header">
+                            Year
+                        </TableCell>
+                        <TableCell className="interface-table-header">
                             KRA
                         </TableCell>
                         <TableCell className="interface-table-header">
@@ -86,6 +89,9 @@ export default (data) => {
                             <TableRow>
                                 <TableCell component="th" className="interface-table-cell">
                                     {r.Department}
+                                </TableCell>
+                                <TableCell component="th" className="interface-table-cell">
+                                    {r.KRAYear}
                                 </TableCell>
                                 <TableCell component="th" className="interface-table-cell">
                                     {r.KRAName}
