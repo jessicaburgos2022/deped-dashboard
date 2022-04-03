@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
+import exportFromJSON, { ExportType } from 'export-from-json'
+import { ReactComponent as ExcelSvg } from '../../media/svg/excel-svgrepo-com.svg'
+import { ReactComponent as PDFSvg } from '../../media/svg/pdf-svgrepo-com.svg'
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import {
   Chart as ChartJS,
@@ -313,6 +316,9 @@ export default () => {
                   </h3>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item c-pointer pr-5">
+                        <ExcelSvg onClick={() => exportFromJSON({ data: dashboardState.MonitoredPPA, fileName: 'Approved PPAs', exportType: 'xls' })} style={{ height: 30 }} />
+                      </li>
                       <li class="nav-item c-pointer">
                         <a class={`nav-link ${Chart1ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart1YearOnChange(currentYear)}>{currentYear}</a>
                       </li>
@@ -361,6 +367,9 @@ export default () => {
                   </h3>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item c-pointer pr-5">
+                        <ExcelSvg onClick={() => exportFromJSON({ data: dashboardState.BudgetUtilizationRate, fileName: 'Budget Utilization Rate', exportType: 'xls' })} style={{ height: 30 }} />
+                      </li>
                       <li class="nav-item c-pointer">
                         <a class={`nav-link ${Chart2ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart2YearOnChange(currentYear)}>{currentYear}</a>
                       </li>
@@ -392,6 +401,9 @@ export default () => {
                   </h3>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item c-pointer pr-5">
+                        <ExcelSvg onClick={() => exportFromJSON({ data: dashboardState.SatisfactoryResult, fileName: 'Satisfactory Accountability Result on Targets', exportType: 'xls' })} style={{ height: 30 }} />
+                      </li>
                       <li class="nav-item c-pointer">
                         <a class={`nav-link ${Chart3ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart3YearOnChange(currentYear)}>{currentYear}</a>
                       </li>
@@ -425,6 +437,9 @@ export default () => {
                   </h3>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item c-pointer pr-5">
+                        <ExcelSvg onClick={() => exportFromJSON({ data: dashboardState.ConductedWithinTimeframe, fileName: 'PPAs Conducted within the defined timeline', exportType: 'xls' })} style={{ height: 30 }} />
+                      </li>
                       <li class="nav-item c-pointer">
                         <a class={`nav-link ${Chart4ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart4YearOnChange(currentYear)}>{currentYear}</a>
                       </li>

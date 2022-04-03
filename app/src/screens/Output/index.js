@@ -8,11 +8,11 @@ export default (props) => {
 
     const RenderOutputView = () => {
         switch (props.location.pathname) {
-            case '/output/major':
+            case '/insertoutputmajor':
                 return <MajorView />;
-            case '/output/minor':
+            case '/insertoutputminor':
                 return <MinorView />;
-            case '/output/oo':
+            case '/insertoutputoo':
                 return <OOView />;
             default:
                 return <MajorView />;
