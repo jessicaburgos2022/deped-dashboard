@@ -13,17 +13,20 @@ import {
   GET_SATISFACTORYRESULT_FAILED,
   GET_DASHBOARDOO_INFO_REQUEST,
   GET_DASHBOARDOO_INFO_SUCCESS,
-  GET_DASHBOARDOO_INFO_FAILED
+  GET_DASHBOARDOO_INFO_FAILED,
+  GET_MONITOREDPPA_PREVIOUSYEAR_REQUEST,
+  GET_MONITOREDPPA_PREVIOUSYEAR_SUCCESS,
+  GET_MONITOREDPPA_PREVIOUSYEAR_FAILED
 }
   from '../constants/dashboardConstants';
 
 
 import axios from "../helpers/axios";
 
-export const fetchChart1 = () => async (dispatch) => {
+export const fetchChart1 = (year) => async (dispatch) => {
   await dispatch({ type: GET_MONITOREDPPA_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/chart1`);
+    const { data } = await axios.get(`/api/dashboard/chart1/${year}`);
     dispatch({
       type: GET_MONITOREDPPA_SUCCESS,
       payload: data,
@@ -31,6 +34,22 @@ export const fetchChart1 = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_MONITOREDPPA_FAILED,
+      payload: ""
+    });
+  }
+};
+
+export const fetchChart1PreviousYear = (year) => async (dispatch) => {
+  await dispatch({ type: GET_MONITOREDPPA_PREVIOUSYEAR_REQUEST });
+  try {
+    const { data } = await axios.get(`/api/dashboard/chart1/${year - 1}`);
+    dispatch({
+      type: GET_MONITOREDPPA_PREVIOUSYEAR_SUCCESS,
+      payload: data,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_MONITOREDPPA_PREVIOUSYEAR_FAILED,
       payload: ""
     });
   }

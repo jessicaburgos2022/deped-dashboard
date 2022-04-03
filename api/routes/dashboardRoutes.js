@@ -4,7 +4,7 @@ const router = express.Router();
 const { DashboardPPAMonitored, ConductedWithinTimeframe, BudgetUtilizationRate, SatisfactoryResult, DashboardOO } = require('../controller/dashboardController');
 
 
-router.route('/chart1').get(DashboardPPAMonitored);
+router.route('/chart1/:year').get(DashboardPPAMonitored);
 
 router.route('/chart2').get(SatisfactoryResult);
 

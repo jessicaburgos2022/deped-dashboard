@@ -14,7 +14,7 @@ import {
 } from "chart.js";
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 
-import { Bar, Doughnut, Line, Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 
 import {
   fetchKRAByDepartmentId,
@@ -52,7 +52,7 @@ export default () => {
       : 0;
     dispatch(fetchKRAByDepartmentId(departmentId));
     dispatch(fetchOutputTypes());
-    dispatch(fetchChart1());
+    dispatch(fetchChart1(currentYear));
     dispatch(fetchChart2());
     dispatch(fetchChart3());
     dispatch(fetchChart4());
@@ -62,10 +62,14 @@ export default () => {
     // eslint-disable-next-line
   }, []);
   const [totalPPACount, setTotalPPACount] = useState(0);
+  const [Chart1ActiveYear, setChart1ActiveYear] = useState(currentYear)
   useEffect(() => {
     setTotalPPACount(dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) && Array.isArray(dashboardState.MonitoredPPA.map(item => item.PPACount)) && dashboardState.MonitoredPPA.map(item => item.PPACount).length > 0 ? dashboardState.MonitoredPPA.map(item => item.PPACount).reduce((prev, cur) => prev + cur) : 0);
   }, [dashboardState.MonitoredPPA])
-
+  const chart1YearOnChange = (year) => {
+    setChart1ActiveYear(year);
+    dispatch(fetchChart1(year));
+  }
   const colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'cyan'];
   const graph1Colors = [];
   const data1 = {
@@ -285,20 +289,20 @@ export default () => {
             </div>
           </div>
           <div className="row">
-            <section className="col-lg-7 connectedSortable ui-sortable">
+            <section className="col-lg-6 connectedSortable ui-sortable">
               <div className="card">
                 <div className="card-header">
                   <h3 className="card-title">
                     <i className="fas fa-chart-pie mr-1"></i>
-                    Approved PPA
+                    Approved PPAs
                   </h3>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">{currentYear - 1}</a>
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart1ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart1YearOnChange(currentYear)}>{currentYear}</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#sales-chart" data-toggle="tab">{currentYear}</a>
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart1ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart1YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
                       </li>
                     </ul>
                   </div>
@@ -316,7 +320,8 @@ export default () => {
                             return (
                               <div className="progress-group" style={{ marginBottom: '0.1rem' }}>
                                 {item.DepartmentName}
-                                <span className="float-right">{item.PPACount}</span>
+                                <span className="float-right text-muted"> | {Math.round(((item.PPACount / totalPPACount) * 100) * 100) / 100 ? Math.round(((item.PPACount / totalPPACount) * 100) * 100) / 100 : 0}%</span>
+                                <span className="float-right">{item.PPACount}&nbsp;</span>
                                 <div className="progress progress-sm">
                                   <div className={`progress-bar bg-${graph1Colors[i]} progress-bar-striped`} style={{ width: (item.PPACount / totalPPACount) * 100 + '%' }}></div>
                                 </div>
@@ -326,14 +331,13 @@ export default () => {
                         }
                       </div>
                     </div>
-                    <div className="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
-                      {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
+                    <div className="chart tab-pane" id="sales-chart" style={{ position: 'relative', display: 'flex' }}>
                     </div>
                   </div>
                 </div>
               </div>
             </section>
-            <section className="col-lg-5 connectedSortable">
+            <section className="col-lg-6 connectedSortable ui-sortable">
               <div className="card">
                 <div className="card-header border-0">
                   <h3 className="card-title">
@@ -341,17 +345,13 @@ export default () => {
                     Budget Utilization Rate
                   </h3>
                 </div>
-                <div className="card-body" style={{ height: 340 }}>
+                <div className="card-body">
                   <div className="tab-content p-0">
                     <div className="chart tab-pane active" id="utilization-chart"
                       style={{ position: 'relative', display: 'flex' }}>
                       <div className="col-md-12">
                         <Bar options={options} data={BudgetUtilizationRate} />
                       </div>
-                    </div>
-
-                    <div className="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
-                      {/* <canvas id="sales-chart-canvas" height="300" style={{height:300}}></canvas> */}
                     </div>
                   </div>
                 </div>

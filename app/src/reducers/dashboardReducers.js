@@ -13,7 +13,10 @@ import {
     GET_SATISFACTORYRESULT_FAILED,
     GET_DASHBOARDOO_INFO_REQUEST,
     GET_DASHBOARDOO_INFO_SUCCESS,
-    GET_DASHBOARDOO_INFO_FAILED
+    GET_DASHBOARDOO_INFO_FAILED,
+    GET_MONITOREDPPA_PREVIOUSYEAR_REQUEST,
+    GET_MONITOREDPPA_PREVIOUSYEAR_SUCCESS,
+    GET_MONITOREDPPA_PREVIOUSYEAR_FAILED
 }
     from '../constants/dashboardConstants';
 
@@ -21,6 +24,7 @@ import {
 const dashboardState = {
     loading: false,
     MonitoredPPA: [],
+    PreviousYearMonitoredPPA: [],
     ConductedWithinTimeframe: [],
     BudgetUtilizationRate: [],
     SatisfactoryResult: [],
@@ -49,6 +53,24 @@ export const dashboardReducer = (state = dashboardState, action) => {
                 MonitoredPPA: []
             }
 
+        case GET_MONITOREDPPA_PREVIOUSYEAR_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                PreviousYearMonitoredPPA: []
+            }
+        case GET_MONITOREDPPA_PREVIOUSYEAR_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                PreviousYearMonitoredPPA: payload
+            }
+        case GET_MONITOREDPPA_PREVIOUSYEAR_FAILED:
+            return {
+                ...state,
+                loading: false,
+                PreviousYearMonitoredPPA: []
+            }
         case GET_CONDUCTEDWITHINTIMEFRAME_REQUEST:
             return {
                 ...state,

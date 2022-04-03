@@ -33,3 +33,6 @@ a {
 .MuiInputBase-input {
   height: 1.13rem!important;
 }
+.c-pointer {
+  cursor: pointer;
+}

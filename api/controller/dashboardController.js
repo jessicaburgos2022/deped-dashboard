@@ -13,7 +13,8 @@ const pool = mysql.createPool({
 });
 
 const DashboardPPAMonitored = asyncHander(async (req, res) => {
-  const queryString = `call DashboardPPAMonitored();`;
+  const { year } = req.params;
+  const queryString = `call DashboardPPAMonitored(${year});`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
