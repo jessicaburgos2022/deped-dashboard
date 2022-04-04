@@ -12,11 +12,13 @@ export default () => {
     const appState = useSelector(state => state.app);
     const outcomeState = useSelector(state => state.outcome);
     const [selectedDepartmentId, setSelectedDepartmentId] = useState(0);
+    const [selectedYear, setSelectedYear] = useState(0);
     const [selectedOutcomeType, setSelectedOutcomeType] = useState(0);
     const [Title, setTitle] = useState('');
     const [departmentList, setdepartmentList] = useState(
         appState.departments
     );
+    const currentYear = new Date().getFullYear();
     const [outcomeTypeList, setOutcomeTypeList] = useState(outcomeState.outcometypes);
     useEffect(() => {
         dispatch(fetchOutcomeTypes())
@@ -46,9 +48,32 @@ export default () => {
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    <Grid container spacing={3} style={{ padding: 10 }}>
-                        <Grid item xs={3}>
-                            <FormGroup>
+                    <div className='advance-search'>
+                        <span className='desc'>Search</span>
+                        <Grid container spacing={3}>
+                            <Grid item xs={3}>
+                                <FormControl variant="standard" className="w-100">
+                                    <InputLabel>Year</InputLabel>
+                                    <Select
+                                        fullWidth
+                                        label="Year"
+                                        name="selectedYear"
+                                        onChange={(e) => setSelectedYear(e.target.value)}
+                                        value={selectedYear}
+                                    >
+                                        <MenuItem value={0}>
+                                            Any
+                                        </MenuItem>
+                                        <MenuItem value={currentYear - 1}>
+                                            {currentYear - 1}
+                                        </MenuItem>
+                                        <MenuItem value={currentYear}>
+                                            {currentYear}
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={3}>
                                 <FormControl variant="standard" className=" w-100">
                                     <InputLabel>Department</InputLabel>
                                     <Select
@@ -70,10 +95,8 @@ export default () => {
                                         })}
                                     </Select>
                                 </FormControl>
-                            </FormGroup>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <FormGroup>
+                            </Grid>
+                            <Grid item xs={3}>
                                 <FormControl variant="standard" className=" w-100">
                                     <InputLabel>Outcome</InputLabel>
                                     <Select
@@ -95,23 +118,23 @@ export default () => {
                                         })}
                                     </Select>
                                 </FormControl>
-                            </FormGroup>
+                            </Grid>
+                            <Grid item xs={3} >
+                                <Button
+                                    className="output-margin"
+                                    variant="contained"
+                                    style={{ width: "100%" }}
+                                    color="primary"
+                                    onClick={() => dispatch(searchContributoryOutput({ departmentid: selectedDepartmentId, outcometypeid: selectedOutcomeType, title: Title }))}
+                                >
+                                    Search
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={3} >
-                            <Button
-                                className="output-margin"
-                                variant="contained"
-                                style={{ width: "100%" }}
-                                color="primary"
-                                onClick={() => dispatch(searchContributoryOutput({ departmentid: selectedDepartmentId, outcometypeid: selectedOutcomeType, title: Title }))}
-                            >
-                                Search
-                            </Button>
-                        </Grid>
-                    </Grid>
-                    <Table SearchResult={contributorymanagementState.searchResult ? contributorymanagementState.searchResult : []} departmentid={selectedDepartmentId} outcometypeid={selectedOutcomeType} title= {Title} />
+                    </div>
+                    <Table SearchResult={contributorymanagementState.searchResult ? contributorymanagementState.searchResult : []} departmentid={selectedDepartmentId} outcometypeid={selectedOutcomeType} title={Title} />
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

@@ -49,6 +49,9 @@ export default (data) => {
                             Department
                         </TableCell>
                         <TableCell className="interface-table-header">
+                            Year
+                        </TableCell>
+                        <TableCell className="interface-table-header">
                             Outcome Type
                         </TableCell>
                         <TableCell className="interface-table-header">
@@ -70,10 +73,14 @@ export default (data) => {
                     {
                         currentData && Array.isArray(currentData) && currentData.map(r => {
                             // SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
+                            console.log(currentData);
                             return (
                                 <TableRow>
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.DepartmentName}
+                                    </TableCell>
+                                    <TableCell component="th" className="interface-table-cell">
+                                        {r.OutcomeYear}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.OutcomeType}

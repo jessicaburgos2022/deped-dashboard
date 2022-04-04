@@ -60,10 +60,10 @@ export const fetchOutcomeTypes = () => async (dispatch) => {
     }
 };
 
-export const searchOutcome = (departmentid, outcometypeid, title) => async (dispatch) => {
+export const searchOutcome = (outcomeyear, departmentid, outcometypeid, title) => async (dispatch) => {
     await dispatch({ type: SEARCH_OUTCOME_REQUEST });
     try {
-        const { data } = await axios.post(`/api/outcome/search`, { departmentid, outcometypeid, title });
+        const { data } = await axios.post(`/api/outcome/search`, { outcomeyear, departmentid, outcometypeid, title });
         dispatch({
             type: SEARCH_OUTCOME_SUCCESS,
             payload: data,
