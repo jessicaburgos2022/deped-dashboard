@@ -36,3 +36,28 @@ a {
 .c-pointer {
   cursor: pointer;
 }
+
+.advance-search {
+  background: #fff;
+  padding: 40px;
+  border-radius: 3px;
+  box-shadow: 0px 8px 20px 0px rgb(0 0 0 / 15%);
+  margin-bottom: 10px;
+}
+
+.advance-search .desc {
+  font-size: 15px;
+  color: #999;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.advance-search .row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 20px;
+}

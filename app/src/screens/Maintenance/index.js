@@ -5,6 +5,7 @@ import PROJECTModule from './Project';
 import INDICATORModule from './Indicator';
 import OutcomeModule from './Outcome';
 import UserManagement from './UserManagement';
+import RoleManagement from './RoleManagement';
 import { Container, FormControl, IconButton, InputLabel, MenuItem, Select } from "@material-ui/core";
 export default (props) => {
   const [outputType, setOutputType] = useState('major');
@@ -19,8 +20,10 @@ export default (props) => {
         return <OutcomeModule />
       case '/maintenance-indicator':
         return <INDICATORModule />;
-        case '/maintenance-user':
-          return <UserManagement />;
+      case '/maintenance-user':
+        return <UserManagement />;
+      case '/maintenance-role':
+        return <RoleManagement />;
       default:
         return <KRAModule />;
     }

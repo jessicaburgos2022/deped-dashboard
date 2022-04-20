@@ -35,6 +35,9 @@ export default (data) => {
                             Department
                         </TableCell>
                         <TableCell className="interface-table-header">
+                            Year
+                        </TableCell>
+                        <TableCell className="interface-table-header">
                             Outcome Type
                         </TableCell>
                         <TableCell className="interface-table-header">
@@ -50,6 +53,9 @@ export default (data) => {
                                 <TableRow>
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.DepartmentName}
+                                    </TableCell>
+                                    <TableCell component="th" className="interface-table-cell">
+                                        {r.OutcomeYear}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.OutcomeType}

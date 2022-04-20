@@ -80,7 +80,7 @@ export default (data) => {
                                         {r.DepartmentName}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
-                                        {r.OutcomeYear}
+                                        {r.KRAYear}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.OutcomeType}

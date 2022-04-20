@@ -22,7 +22,7 @@ export default () => {
     const [outcomeTypeList, setOutcomeTypeList] = useState(outcomeState.outcometypes);
     useEffect(() => {
         dispatch(fetchOutcomeTypes())
-        dispatch(searchContributoryOutput({ departmentid: selectedDepartmentId, outcometypeid: selectedOutcomeType, title: Title }))
+        dispatch(searchContributoryOutput({ krayear: selectedYear, departmentid: selectedDepartmentId, outcometypeid: selectedOutcomeType, title: Title }))
     }, [])
     return (
         <div className="content-wrapper">
@@ -125,7 +125,7 @@ export default () => {
                                     variant="contained"
                                     style={{ width: "100%" }}
                                     color="primary"
-                                    onClick={() => dispatch(searchContributoryOutput({ departmentid: selectedDepartmentId, outcometypeid: selectedOutcomeType, title: Title }))}
+                                    onClick={() => dispatch(searchContributoryOutput({ krayear: selectedYear, departmentid: selectedDepartmentId, outcometypeid: selectedOutcomeType, title: Title }))}
                                 >
                                     Search
                                 </Button>

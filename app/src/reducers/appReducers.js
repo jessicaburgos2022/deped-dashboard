@@ -29,7 +29,7 @@ const appState = {
   unitsByActiveDepartment: {
     isLoading: false,
     data: []
-  }
+  },
 };
 
 export const appReducer = (state = appState, action) => {

@@ -1,5 +1,4 @@
-import { Button, FormGroup, MenuItem, Select } from '@material-ui/core';
-import { Container, Grid, InputLabel, TextField } from '@mui/material';
+import { Button, FormControl, FormGroup, MenuItem, Select, Container, Grid, InputLabel, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOutcomeTypes, searchOutcome } from '../../../actions/outcomeActions';
@@ -13,12 +12,14 @@ export default () => {
     const [selectedOutcomeTypeId, setselectedOutcomeTypeId] = useState(0);
     const [OutcomeTitle, setOutcomeTitle] = useState('');
     const [isAddOpen, setisAddOpen] = useState(false);
+    const currentYear = new Date().getFullYear();
+    const [selectedYear, setSelectedYear] = useState(0);
     const [departmentList, setdepartmentList] = useState(
         appState.departments
     );
     useEffect(() => {
         dispatch(fetchOutcomeTypes());
-        dispatch(searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle))
+        dispatch(searchOutcome(selectedYear, selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle))
     }, [dispatch, fetchOutcomeTypes])
     return (
         <div className="content-wrapper">
@@ -43,75 +44,101 @@ export default () => {
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    <Grid container spacing={3} style={{ padding: 10 }}>
-                        <Grid item xs={3}>
-                            <FormGroup>
-                                <InputLabel>Department</InputLabel>
-                                <Select
-                                    label="Department"
+                    <div className='advance-search'>
+                        <span className='desc'>Search</span>
+                        <Grid container spacing={3}>
+                            <Grid item xs={3}>
+                                <FormControl variant="standard" className="w-100">
+                                    <InputLabel>Year</InputLabel>
+                                    <Select
+                                        fullWidth
+                                        label="Year"
+                                        name="selectedYear"
+                                        onChange={(e) => setSelectedYear(e.target.value)}
+                                        value={selectedYear}
+                                    >
+                                        <MenuItem value={0}>
+                                            Any
+                                        </MenuItem>
+                                        <MenuItem value={currentYear - 1}>
+                                            {currentYear - 1}
+                                        </MenuItem>
+                                        <MenuItem value={currentYear}>
+                                            {currentYear}
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <FormControl variant="standard" className="w-100">
+                                    <InputLabel>Department</InputLabel>
+                                    <Select
+                                        label="Department"
+                                        fullWidth
+                                        className="output-category-margin"
+                                        name="departmentId"
+                                        onChange={(e) => setSelectedDepartmentId(e.target.value)}
+                                    >
+                                        <MenuItem value={0}>
+                                            None
+                                        </MenuItem>
+                                        {departmentList.map((department, id) => {
+                                            return (
+                                                <MenuItem key={id} value={department.Id}>
+                                                    {department.Name}
+                                                </MenuItem>
+                                            );
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <FormControl variant="standard" className="w-100">
+                                    <InputLabel>Outcome Type</InputLabel>
+                                    <Select
+                                        label="Outcome Type"
+                                        fullWidth
+                                        className="output-category-margin"
+                                        name="outcomeTypeId"
+                                        onChange={(e) => setselectedOutcomeTypeId(e.target.value)}
+                                    >
+                                        <MenuItem value={0}>
+                                            Any
+                                        </MenuItem>
+                                        {outcomeState.outcometypes && Array.isArray(outcomeState.outcometypes) && outcomeState.outcometypes.map((outcomeType, id) => {
+                                            return (
+                                                <MenuItem key={id} value={outcomeType.Id}>
+                                                    {outcomeType.Outcome}
+                                                </MenuItem>
+                                            );
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={3} >
+                                <TextField
                                     fullWidth
-                                    className="output-category-margin"
-                                    name="departmentId"
-                                    label="Select Department"
-                                    onChange={(e) => setSelectedDepartmentId(e.target.value)}
+                                    placeholder="Title Keyword"
+                                    label="Title"
+                                    variant="standard"
+                                    size="small"
+                                    onChange={(e) => setOutcomeTitle(e.target.value)}
+                                />
+                            </Grid>
+
+                            <Grid item xs={3} >
+                                <Button
+                                    className="output-margin"
+                                    variant="contained"
+                                    style={{ width: "100%" }}
+                                    color="primary"
+                                    onClick={() => dispatch(searchOutcome(selectedYear, selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle))}
                                 >
-                                    <MenuItem value={0}>
-                                        None
-                                    </MenuItem>
-                                    {departmentList.map((department, id) => {
-                                        return (
-                                            <MenuItem key={id} value={department.Id}>
-                                                {department.Name}
-                                            </MenuItem>
-                                        );
-                                    })}
-                                </Select>
-                            </FormGroup>
+                                    Search
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={3}>
-                            <FormGroup>
-                                <InputLabel>Outcome Type</InputLabel>
-                                <Select
-                                    label="Outcome Type"
-                                    fullWidth
-                                    className="output-category-margin"
-                                    name="outcomeTypeId"
-                                    label="Select Department"
-                                    onChange={(e) => setselectedOutcomeTypeId(e.target.value)}
-                                >
-                                    {outcomeState.outcometypes && Array.isArray(outcomeState.outcometypes) && outcomeState.outcometypes.map((outcomeType, id) => {
-                                        return (
-                                            <MenuItem key={id} value={outcomeType.Id}>
-                                                {outcomeType.Outcome}
-                                            </MenuItem>
-                                        );
-                                    })}
-                                </Select>
-                            </FormGroup>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <TextField
-                                fullWidth
-                                className="output-margin"
-                                placeholder="Keyword"
-                                label="Outcome"
-                                variant="outlined"
-                                size="small"
-                                onChange={(e) => setOutcomeTitle(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={3} >
-                            <Button
-                                className="output-margin"
-                                variant="contained"
-                                style={{ width: "100%" }}
-                                color="primary"
-                                onClick={() => dispatch(searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle))}
-                            >
-                                Search
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    </div>
                     <Table SearchResult={outcomeState.outcome} />
                 </div >
             </div >

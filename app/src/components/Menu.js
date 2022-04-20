@@ -57,8 +57,19 @@ export const menu = [
                 to: "/maintenance-outcome"
             },
             {
-                title: "User Management",
-                to: "/maintenance-user"
+                icon: <AssessmentOutlined />,
+                title: "Account",
+                items: [
+                    {
+                        title: "Role",
+                        to: "/maintenance-role"
+                    },
+                    {
+                        title: "User",
+                        to: "/maintenance-user"
+                    }
+                ]
+
             }
         ]
     }

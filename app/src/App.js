@@ -62,6 +62,7 @@ const App = () => {
           <PrivateRoute path="/maintenance-outcome" component={Maintenance} />
           <PrivateRoute path="/maintenance-indicator" component={Maintenance} />
           <PrivateRoute path="/maintenance-user" component={Maintenance} />
+          <PrivateRoute path="/maintenance-role" component={Maintenance} />
         </Switch>
       </MuiThemeProvider>
     </Router>
