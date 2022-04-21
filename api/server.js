@@ -12,6 +12,8 @@ const dashboardRoutes = require('./routes/dashboardRoutes')
 const kraRoutes = require('./routes/kraRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const outcomeRoutes = require('./routes/outcomeRoutes');
+const roleRoutes = require('./routes/roleRoutes');
+const prexcRoutes = require('./routes/prexcRoutes');
 
 dotenv.config();
 
@@ -31,6 +33,8 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/kra', kraRoutes);
 app.use('/api/project', projectRoutes);
 app.use('/api/outcome', outcomeRoutes);
+app.use('/api/prexc', prexcRoutes);
+app.use('/api/roles', roleRoutes);
 
 __dirname = path.resolve();
 if (process.env.NODE_ENV === 'production') {

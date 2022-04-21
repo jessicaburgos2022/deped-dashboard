@@ -264,8 +264,8 @@ const searchMinorOutput = asyncHander(async (req, res) => {
 });
 
 const searchContributoryOutput = asyncHander(async (req, res) => {
-    const { departmentid, outcometypeid, title } = req.body;
-    const queryString = `CALL SearchContributoryOutput('${departmentid}','${outcometypeid}','${title}')`;
+    const { krayear, departmentid, outcometypeid, title } = req.body;
+    const queryString = `CALL SearchContributoryOutput(${krayear}, '${departmentid}','${outcometypeid}','${title}')`;
     console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
