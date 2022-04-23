@@ -121,6 +121,7 @@ const insertProject = asyncHander(async (req, res) => {
 const insertIndicator = asyncHander(async (req, res) => {
     const { ProgramId, DepartmentId, Title, PhysicalTarget, Accountable } = req.body;
     const queryString = `INSERT INTO prexc_indicator SET ProgramId = '${ProgramId}', DepartmentId = '${DepartmentId}', Title = '${Title}', PhysicalTarget = '${PhysicalTarget}', Accountable = '${Accountable}'`;
+    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });

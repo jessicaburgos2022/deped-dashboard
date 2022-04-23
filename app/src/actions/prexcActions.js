@@ -7,7 +7,10 @@ import {
     LIST_ORGOUTCOME_FAILED,
     INSERT_PREXCPROJECT_REQUEST,
     INSERT_PREXCPROJECT_SUCCESS,
-    INSERT_PREXCPROJECT_FAILED,
+    INSERT_PREXCPROJECT_FAILED, 
+    INSERT_PREXCINDICATOR_REQUEST, 
+    INSERT_PREXCINDICATOR_SUCCESS, 
+    INSERT_PREXCINDICATOR_FAILED,
     LIST_PROJECTINDICATORS_REQUEST,
     LIST_PROJECTINDICATORS_SUCCESS,
     LIST_PROJECTINDICATORS_FAILED
@@ -50,6 +53,19 @@ export const insertProject = (param) => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: INSERT_PREXCPROJECT_FAILED,
+            payload: []
+        });
+    }
+};
+export const insertIndicator = (param) => async (dispatch) => {
+    await dispatch({ type: INSERT_PREXCINDICATOR_REQUEST });
+    try {
+        const { data } = await axios.post(`/api/prexc/indicator`, param);
+        await dispatch({ type: INSERT_PREXCINDICATOR_SUCCESS, payload: data });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: INSERT_PREXCINDICATOR_FAILED,
             payload: []
         });
     }

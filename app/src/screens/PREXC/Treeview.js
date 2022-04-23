@@ -9,6 +9,7 @@ import Collapse from '@mui/material/Collapse';
 import { useSpring, animated } from 'react-spring';
 import { useSelector, useDispatch } from 'react-redux';
 import InserProjectButton from './Insert/insertProject';
+import InsertIndicatorButton from './Insert/insertIndicator';
 
 function MinusSquare(props) {
   return (
@@ -158,7 +159,7 @@ export default function CustomizedTreeView(props) {
             <StyledTreeItem nodeId={`oo-${oo.OrganizationalOutcomeId}`} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <InserProjectButton orgOutcomeId={oo.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} /></div>} >
               {distinctProject(prexcState.projectIndicators.filter(pi => pi.OrgOutcomeId === oo.OrganizationalOutcomeId)).map(pi => {
                 return <StyledTreeItem nodeId={`project-${pi.ProgramId}`} label={
-                  <div><span className='text-muted'>Project:</span> {pi.ProgramTitle} <PlusSquare onClick={() => null} /></div>}>
+                  <div><span className='text-muted'>Project:</span> {pi.ProgramTitle} <InsertIndicatorButton programId ={pi.ProgramId} handleRefresh={() => handleRefresh()} /></div>}>
                   {prexcState.projectIndicators.filter(i => i.OrgOutcomeId === oo.OrganizationalOutcomeId && i.ProgramId === pi.ProgramId && i.IndicatorTitle).map(i => {
                     return <StyledTreeItemIndicator nodeId={`indicator-${i.IndicatorId}`} label={
                       <div>
