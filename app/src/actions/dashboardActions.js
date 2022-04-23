@@ -87,10 +87,10 @@ export const fetchChart4 = (year) => async (dispatch) => {
   }
 };
 
-export const fetchDashboardOO = () => async (dispatch) => {
+export const fetchDashboardOO = (params) => async (dispatch) => {
   await dispatch({ type: GET_DASHBOARDOO_INFO_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/oo`);
+    const { data } = await axios.get(`/api/dashboard/oo/${params}`);
     dispatch({
       type: GET_DASHBOARDOO_INFO_SUCCESS,
       payload: data,

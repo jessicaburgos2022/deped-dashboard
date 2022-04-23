@@ -125,7 +125,8 @@ const SatisfactoryResult = asyncHander(async (req, res) => {
 });
 
 const DashboardOO = asyncHander(async (req, res) => {
-  const queryString = `call DashboardOO();`;
+  const { year } = req.params;
+  const queryString = `call DashboardOO(${year});`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });

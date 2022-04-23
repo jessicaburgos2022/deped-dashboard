@@ -83,6 +83,17 @@ const StyledTreeItem = styled((props) => (
   },
 }));
 
+const StyledTreeItemIndicator = styled((props) => (
+  <TreeItem {...props} TransitionComponent={TransitionComponent} />
+))(({ theme }) => ({
+  [`& .${treeItemClasses.group}`]: {
+    marginLeft: 15,
+    paddingLeft: 18,
+    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
+  },
+}));
+
+
 // function StyledTreeItem(props) {
 //   const {
 //     bgColor,
@@ -138,16 +149,25 @@ export default function CustomizedTreeView(props) {
       // defaultExpanded={[1, 2, 3, 4, 5, 6]}
       defaultCollapseIcon={<MinusSquare />}
       defaultExpandIcon={<PlusSquare />}
-      defaultEndIcon={<CloseSquare />}
-      sx={{ height: 264, flexGrow: 1, overflowY: 'auto' }}
+      // defaultEndIcon={<CloseSquare />}
+      sx={{ height: '100%', flexGrow: 1, minHeight: 'calc(100vh - 15rem)' }}
     >
       {
         prexcState.orgOutcome.map((oo) => {
           return (
             <StyledTreeItem nodeId={`oo-${oo.OrganizationalOutcomeId}`} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <InserProjectButton orgOutcomeId={oo.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} /></div>} >
-              {distinctProject(prexcState.projectIndicators.filter(i => i.OrgOutcomeId === oo.OrganizationalOutcomeId)).map(i => {
-                return <StyledTreeItem nodeId={`project-${i.ProgramId}`} label={
-                  <div><span className='text-muted'>Project:</span> {i.ProgramTitle} <PlusSquare onClick={() => null} /></div>}>
+              {distinctProject(prexcState.projectIndicators.filter(pi => pi.OrgOutcomeId === oo.OrganizationalOutcomeId)).map(pi => {
+                return <StyledTreeItem nodeId={`project-${pi.ProgramId}`} label={
+                  <div><span className='text-muted'>Project:</span> {pi.ProgramTitle} <PlusSquare onClick={() => null} /></div>}>
+                  {prexcState.projectIndicators.filter(i => i.OrgOutcomeId === oo.OrganizationalOutcomeId && i.ProgramId === pi.ProgramId && i.IndicatorTitle).map(i => {
+                    return <StyledTreeItemIndicator nodeId={`indicator-${i.IndicatorId}`} label={
+                      <div>
+                        <p><span className='text-muted'>Indicator:</span> {i.IndicatorTitle} </p>
+                        <p><span className='text-muted'>P. Target:</span> {i.PhysicalTarget}</p>
+                        <p><span className='text-muted'>Accountable Office:</span> {i.AccountableOffice}</p>
+                      </div>}>
+                    </StyledTreeItemIndicator>
+                  })}
                 </StyledTreeItem>
               })}
               {/* <StyledTreeItem nodeId="2" label={<div><span className='text-muted'>Project:</span> Number of education researches completed <PlusSquare onClick={() => null} /></div>}>

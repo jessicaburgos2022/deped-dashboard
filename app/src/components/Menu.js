@@ -12,7 +12,7 @@ export const menu = [
                 to: '/dashboard'
             },
             {
-                title: "KRAs",
+                title: "TO-KRAs",
                 to: '/contributorydashboard'
             },
         ]
@@ -30,7 +30,7 @@ export const menu = [
                 to: "/outputminor"
             },
             {
-                title: "KRAs",
+                title: "TO-KRAs",
                 to: "/outputtokra"
             },
         ]

@@ -64,7 +64,7 @@ export default () => {
                                                         {userState.userInfo.acc[0].FirstName} {userState.userInfo.acc[0].Surname}
                                                     </div>
                                                     <div className="job">
-                                                        [{userState.userInfo.acc[0].DepartmentName}]{userState.userInfo.role[0].RoleDescription}
+                                                        [{userState.userInfo.acc[0].DepartmentName}] {userState.userInfo.role[0].RoleDescription}
                                                     </div>
                                                 </div>
                                             )}

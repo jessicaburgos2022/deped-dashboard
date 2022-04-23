@@ -41,11 +41,17 @@ export default () => {
   const dispatch = useDispatch();
   const accState = useSelector((state) => state.user);
   const dashboardState = useSelector((state) => state.dashboard);
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
   useEffect(() => {
     // var departmentId = accState.userInfo.acc[0] ? accState.userInfo.acc[0].DepartmentId : 0;
-    dispatch(fetchDashboardOO());
+    dispatch(fetchDashboardOO(currentYear));
     // eslint-disable-next-line
   }, []);
+  const setDashboardYear = (year) => {
+    setSelectedYear(year)
+    dispatch(fetchDashboardOO(year));
+  }
   const GenerateBarGraph = (props) => {
     const { data, type } = props;
     const filteredData = dashboardState.oo
@@ -95,10 +101,20 @@ export default () => {
       <div className="content-header">
         <div className="container-fluid">
           <div className="row mb-2">
-            <div className="col-sm-6">
+            <div className="col-sm-6 d-flex">
               <h1 className="m-0">
                 Target Outputs Along Key Result Areas (KRAs)
               </h1>
+              <ul class="nav nav-pills ml-auto">
+                <li class="nav-item c-pointer pr-5">
+                </li>
+                <li class="nav-item c-pointer">
+                  <a class={`nav-link ${selectedYear === currentYear ? 'active' : ''}`} onClick={() => setDashboardYear(currentYear)}>{currentYear}</a>
+                </li>
+                <li class="nav-item c-pointer">
+                  <a class={`nav-link ${selectedYear === currentYear - 1 ? 'active' : ''}`} onClick={() => setDashboardYear(currentYear - 1)}>{currentYear - 1}</a>
+                </li>
+              </ul>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">

@@ -12,6 +12,6 @@ router.route('/chart3/:year').get(ConductedWithinTimeframe);
 
 router.route('/chart4/:year').get(BudgetUtilizationRate);
 
-router.route('/oo').get(DashboardOO);
+router.route('/oo/:year').get(DashboardOO);
 
 module.exports = router;
