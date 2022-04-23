@@ -71,15 +71,15 @@ export default () => {
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                      setSelectedRoleId(r.RoleId);
+                      setSelectedRoleId(r.Id);
                       setEditOpen(!isEditOpen);
                     }}
                   >
                     Edit
                   </Button>
                   {
-                    r.RoleTitle !== "Administrator" && r.RoleTitle !== "Default" &&
-                    <Button onClick={() => handleDelete(r.RoleId)} style={{marginLeft:10}}
+                    r.Name !== "Administrator" && r.Name !== "Default" &&
+                    <Button onClick={() => handleDelete(r.Id)} style={{marginLeft:10}}
                       color="secondary">Delete</Button>
                   }
                 </TableCell>

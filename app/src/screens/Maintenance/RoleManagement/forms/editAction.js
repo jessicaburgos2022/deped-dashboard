@@ -23,12 +23,9 @@ export default (props) => {
   const [role, setRole] = useState(null);
   const [actions, setActions] = useState(null);
   useEffect(() => {
-    setRole(store.roles.filter((r) => r.RoleId === roleId));
+    setRole(store.roles.filter((r) => r.Id === roleId));
     setActions(store.actions);
   }, [setRole, store.roles, roleId, store.actions]);
-  const distinctSysId = [
-    ...new Map(store.actions.map((item) => [item["sys_id"], item])).values(),
-  ];
   const submitUpdate = () => {
     var newActions = role
       .filter((r) => r.ActionId !== null)
@@ -44,7 +41,7 @@ export default (props) => {
     r = r.map(row => {
       return {
         ...row,
-        RoleIsActive : val
+        RoleIsActive: val
       };
     })
     setRole(r);
@@ -69,72 +66,61 @@ export default (props) => {
   function isActionExist(actionId) {
     return role.find((r) => r.ActionId === actionId) !== undefined;
   }
+  console.log(role)
   return (
     <>
       <Dialog open={openEditForm}>
         {role && role.length > 0 && (
-          <div style={{display:"flex", justifyContent:'space-between', padding:"20px 30px 0 30px"}}>
+          <div style={{ display: "flex", justifyContent: 'space-between', padding: "20px 30px 0 30px" }}>
             <Typography variant="h5">
-              {role[0].RoleTitle} Actions
+              {role[0].Name} Actions
             </Typography>
             {
-              role[0].RoleTitle !== "Administrator" && role[0].RoleTitle !== "Default" &&
+              role[0].Name !== "Administrator" && role[0].Name !== "Default" &&
               <Switch
                 checked={role[0].RoleIsActive}
                 variant="contained"
                 color="secondary"
-                onChange={(e) => {updateActive(!role[0].RoleIsActive)}}
+                onChange={(e) => { updateActive(!role[0].IsActive) }}
               />
             }
           </div>
         )}
-        <DialogContent style={{maxHeight:600}}>
-          {distinctSysId &&
-            distinctSysId.map((s) => {
-              return (
-                <div>
-                  {actions &&
-                    actions.length > 0 &&
-                    actions.filter((a) => a.sys_id === s.sys_id).length >
-                      0 && (
-                      <Paper style={{ padding: 10 }}>
-                        <Typography variant="h6">{s.sys_id}</Typography>
-                        <Grid container spacing={1}>
-                          {actions &&
-                            actions.length > 0 &&
-                            actions
-                              .filter((a) => a.sys_id === s.sys_id)
-                              .map((a) => {
-                                return (
-                                  <Grid item xs={4}>
-                                    <FormControlLabel
-                                      control={
-                                        <Checkbox
-                                          name={"chk-" + a.action_id}
-                                          color="primary"
-                                          checked={isActionExist(a.action_id)}
-                                          onChange={() =>
-                                            updateRole(a.action_id)
-                                          }
-                                        ></Checkbox>
-                                      }
-                                      label={
-                                        <span style={{ fontSize: 12 }}>
-                                          {a.Title}
-                                        </span>
-                                      }
-                                      style={{ marginLeft: 0, padding: 5 }}
-                                    />
-                                  </Grid>
-                                );
-                              })}
+        <DialogContent style={{ maxHeight: 600 }}>
+          <div>
+            <Paper style={{ padding: 10 }}>
+              <Grid container spacing={1}>
+                {actions &&
+                  actions.length > 0 &&
+                  actions
+                    .map((a) => {
+                      return (
+                        <Grid item xs={4}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                name={"chk-" + a.action_id}
+                                color="primary"
+                                checked={isActionExist(a.action_id)}
+                                onChange={() =>
+                                  updateRole(a.action_id)
+                                }
+                              ></Checkbox>
+                            }
+                            label={
+                              <span style={{ fontSize: 12 }}>
+                                {a.Title}
+                              </span>
+                            }
+                            style={{ marginLeft: 0, padding: 5 }}
+                          />
                         </Grid>
-                      </Paper>
-                    )}
-                  <br />
-                </div>
-              );
-            })}
+                      );
+                    })}
+              </Grid>
+            </Paper>
+            <br />
+          </div>
           <div style={{ float: "right" }}>
             <Button onClick={() => setEditOpen(false)}>Cancel</Button>
             <Button

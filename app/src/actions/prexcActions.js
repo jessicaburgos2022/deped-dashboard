@@ -4,7 +4,10 @@ import {
     INSERT_ORGOUTCOME_FAILED,
     LIST_ORGOUTCOME_REQUEST,
     LIST_ORGOUTCOME_SUCCESS,
-    LIST_ORGOUTCOME_FAILED
+    LIST_ORGOUTCOME_FAILED,
+    INSERT_PREXCPROJECT_REQUEST,
+    INSERT_PREXCPROJECT_SUCCESS,
+    INSERT_PREXCPROJECT_FAILED
 } from "../constants/prexcConstants";
 import axios from "../helpers/axios";
 
@@ -30,6 +33,20 @@ export const listOrgOutcome = (param) => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: LIST_ORGOUTCOME_FAILED,
+            payload: []
+        });
+    }
+};
+
+export const insertProject = (param) => async (dispatch) => {
+    await dispatch({ type: INSERT_PREXCPROJECT_REQUEST });
+    try {
+        const { data } = await axios.post(`/api/prexc/prexc-project`, param);
+        await dispatch({ type: INSERT_PREXCPROJECT_SUCCESS, payload: data });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: INSERT_PREXCPROJECT_FAILED,
             payload: []
         });
     }

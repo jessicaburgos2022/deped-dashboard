@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "./table";
 import "./rolemanagement.css";
 import CreateRole from "./forms/createRole";
 import { Button, Container } from "@material-ui/core";
+import { searchRoleAction } from "../../../actions/roleManagementActions";
+import { useDispatch } from "react-redux";
 export default () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(searchRoleAction());
+  }, [])
   return (
     <>
       <div style={{ marginTop: 80 }}>

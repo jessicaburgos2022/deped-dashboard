@@ -9,7 +9,7 @@ import {
 
 const prexcState = {
     searchResult: [],
-    orgOutcome: []
+    orgOutcome: [],
 };
 
 export const PrexcReducer = (state = prexcState, action) => {

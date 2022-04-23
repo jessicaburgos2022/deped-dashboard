@@ -6,7 +6,7 @@ const { ListOrgOutcome, insertOrgOutcome, insertProject } = require('../controll
 // router.route('/').get(searchProject);
 router.route('/orgoutcome').post(insertOrgOutcome);
 router.route('/orgoutcome/:OrgOutcomeId').get(ListOrgOutcome);
-router.route('/prexc-project').post(insertProject);
+router.route('/project').post(insertProject);
 router.route('/prexc-indicator').post(insertProject);
 // router.route('/').put(editProject);
 

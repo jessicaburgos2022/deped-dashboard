@@ -8,6 +8,7 @@ import Collapse from '@mui/material/Collapse';
 // web.cjs is required for IE11 support
 import { useSpring, animated } from 'react-spring';
 import { useSelector } from 'react-redux';
+import InserProjectButton from './Insert/insertProject';
 
 function MinusSquare(props) {
   return (
@@ -128,7 +129,7 @@ export default function CustomizedTreeView() {
       {
         prexcState.orgOutcome.map((oo) => {
           return (
-            <StyledTreeItem nodeId={oo.OrganizationalOutcomeId} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <PlusSquare onClick={() => null} /></div>} >
+            <StyledTreeItem nodeId={oo.OrganizationalOutcomeId} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <InserProjectButton orgOutcomeId={oo.OrganizationalOutcomeId} /></div>} >
               <StyledTreeItem nodeId="2" label={<div><span className='text-muted'>Project:</span> Number of education researches completed <PlusSquare onClick={() => null} /></div>}>
                 <StyledTreeItem nodeId="4" label="Basic Education Inputs" />
               </StyledTreeItem>
