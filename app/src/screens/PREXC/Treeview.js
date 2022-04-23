@@ -118,10 +118,23 @@ const StyledTreeItem = styled((props) => (
 export default function CustomizedTreeView(props) {
   const { handleRefresh } = props;
   const prexcState = useSelector((state) => state.prexc);
+  const distinctProject = (array) => {
+    const result = [];
+    const map = new Map();
+    for (const item of array) {
+      if (!map.has(item.id)) {
+        // map.set(item.id, true);    // set any value to Map
+        result.push({
+          ...item
+        });
+      }
+    }
+    return result;
+  }
   return (
     <TreeView
       aria-label="customized"
-      defaultExpanded={[1, 2, 3, 4, 5, 6]}
+      // defaultExpanded={[1, 2, 3, 4, 5, 6]}
       defaultCollapseIcon={<MinusSquare />}
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
@@ -130,7 +143,7 @@ export default function CustomizedTreeView(props) {
       {
         prexcState.orgOutcome.map((oo) => {
           return (
-            <StyledTreeItem nodeId={oo.OrganizationalOutcomeId} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <InserProjectButton orgOutcomeId={oo.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} /></div>} >
+            <StyledTreeItem nodeId={`oo-${oo.OrganizationalOutcomeId}`} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <InserProjectButton orgOutcomeId={oo.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} /></div>} >
               {prexcState.projectIndicators.filter(i => i.OrgOutcomeId === oo.OrganizationalOutcomeId).map(i => {
                 return <StyledTreeItem nodeId={`project-${i.ProgramId}`} label={
                   <div><span className='text-muted'>Project:</span> {i.ProgramTitle} <PlusSquare onClick={() => null} /></div>}>
