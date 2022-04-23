@@ -81,7 +81,7 @@ export default (props) => {
                 checked={role[0].RoleIsActive}
                 variant="contained"
                 color="secondary"
-                onChange={(e) => { updateActive(!role[0].IsActive) }}
+                onChange={(e) => { updateActive(!role[0].RoleIsActive) }}
               />
             }
           </div>

@@ -7,7 +7,10 @@ import {
     LIST_ORGOUTCOME_FAILED,
     INSERT_PREXCPROJECT_REQUEST,
     INSERT_PREXCPROJECT_SUCCESS,
-    INSERT_PREXCPROJECT_FAILED
+    INSERT_PREXCPROJECT_FAILED,
+    LIST_PROJECTINDICATORS_REQUEST,
+    LIST_PROJECTINDICATORS_SUCCESS,
+    LIST_PROJECTINDICATORS_FAILED
 } from "../constants/prexcConstants";
 import axios from "../helpers/axios";
 
@@ -41,12 +44,25 @@ export const listOrgOutcome = (param) => async (dispatch) => {
 export const insertProject = (param) => async (dispatch) => {
     await dispatch({ type: INSERT_PREXCPROJECT_REQUEST });
     try {
-        const { data } = await axios.post(`/api/prexc/prexc-project`, param);
+        const { data } = await axios.post(`/api/prexc/project`, param);
         await dispatch({ type: INSERT_PREXCPROJECT_SUCCESS, payload: data });
         return data;
     } catch (e) {
         dispatch({
             type: INSERT_PREXCPROJECT_FAILED,
+            payload: []
+        });
+    }
+};
+
+export const listProjectIndicators = () => async (dispatch) => {
+    await dispatch({ type: LIST_PROJECTINDICATORS_REQUEST });
+    try {
+        const { data } = await axios.get(`/api/prexc/project/indicator`);
+        await dispatch({ type: LIST_PROJECTINDICATORS_SUCCESS, payload: data });
+    } catch (e) {
+        dispatch({
+            type: LIST_PROJECTINDICATORS_FAILED,
             payload: []
         });
     }

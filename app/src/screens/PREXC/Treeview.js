@@ -7,7 +7,7 @@ import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import Collapse from '@mui/material/Collapse';
 // web.cjs is required for IE11 support
 import { useSpring, animated } from 'react-spring';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import InserProjectButton from './Insert/insertProject';
 
 function MinusSquare(props) {
@@ -115,7 +115,8 @@ const StyledTreeItem = styled((props) => (
 //   );
 // }
 
-export default function CustomizedTreeView() {
+export default function CustomizedTreeView(props) {
+  const { handleRefresh } = props;
   const prexcState = useSelector((state) => state.prexc);
   return (
     <TreeView
@@ -129,8 +130,13 @@ export default function CustomizedTreeView() {
       {
         prexcState.orgOutcome.map((oo) => {
           return (
-            <StyledTreeItem nodeId={oo.OrganizationalOutcomeId} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <InserProjectButton orgOutcomeId={oo.OrganizationalOutcomeId} /></div>} >
-              <StyledTreeItem nodeId="2" label={<div><span className='text-muted'>Project:</span> Number of education researches completed <PlusSquare onClick={() => null} /></div>}>
+            <StyledTreeItem nodeId={oo.OrganizationalOutcomeId} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <InserProjectButton orgOutcomeId={oo.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} /></div>} >
+              {prexcState.projectIndicators.filter(i => i.OrgOutcomeId === oo.OrganizationalOutcomeId).map(i => {
+                return <StyledTreeItem nodeId={`project-${i.ProgramId}`} label={
+                  <div><span className='text-muted'>Project:</span> {i.ProgramTitle} <PlusSquare onClick={() => null} /></div>}>
+                </StyledTreeItem>
+              })}
+              {/* <StyledTreeItem nodeId="2" label={<div><span className='text-muted'>Project:</span> Number of education researches completed <PlusSquare onClick={() => null} /></div>}>
                 <StyledTreeItem nodeId="4" label="Basic Education Inputs" />
               </StyledTreeItem>
               <StyledTreeItem nodeId="3" label="Inclusive Education">
@@ -138,24 +144,10 @@ export default function CustomizedTreeView() {
               </StyledTreeItem>
               <StyledTreeItem nodeId="5" label="Support to Schools and Learners">
               </StyledTreeItem>
-              <StyledTreeItem nodeId="6" label="Education Human Resource Development" />
+              <StyledTreeItem nodeId="6" label="Education Human Resource Development" /> */}
             </StyledTreeItem>)
         })
       }
-      {/* <StyledTreeItem nodeId="1" label="Main">
-        <StyledTreeItem nodeId="2" label="Hello" />
-        <StyledTreeItem nodeId="3" label="Subtree with children">
-          <StyledTreeItem nodeId="6" label="Hello" />
-          <StyledTreeItem nodeId="7" label="Sub-subtree with children">
-            <StyledTreeItem nodeId="9" label="Child 1" />
-            <StyledTreeItem nodeId="10" label="Child 2" />
-            <StyledTreeItem nodeId="11" label="Child 3" />
-          </StyledTreeItem>
-          <StyledTreeItem nodeId="8" label="Hello" />
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="4" label="World" />
-        <StyledTreeItem nodeId="5" label="Something something" />
-      </StyledTreeItem> */}
     </TreeView >
   );
 }

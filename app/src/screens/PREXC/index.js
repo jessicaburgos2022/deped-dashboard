@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import TreeView from './Treeview';
 import InsertOrgOutcome from './Insert';
-import { listOrgOutcome } from '../../actions/prexcActions';
+import { listOrgOutcome, listProjectIndicators } from '../../actions/prexcActions';
 import { useDispatch } from 'react-redux';
 
 export default () => {
@@ -10,10 +10,15 @@ export default () => {
     const [insertOrgOutcomeModalIsOpen, setInsertOrgOutcomeModalIsOpen] = useState(false);
     useEffect(() => {
         dispatch(listOrgOutcome({ orgId: 0 }));
+        dispatch(listProjectIndicators());
     }, [])
+    const reloadPREXC = () => {
+        dispatch(listOrgOutcome({ orgId: 0 }));
+        dispatch(listProjectIndicators());
+    }
     return (
         <div className="content-wrapper">
-            {insertOrgOutcomeModalIsOpen && <InsertOrgOutcome open={insertOrgOutcomeModalIsOpen} handleRefresh={() => null} handleClose={() => setInsertOrgOutcomeModalIsOpen(false)} />}
+            {insertOrgOutcomeModalIsOpen && <InsertOrgOutcome open={insertOrgOutcomeModalIsOpen} handleRefresh={() => reloadPREXC()} handleClose={() => setInsertOrgOutcomeModalIsOpen(false)} />}
             <div className="content-header">
                 <div className="container-fluid">
                     <div className="row mb-2">
@@ -36,7 +41,7 @@ export default () => {
                     </div>
 
                     <h4>Organizational Outcomes</h4>
-                    <TreeView />
+                    <TreeView handleRefresh={reloadPREXC} />
                 </div>
             </div>
         </div>

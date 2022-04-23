@@ -39,6 +39,32 @@ const ListOrgOutcome = asyncHander(async (req, res) => {
     });
 });
 
+const listProjectIndicatorsByOrgOutcomeId = asyncHander(async (req, res) => {
+    const queryString = `CALL PREXC_ListProjectIndicators()`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    var qResult = JSON.parse(JSON.stringify(results[0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
 const insertOrgOutcome = asyncHander(async (req, res) => {
     const { Year, Quarter, Title } = req.body;
     const queryString = `INSERT INTO prexc_orgoutcome SET Title = '${Title}', year = ${Year}, quarter = ${Quarter}`;
@@ -67,7 +93,8 @@ const insertOrgOutcome = asyncHander(async (req, res) => {
 
 const insertProject = asyncHander(async (req, res) => {
     const { OrgOutcomeId, Title } = req.body;
-    const queryString = `INSERT INTO prexc_program SET OrgOutcomeId = '${OrgOutcomeId}' Title = '${Title}'`;
+    const queryString = `INSERT INTO prexc_program SET OrgOutcomeId = '${OrgOutcomeId}', Title = '${Title}'`;
+    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -117,4 +144,4 @@ const insertIndicator = asyncHander(async (req, res) => {
     });
 });
 
-module.exports = { ListOrgOutcome, insertOrgOutcome, insertProject, insertIndicator };
+module.exports = { ListOrgOutcome, insertOrgOutcome, insertProject, insertIndicator, listProjectIndicatorsByOrgOutcomeId };

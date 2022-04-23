@@ -65,7 +65,7 @@ export default () => {
                 <TableCell><span style={{fontWeight:'bold'}}>{r.Id}</span></TableCell>
                 <TableCell><span style={{fontWeight:'bold'}}>{r.Name}</span></TableCell>
                 <TableCell><span style={{fontWeight:'bold'}}>{r.Description}</span></TableCell>
-                <TableCell>{r.IsActive?'Enabled':'Disabled'}</TableCell>
+                <TableCell>{r.RoleIsActive?'Enabled':'Disabled'}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"

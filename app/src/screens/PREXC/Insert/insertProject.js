@@ -9,7 +9,7 @@ import { insertProject } from '../../../actions/prexcActions';
 
 export default (props) => {
     const { orgOutcomeId } = props;
-    const { open, handleClose, handleRefresh } = props;
+    const { open, handleRefresh } = props;
     const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(0);
     //react hook form
@@ -18,6 +18,9 @@ export default (props) => {
     const [selectedQuarter, setSelectedQuarter] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
+    const handleClose = () => {
+        setIsOpen(false)
+    }
     const onSubmit = async (input) => {
         if (input) {
             if (
