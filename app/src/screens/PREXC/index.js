@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import TreeView from './Treeview';
+import CustomTable from './Table';
 import InsertOrgOutcome from './Insert';
 import { listOrgOutcome, listProjectIndicators } from '../../actions/prexcActions';
 import { useDispatch } from 'react-redux';
@@ -41,6 +42,7 @@ export default () => {
                     </div>
 
                     <h4>Organizational Outcomes</h4>
+                    <CustomTable handleRefresh={reloadPREXC} />
                     <TreeView handleRefresh={reloadPREXC} />
                 </div>
             </div>

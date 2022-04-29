@@ -57,6 +57,10 @@ export const menu = [
                 to: "/maintenance-outcome"
             },
             {
+                title: "Change Password",
+                to: "/maintenance-changepassword"
+            },
+            {
                 icon: <AssessmentOutlined />,
                 title: "Account",
                 items: [
