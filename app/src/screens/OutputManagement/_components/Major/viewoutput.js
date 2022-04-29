@@ -23,32 +23,138 @@ export default (props) => {
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     View Major Output
                 </DialogTitle>
-                <DialogContent dividers>
-                    <b>Department:</b> {data.Department} <br />
-                    <b>KRA:</b> {data.KRAName} <br />
-                    <b>Objective:</b> {data.Objective} <br />
-                    <b>Program/Project:</b> {data.Project} <br />
-                    <b>Output:</b>{data.Output} <br />
-                    <b>Planned Target:</b> {data.PlannedTarget} <br />
-                    <b>Timeline:</b> {data.Timeline} <br />
-                    <b>Physical Accomplishment:</b> {data.PhysicalAccomplishment} <br />
-                    <b>% of Accomplishment vs Targets:</b> {data.Accomplishment1 + '%'} <br />
-                    <b>% of Accomplishment according to Timeline :</b> {data.Accomplishment2 + '%'} <br />
-                    <b>Gains/Gaps:</b> {data.GainGap} <br />
-                    <b>Financial Requirement:</b> {data.FinancialRequirement.toLocaleString('en-US')} <br />
-                    <b>Amount Utilized:</b> {data.AmountUtilized.toLocaleString('en-US')} <br />
-                    <b>Balance:</b> {data.Balance.toLocaleString('en-US')} <br />
-                    <b>Budget Utilization Rate (%):</b> {data.UtilizationRate.toFixed(2) + '%'} <br />
-                    <b>Funding Source:</b> {data.FundingSource} <br />
-                    <b>Budget Structure:</b> {data.BurdgetStructure} <br />
-                    <b>SCORE:</b> {data.Score} <br />
-                    <b>DESCRIPTIVE EQUIVALENT:</b>  {data.ScoreDescription} <br />
-                    <b>Operational Issue:</b>  {data.OpsIssue} <br />
-                    <b>Policy Issue:</b>  {data.PolicyIssue} <br />
-                    <b>Recommendation:</b>  {data.PolicyIssue} <br />
-                    <b>Others:</b>  {data.Others} <br />
-                    <b>Corrective Action:</b>  {data.CorrectiveAction} <br />
+
+                <DialogContent dividers className='p-4'>
+                <div class="table-responsive">
+                <table className='table table-sm table-bordered'>
+                <tbody>
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Department</th>
+                        <td className='w-75'>{data.Department}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>KRA:</th>
+                        <td className='w-75'>{data.KRAName}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Objective:</th>
+                        <td className='w-75'>{data.Objective}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Program/Project:</th>
+                        <td className='w-75'>{data.Project}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Output:</th>
+                        <td className='w-75'>{data.Output}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Planned Target:</th>
+                        <td className='w-75'>{data.PlannedTarget}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Timeline:</th>
+                        <td className='w-75'>{data.PlannedTarget}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Physical Accomplishment:</th>
+                        <td className='w-75'>{data.PhysicalAccomplishment}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>% of Accomplishment vs Targets:</th>
+                        <td className='w-75'>{data.Accomplishment1 + '%'}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>% of Accomplishment according to Timeline:</th>
+                        <td className='w-75'>{data.Accomplishment2 + '%'}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Gains/Gaps:</th>
+                        <td className='w-75'>{data.GainGap}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Financial Requirement:</th>
+                        <td className='w-75'>{data.FinancialRequirement.toLocaleString('en-US')}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Amount Utilized:</th>
+                        <td className='w-75'>{data.AmountUtilized.toLocaleString('en-US')}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Balance:</th>
+                        <td className='w-75'>{data.Balance.toLocaleString('en-US')}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Budget Utilization Rate (%):</th>
+                        <td className='w-75'>{data.UtilizationRate.toFixed(2) + '%'}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Funding Source:</th>
+                        <td className='w-75'>{data.FundingSource}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Budget Structure:</th>
+                        <td className='w-75'>{data.BurdgetStructure}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>SCORE:</th>
+                        <td className='w-75'>{data.Score}</td>
+                    </tr>
+                    
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Descriptive Equivalent:</th>
+                        <td className='w-75'>{data.Description}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Operational Issue:</th>
+                        <td className='w-75'>{data.OpsIssue}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Policy Issue:</th>
+                        <td className='w-75'>{data.PolicyIssue}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Recommendation:</th>
+                        <td className='w-75'>{data.Recommendation}</td>
+                    </tr>
+
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Others:</th>
+                        <td className='w-75'>{data.Others}</td> 
+                    </tr>
+                    
+                    <tr>
+                        <th className='w-25 text-muted bg-light text-nowrap'>Corrective Action:</th>
+                        <td className='w-75'>{data.CorrectiveAction}</td>
+                    </tr>
+
+                </tbody>
+                </table>
+                </div>
                 </DialogContent>
+
+
+
                 <DialogActions>
                     {/* <Button autoFocus color="primary" onClick={() => handleClose}>
                         Close

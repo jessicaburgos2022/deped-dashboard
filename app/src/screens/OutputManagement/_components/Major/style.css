@@ -22,3 +22,10 @@
     align-items: center;
     margin-bottom: 20px;
 }
+
+
+
+/*JBurgos*/
+.table-sm th, .table-sm td {
+    padding: 0.5rem 1rem;
+}
