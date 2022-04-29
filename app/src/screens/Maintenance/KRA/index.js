@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { searchKRA } from '../../../actions/kraActions';
 import Table from './_components/table';
 import AddOutput from './_components/addOutput';
+import './style.css'; // JBurgos
 
 export default () => {
     const [isAddOpen, setIsAddOpen] = useState(false);

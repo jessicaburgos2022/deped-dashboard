@@ -20,13 +20,11 @@ import Output from "./screens/Output";
 import OutputManagement from "./screens/OutputManagement";
 import PREXC from "./screens/PREXC";
 
-
 import NavBar from "./components/AdminLTE/navbar";
 import SideBar from "./components/AdminLTE/sidebar";
 
 //Required States
 // import { fetchOutputTypes } from "./actions/appActions";
-
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -37,7 +35,6 @@ const App = () => {
   //     setInterval(dispatch(fetchOutputTypes(), 2000));
   //   }
   // });
-
 
   return (
     <Router>
@@ -52,7 +49,10 @@ const App = () => {
           <PrivateRoute path="/insertoutputoo" component={Output} />
           <Route path="/login" component={LoginScreen} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
-          <PrivateRoute path="/contributorydashboard" component={ContributoryDashboard} />
+          <PrivateRoute
+            path="/contributorydashboard"
+            component={ContributoryDashboard}
+          />
           <PrivateRoute path="/outputmajor" component={OutputManagement} />
           <PrivateRoute path="/outputminor" component={OutputManagement} />
           <PrivateRoute path="/outputtokra" component={OutputManagement} />
