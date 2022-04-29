@@ -64,7 +64,7 @@ export default (props) => {
     setRole(r);
   };
   function isActionExist(actionId) {
-    return role.find((r) => r.ActionId === actionId) !== undefined;
+    return store.roleaction.find((r) => r.action_id === actionId) !== undefined;
   }
   console.log(role)
   return (
