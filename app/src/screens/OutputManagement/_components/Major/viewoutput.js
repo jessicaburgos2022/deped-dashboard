@@ -17,7 +17,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 export default (props) => {
   const { open, handleClose, data } = props;
-  console.log(data);
   return (
     <React.Fragment>
       <Dialog
@@ -174,9 +173,9 @@ export default (props) => {
         </DialogContent>
 
         <DialogActions>
-          {/* <Button autoFocus color="primary" onClick={() => handleClose}>
-                        Close
-                    </Button> */}
+          <Button autoFocus color="primary" onClick={() => handleClose()}>
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
