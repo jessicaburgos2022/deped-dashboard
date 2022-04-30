@@ -131,18 +131,18 @@ export default function CustomizedTreeView(props) {
             dataField: "Quarter1",
             text: "Quarter 1",
             formatter: (value, row) => (
-                <div style={{ padding: '0.75rem 0.50rem' , backgroundColor: row.Q1StatusId && row.Q1StatusId === 1 ? 'orange' : row.Q1StatusId && row.Q1StatusId === 2 ? 'green' : 'red'}} >
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>
-                        {row.Q1Result}
-                    </span>
-                    <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                            <CheckIcon className="c-pointer" />
-                        </div>
+                <div style={{ padding: '0.75rem 0.50rem', backgroundColor: row.Q1StatusId && row.Q1StatusId === 1 ? 'orange' : row.Q1StatusId && row.Q1StatusId === 2 ? 'green' : 'red' }} >
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>
+                            {row.Q1Result}
+                        </span>
+                        <div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                                <CheckIcon className="c-pointer" />
+                            </div>
+                        </div >
                     </div >
-                </div >
                 </div>
             )
         },
@@ -150,51 +150,57 @@ export default function CustomizedTreeView(props) {
             dataField: "Quarter2",
             text: "Quarter 2",
             formatter: (value, row) => (
-                <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: row.Q2StatusId && row.Q2StatusId === 1 ? 'orange' : row.Q2StatusId && row.Q2StatusId === 2 ? 'green' : 'red' }}>
-                    <span>
-                        {row.Q2Result}
-                    </span>
-                    <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                            <CheckIcon className="c-pointer" />
-                        </div>
+                <div style={{ padding: '0.75rem 0.50rem', backgroundColor: row.Q2StatusId && row.Q2StatusId === 1 ? 'orange' : row.Q2StatusId && row.Q2StatusId === 2 ? 'green' : 'red' }} >
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>
+                            {row.Q2Result}
+                        </span>
+                        <div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                                <CheckIcon className="c-pointer" />
+                            </div>
+                        </div >
                     </div >
-                </div >
+                </div>
             )
         },
         {
             dataField: "Quarter3",
             text: "Quarter 3",
             formatter: (value, row) => (
-                <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: row.Q3StatusId && row.Q3StatusId === 1 ? 'orange' : row.Q3StatusId && row.Q3StatusId === 2 ? 'green' : 'red' }}>
-                    <span>
-                        {row.Q3Result}
-                    </span>
-                    <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                            <CheckIcon className="c-pointer" />
-                        </div>
+                <div style={{ padding: '0.75rem 0.50rem', backgroundColor: row.Q3StatusId && row.Q3StatusId === 1 ? 'orange' : row.Q3StatusId && row.Q3StatusId === 2 ? 'green' : 'red' }} >
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>
+                            {row.Q3Result}
+                        </span>
+                        <div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                                <CheckIcon className="c-pointer" />
+                            </div>
+                        </div >
                     </div >
-                </div >
+                </div>
             )
         },
         {
             dataField: "Quarter4",
             text: "Quarter 4",
             formatter: (value, row) => (
-                <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: row.Q4StatusId && row.Q4StatusId === 1 ? 'orange' : row.Q4StatusId && row.Q4StatusId === 2 ? 'green' : 'red' }}>
-                    <span>
-                        {row.Q4Result}
-                    </span>
-                    <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                            <CheckIcon className="c-pointer" />
-                        </div>
+                <div style={{ padding: '0.75rem 0.50rem', backgroundColor: row.Q4StatusId && row.Q3StatusId === 1 ? 'orange' : row.Q4StatusId && row.Q4StatusId === 2 ? 'green' : 'red' }} >
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>
+                            {row.Q4Result}
+                        </span>
+                        <div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                                <CheckIcon className="c-pointer" />
+                            </div>
+                        </div >
                     </div >
-                </div >
+                </div>
             )
         }
     ];
