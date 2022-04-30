@@ -121,7 +121,6 @@ const insertProject = asyncHander(async (req, res) => {
 const insertIndicator = asyncHander(async (req, res) => {
     const { ProgramId, DepartmentId, Title, PhysicalTarget, Accountable } = req.body;
     const queryString = `INSERT INTO prexc_indicator SET ProgramId = '${ProgramId}', DepartmentId = '${DepartmentId}', Title = '${Title}', PhysicalTarget = '${PhysicalTarget}', Accountable = '${Accountable}'`;
-    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -145,4 +144,57 @@ const insertIndicator = asyncHander(async (req, res) => {
     });
 });
 
-module.exports = { ListOrgOutcome, insertOrgOutcome, insertProject, insertIndicator, listProjectIndicatorsByOrgOutcomeId };
+const getIndicatorValues = asyncHander(async (req, res) => {
+    const { orgoutcomeid } = req.params;
+    const queryString = `CALL SearchIndicatorValuesByOrgOutcomeId(${orgoutcomeid})`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    var qResult = JSON.parse(JSON.stringify(results[0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
+const editIndicatorValue = asyncHander(async (req, res) => {
+    const { quarter, indicatorid, value } = req.body;
+    const queryString = `CALL EditIndicatorResult('${indicatorid}', '${quarter}', '${value}', ${'1'})`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    var qResult = JSON.parse(JSON.stringify(results[0][0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+module.exports = { ListOrgOutcome, insertOrgOutcome, insertProject, insertIndicator, listProjectIndicatorsByOrgOutcomeId, editIndicatorValue, getIndicatorValues };

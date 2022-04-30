@@ -1,8 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import SvgIcon from '@mui/material/SvgIcon';
 import { alpha, styled } from '@mui/material/styles';
-import TreeView from '@mui/lab/TreeView';
 import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import Collapse from '@mui/material/Collapse';
 // web.cjs is required for IE11 support
@@ -13,11 +11,14 @@ import InserProjectButton from './Insert/insertProject';
 import InsertIndicatorButton from './Insert/insertIndicator';
 
 import BootstrapTable from "react-bootstrap-table-next";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Row } from "react-bootstrap";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-json-pretty/themes/monikai.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-
+import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
+import EditIndicator from './edit/editInput';
+import './styles.css';
 
 function TransitionComponent(props) {
     const style = useSpring({
@@ -45,69 +46,13 @@ TransitionComponent.propTypes = {
     in: PropTypes.bool,
 };
 
-const StyledTreeItem = styled((props) => (
-    <TreeItem {...props} TransitionComponent={TransitionComponent} />
-))(({ theme }) => ({
-    [`& .${treeItemClasses.iconContainer}`]: {
-        '& .close': {
-            opacity: 0.3,
-        },
-    },
-    [`& .${treeItemClasses.group}`]: {
-        marginLeft: 15,
-        paddingLeft: 18,
-        borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
-    },
-}));
-
-const StyledTreeItemIndicator = styled((props) => (
-    <TreeItem {...props} TransitionComponent={TransitionComponent} />
-))(({ theme }) => ({
-    [`& .${treeItemClasses.group}`]: {
-        marginLeft: 15,
-        paddingLeft: 18,
-        borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
-    },
-}));
-
-
-// function StyledTreeItem(props) {
-//   const {
-//     bgColor,
-//     color,
-//     labelIcon: LabelIcon,
-//     labelInfo,
-//     labelText,
-//     ...other
-//   } = props;
-
-//   return (
-//     <StyledTreeItemRoot
-//       label={
-//         <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
-//           <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-//           <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
-//             {labelText}
-//           </Typography>
-//           <Typography variant="caption" color="inherit">
-//             {labelInfo}
-//           </Typography>
-//         </Box>
-//       }
-//       style={{
-//         '--tree-view-color': color,
-//         '--tree-view-bg-color': bgColor,
-//       }}
-//       {...other}
-//     />
-//   );
-// }
-
 export default function CustomizedTreeView(props) {
     const { handleRefresh } = props;
     const prexcState = useSelector((state) => state.prexc);
+    const [isEditIndicatorOpen, setIsEditIndicatorOpen] = React.useState(false);
+    const [selectedIndicator, setSelectedIndicator] = React.useState({})
+    const [quarterForEdit, setQuarterForEdit] = React.useState(0);
     const distinctProject = (array) => {
-        console.log(array)
         const result = [];
         const map = new Map();
         for (const item of array) {
@@ -148,6 +93,9 @@ export default function CustomizedTreeView(props) {
             )
         }
     ];
+    const getIndicatorValue = (Quarter, IndicatorId) => {
+        return prexcState.indicatorValues && Array.isArray(prexcState.indicatorValues) && prexcState.indicatorValues.find(r => r.IndicatorId === IndicatorId && r.Quarter === Quarter) ? prexcState.indicatorValues.find(r => r.IndicatorId === IndicatorId && r.Quarter === Quarter).Result : '';
+    }
     const indicatorColumns = [
         {
             dataField: "IndicatorId",
@@ -156,13 +104,13 @@ export default function CustomizedTreeView(props) {
             headerStyle: (column, colIndex) => {
                 return { width: "80px" };
             },
-            hide: true
+            hidden: true
         },
         {
             dataField: "IndicatorTitle",
             text: "Indicator",
             headerStyle: (column, colIndex) => {
-                return { width: "100" };
+                return { width: "70vh" };
             },
         },
         {
@@ -181,30 +129,85 @@ export default function CustomizedTreeView(props) {
         },
         {
             dataField: "Quarter1",
-            text: "Quarter 1"
+            text: "Quarter 1",
+            formatter: (value, row) => (
+                <div style={{ padding: '0.75rem 0.50rem' , backgroundColor: row.Q1StatusId && row.Q1StatusId === 1 ? 'orange' : row.Q1StatusId && row.Q1StatusId === 2 ? 'green' : 'red'}} >
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>
+                        {row.Q1Result}
+                    </span>
+                    <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                            <CheckIcon className="c-pointer" />
+                        </div>
+                    </div >
+                </div >
+                </div>
+            )
         },
         {
             dataField: "Quarter2",
-            text: "Quarter 2"
+            text: "Quarter 2",
+            formatter: (value, row) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: row.Q2StatusId && row.Q2StatusId === 1 ? 'orange' : row.Q2StatusId && row.Q2StatusId === 2 ? 'green' : 'red' }}>
+                    <span>
+                        {row.Q2Result}
+                    </span>
+                    <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                            <CheckIcon className="c-pointer" />
+                        </div>
+                    </div >
+                </div >
+            )
         },
         {
             dataField: "Quarter3",
-            text: "Quarter 3"
+            text: "Quarter 3",
+            formatter: (value, row) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: row.Q3StatusId && row.Q3StatusId === 1 ? 'orange' : row.Q3StatusId && row.Q3StatusId === 2 ? 'green' : 'red' }}>
+                    <span>
+                        {row.Q3Result}
+                    </span>
+                    <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                            <CheckIcon className="c-pointer" />
+                        </div>
+                    </div >
+                </div >
+            )
         },
         {
             dataField: "Quarter4",
-            text: "Quarter 4"
+            text: "Quarter 4",
+            formatter: (value, row) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: row.Q4StatusId && row.Q4StatusId === 1 ? 'orange' : row.Q4StatusId && row.Q4StatusId === 2 ? 'green' : 'red' }}>
+                    <span>
+                        {row.Q4Result}
+                    </span>
+                    <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                            <CheckIcon className="c-pointer" />
+                        </div>
+                    </div >
+                </div >
+            )
         }
     ];
     const expandRow = {
         renderer: (row) => (
-            <div className="col-sm-12 d-flex text-justify table-row-expand-content">
-                {distinctProject(prexcState.projectIndicators.filter(pi => pi.OrgOutcomeId === row.OrganizationalOutcomeId)).map(pi => {
+            <div className="indicator-row text-justify table-row-expand-content">
+                {prexcState.projectIndicators && Array.isArray(prexcState.projectIndicators) && distinctProject(prexcState.projectIndicators.filter(pi => pi.OrgOutcomeId === row.OrganizationalOutcomeId)).map(pi => {
                     return <div className='col-sm-12'>
-                        <div>
+                        <div style={{ padding: '1rem' }}>
                             <span className='text-muted'>Project:</span> {pi.ProgramTitle} <InsertIndicatorButton programId={pi.ProgramId} handleRefresh={() => handleRefresh()} />
                         </div>
                         <BootstrapTable
+                            className="indicator-table"
                             bootstrap4
                             keyField="Id"
                             data={prexcState.projectIndicators.filter(i => i.OrgOutcomeId === row.OrganizationalOutcomeId && i.ProgramId === pi.ProgramId && i.IndicatorTitle) ? prexcState.projectIndicators.filter(i => i.OrgOutcomeId === row.OrganizationalOutcomeId && i.ProgramId === pi.ProgramId && i.IndicatorTitle) : []}
@@ -215,18 +218,10 @@ export default function CustomizedTreeView(props) {
                                 </span>
                             }
                         />
-                        {/* {prexcState.projectIndicators.filter(i => i.OrgOutcomeId === oo.OrganizationalOutcomeId && i.ProgramId === pi.ProgramId && i.IndicatorTitle).map(i => {
-                                return <StyledTreeItemIndicator nodeId={`indicator-${i.IndicatorId}`} label={
-                                    <div>
-                                        <p><span className='text-muted'>Indicator:</span> {i.IndicatorTitle} </p>
-                                        <p><span className='text-muted'>P. Target:</span> {i.PhysicalTarget}</p>
-                                        <p><span className='text-muted'>Accountable Office:</span> {i.AccountableOffice}</p>
-                                    </div>}>
-                                </StyledTreeItemIndicator>
-                            })} */}
                     </div>
-                })}
-            </div>
+                })
+                }
+            </div >
         ),
         showExpandColumn: true,
         // expandByColumnOnly: true,
@@ -234,7 +229,7 @@ export default function CustomizedTreeView(props) {
 
     const paginationTotalRenderer = (from, to, size) => (
         <span className="react-bootstrap-table-pagination-total" style={{ fontSize: 11 }}>
-            Showing {from} to {to} of {size} Results
+            Showing {from} to {to} of {size} Organizational Outcomes
         </span>
     );
     const sizePerPageRenderer = ({
@@ -263,58 +258,22 @@ export default function CustomizedTreeView(props) {
         showTotal: true
     };
     return (
-        <BootstrapTable
-            bootstrap4
-            keyField="Id"
-            data={prexcState.orgOutcome ? prexcState.orgOutcome : []}
-            columns={columns}
-            expandRow={expandRow}
-            // showTotal={true}
-            noDataIndication={
-                <span style={{ color: "red" }}>
-                    No data returned by search criteria.
-                </span>
-            }
-            pagination={paginationFactory(options)}
-        />
-        // <TreeView
-        //     aria-label="customized"
-        //     // defaultExpanded={[1, 2, 3, 4, 5, 6]}
-        //     defaultCollapseIcon={<MinusSquare />}
-        //     defaultExpandIcon={<PlusSquare />}
-        //     // defaultEndIcon={<CloseSquare />}
-        //     sx={{ height: '100%', flexGrow: 1, minHeight: 'calc(100vh - 15rem)' }}
-        // >
-        //     {
-        //         prexcState.orgOutcome.map((oo) => {
-        //             return (
-        //     <StyledTreeItem nodeId={`oo-${oo.OrganizationalOutcomeId}`} label={<div><span className='text-muted'>Organizational Outcome:</span> {oo.OrganizationalOutcomeTitle} <InserProjectButton orgOutcomeId={oo.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} /></div>} >
-        //       {distinctProject(prexcState.projectIndicators.filter(pi => pi.OrgOutcomeId === oo.OrganizationalOutcomeId)).map(pi => {
-        //         return <StyledTreeItem nodeId={`project-${pi.ProgramId}`} label={
-        //           <div><span className='text-muted'>Project:</span> {pi.ProgramTitle} <InsertIndicatorButton programId ={pi.ProgramId} handleRefresh={() => handleRefresh()} /></div>}>
-        //           {prexcState.projectIndicators.filter(i => i.OrgOutcomeId === oo.OrganizationalOutcomeId && i.ProgramId === pi.ProgramId && i.IndicatorTitle).map(i => {
-        //             return <StyledTreeItemIndicator nodeId={`indicator-${i.IndicatorId}`} label={
-        //               <div>
-        //                 <p><span className='text-muted'>Indicator:</span> {i.IndicatorTitle} </p>
-        //                 <p><span className='text-muted'>P. Target:</span> {i.PhysicalTarget}</p>
-        //                 <p><span className='text-muted'>Accountable Office:</span> {i.AccountableOffice}</p>
-        //               </div>}>
-        //             </StyledTreeItemIndicator>
-        //           })}
-        //         </StyledTreeItem>
-        //       })}
-        //       {/* <StyledTreeItem nodeId="2" label={<div><span className='text-muted'>Project:</span> Number of education researches completed <PlusSquare onClick={() => null} /></div>}>
-        //         <StyledTreeItem nodeId="4" label="Basic Education Inputs" />
-        //       </StyledTreeItem>
-        //       <StyledTreeItem nodeId="3" label="Inclusive Education">
-        //         <StyledTreeItem nodeId="4" label="Support to Schools and Learners" />
-        //       </StyledTreeItem>
-        //       <StyledTreeItem nodeId="5" label="Support to Schools and Learners">
-        //       </StyledTreeItem>
-        //       <StyledTreeItem nodeId="6" label="Education Human Resource Development" /> */}
-        //     </StyledTreeItem>)
-        //         })
-        //     }
-        // </TreeView >
+        <React.Fragment>
+            {isEditIndicatorOpen && <EditIndicator handleRefresh={handleRefresh} handleClose={() => setIsEditIndicatorOpen(false)} open={isEditIndicatorOpen} IndicatorId={selectedIndicator.IndicatorId} Quarter={quarterForEdit} />}
+            <BootstrapTable
+                bootstrap4
+                keyField="Id"
+                data={prexcState.orgOutcome ? prexcState.orgOutcome : []}
+                columns={columns}
+                expandRow={expandRow}
+                noDataIndication={
+                    <span style={{ color: "red" }}>
+                        No data returned by search criteria.
+                    </span>
+                }
+                pagination={paginationFactory(options)}
+            />
+        </React.Fragment>
+
     );
 }

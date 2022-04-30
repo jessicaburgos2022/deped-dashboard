@@ -7,13 +7,19 @@ import {
     LIST_ORGOUTCOME_FAILED,
     INSERT_PREXCPROJECT_REQUEST,
     INSERT_PREXCPROJECT_SUCCESS,
-    INSERT_PREXCPROJECT_FAILED, 
-    INSERT_PREXCINDICATOR_REQUEST, 
-    INSERT_PREXCINDICATOR_SUCCESS, 
+    INSERT_PREXCPROJECT_FAILED,
+    INSERT_PREXCINDICATOR_REQUEST,
+    INSERT_PREXCINDICATOR_SUCCESS,
     INSERT_PREXCINDICATOR_FAILED,
     LIST_PROJECTINDICATORS_REQUEST,
     LIST_PROJECTINDICATORS_SUCCESS,
-    LIST_PROJECTINDICATORS_FAILED
+    LIST_PROJECTINDICATORS_FAILED,
+    EDIT_INDICATORVALUE_REQUEST,
+    EDIT_INDICATORVALUE_SUCCESS,
+    EDIT_INDICATORVALUE_FAILED,
+    SEARCH_INDICATORVALUE_REQUEST,
+    SEARCH_INDICATORVALUE_SUCCESS,
+    SEARCH_INDICATORVALUE_FAILED
 } from "../constants/prexcConstants";
 import axios from "../helpers/axios";
 
@@ -79,6 +85,33 @@ export const listProjectIndicators = () => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: LIST_PROJECTINDICATORS_FAILED,
+            payload: []
+        });
+    }
+};
+
+export const editIndicatorValue = (param) => async (dispatch) => {
+    await dispatch({ type: EDIT_INDICATORVALUE_REQUEST });
+    try {
+        const { data } = await axios.post(`/api/prexc/indicator/value`, param);
+        await dispatch({ type: EDIT_INDICATORVALUE_SUCCESS, payload: data });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: EDIT_INDICATORVALUE_FAILED,
+            payload: []
+        });
+    }
+}
+
+export const searchIndicatorValues = (id) => async (dispatch) => {
+    await dispatch({ type: SEARCH_INDICATORVALUE_REQUEST });
+    try {
+        const { data } = await axios.get(`/api/prexc/indicator/value/${id}`);
+        await dispatch({ type: SEARCH_INDICATORVALUE_SUCCESS, payload: data });
+    } catch (e) {
+        dispatch({
+            type: SEARCH_INDICATORVALUE_FAILED,
             payload: []
         });
     }

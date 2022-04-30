@@ -7,13 +7,17 @@ import {
     LIST_ORGOUTCOME_FAILED,
     LIST_PROJECTINDICATORS_REQUEST,
     LIST_PROJECTINDICATORS_SUCCESS,
-    LIST_PROJECTINDICATORS_FAILED
+    LIST_PROJECTINDICATORS_FAILED,
+    SEARCH_INDICATORVALUE_REQUEST,
+    SEARCH_INDICATORVALUE_SUCCESS,
+    SEARCH_INDICATORVALUE_FAILED
 } from "../constants/prexcConstants";
 
 const prexcState = {
     searchResult: [],
     orgOutcome: [],
-    projectIndicators: []
+    projectIndicators: [],
+    indicatorValues: []
 };
 
 export const PrexcReducer = (state = prexcState, action) => {
@@ -65,6 +69,22 @@ export const PrexcReducer = (state = prexcState, action) => {
             return {
                 ...state,
                 projectIndicators: []
+            }
+        case SEARCH_INDICATORVALUE_REQUEST:
+            return {
+                ...state,
+                indicatorValues: []
+            }
+        case SEARCH_INDICATORVALUE_SUCCESS:
+            return {
+                ...state,
+                indicatorValues: payload
+            }
+
+        case SEARCH_INDICATORVALUE_FAILED:
+            return {
+                ...state,
+                indicatorValues: []
             }
         default:
             return state;

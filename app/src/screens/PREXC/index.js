@@ -3,17 +3,19 @@ import React, { useEffect, useState } from 'react';
 import TreeView from './Treeview';
 import CustomTable from './Table';
 import InsertOrgOutcome from './Insert';
-import { listOrgOutcome, listProjectIndicators } from '../../actions/prexcActions';
+import { listOrgOutcome, listProjectIndicators, searchIndicatorValues } from '../../actions/prexcActions';
 import { useDispatch } from 'react-redux';
 
 export default () => {
     const dispatch = useDispatch();
     const [insertOrgOutcomeModalIsOpen, setInsertOrgOutcomeModalIsOpen] = useState(false);
     useEffect(() => {
+        // dispatch(searchIndicatorValues(0));
         dispatch(listOrgOutcome({ orgId: 0 }));
         dispatch(listProjectIndicators());
     }, [])
     const reloadPREXC = () => {
+        // dispatch(searchIndicatorValues(0));
         dispatch(listOrgOutcome({ orgId: 0 }));
         dispatch(listProjectIndicators());
     }
@@ -43,7 +45,7 @@ export default () => {
 
                     <h4>Organizational Outcomes</h4>
                     <CustomTable handleRefresh={reloadPREXC} />
-                    <TreeView handleRefresh={reloadPREXC} />
+                    {/* <TreeView handleRefresh={reloadPREXC} /> */}
                 </div>
             </div>
         </div>
