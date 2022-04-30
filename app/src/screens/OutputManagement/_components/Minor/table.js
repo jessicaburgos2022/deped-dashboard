@@ -61,8 +61,8 @@ export default (data) => {
             {
                 isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh={() => handleRefresh()} />
             }
-            <Table aria-label="collapsible table">
-                <TableHead>
+            <Table aria-label="collapsible table" className='table table-striped table-bordered'>
+                <TableHead className='thead'>
                     <TableRow>
                         <TableCell className="interface-table-header">
                             Department
@@ -87,22 +87,22 @@ export default (data) => {
                         // SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
                         return (
                             <TableRow>
-                                <TableCell component="th" className="interface-table-cell">
+                                <TableCell component="td" className="interface-table-cell text-center">
                                     {r.Department}
                                 </TableCell>
-                                <TableCell component="th" className="interface-table-cell">
+                                <TableCell component="td" className="interface-table-cell text-center">
                                     {r.KRAYear}
                                 </TableCell>
-                                <TableCell component="th" className="interface-table-cell">
+                                <TableCell component="td" className="interface-table-cell">
                                     {r.KRAName}
                                 </TableCell>
-                                <TableCell component="th" className="interface-table-cell">
+                                <TableCell component="td" className="interface-table-cell">
                                     {r.Project}
                                 </TableCell>
-                                <TableCell component="th" className="interface-table-cell">
+                                <TableCell component="td" className="interface-table-cell">
                                     {r.Output}
                                 </TableCell>
-                                <TableCell component="th" className="interface-table-cell">
+                                <TableCell component="td" className="interface-table-cell">
 
                                     <div style={{ display: 'flex', padding: 5 }}>
                                         <Button variant="contained" color="primary" onClick={() => handleViewOpen(r)}>View</Button>

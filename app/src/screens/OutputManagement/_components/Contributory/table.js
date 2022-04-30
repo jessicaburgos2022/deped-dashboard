@@ -42,8 +42,8 @@ export default (data) => {
     }
     return (
         <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-                <TableHead>
+            <Table aria-label="collapsible table" className='table table-striped table-bordered'>
+                <TableHead className='thead'>
                     <TableRow>
                         <TableCell className="interface-table-header">
                             Department
@@ -52,7 +52,7 @@ export default (data) => {
                             Year
                         </TableCell>
                         <TableCell className="interface-table-header">
-                            Outcome Type
+                            Type
                         </TableCell>
                         <TableCell className="interface-table-header">
                             Outcome Title
@@ -76,28 +76,28 @@ export default (data) => {
                             console.log(currentData);
                             return (
                                 <TableRow>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell text-center">
                                         {r.DepartmentName}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell text-center">
                                         {r.KRAYear}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.OutcomeType}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.OutcomeTitle}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.ProjectName}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.IndicatorTitle}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.Result}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {/* <Button >View</Button>
                                         <Button hidden={parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1}>Edit</Button> */}
 
