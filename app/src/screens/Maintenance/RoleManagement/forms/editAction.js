@@ -20,16 +20,16 @@ export default (props) => {
   const dispatch = useDispatch();
   const store = useSelector((s) => s.roles);
   const { openEditForm, roleId, setEditOpen } = props;
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState([]);
   const [actions, setActions] = useState(null);
   useEffect(() => {
-    setRole(store.roles.filter((r) => r.Id === roleId));
+    setRole(store.roles.filter((r) => r.role_id === roleId))
     setActions(store.actions);
   }, [setRole, store.roles, roleId, store.actions]);
   const submitUpdate = () => {
     var newActions = role
-      .filter((r) => r.ActionId !== null)
-      .map((a) => a.ActionId)
+      .filter((r) => r.action_id !== null)
+      .map((a) => a.action_id)
       .join(",");
     dispatch(submitRoleUpdate(roleId, newActions, role[0].RoleIsActive));
     setEditOpen(false);
@@ -48,35 +48,34 @@ export default (props) => {
   }
   const updateRole = (actionId) => {
     var r = [...role];
-    const isExist = r.find((ro) => ro.ActionId === actionId) !== undefined;
-    const action = actions.find((a) => a.action_id === actionId);
+    const isExist = r.find((ro) => ro.action_id === actionId) !== undefined;
+    const action = actions ? actions.find((a) => a.action_id === actionId) : [];
     if (!isExist) {
       r.push({
         RoleId: roleId,
         RoleTitle: "",
-        ActionId: action.action_id,
-        ActionTitle: action.Title,
-        SystemId: action.sys_id
+        action_id: action.action_id,
+        ActionTitle: action.Title
       });
     } else {
-      r = r.filter((r) => r.ActionId !== actionId);
+      r = r.filter((r) => r.action_id !== actionId);
     }
     setRole(r);
   };
   function isActionExist(actionId) {
-    return store.roleaction.find((r) => r.action_id === actionId) !== undefined;
+    console.log(role)
+    return role.find((r) => r.action_id === actionId) !== undefined;
   }
-  console.log(role)
   return (
     <>
       <Dialog open={openEditForm}>
         {role && role.length > 0 && (
           <div style={{ display: "flex", justifyContent: 'space-between', padding: "20px 30px 0 30px" }}>
             <Typography variant="h5">
-              {role[0].Name} Actions
+              {role[0].role_title} Actions
             </Typography>
             {
-              role[0].Name !== "Administrator" && role[0].Name !== "Default" &&
+              role[0].role_title !== "Administrator" && role[0].role_title !== "Default" &&
               <Switch
                 checked={role[0].RoleIsActive}
                 variant="contained"

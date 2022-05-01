@@ -1,5 +1,5 @@
 import { AddCircleOutlineOutlined } from "@material-ui/icons";
-import { BubbleChartOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined, AssessmentOutlined } from '@mui/icons-material';
+import { BubbleChartOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined, AssessmentOutlined, SupervisedUserCircleOutlined } from '@mui/icons-material';
 import React from "react";
 
 export const menu = [
@@ -61,7 +61,7 @@ export const menu = [
                 to: "/maintenance-changepassword"
             },
             {
-                icon: <AssessmentOutlined />,
+                icon: <SupervisedUserCircleOutlined />,
                 title: "Account",
                 items: [
                     {

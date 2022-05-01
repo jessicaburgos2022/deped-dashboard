@@ -28,7 +28,7 @@ export default () => {
     dispatch(searchActions());
   }, [dispatch]);
   const distinctRoles = [
-    ...new Map(store.roles.map((item) => [item["Id"], item])).values(),
+    ...new Map(store.roles.map((item) => [item["role_id"], item])).values(),
   ];
   const handleDelete = async (roleId) => {
     const modal = deleteConfirmationRef.current;
@@ -62,24 +62,24 @@ export default () => {
           {distinctRoles.map((r) => {
             return (
               <TableRow>
-                <TableCell><span style={{fontWeight:'bold'}}>{r.Id}</span></TableCell>
-                <TableCell><span style={{fontWeight:'bold'}}>{r.Name}</span></TableCell>
-                <TableCell><span style={{fontWeight:'bold'}}>{r.Description}</span></TableCell>
+                <TableCell><span style={{fontWeight:'bold'}}>{r.role_id}</span></TableCell>
+                <TableCell><span style={{fontWeight:'bold'}}>{r.role_title}</span></TableCell>
+                <TableCell><span style={{fontWeight:'bold'}}>{r.role_description}</span></TableCell>
                 <TableCell>{r.RoleIsActive?'Enabled':'Disabled'}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                      setSelectedRoleId(r.Id);
+                      setSelectedRoleId(r.role_id);
                       setEditOpen(!isEditOpen);
                     }}
                   >
                     Edit
                   </Button>
                   {
-                    r.Name !== "Administrator" && r.Name !== "Default" &&
-                    <Button onClick={() => handleDelete(r.Id)} style={{marginLeft:10}}
+                    r.role_title !== "Administrator" && r.role_title !== "Default User" &&
+                    <Button onClick={() => handleDelete(r.role_id)} style={{marginLeft:10}}
                       color="secondary">Delete</Button>
                   }
                 </TableCell>

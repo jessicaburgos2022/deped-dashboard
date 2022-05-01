@@ -13,7 +13,18 @@ const pool = mysql.createPool({
 });
 
 const searchRole = asyncHander(async (req, res) => {
-    const queryString = `SELECT Id, Name, Description, CASE WHEN IsActive THEN 1 ELSE 0 END AS RoleIsActive, InsertedOn, UpdatedOn FROM roles`;
+    const queryString = `SELECT
+        ra.Id AS roleaction_id,
+        r.Id AS role_id,
+        r.Name AS role_title,
+        r.Description AS role_description,
+        a.Id AS action_id,
+        a.Name AS action_title,
+        CASE WHEN r.IsActive THEN 1 ELSE 0 END AS RoleIsActive
+    FROM trans_roles ra
+    RIGHT JOIN roles r ON r.Id = ra.RoleId
+    LEFT JOIN ref_actions a ON a.Id = ra.ActionId
+    ORDER BY r.Id;`
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
