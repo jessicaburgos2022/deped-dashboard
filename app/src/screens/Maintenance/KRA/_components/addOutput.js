@@ -71,12 +71,12 @@ export default (props) => {
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
             Add Output
           </DialogTitle>
-          
+
           <DialogContent dividers>
             {/* JBURGOS start */}
             <div className="row">
               <div className="col-12 mb-3">
-              <Select
+                <Select
                   className="form-control"
                   placeholder="Select Output Type"
                   name="outputtype"
@@ -85,18 +85,18 @@ export default (props) => {
                   <MenuItem value={1}>Major Output</MenuItem>
                   <MenuItem value={2}>Minor Output</MenuItem>
                 </Select>
-                </div>
+              </div>
 
-                
-                <div className="col-12 mb-3">
+
+              <div className="col-12 mb-3">
                 <Controller
-                control={control} name="name"
-                rules={{
-                  required: {
-                    value: true,
-                    message: "This field is required",
-                  },
-                }}
+                  control={control} name="name"
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "This field is required",
+                    },
+                  }}
                   as={
                     <TextField
                       label="Name"
@@ -109,9 +109,9 @@ export default (props) => {
                     />
                   }
                 />
-                </div>  
+              </div>
 
-                <div className="col-12 mb-3">
+              <div className="col-12 mb-3">
                 <Controller
                   control={control}
                   name="description"
@@ -133,7 +133,7 @@ export default (props) => {
                     />
                   }
                 />
-                </div>
+              </div>
             </div>
 
             {/* JBURGOS end */}
@@ -142,29 +142,29 @@ export default (props) => {
 
               <div class="float-right d-inline-flex">
                 <Button
-                className="output-margin btn mr-3"
-                variant="contained"
+                  className="output-margin btn mr-3"
+                  variant="contained"
 
-                color="primary"
-                type="submit">
-                Submit
-              </Button>
-             
+                  color="primary"
+                  type="submit">
+                  Submit
+                </Button>
+
                 <Button
-                className="output-margin btn"
-                variant="contained"
-                color="dark"
-                type="submit">
+                  className="output-margin btn"
+                  variant="contained"
+                  color="dark"
+                  type="submit">
                   Cancel
-                  </Button>
-                  </div>
+                </Button>
+              </div>
 
             </DialogActions>
-            
+
           </DialogContent>
-          
-          
-        
+
+
+
 
         </form>
       </Dialog>
