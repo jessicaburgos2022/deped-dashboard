@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 export default function App() {
     const userState = useSelector(state => state.user)
     return menu
-        .filter(menu => menu.title !== "Maintenance" || (userState && userState.userInfo && userState.userInfo.acc && Array.isArray(userState.userInfo.acc) && userState.userInfo.acc[0].RoleId === 1))
+        .filter(menu => menu.title !== "Maintenance" || (userState && userState.userInfo && userState.userInfo.acc && Array.isArray(userState.userInfo.acc) && (userState.userInfo.acc[0].RoleId === 3 || userState.userInfo.acc[0].RoleId === 1)))
         .map((item, key) => <MenuItem key={key} item={item} />);
 }
 
@@ -49,7 +49,7 @@ const MultiLevel = ({ item }) => {
     return (
         <React.Fragment>
             <li className={`nav-item ${open ? 'menu-open' : ''}`}>
-                <a href="#" className={`nav-link ${open ? 'active' : ''}`}  style={{ display: 'flex' }}>
+                <a href="#" className={`nav-link ${open ? 'active' : ''}`} style={{ display: 'flex' }}>
                     <ListItemIcon style={{ color: '#fff', textDecoration: 'none' }}>{item.icon}</ListItemIcon>
                     <p>
                         {item.title}
