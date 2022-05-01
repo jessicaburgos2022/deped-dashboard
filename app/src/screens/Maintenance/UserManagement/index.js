@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Register from './register';
 import Table from './table';
 import { searchUsers } from '../../../actions/userActions';
+import { fetchRoleList } from '../../../actions/appActions';
 import { useDispatch, useSelector } from 'react-redux';
 export default () => {
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -16,6 +17,7 @@ export default () => {
     }
     useEffect(() => {
         dispatch(searchUsers());
+        dispatch(fetchRoleList());
     }, [])
     return (
         <div className="content-wrapper">

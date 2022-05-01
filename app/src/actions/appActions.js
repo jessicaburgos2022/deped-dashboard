@@ -16,10 +16,30 @@ import {
   GET_DEPARTMENTLIST_FAILED,
   GET_UNITBYDEPARTMENT_REQUEST,
   GET_UNITBYDEPARTMENT_SUCCESS,
-  GET_UNITBYDEPARTMENT_FAILED
+  GET_UNITBYDEPARTMENT_FAILED,
+  GET_ROLELIST_REQUEST,
+  GET_ROLELIST_FAILED,
+  GET_ROLELIST_SUCCESS
 } from "../constants/appConstants";
 import axios from "../helpers/axios";
 
+
+
+export const fetchRoleList = () => async (dispatch) => {
+  await dispatch({ type: GET_ROLELIST_REQUEST });
+  try {
+    const { data } = await axios.get(`/api/app/role/list`);
+    dispatch({
+      type: GET_ROLELIST_SUCCESS,
+      payload: data,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ROLELIST_FAILED,
+      payload: ""
+    });
+  }
+};
 
 export const fetchOutputTypes = () => async (dispatch) => {
   await dispatch({ type: GET_OUTPUTTYPE_LIST_REQUEST });

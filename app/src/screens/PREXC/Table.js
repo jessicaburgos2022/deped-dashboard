@@ -157,7 +157,7 @@ export default function CustomizedTreeView(props) {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                                <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q1ResultId)} />
+                                {row.Q1StatusId === 1 && <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q1ResultId)} />}
                             </div>
                         </div >
                     </div >
@@ -176,7 +176,7 @@ export default function CustomizedTreeView(props) {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                                <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q2ResultId)} />
+                                {row.Q2StatusId === 1 && <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q2ResultId)} />}
                             </div>
                         </div >
                     </div >
@@ -195,7 +195,7 @@ export default function CustomizedTreeView(props) {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                                <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q3ResultId)} />
+                                {row.Q3StatusId === 1 && <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q3ResultId)} />}
                             </div>
                         </div >
                     </div >
@@ -214,7 +214,7 @@ export default function CustomizedTreeView(props) {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                                <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q4ResultId)} />
+                                {row.Q4StatusId === 1 && <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q4ResultId)} />}
                             </div>
                         </div >
                     </div >

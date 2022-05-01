@@ -38,7 +38,7 @@ export default (props) => {
                 userState.userInfo.acc[0].Id
             ) {
                 input.Year = selectedYear;
-                input.Quarter = selectedQuarter;
+                input.Quarter = 0;
                 var ret = await dispatch(insertOrgOutcome(input));
                 Swal.fire(
                     ret.result,
@@ -84,32 +84,6 @@ export default (props) => {
                                     </MenuItem>
                                     <MenuItem value={currentYear}>
                                         {currentYear}
-                                    </MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl variant="standard" className="w-100">
-                                <InputLabel>Quarter</InputLabel>
-                                <Select
-                                    fullWidth
-                                    label="Quarter"
-                                    name="selectedQuarter"
-                                    onChange={(e) => setSelectedQuarter(e.target.value)}
-                                    value={selectedQuarter}
-                                >
-                                    <MenuItem value={0}>
-                                        Any
-                                    </MenuItem>
-                                    <MenuItem value={1}>
-                                        First
-                                    </MenuItem>
-                                    <MenuItem value={2}>
-                                        Second
-                                    </MenuItem>
-                                    <MenuItem value={3}>
-                                        Third
-                                    </MenuItem>
-                                    <MenuItem value={4}>
-                                        Fourth
                                     </MenuItem>
                                 </Select>
                             </FormControl>

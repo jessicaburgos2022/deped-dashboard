@@ -1,4 +1,7 @@
 /*JBurgos*/
+.table{
+	background-color: white;
+}
 .table-sm th,
 .table-sm td {
 	padding: 0.5rem 1rem;

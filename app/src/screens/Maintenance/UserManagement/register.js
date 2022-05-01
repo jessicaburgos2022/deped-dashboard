@@ -95,7 +95,7 @@ export default (props) => {
                                     name="unitid"
                                     rules={{
                                         required: {
-                                            value: true,
+                                            value: false,
                                             message: "This field is required",
                                         },
                                     }}
@@ -140,12 +140,11 @@ export default (props) => {
                                             className="output-category-margin"
                                             name="roleid"
                                         >
-                                            <MenuItem value={3}>
-                                                Administrator
-                                            </MenuItem>
-                                            <MenuItem value={2}>
-                                                User
-                                            </MenuItem>
+                                            {
+                                                appState.roleList && Array.isArray(appState.roleList) && appState.roleList.map(r => {
+                                                    return <MenuItem value={r.Id}>{r.Name}</MenuItem>
+                                                })
+                                            }
                                         </Select>
                                     }
                                 />

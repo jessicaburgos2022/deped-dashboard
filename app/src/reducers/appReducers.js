@@ -17,6 +17,9 @@ import {
   GET_UNITBYDEPARTMENT_REQUEST,
   GET_UNITBYDEPARTMENT_SUCCESS,
   GET_UNITBYDEPARTMENT_FAILED,
+  GET_ROLELIST_REQUEST,
+  GET_ROLELIST_SUCCESS,
+  GET_ROLELIST_FAILED
 } from "../constants/appConstants";
 
 const appState = {
@@ -30,6 +33,7 @@ const appState = {
     isLoading: false,
     data: []
   },
+  roleList: []
 };
 
 export const appReducer = (state = appState, action) => {
@@ -132,13 +136,28 @@ export const appReducer = (state = appState, action) => {
           data: payload
         }
       }
-    case GET_UNITBYDEPARTMENT_REQUEST:
+    case GET_UNITBYDEPARTMENT_FAILED:
       return {
         ...state,
         unitsByActiveDepartment: {
           isLoading: false,
           data: []
         }
+      }
+    case GET_ROLELIST_REQUEST:
+      return {
+        ...state,
+        roleList: []
+      }
+    case GET_ROLELIST_SUCCESS:
+      return {
+        ...state,
+        roleList: payload
+      }
+    case GET_ROLELIST_FAILED:
+      return {
+        ...state,
+        roleList: []
       }
     default:
       return state;
