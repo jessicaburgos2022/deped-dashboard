@@ -51,35 +51,38 @@ export default () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell><span style={{fontWeight:'bold'}}>Role Id</span></TableCell>
-            <TableCell><span style={{fontWeight:'bold'}}>Title</span></TableCell>
-            <TableCell><span style={{fontWeight:'bold'}}>Description</span></TableCell>
-            <TableCell><span style={{fontWeight:'bold'}}>Status</span></TableCell>
-            <TableCell><span style={{fontWeight:'bold'}}>Actions</span></TableCell>
+            <TableCell><span style={{ fontWeight: 'bold' }}>Role Id</span></TableCell>
+            <TableCell><span style={{ fontWeight: 'bold' }}>Title</span></TableCell>
+            <TableCell><span style={{ fontWeight: 'bold' }}>Description</span></TableCell>
+            <TableCell><span style={{ fontWeight: 'bold' }}>Status</span></TableCell>
+            <TableCell><span style={{ fontWeight: 'bold' }}>Actions</span></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {distinctRoles.map((r) => {
             return (
               <TableRow>
-                <TableCell><span style={{fontWeight:'bold'}}>{r.role_id}</span></TableCell>
-                <TableCell><span style={{fontWeight:'bold'}}>{r.role_title}</span></TableCell>
-                <TableCell><span style={{fontWeight:'bold'}}>{r.role_description}</span></TableCell>
-                <TableCell>{r.RoleIsActive?'Enabled':'Disabled'}</TableCell>
+                <TableCell><span style={{ fontWeight: 'bold' }}>{r.role_id}</span></TableCell>
+                <TableCell><span style={{ fontWeight: 'bold' }}>{r.role_title}</span></TableCell>
+                <TableCell><span style={{ fontWeight: 'bold' }}>{r.role_description}</span></TableCell>
+                <TableCell>{r.RoleIsActive ? 'Enabled' : 'Disabled'}</TableCell>
                 <TableCell>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      setSelectedRoleId(r.role_id);
-                      setEditOpen(!isEditOpen);
-                    }}
-                  >
-                    Edit
-                  </Button>
                   {
-                    r.role_title !== "Administrator" && r.role_title !== "Default User" &&
-                    <Button onClick={() => handleDelete(r.role_id)} style={{marginLeft:10}}
+                    r.role_title !== "Super Admin" && r.role_title !== "Default User" &&
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        setSelectedRoleId(r.role_id);
+                        setEditOpen(!isEditOpen);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  }
+                  {
+                    r.role_title !== "Super Admin" && r.role_title !== "Default User" &&
+                    <Button onClick={() => handleDelete(r.role_id)} style={{ marginLeft: 10 }}
                       color="secondary">Delete</Button>
                   }
                 </TableCell>
@@ -96,7 +99,7 @@ export default () => {
         />
       )}
       {alert.message === "" ? null : <MessageBar />}
-      
+
       <ConfirmationDialog
         ref={deleteConfirmationRef}
         open={false}

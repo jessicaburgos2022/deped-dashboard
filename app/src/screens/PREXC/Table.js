@@ -21,6 +21,8 @@ import EditIndicator from './edit/editInput';
 import ConfirmationDialog from "../../components/ConfirmationDialog";
 import './styles.css';
 import { updateIndicatorStatus } from '../../actions/prexcActions';
+import { hasAccess } from '../../helpers/common';
+import { searchRoleAction } from '../../actions/roleManagementActions';
 
 function TransitionComponent(props) {
     const style = useSpring({
@@ -48,14 +50,19 @@ TransitionComponent.propTypes = {
     in: PropTypes.bool,
 };
 
-export default function CustomizedTreeView(props) {
+export default function PREXCTable(props) {
     const { handleRefresh } = props;
     const prexcState = useSelector((state) => state.prexc);
+    const rolesState = useSelector((state) => state.roles);
+    const userState = useSelector((state) => state.user);
     const [isEditIndicatorOpen, setIsEditIndicatorOpen] = React.useState(false);
     const [selectedIndicator, setSelectedIndicator] = React.useState({})
     const [quarterForEdit, setQuarterForEdit] = React.useState(0);
     const deleteConfirmationRef = React.createRef();
     const dispatch = useDispatch();
+    React.useEffect(() => {
+        dispatch(searchRoleAction());
+    }, []);
     const handleApproveValue = (resultid) => {
         const modal = deleteConfirmationRef.current;
         setTimeout(async () => {
@@ -106,7 +113,7 @@ export default function CustomizedTreeView(props) {
             formatter: (value, row) => (
                 <span>
                     {value}
-                    <InserProjectButton orgOutcomeId={row.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} />
+                    {hasAccess(rolesState.roleaction, userState.userInfo.acc[0].RoleId, 8) && <InserProjectButton orgOutcomeId={row.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} />}
                 </span>
             )
         }
@@ -156,7 +163,7 @@ export default function CustomizedTreeView(props) {
                         </span>
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                                {hasAccess(rolesState.roleaction, userState.userInfo.acc[0].RoleId, 11) && <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
                                 {row.Q1StatusId === 1 && <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q1ResultId)} />}
                             </div>
                         </div >
@@ -175,7 +182,7 @@ export default function CustomizedTreeView(props) {
                         </span>
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                                {hasAccess(rolesState.roleaction, userState.userInfo.acc[0].RoleId, 11) && <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
                                 {row.Q2StatusId === 1 && <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q2ResultId)} />}
                             </div>
                         </div >
@@ -194,7 +201,7 @@ export default function CustomizedTreeView(props) {
                         </span>
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                                {hasAccess(rolesState.roleaction, userState.userInfo.acc[0].RoleId, 11) && <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
                                 {row.Q3StatusId === 1 && <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q3ResultId)} />}
                             </div>
                         </div >
@@ -213,7 +220,7 @@ export default function CustomizedTreeView(props) {
                         </span>
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
+                                {hasAccess(rolesState.roleaction, userState.userInfo.acc[0].RoleId, 11) && <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
                                 {row.Q4StatusId === 1 && <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q4ResultId)} />}
                             </div>
                         </div >
@@ -228,7 +235,7 @@ export default function CustomizedTreeView(props) {
                 {prexcState.projectIndicators && Array.isArray(prexcState.projectIndicators) && distinctProject(prexcState.projectIndicators.filter(pi => pi.OrgOutcomeId === row.OrganizationalOutcomeId)).map(pi => {
                     return <div className='col-sm-12'>
                         <div style={{ padding: '1rem' }}>
-                            <span className='text-muted'>Project:</span> {pi.ProgramTitle} <InsertIndicatorButton programId={pi.ProgramId} handleRefresh={() => handleRefresh()} />
+                            <span className='text-muted'>Project:</span> {pi.ProgramTitle} {hasAccess(rolesState.roleaction, userState.userInfo.acc[0].RoleId, 11) && <InsertIndicatorButton programId={pi.ProgramId} handleRefresh={() => handleRefresh()} />}
                         </div>
                         <BootstrapTable
                             className="indicator-table"
