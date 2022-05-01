@@ -19,7 +19,10 @@ import {
     EDIT_INDICATORVALUE_FAILED,
     SEARCH_INDICATORVALUE_REQUEST,
     SEARCH_INDICATORVALUE_SUCCESS,
-    SEARCH_INDICATORVALUE_FAILED
+    SEARCH_INDICATORVALUE_FAILED,
+    UPDATE_INDICATORVALUESTATUS_REQUEST,
+    UPDATE_INDICATORVALUESTATUS_SUCCESS,
+    UPDATE_INDICATORVALUESTATUS_FAILED
 } from "../constants/prexcConstants";
 import axios from "../helpers/axios";
 
@@ -116,3 +119,17 @@ export const searchIndicatorValues = (id) => async (dispatch) => {
         });
     }
 };
+
+export const updateIndicatorStatus = (resultid, statusid) => async (dispatch) => {
+    await dispatch({ type: UPDATE_INDICATORVALUESTATUS_REQUEST });
+    try {
+        const { data } = await axios.put(`/api/prexc/indicator/value/${resultid}/${statusid}`);
+        await dispatch({ type: UPDATE_INDICATORVALUESTATUS_SUCCESS, payload: data });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: UPDATE_INDICATORVALUESTATUS_FAILED,
+            payload: []
+        });
+    }
+}

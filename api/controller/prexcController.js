@@ -173,7 +173,8 @@ const getIndicatorValues = asyncHander(async (req, res) => {
 
 const editIndicatorValue = asyncHander(async (req, res) => {
     const { quarter, indicatorid, value } = req.body;
-    const queryString = `CALL EditIndicatorResult('${indicatorid}', '${quarter}', '${value}', ${'1'})`;
+    const queryString = `CALL EditIndicatorResult(${indicatorid}, ${quarter}, '${value}', ${'1'})`;
+    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -197,4 +198,31 @@ const editIndicatorValue = asyncHander(async (req, res) => {
         connection.release();
     });
 });
-module.exports = { ListOrgOutcome, insertOrgOutcome, insertProject, insertIndicator, listProjectIndicatorsByOrgOutcomeId, editIndicatorValue, getIndicatorValues };
+
+const editIndicatorStatus = asyncHander(async (req, res) => {
+    const { resultid, status } = req.params;
+    const queryString = `UPDATE prexc_result SET StatusId = ${status} WHERE Id = ${resultid}`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                    res.end();
+                } else {
+                    res.json({ result: 'Success', message: 'Indicator status has been updated.' });
+                    res.end();
+                }
+            });
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
+module.exports = { ListOrgOutcome, insertOrgOutcome, insertProject, insertIndicator, listProjectIndicatorsByOrgOutcomeId, editIndicatorValue, getIndicatorValues, editIndicatorStatus };

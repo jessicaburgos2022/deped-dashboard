@@ -18,7 +18,9 @@ import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import EditIndicator from './edit/editInput';
+import ConfirmationDialog from "../../components/ConfirmationDialog";
 import './styles.css';
+import { updateIndicatorStatus } from '../../actions/prexcActions';
 
 function TransitionComponent(props) {
     const style = useSpring({
@@ -52,6 +54,22 @@ export default function CustomizedTreeView(props) {
     const [isEditIndicatorOpen, setIsEditIndicatorOpen] = React.useState(false);
     const [selectedIndicator, setSelectedIndicator] = React.useState({})
     const [quarterForEdit, setQuarterForEdit] = React.useState(0);
+    const deleteConfirmationRef = React.createRef();
+    const dispatch = useDispatch();
+    const handleApproveValue = (resultid) => {
+        const modal = deleteConfirmationRef.current;
+        setTimeout(async () => {
+            try {
+                await modal.show();
+                dispatch(updateIndicatorStatus(resultid, 2));
+                handleRefresh();
+                await modal.hide();
+            } catch (err) {
+                await modal.hide();
+            }
+        }, 100);
+    }
+
     const distinctProject = (array) => {
         const result = [];
         const map = new Map();
@@ -139,7 +157,7 @@ export default function CustomizedTreeView(props) {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                                <CheckIcon className="c-pointer" />
+                                <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q1ResultId)} />
                             </div>
                         </div >
                     </div >
@@ -158,7 +176,7 @@ export default function CustomizedTreeView(props) {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                                <CheckIcon className="c-pointer" />
+                                <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q2ResultId)} />
                             </div>
                         </div >
                     </div >
@@ -177,7 +195,7 @@ export default function CustomizedTreeView(props) {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                                <CheckIcon className="c-pointer" />
+                                <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q3ResultId)} />
                             </div>
                         </div >
                     </div >
@@ -196,7 +214,7 @@ export default function CustomizedTreeView(props) {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <EditIcon className="c-pointer" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                                <CheckIcon className="c-pointer" />
+                                <CheckIcon className="c-pointer" onClick={() => handleApproveValue(row.Q4ResultId)} />
                             </div>
                         </div >
                     </div >
@@ -279,6 +297,14 @@ export default function CustomizedTreeView(props) {
                 }
                 pagination={paginationFactory(options)}
             />
+            <ConfirmationDialog
+                ref={deleteConfirmationRef}
+                open={false}
+                confirmTitle="Confirmation"
+                confirmationDetail="Do you want to approve this result?"
+                confirmButtonText="Yes"
+                cancelButtonText="No"
+            ></ConfirmationDialog>
         </React.Fragment>
 
     );
