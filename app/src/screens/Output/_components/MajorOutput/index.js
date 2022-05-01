@@ -279,7 +279,7 @@ export default () => {
                           </FormControl>
 
                           <FormControl variant="standard" className=" w-100">
-                            <InputLabel>Project</InputLabel>
+                            <InputLabel>Program/Project</InputLabel>
                             <Controller
                               control={control}
                               name="projectid"
@@ -293,7 +293,7 @@ export default () => {
                                 </InputAdornment>
                               }
                               as={
-                                <Select className="output-margin" label="Select Project" disabled={appState.projectsByKRALoading}>
+                                <Select className="output-margin" label="Select Program/Project" disabled={appState.projectsByKRALoading}>
                                   {appState.projectsByKRA &&
                                     appState.projectsByKRA.map((project, id) => {
                                       return (
