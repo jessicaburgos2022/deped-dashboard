@@ -39,12 +39,14 @@ export default () => {
           <div className="row mb-2">
             <div className="col-sm-6">
               <h1 className="m-0">Major Output Management</h1>
-              <p style={{ fontSize: "10px" }} className="text-muted">
+              <p style={{ fontSize: "12" }} className="text-muted">
                 <b>MAJOR OUTPUTS</b> - Programs, Project and Activities(PPAs) with Funding Source from MOOE, CO, Downloaded PPAs refer to:
                 <ul>
-                  <li><b>Program</b> - an integrated group of activities that contribute to particular contunuing objective of a department/agency.</li>
-                  <li><b>Project</b> - a special department or agency undertaking carried out within a define time frame and intended to result in some pre-determined measure of goods and services.</li>
-                  <li><b>Activities</b> - a work process that contributes to the implementation of a program or sub-program or project.</li>
+                  <p style={{ fontSize: "10px" }} className="text-muted">
+                    <li><b>Program</b> - an integrated group of activities that contribute to particular contunuing objective of a department/agency.</li>
+                    <li><b>Project</b> - a special department or agency undertaking carried out within a define time frame and intended to result in some pre-determined measure of goods and services.</li>
+                    <li><b>Activities</b> - a work process that contributes to the implementation of a program or sub-program or project.</li>
+                  </p>
                 </ul>
               </p>
             </div>

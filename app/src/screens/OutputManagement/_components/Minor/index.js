@@ -29,6 +29,16 @@ export default () => {
                     <div className="row mb-2">
                         <div className="col-sm-6">
                             <h1 className="m-0">Minor Output Management</h1>
+                            <p style={{ fontSize: "12px" }} className="text-muted">
+                                <b>MINOR OUTPUTS</b> - Programs, Project and Activities on Cross-cutting KRAs not included in OPCRF Cross-cutting KRAs may include:
+                                <ul>
+                                    <p style={{ fontSize: "10px" }} className="text-muted">
+                                        <li>Technical assistance, Monitoring and Evaluation, Planning, Learning and Development, and other In-House KRAs</li>
+                                    </p>
+
+                                </ul>
+
+                            </p>
                         </div>
                         <div className="col-sm-6">
                             <ol className="breadcrumb float-sm-right">
