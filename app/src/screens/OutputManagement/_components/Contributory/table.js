@@ -58,7 +58,7 @@ export default (data) => {
                             Outcome Title
                         </TableCell>
                         <TableCell className="interface-table-header">
-                            Project
+                            Program / Project
                         </TableCell>
                         <TableCell className="interface-table-header">
                             Indicator

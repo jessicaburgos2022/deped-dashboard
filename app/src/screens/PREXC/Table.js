@@ -22,7 +22,7 @@ import ConfirmationDialog from "../../components/ConfirmationDialog";
 import './styles.css';
 import { updateIndicatorStatus } from '../../actions/prexcActions';
 import Check from '@mui/icons-material/Check';
-import { hasAccess } from '../../helpers/common';
+import { hasAccess, isOfficeAccessible } from '../../helpers/common';
 
 function TransitionComponent(props) {
     const style = useSpring({
@@ -139,8 +139,15 @@ export default function CustomizedTreeView(props) {
             },
         },
         {
+            dataField: "DepartmentName",
+            text: "Office",
+            headerStyle: (column, colIndex) => {
+                return { width: "50" };
+            },
+        },
+        {
             dataField: "AccountableOffice",
-            text: "Accountable Office",
+            text: "Accountable Office/Unit",
             headerStyle: (column, colIndex) => {
                 return { width: "50" };
             },
@@ -157,9 +164,9 @@ export default function CustomizedTreeView(props) {
                 <span className="d-block position-relative quarter-column">
                     <span>{row.Q1Result}</span>
                     <span className='button-wrapper'>
-                        {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
+                        {isOfficeAccessible(userState, row.DepartmentId) && hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
 
-                        {row.Q1StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
+                        {row.Q1StatusId === 1 && isOfficeAccessible(userState, row.DepartmentId) && hasAccess(userState.userInfo.role, 12) &&
                             <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q1ResultId)} />}
                     </span>
                 </span>
@@ -178,10 +185,10 @@ export default function CustomizedTreeView(props) {
                     <span>{row.Q2Result}</span>
                     <span className='button-wrapper'>
                         {/* edit button */}
-                        {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
+                        {isOfficeAccessible(userState, row.DepartmentId) && hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
 
                         {/* check button */}
-                        {row.Q2StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
+                        {row.Q2StatusId === 1 && isOfficeAccessible(userState, row.DepartmentId) && hasAccess(userState.userInfo.role, 12) &&
                             <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q2ResultId)} />}
                     </span>
                 </span>
@@ -199,10 +206,10 @@ export default function CustomizedTreeView(props) {
                     <span>{row.Q3Result}</span>
                     <span className='button-wrapper'>
                         {/* edit button */}
-                        {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
+                        {isOfficeAccessible(userState, row.DepartmentId) && hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
 
                         {/* check button */}
-                        {row.Q3StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
+                        {row.Q3StatusId === 1 && isOfficeAccessible(userState, row.DepartmentId) && hasAccess(userState.userInfo.role, 12) &&
                             <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q3ResultId)} />}
                     </span>
                 </span>
@@ -220,10 +227,10 @@ export default function CustomizedTreeView(props) {
                     <span>{row.Q4Result}</span>
                     <span className='button-wrapper'>
                         {/* edit button */}
-                        {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
+                        {isOfficeAccessible(userState, row.DepartmentId) && hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
 
                         {/* check button */}
-                        {row.Q4StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
+                        {row.Q4StatusId === 1 && isOfficeAccessible(userState, row.DepartmentId) && hasAccess(userState.userInfo.role, 12) &&
                             <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q4ResultId)} />}
                     </span>
                 </span>

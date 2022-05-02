@@ -11,7 +11,6 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
@@ -145,10 +144,9 @@ export default () => {
                       multiline
                       rows={4}
                       maxRows={4}
-                      className="output-margin"
-                      label="Major and Minor Outputs"
+                      className="output-margin w-100"
+                      label="Major and Minor Outputs/Output Indicator/Activity"
                       variant="outlined"
-                      size="small"
                       fullWidth
                       error={errors.outputs != null}
                       helperText={

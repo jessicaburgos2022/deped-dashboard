@@ -345,8 +345,8 @@ export default () => {
                                 className="output-margin "
                                 rows={3}
                                 maxRows={3}
-                                placeholder="Output"
-                                label="Output"
+                                placeholder="Output/Output Indicator/Activity"
+                                label="Output/Output Indicator/Activity"
                                 variant="outlined"
                                 size="small"
                                 fullWidth
@@ -357,7 +357,7 @@ export default () => {
                           />
                         </div>
                       </div>
-                      <div className="col-xl-6"> 
+                      <div className="col-xl-6">
                         {/* ***** QAME RATING ***** */}
                         <div style={{ paddingLeft: '1.5rem' }}>
                           <Divider

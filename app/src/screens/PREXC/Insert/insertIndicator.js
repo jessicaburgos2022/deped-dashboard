@@ -46,7 +46,7 @@ export default (props) => {
     };
 
     return (<React.Fragment>
-        <Button className="btn btn-secondary"  onClick={() => setIsOpen(true)} >Insert Indicator</Button>
+        <Button className="btn btn-secondary" onClick={() => setIsOpen(true)} >Insert Indicator</Button>
         {isOpen && <Dialog
             onClose={handleClose}
             aria-labelledby="customized-dialog-title"
@@ -60,7 +60,7 @@ export default (props) => {
                 </DialogTitle>
                 <DialogContent dividers>
                     <FormGroup>
-                    <FormControl variant="standard" className="w-100">
+                        <FormControl variant="standard" className="w-100">
                             <Controller
                                 control={control}
                                 name="Title"
@@ -118,7 +118,7 @@ export default (props) => {
                                 }}
                                 as={
                                     <TextField
-                                        label="Accountable Office"
+                                        label="Accountable Office/Unit"
                                         name="Accountable"
                                         className="output-margin"
                                         variant="outlined"
@@ -129,7 +129,7 @@ export default (props) => {
                                 }
                             />
                         </FormControl>
-                        
+
                     </FormGroup>
                 </DialogContent>
                 <DialogActions>

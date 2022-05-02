@@ -74,7 +74,7 @@ export default (data) => {
                             KRA
                         </TableCell>
                         <TableCell className="interface-table-header">
-                            Project
+                            Program / Project
                         </TableCell>
                         <TableCell className="interface-table-header">
                             Status

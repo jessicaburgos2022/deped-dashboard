@@ -53,7 +53,7 @@ export const menu = [
                 to: "/maintenance-project"
             },
             {
-                title: "Outcome",
+                title: "TO-KRA",
                 to: "/maintenance-outcome"
             },
             {
