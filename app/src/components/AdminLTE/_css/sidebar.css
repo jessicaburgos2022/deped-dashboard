@@ -19,7 +19,8 @@
     font-size: 25px!important;
 }
 .sidebar-dark-primary {
-	background-color: #012060
+	/* background-color: #012060 */
+	background-color: #00184a;
 }
 .brand-image {
 	float: unset!important;

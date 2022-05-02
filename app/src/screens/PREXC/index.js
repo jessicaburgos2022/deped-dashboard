@@ -39,11 +39,15 @@ export default () => {
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    <div style={{ padding: 5 }}>
-                        <Button variant="contained" color="primary" onClick={() => setInsertOrgOutcomeModalIsOpen(true)}>New Organizational Outcome</Button>
+                    <div className='row justify-content-lg-between'>
+                        <div className='col-auto'>
+                            <h4>Organizational Outcomes</h4>
+                        </div>
+                        <div className='col-auto'>
+                            <Button className="btn" onClick={() => setInsertOrgOutcomeModalIsOpen(true)}>New Organizational Outcome</Button>
+                        </div>
                     </div>
 
-                    <h4>Organizational Outcomes</h4>
                     <CustomTable handleRefresh={reloadPREXC} />
                     {/* <TreeView handleRefresh={reloadPREXC} /> */}
                 </div>

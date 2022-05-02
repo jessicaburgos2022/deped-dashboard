@@ -205,13 +205,19 @@ button.btn-primary {
   width: 100%;
 }
 
-.btn {
+/* JBurgos backup .btn {
   height: 54px;
   padding-left: 30px;
   padding-right: 30px;
+} */
+
+
+.btn{
+  padding: 6px 16px;
+  text-transform: none;
 }
 
-.btn-primary {
+/* .btn-primary {
   color: #fff !important;
   background-color: #008cba !important;
 }
@@ -219,6 +225,19 @@ button.btn-primary {
 .btn-primary:hover {
   background-color: #137ea1 !important;
   border-color: #137ea1 !important;
+} */
+
+.btn.btn-secondary {
+  /* background-color: rgba(93, 120, 255, 0.1); */
+  color: #5d78ff;
+  text-transform: none;
+  background-color: rgba(77, 89, 149, 0.06);
+  box-shadow: none;
+}
+
+.btn.btn-secondary:hover {
+  background-color: #485dc7;
+  color: white;
 }
 
 .avatar {

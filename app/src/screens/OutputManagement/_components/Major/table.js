@@ -61,7 +61,7 @@ export default (data) => {
             {
                 isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh={() => handleRefresh()} />
             }
-            <Table aria-label="collapsible" className='table table-striped table-bordered'>
+            <Table aria-label="collapsible" className='table table-bordered'>
                 <TableHead className='thead'>
                     <TableRow>
                         <TableCell className="interface-table-header">
@@ -100,20 +100,22 @@ export default (data) => {
                                         {r.Project}
                                     </TableCell>
                                     <TableCell component="td" className="interface-table-cell">
-                                        {r.Status}
+                                        <span className="badge-pill badge-success">
+                                            {r.Status}
+                                            </span>
                                     </TableCell>
                                     <TableCell component="td" className="interface-table-cell">
                                         <div style={{ display: 'flex', padding: 5 }}>
-                                            <Button variant="contained" color="primary" onClick={() => handleViewOpen(r)}>View</Button>
+                                            <Button variant="contained" className='btn btn-secondary' onClick={() => handleViewOpen(r)}>View</Button>
                                             {
                                                 (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3))
                                                 &&
-                                                <Button style={{marginLeft: 5}}  variant="contained" color="primary" onClick={() => handleViewEdit(r)}>Edit</Button>
+                                                <Button style={{marginLeft: 5}}  variant="contained" className='btn btn-secondary' onClick={() => handleViewEdit(r)}>Edit</Button>
                                             }
                                             {
                                                 (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
                                                 &&
-                                                <Button  style={{marginLeft: 5}} variant="contained" color="primary" onClick={() => handleEditOutputStatus(1, r.OutputMajorHeaderId, 2)} >Approve</Button>
+                                                <Button  style={{marginLeft: 5}} variant="contained" className='btn btn-secondary' onClick={() => handleEditOutputStatus(1, r.OutputMajorHeaderId, 2)} >Approve</Button>
                                             }
                                         </div>
                                     </TableCell>

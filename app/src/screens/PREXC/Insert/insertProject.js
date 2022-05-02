@@ -45,7 +45,7 @@ export default (props) => {
     };
 
     return (<React.Fragment>
-        <Button color='primary' variant='outlined' onClick={() => setIsOpen(true)} >Insert Project</Button>
+        <Button className='btn btn-secondary' onClick={() => setIsOpen(true)} >Insert Project</Button>
         {isOpen && <Dialog
             onClose={handleClose}
             aria-labelledby="customized-dialog-title"
