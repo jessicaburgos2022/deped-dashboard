@@ -22,6 +22,7 @@ import ConfirmationDialog from "../../components/ConfirmationDialog";
 import './styles.css';
 import { updateIndicatorStatus } from '../../actions/prexcActions';
 import Check from '@mui/icons-material/Check';
+import { hasAccess } from '../../helpers/common';
 
 function TransitionComponent(props) {
     const style = useSpring({
@@ -52,6 +53,7 @@ TransitionComponent.propTypes = {
 export default function CustomizedTreeView(props) {
     const { handleRefresh } = props;
     const prexcState = useSelector((state) => state.prexc);
+    const userState = useSelector((state) => state.user);
     const [isEditIndicatorOpen, setIsEditIndicatorOpen] = React.useState(false);
     const [selectedIndicator, setSelectedIndicator] = React.useState({})
     const [quarterForEdit, setQuarterForEdit] = React.useState(0);
@@ -105,17 +107,13 @@ export default function CustomizedTreeView(props) {
             dataField: "OrganizationalOutcomeTitle",
             text: "Organizational Outcome",
             formatter: (value, row) => (
-            <span>
-                <span className='mr-3'>{value}</span>
-                <InserProjectButton orgOutcomeId={row.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} />
-            </span>
-
+                <span>
+                    <span className='mr-3'>{value}</span>
+                    {hasAccess(userState.userInfo.role, 9) && <InserProjectButton orgOutcomeId={row.OrganizationalOutcomeId} handleRefresh={() => handleRefresh()} />}
+                </span>
             )
         }
     ];
-    const getIndicatorValue = (Quarter, IndicatorId) => {
-        return prexcState.indicatorValues && Array.isArray(prexcState.indicatorValues) && prexcState.indicatorValues.find(r => r.IndicatorId === IndicatorId && r.Quarter === Quarter) ? prexcState.indicatorValues.find(r => r.IndicatorId === IndicatorId && r.Quarter === Quarter).Result : '';
-    }
     const indicatorColumns = [
         {
             dataField: "IndicatorId",
@@ -154,17 +152,15 @@ export default function CustomizedTreeView(props) {
                 padding: "0.75rem .25rem .75rem .75rem",
                 backgroundColor: quarter1.Q1StatusId && quarter1.Q1StatusId === 1 ? '#FFF8E8' : quarter1.Q1StatusId && quarter1.Q1StatusId === 2 ? '#E6F8F3' : '#FFEBF1'
             }),
-            
+
             formatter: (value, row) => (
-                <span className= "d-block position-relative quarter-column">
+                <span className="d-block position-relative quarter-column">
                     <span>{row.Q1Result}</span>
                     <span className='button-wrapper'>
-                        {/* edit button */}
-                        <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                        
-                        {/* check button */}
-                        { row.Q1StatusId === 1 && 
-                        <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q1ResultId)} /> }
+                        {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(1); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
+
+                        {row.Q1StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
+                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q1ResultId)} />}
                     </span>
                 </span>
             )
@@ -174,19 +170,19 @@ export default function CustomizedTreeView(props) {
             text: "Quarter 2",
             style: (value, quarter2) => ({
                 padding: "0.75rem .25rem .75rem .75rem",
-                backgroundColor: quarter2.Q1StatusId && quarter2.Q1StatusId === 1 ? '#FFF8E8' : quarter2.Q1StatusId && quarter2.Q1StatusId === 2 ? '#E6F8F3' : '#FFEBF1'
+                backgroundColor: quarter2.Q2StatusId && quarter2.Q2StatusId === 1 ? '#FFF8E8' : quarter2.Q2StatusId && quarter2.Q2StatusId === 2 ? '#E6F8F3' : '#FFEBF1'
             }),
 
             formatter: (value, row) => (
-                <span className= "d-block position-relative quarter-column">
+                <span className="d-block position-relative quarter-column">
                     <span>{row.Q2Result}</span>
                     <span className='button-wrapper'>
                         {/* edit button */}
-                        <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                        
+                        {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(2); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
+
                         {/* check button */}
-                        { row.Q2StatusId === 1 && 
-                        <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q2Result)} /> }
+                        {row.Q2StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
+                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q2Result)} />}
                     </span>
                 </span>
             )
@@ -196,18 +192,18 @@ export default function CustomizedTreeView(props) {
             text: "Quarter 3",
             style: (value, quarter3) => ({
                 padding: "0.75rem .25rem .75rem .75rem",
-                backgroundColor: quarter3.Q1StatusId && quarter3.Q1StatusId === 1 ? '#FFF8E8' : quarter3.Q1StatusId && quarter3.Q1StatusId === 2 ? '#E6F8F3' : '#FFEBF1'
+                backgroundColor: quarter3.Q3StatusId && quarter3.Q3StatusId === 1 ? '#FFF8E8' : quarter3.Q3StatusId && quarter3.Q3StatusId === 2 ? '#E6F8F3' : '#FFEBF1'
             }),
             formatter: (value, row) => (
-                <span className= "d-block position-relative quarter-column">
+                <span className="d-block position-relative quarter-column">
                     <span>{row.Q3Result}</span>
                     <span className='button-wrapper'>
                         {/* edit button */}
-                        <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                        
+                        {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
+
                         {/* check button */}
-                        { row.Q3Result === 1 && 
-                        <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q3Result)} /> }
+                        {row.Q3Result === 1 && hasAccess(userState.userInfo.role, 12) &&
+                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q3Result)} />}
                     </span>
                 </span>
             )
@@ -217,18 +213,18 @@ export default function CustomizedTreeView(props) {
             text: "Quarter 4",
             style: (value, quarter4) => ({
                 padding: "0.75rem .25rem .75rem .75rem",
-                backgroundColor: quarter4.Q1StatusId && quarter4.Q1StatusId === 1 ? '#FFF8E8' : quarter4.Q1StatusId && quarter4.Q1StatusId === 2 ? '#E6F8F3' : '#FFEBF1'
+                backgroundColor: quarter4.Q4StatusId && quarter4.Q4StatusId === 1 ? '#FFF8E8' : quarter4.Q4StatusId && quarter4.Q4StatusId === 2 ? '#E6F8F3' : '#FFEBF1'
             }),
             formatter: (value, row) => (
-                <span className= "d-block position-relative quarter-column">
+                <span className="d-block position-relative quarter-column">
                     <span>{row.Q4Result}</span>
                     <span className='button-wrapper'>
                         {/* edit button */}
-                        <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />
-                        
+                        {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
+
                         {/* check button */}
-                        { row.Q4Result === 1 && 
-                        <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q4Result)} /> }
+                        {row.Q4Result === 1 && hasAccess(userState.userInfo.role, 12) &&
+                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q4Result)} />}
                     </span>
                 </span>
             )
@@ -244,7 +240,7 @@ export default function CustomizedTreeView(props) {
                             <span className='head-title mr-3'>{pi.ProgramTitle}</span>
                             <InsertIndicatorButton programId={pi.ProgramId} handleRefresh={() => handleRefresh()} />
                         </div>
-                        
+
                         <BootstrapTable
                             className="indicator-table"
                             bootstrap4
@@ -300,7 +296,7 @@ export default function CustomizedTreeView(props) {
         <React.Fragment>
             {isEditIndicatorOpen && <EditIndicator handleRefresh={handleRefresh} handleClose={() => setIsEditIndicatorOpen(false)} open={isEditIndicatorOpen} IndicatorId={selectedIndicator.IndicatorId} Quarter={quarterForEdit} />}
             <BootstrapTable
-            classes="table table-head-custom"
+                classes="table table-head-custom"
                 bootstrap4
                 keyField="Id"
                 data={prexcState.orgOutcome ? prexcState.orgOutcome : []}

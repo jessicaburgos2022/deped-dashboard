@@ -4,6 +4,7 @@ import TreeView from './Treeview';
 import CustomTable from './Table';
 import InsertOrgOutcome from './Insert';
 import { listOrgOutcome, listProjectIndicators } from '../../actions/prexcActions';
+import { fetchRoleList } from '../../actions/appActions';
 import { useDispatch } from 'react-redux';
 
 import './styles.css'
@@ -12,6 +13,7 @@ export default () => {
     const dispatch = useDispatch();
     const [insertOrgOutcomeModalIsOpen, setInsertOrgOutcomeModalIsOpen] = useState(false);
     useEffect(() => {
+        dispatch(fetchRoleList());
         dispatch(listOrgOutcome({ orgId: 0 }));
         dispatch(listProjectIndicators());
     }, [])

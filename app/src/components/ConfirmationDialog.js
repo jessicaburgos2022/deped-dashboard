@@ -37,7 +37,7 @@ export default class PromiseModal extends React.Component {
     });
   };
 
-  hide = () => {
+  hide = async () => {
     this.setState({
       show: false,
     });
