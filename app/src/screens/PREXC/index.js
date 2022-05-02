@@ -5,12 +5,14 @@ import CustomTable from './Table';
 import InsertOrgOutcome from './Insert';
 import { listOrgOutcome, listProjectIndicators } from '../../actions/prexcActions';
 import { fetchRoleList } from '../../actions/appActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './styles.css'
+import { hasAccess } from '../../helpers/common';
 
 export default () => {
     const dispatch = useDispatch();
+    const userState = useSelector((state) => state.user);
     const [insertOrgOutcomeModalIsOpen, setInsertOrgOutcomeModalIsOpen] = useState(false);
     useEffect(() => {
         dispatch(fetchRoleList());
@@ -46,7 +48,7 @@ export default () => {
                             <h4>Organizational Outcomes</h4>
                         </div>
                         <div className='col-auto'>
-                            <Button className="btn" onClick={() => setInsertOrgOutcomeModalIsOpen(true)}>New Organizational Outcome</Button>
+                            {hasAccess(userState.userInfo.role, 8) && <Button className="btn" onClick={() => setInsertOrgOutcomeModalIsOpen(true)}>New Organizational Outcome</Button>}
                         </div>
                     </div>
 

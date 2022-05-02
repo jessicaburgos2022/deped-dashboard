@@ -182,7 +182,7 @@ export default function CustomizedTreeView(props) {
 
                         {/* check button */}
                         {row.Q2StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
-                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q2Result)} />}
+                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q2ResultId)} />}
                     </span>
                 </span>
             )
@@ -202,8 +202,8 @@ export default function CustomizedTreeView(props) {
                         {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(3); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
 
                         {/* check button */}
-                        {row.Q3Result === 1 && hasAccess(userState.userInfo.role, 12) &&
-                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q3Result)} />}
+                        {row.Q3StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
+                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q3ResultId)} />}
                     </span>
                 </span>
             )
@@ -223,8 +223,8 @@ export default function CustomizedTreeView(props) {
                         {hasAccess(userState.userInfo.role, 11) && <EditIcon className="c-pointer edit-icon" onClick={() => { setQuarterForEdit(4); setSelectedIndicator(row); setIsEditIndicatorOpen(true); }} />}
 
                         {/* check button */}
-                        {row.Q4Result === 1 && hasAccess(userState.userInfo.role, 12) &&
-                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q4Result)} />}
+                        {row.Q4StatusId === 1 && hasAccess(userState.userInfo.role, 12) &&
+                            <CheckIcon className="c-pointer check-icon" onClick={() => handleApproveValue(row.Q4ResultId)} />}
                     </span>
                 </span>
             )
@@ -238,7 +238,7 @@ export default function CustomizedTreeView(props) {
                         <div className='py-3'>
                             {/* <span className='text-muted'>Project:</span> {pi.ProgramTitle} <InsertIndicatorButton programId={pi.ProgramId} handleRefresh={() => handleRefresh()} />  JBURGOS */}
                             <span className='head-title mr-3'>{pi.ProgramTitle}</span>
-                            <InsertIndicatorButton programId={pi.ProgramId} handleRefresh={() => handleRefresh()} />
+                            {hasAccess(userState.userInfo.role, 10) && <InsertIndicatorButton programId={pi.ProgramId} handleRefresh={() => handleRefresh()} />}
                         </div>
 
                         <BootstrapTable
