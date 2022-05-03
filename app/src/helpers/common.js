@@ -6,3 +6,7 @@ export const hasAccess = (rolesAccess, actionId) => {
 export const isOfficeAccessible = (userState, EntityOfficeId) => {
     return userState && userState.userInfo && userState.userInfo.acc && Array.isArray(userState.userInfo.acc) && userState.userInfo.acc[0] && userState.userInfo.acc[0].DepartmentId === EntityOfficeId;
 }
+
+export const isUserSuperAdmin = (userState) => {
+    return userState && userState.userInfo && userState.userInfo.acc && Array.isArray(userState.userInfo.acc) && userState.userInfo.acc[0] && userState.userInfo.acc[0].RoleId === 1;
+}
