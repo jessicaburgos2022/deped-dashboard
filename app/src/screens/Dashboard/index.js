@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
 import exportFromJSON, { ExportType } from 'export-from-json'
@@ -148,6 +148,25 @@ export default () => {
       },
     ],
   };
+  const footer = (tooltipItems) => {
+    return 'Total Amount Utilized (Php): ' + dashboardState.BudgetUtilizationRate.find(ur => ur.DepartmentName === tooltipItems[0].label).TotalAmountUtilized;
+  };
+  const BudgetUtilizationRateOptions = useMemo(() => ({
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          footer: footer,
+        }
+      }
+    },
+  }));
   const BudgetUtilizationRate = {
     labels: dashboardState.BudgetUtilizationRate.map((r) => {
       return r.DepartmentName;
@@ -159,6 +178,19 @@ export default () => {
         data: dashboardState.BudgetUtilizationRate.map((r) => {
           return r.AverageUtilizationRate ? r.AverageUtilizationRate : 0;
         }),
+        options: {
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                footer: footer,
+              }
+            }
+          }
+        },
         borderColor: "rgb(1,32,96)",
         backgroundColor: "rgb(255,192,0)",
       },
@@ -384,7 +416,7 @@ export default () => {
                     <div className="chart tab-pane active" id="utilization-chart"
                       style={{ position: 'relative', display: 'flex' }}>
                       <div className="col-md-12">
-                        <Bar options={options} data={BudgetUtilizationRate} />
+                        <Bar options={{ ...BudgetUtilizationRateOptions }} data={BudgetUtilizationRate} />
                       </div>
                     </div>
                   </div>
