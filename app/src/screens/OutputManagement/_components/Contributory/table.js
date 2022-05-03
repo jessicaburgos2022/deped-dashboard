@@ -42,7 +42,7 @@ export default (data) => {
     }
     return (
         <TableContainer component={Paper}>
-            <Table aria-label="collapsible table" className='table table-striped table-bordered'>
+            <Table aria-label="collapsible" className='table table-bordered'>
                 <TableHead className='thead'>
                     <TableRow>
                         <TableCell className="interface-table-header">
@@ -104,8 +104,8 @@ export default (data) => {
                                         <div style={{ display: 'flex', padding: 5 }}>
                                             {
                                                 (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
-                                                &&
-                                                <Button variant="contained" color="primary" onClick={() => handleEditOutputStatus(3, r.OutcomeResultId, 2)} >Approve</Button>
+                                                &&  
+                                                <Button className="btn btn-secondary" onClick={() => handleEditOutputStatus(3, r.OutcomeResultId, 2)} >Approve</Button>
                                             }
                                         </div>
                                     </TableCell>

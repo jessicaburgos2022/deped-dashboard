@@ -4,7 +4,7 @@ import ConfirmationDialog from "../../../components/ConfirmationDialog";
 import {
   searchRoles,
   searchActions,
-  deleteRole
+  deleteRole,
 } from "../../../actions/roleManagementActions";
 import {
   TableRow,
@@ -35,9 +35,7 @@ export default () => {
     setTimeout(async () => {
       try {
         await modal.show();
-        await dispatch(
-          deleteRole(roleId)
-        );
+        await dispatch(deleteRole(roleId));
         dispatch(searchRoles());
         dispatch(searchActions());
         await modal.hide();
@@ -48,43 +46,69 @@ export default () => {
   };
   return (
     <Container>
-      <Table>
-        <TableHead>
+      <Table aria-label="collapsible" className="table table-bordered">
+        <TableHead className="thead">
           <TableRow>
-            <TableCell><span style={{ fontWeight: 'bold' }}>Role Id</span></TableCell>
-            <TableCell><span style={{ fontWeight: 'bold' }}>Title</span></TableCell>
-            <TableCell><span style={{ fontWeight: 'bold' }}>Description</span></TableCell>
-            <TableCell><span style={{ fontWeight: 'bold' }}>Status</span></TableCell>
-            <TableCell><span style={{ fontWeight: 'bold' }}>Actions</span></TableCell>
+            <TableCell>
+              <span>Role Id</span>
+            </TableCell>
+            <TableCell>
+              <span>Title</span>
+            </TableCell>
+            <TableCell>
+              <span>Description</span>
+            </TableCell>
+            <TableCell>
+              <span>Status</span>
+            </TableCell>
+            <TableCell>
+              <span>Actions</span>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {distinctRoles.map((r) => {
             return (
               <TableRow>
-                <TableCell><span style={{ fontWeight: 'bold' }}>{r.role_id}</span></TableCell>
-                <TableCell><span style={{ fontWeight: 'bold' }}>{r.role_title}</span></TableCell>
-                <TableCell><span style={{ fontWeight: 'bold' }}>{r.role_description}</span></TableCell>
-                <TableCell>{r.RoleIsActive ? 'Enabled' : 'Disabled'}</TableCell>
-                <TableCell>
-                  {
-                    r.role_title !== "Super Admin" && r.role_title !== "Default User" &&
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        setSelectedRoleId(r.role_id);
-                        setEditOpen(!isEditOpen);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                  }
-                  {
-                    r.role_title !== "Super Admin" && r.role_title !== "Default User" &&
-                    <Button onClick={() => handleDelete(r.role_id)} style={{ marginLeft: 10 }}
-                      color="secondary">Delete</Button>
-                  }
+                <TableCell component="td" className="interface-table-cell">
+                  {r.role_id}
+                </TableCell>
+
+                <TableCell component="td" className="interface-table-cell">
+                  {r.role_title}
+                </TableCell>
+
+                <TableCell component="td" className="interface-table-cell w-50">
+                  {r.role_description}
+                </TableCell>
+
+                <TableCell component="td" className="interface-table-cell">
+                  {r.RoleIsActive ? "Enabled" : "Disabled"}
+                </TableCell>
+
+                <TableCell component="td" className="interface-table-cell">
+                  {r.role_title !== "Super Admin" &&
+                    r.role_title !== "Default User" && (
+                      <Button
+                        className="btn btn-secondary"
+                        onClick={() => {
+                          setSelectedRoleId(r.role_id);
+                          setEditOpen(!isEditOpen);
+                        }}
+                      >
+                        Edit
+                      </Button>
+                    )}
+                  {r.role_title !== "Super Admin" &&
+                    r.role_title !== "Default User" && (
+                      <Button
+                        onClick={() => handleDelete(r.role_id)}
+                        style={{ marginLeft: 10 }}
+                        className="btn btn-secondary"
+                      >
+                        Delete
+                      </Button>
+                    )}
                 </TableCell>
               </TableRow>
             );

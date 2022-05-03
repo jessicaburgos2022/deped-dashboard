@@ -33,7 +33,7 @@ export default () => {
                 </div>
                 {isAddOpen && <AddOutput open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh} />}
                 <div className="container-fluid" style={{ marginTop: 20 }}>
-                    <Button variant="contained" color="primary" onClick={() => setIsAddOpen(true)} >Add KRA</Button>
+                    <Button className='btn btn-primary' onClick={() => setIsAddOpen(true)} >Add KRA</Button>
                 </div>
             </div>
             <div className="content">

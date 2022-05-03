@@ -109,7 +109,7 @@ export default (props) => {
                         New
                     </Button>
                     <TableContainer component={Paper}>
-                        <Table aria-label="collapsible table">
+                        <Table aria-label="collapsible" className='table table-bordered'>
                             <TableBody>
                                 {
                                     indicators && Array.isArray(indicators) && indicators.map((indicator, key) => {

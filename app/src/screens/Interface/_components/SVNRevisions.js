@@ -50,7 +50,7 @@ export default (props) => {
       <h6 style={{ marginTop: 0, marginBottom: 3 }}>{url}</h6>
       <Paper>
         <TableContainer component={Paper}>
-          <Table aria-label="table">
+        <Table aria-label="collapsible" className='table table-bordered'>
             <TableHead>
               <TableRow>
                 <TableCell className="interface-table-header">

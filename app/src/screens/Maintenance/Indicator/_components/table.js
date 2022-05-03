@@ -58,7 +58,7 @@ export default (data) => {
             {
                 isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh={() => handleRefresh()} />
             }
-            <Table aria-label="collapsible table">
+            <Table aria-label="collapsible" className='table table-bordered'>
                 <TableHead>
                     <TableRow>
                         <TableCell className="interface-table-header">

@@ -39,7 +39,7 @@ export default () => {
                 </div>
                 {isAddOpen && <AddOutcome open={isAddOpen} handleClose={() => setisAddOpen(false)} handleRefresh={() => searchOutcome(selectedDepartmentId, selectedOutcomeTypeId, OutcomeTitle)} />}
                 <div className="container-fluid" style={{ marginTop: 20 }}>
-                    <Button variant="contained" color="primary" onClick={() => setisAddOpen(true)} >Add Outcome</Button>
+                    <Button className="btn btn-primary" onClick={() => setisAddOpen(true)} >Add Outcome</Button>
                 </div>
             </div>
             <div className="content">

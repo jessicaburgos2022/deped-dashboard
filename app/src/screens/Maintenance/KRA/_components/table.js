@@ -65,7 +65,7 @@ export default (data) => {
             {
                 isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh={() => handleRefresh()} />
             }
-            <Table aria-label="collapsible" className='table table-striped table-bordered'>
+            <Table aria-label="collapsible" className='table table-bordered'>
                 <TableHead className='thead'>
                     <TableRow>
                         <TableCell className="interface-table-header">
@@ -74,7 +74,7 @@ export default (data) => {
                         <TableCell className="interface-table-header text-nowrap">
                             Output Type
                         </TableCell>
-                        <TableCell className="interface-table-header">
+                        <TableCell className="interface-table-header w-75">
                             KRA
                         </TableCell>
                         <TableCell className="interface-table-header">Action</TableCell>
@@ -96,7 +96,7 @@ export default (data) => {
                                         {r.KRAName}
                                     </TableCell>
                                     <TableCell component="td" className="interface-table-cell">
-                                        <Button  variant="contained" color="primary" onClick={() => handleViewOpen(r)}>View</Button>
+                                        <Button className='btn btn-secondary' onClick={() => handleViewOpen(r)}>View</Button>
                                         <Button onClick={() => handleViewEdit(r)} hidden={parseInt(departmentId) !== parseInt(r.DepartmentId)}>Edit</Button>
                                     </TableCell>
 

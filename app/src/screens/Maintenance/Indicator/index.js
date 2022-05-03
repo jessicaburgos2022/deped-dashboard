@@ -34,7 +34,7 @@ export default () => {
             <div className="content">
                 <div className="container-fluid">
                     {isAddOpen && <AddOutput open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh} />}
-                    <div className="text">KRA  &nbsp; <Button variant="contained" color="success" onClick={() => setIsAddOpen(true)} >Add KRA</Button></div>
+                    <div className="text">KRA  &nbsp; <Button className="btn btn-primary"  onClick={() => setIsAddOpen(true)} >Add KRA</Button></div>
                     <Table SearchResult={kraState.searchResult} />
 
                 </div>

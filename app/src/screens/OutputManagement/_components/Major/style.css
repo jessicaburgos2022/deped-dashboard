@@ -38,44 +38,6 @@
 }
 
 
-
-.table-sm th,
-.table-sm td {
-  padding: 0.5rem 1rem;
-}
-
-.table td,
-.table th {
-  vertical-align: middle;
-  padding: 0.75rem;
-}
-
-.table thead th{
-  vertical-align: bottom;
-    border-bottom: 2px solid #DFE4FF;
-    color: #48465b;
-}
-
-.table td {
-  color: #74788d;
-}
-
-.table-striped tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: transparent;
-}
-
-.thead th {
-  font-weight: 700;
-  vertical-align: middle;
-  border-bottom: 2px solid #c6c8cb;
-  padding: 1rem;
-  background-color: #F3F3FB;
-}
-
 .form {
   margin-bottom: 20px;
   border-radius: 4px;

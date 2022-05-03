@@ -39,7 +39,7 @@ export default () => {
                     </div>
                 </div>
                 <div className="container-fluid" style={{ marginTop: 20 }}>
-                    <Button variant="contained" color="primary" onClick={() => handleRegisterClick(true)} >Register</Button>
+                    <Button className="btn btn-primary" onClick={() => handleRegisterClick(true)} >Register</Button>
                 </div>
             </div>
             <div className="content">

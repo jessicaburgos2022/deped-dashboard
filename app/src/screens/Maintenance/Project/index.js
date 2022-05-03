@@ -33,7 +33,7 @@ export default () => {
                 </div>
                 {isAddOpen && <AddProject open={isAddOpen} handleClose={handleClose} handleRefresh={handleRefresh} />}
                 <div className="container-fluid" style={{ marginTop: 20 }}>
-                    <Button variant="contained" color="primary" onClick={() => setIsAddOpen(true)} >Add PROJECT</Button>
+                    <Button className='btn btn-primary' onClick={() => setIsAddOpen(true)} >Add Project</Button>
                 </div>
             </div>
             <div className="content">

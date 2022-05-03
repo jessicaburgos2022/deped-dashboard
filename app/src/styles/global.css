@@ -201,9 +201,12 @@ body {
   align-items: center !important;
 }
 
-button.btn-primary {
+/* button.btn-primary {
   width: 100%;
-}
+} */
+
+
+
 
 /* JBurgos backup .btn {
   height: 54px;
@@ -227,12 +230,29 @@ button.btn-primary {
   border-color: #137ea1 !important;
 } */
 
+.btn.btn-primary{
+  background-color: #5867dd;
+  border-color: #5867dd;
+  color: white;
+  padding: 6px 16px;
+  text-transform: none;
+}
+
+.btn.btn-primary:hover{
+  background-color: #4a58c1;
+  border-color: #4a58c1;
+  color: white;
+}
+
+
 .btn.btn-secondary {
   /* background-color: rgba(93, 120, 255, 0.1); */
   color: #5d78ff;
   text-transform: none;
   background-color: rgba(77, 89, 149, 0.06);
   box-shadow: none;
+  padding: 6px 16px;
+  text-transform: none;
 }
 
 .btn.btn-secondary:hover {
@@ -270,6 +290,13 @@ button.btn-primary {
   margin-bottom: 1rem;
 }
 
+.form {
+  margin-bottom: 20px;
+  border-radius: 4px;
+  padding: 15px;
+  background-color: white;
+}
+
 .form-input-error-label-container {
   /* margin-top: -10px; */
   margin-top: unset !important;
@@ -289,4 +316,51 @@ button.btn-primary {
 }
 .ml-1 {
   margin-left: 1rem;
+}
+
+.table-sm th,
+.table-sm td {
+  padding: 0.5rem 1rem;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  padding: 0.75rem;
+}
+
+.table thead th{
+  vertical-align: bottom;
+    border-bottom: 2px solid #DFE4FF;
+    color: #48465b;
+}
+
+.table td {
+  color: #74788d;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: transparent;
+}
+
+.thead th {
+  font-weight: 700;
+  vertical-align: middle;
+  border-bottom: 2px solid #c6c8cb;
+  padding: 1rem;
+  background-color: #F3F3FB;
+}
+
+
+
+.card-header {
+  font-weight: 700;
+  vertical-align: middle;
+  border-bottom: 2px solid #c6c8cb;
+  padding: 1rem;
+  background-color: #F3F3FB;
 }

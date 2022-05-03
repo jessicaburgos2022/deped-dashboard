@@ -42,7 +42,7 @@ export default () => {
                 </div>
                 <div className="container-fluid" style={{ marginTop: 20 }}>
                     <Link to="/insertoutputoo" style={{ color: "#fff", margin: "auto" }}>
-                        <Button variant="contained" color="primary">Insert Target Outputs</Button>
+                        <Button className="btn btn-primary">Insert Target Outputs</Button>
                     </Link>
                 </div>
             </div>

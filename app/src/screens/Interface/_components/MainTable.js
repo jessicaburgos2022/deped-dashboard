@@ -346,7 +346,7 @@ export default function CollapsibleTable() {
       </div>
 
       <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
+      <Table aria-label="collapsible table" className='table table-bordered'>
           <TableHead>
             <TableRow>
               <TableCell />

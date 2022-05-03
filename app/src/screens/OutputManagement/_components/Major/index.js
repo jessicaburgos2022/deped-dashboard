@@ -67,9 +67,7 @@ export default () => {
             to="/insertoutputmajor"
             style={{ color: "#fff", margin: "auto" }}
           >
-            <Button variant="contained" color="primary">
-              Insert Major Output
-            </Button>
+            <Button className="btn btn-primary">Insert Major Output </Button>
           </Link>
         </div>
       </div>

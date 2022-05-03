@@ -66,24 +66,14 @@ export default (data) => {
             {
                 isEditOpen && <ViewEdit data={selectedRow} open={isEditOpen} handleClose={() => setIsEditOpen(false)} handleRefresh={() => handleRefresh()} />
             }
-            <Table aria-label="collapsible table">
-                <TableHead>
+            <Table aria-label="collapsible" className='table table-bordered'>
+                <TableHead className='thead'>
                     <TableRow>
-                        <TableCell className="interface-table-header">
-                            KRA Id
-                        </TableCell>
-                        <TableCell className="interface-table-header">
-                            Project ID
-                        </TableCell>
-                        <TableCell className="interface-table-header">
-                            Department
-                        </TableCell>
-                        <TableCell className="interface-table-header">
-                            KRA Name
-                        </TableCell>
-                        <TableCell className="interface-table-header">
-                            Project / Program
-                        </TableCell>
+                        <TableCell className="interface-table-header text-nowrap">KRA Id</TableCell>
+                        <TableCell className="interface-table-header text-nowrap">Project ID</TableCell>
+                        <TableCell className="interface-table-header">Department</TableCell>
+                        <TableCell className="interface-table-header">KRA Name</TableCell>
+                        <TableCell className="interface-table-header">Project / Program</TableCell>
                         <TableCell className="interface-table-header">Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -92,25 +82,25 @@ export default (data) => {
                         currentData && Array.isArray(currentData) && currentData.map(r => {
                             return (
                                 <TableRow>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.KRAId}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.ProjectId}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.DepartmentDescription}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.KRADescription}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.ProjectName}
                                     </TableCell>
 
-                                    <TableCell component="th" className="interface-table-cell">
-                                        <Button onClick={() => handleViewOpen(r)}>View</Button>
-                                        <Button onClick={() => handleViewEdit(r)} hidden={parseInt(departmentId) !== parseInt(r.DepartmentId)}>Edit</Button>
+                                    <TableCell component="td" className="interface-table-cell">
+                                        <Button className='btn btn-secondary' onClick={() => handleViewOpen(r)}>View</Button>
+                                        <Button className='btn btn-secondary' onClick={() => handleViewEdit(r)} hidden={parseInt(departmentId) !== parseInt(r.DepartmentId)}>Edit</Button>
                                     </TableCell>
                                 </TableRow>
                             )

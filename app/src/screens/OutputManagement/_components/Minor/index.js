@@ -51,7 +51,7 @@ export default () => {
 
                 <div className="container-fluid" style={{ marginTop: 20 }}>
                     <Link to="/insertoutputminor" style={{ color: "#fff", margin: "auto" }}>
-                        <Button variant="contained" color="primary">Insert Minor Output</Button>
+                        <Button className="btn btn-primary">Insert Minor Output</Button>
                     </Link>
                 </div>
             </div>

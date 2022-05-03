@@ -15,7 +15,7 @@ export default () => {
     <>
       <div style={{ marginTop: 80 }}>
         <Container>
-          <Button onClick={() => setIsCreateOpen(true)} variant="contained" color="primary">Create Role</Button>
+          <Button onClick={() => setIsCreateOpen(true)} className="btn btn-primary mb-3">Create Role</Button>
         </Container>
         <Table />
       </div>

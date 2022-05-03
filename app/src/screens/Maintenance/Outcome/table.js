@@ -28,8 +28,8 @@ export default (data) => {
             {
                 isViewOpen && <ViewOutcome data={selectedRow} open={isViewOpen} handleClose={() => setIsViewOpen(false)} />
             }
-            <Table aria-label="collapsible table">
-                <TableHead>
+            <Table aria-label="collapsible" className='table table-bordered'>
+                <TableHead className="thead">
                     <TableRow>
                         <TableCell className="interface-table-header">
                             Department
@@ -51,20 +51,20 @@ export default (data) => {
                         currentData && Array.isArray(currentData) && currentData.map(r => {
                             return (
                                 <TableRow>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.DepartmentName}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.OutcomeYear}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell">
                                         {r.OutcomeType}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
+                                    <TableCell component="td" className="interface-table-cell w-50">
                                         {r.OutcomeTitle}
                                     </TableCell>
-                                    <TableCell component="th" className="interface-table-cell">
-                                        <Button onClick={() => handleViewOpen(r)}>View</Button>
+                                    <TableCell component="td" className="interface-table-cell">
+                                        <Button className="btn btn-secondary" onClick={() => handleViewOpen(r)}>View</Button>
                                     </TableCell>
                                 </TableRow>
                             )
