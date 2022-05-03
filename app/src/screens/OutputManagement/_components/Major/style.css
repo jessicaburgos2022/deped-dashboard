@@ -24,17 +24,22 @@
 }
 
 /*JBurgos*/
-.badge-pill{
+.badge-pill {
   border-radius: 2rem;
-    height: auto;
-    width: auto;
-    padding: 0.15rem 0.75rem;
-    font-size: 13px;
+  height: auto;
+  width: auto;
+  padding: 0.15rem 0.75rem;
+  font-size: 13px;
 }
 
-.badge-success{
+.badge-success {
   color: #ffffff;
   background: #0abb87;
+}
+
+.badge-warning {
+  color: #FFF8E8;
+  background: #ffb822;
 }
 
 
@@ -59,7 +64,7 @@
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-top: -5px;
+  top: -5px;
   left: 105%;
   /* Position the tooltip */
   position: absolute;
