@@ -218,6 +218,7 @@ body {
 .btn{
   padding: 6px 16px;
   text-transform: none;
+  font-size: 0.875rem;
 }
 
 /* .btn-primary {
@@ -253,9 +254,20 @@ body {
   box-shadow: none;
   padding: 6px 16px;
   text-transform: none;
+  border: none
 }
 
 .btn.btn-secondary:hover {
+  background-color: #485dc7;
+  color: white;
+}
+.btn.btn-secondary-outline {
+  border-color: #4a58c1;
+  color: #5d78ff;
+  background-color: transparent;
+}
+
+.btn.btn-secondary-outline:hover {
   background-color: #485dc7;
   color: white;
 }
@@ -355,8 +367,6 @@ body {
   background-color: #F3F3FB;
 }
 
-
-
 .card-header {
   font-weight: 700;
   vertical-align: middle;
@@ -364,3 +374,122 @@ body {
   padding: 1rem;
   background-color: #F3F3FB;
 }
+
+a {
+  color: #5d78ff;
+}
+
+
+.navbar .toggle-button,
+.navbar .navbar-brand {
+	padding-top: 0.3125rem;
+	padding-bottom: 0.3125rem;
+	margin-right: 1rem;
+	font-size: 1.25rem;
+	line-height: inherit;
+	white-space: nowrap;
+}
+
+.navbar-expand .dropdown-menu {
+    position: absolute;
+}
+
+.v-align-middle {
+	vertical-align: middle;
+}
+
+/* .btn.btn-userDropdown {
+  padding: 6px 0px;
+	color: #959cb6;
+}
+
+.btn.btn-userDropdown:focus{
+	box-shadow: none;
+} */
+
+.btn.btn-secondary#userDropdown:focus{
+  box-shadow: none;
+}
+.btn.btn-secondary#userDropdown:hover{
+  color: white;
+}
+
+
+.navbar .nav.pull-right {
+  float: right;
+  margin-right: 0;
+}
+
+.navbar .dropdown-menu{
+  border-radius: 0px;
+  min-width: 275px;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+
+.user-card-header{
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 2rem 1rem;
+  background-color: #f9fafe;
+}
+.user-card-avatar i{
+  width: 60px;
+  height: 60px;
+  /* border-radius: 4px; */
+}
+
+.notification-item-padding-x{
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+.main-header.navbar {
+  padding: 15px 15px 15px 20px !important;
+}
+
+.user-image {
+  align-self: center;
+  max-height: 34px;
+  border-radius: 4px;
+  }
+
+  .user-card-avatar .user-image{
+    max-height: 50px;
+  }
+  .btn-userDropdown {
+    padding: 6px 16px;
+    text-transform: none;
+    color: #959cb6;
+  }
+  
+  .btn-userDropdown:hover {
+    /* background-color: #F2F3F7; */
+    background-color: #EAEAF5;
+    color: #959cb6;
+
+  }.btn-userDropdown:focus {
+    box-shadow: none;
+  }
+  
+  .user-card-name span:first-child {
+    color: white;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  
+  .user-card-name span {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.755);
+    display: block;
+  }
+
+  .navbar .notification-custom{
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #f7f8fa;
+    padding: 1.6rem 1.5rem;
+  }
