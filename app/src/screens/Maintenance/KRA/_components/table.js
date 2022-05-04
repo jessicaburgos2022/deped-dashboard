@@ -19,9 +19,9 @@ export default (data) => {
     const perPage = 15;
     const [currentPage, setCurrentPage] = useState(0);
 
-    const currentData = SearchResult
-        .slice(currentPage * perPage, currentPage * perPage + perPage);
-        
+    const currentData = SearchResult && Array.isArray(SearchResult) ? SearchResult
+        .slice(currentPage * perPage, currentPage * perPage + perPage) : [];
+
     const handleViewOpen = (data) => {
         setSelectedRow(data);
         setIsViewOpen(true)
@@ -82,8 +82,8 @@ export default (data) => {
                 </TableHead>
                 <TableBody>
                     {
-                         currentData && Array.isArray(currentData) && currentData.map(r => {
-                        // SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
+                        currentData && Array.isArray(currentData) && currentData.map(r => {
+                            // SearchResult && Array.isArray(SearchResult) && SearchResult.map(r => {
                             return (
                                 <TableRow>
                                     <TableCell component="td" className="interface-table-cell text-nowrap text-center">

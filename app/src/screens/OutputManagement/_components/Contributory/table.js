@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { searchContributoryOutput, editOutputStatus } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
 import CustomPagination from '../../../../components/CustomPagination';
+import { hasAccess, isOfficeAccessible } from '../../../../helpers/common';
 
 export default (data) => {
     const userState = useSelector(state => state.user);
@@ -66,6 +67,9 @@ export default (data) => {
                         <TableCell className="interface-table-header">
                             Result
                         </TableCell>
+                        <TableCell className="interface-table-header">
+                            Status
+                        </TableCell>
                         <TableCell className="interface-table-header">Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -98,13 +102,18 @@ export default (data) => {
                                         {r.Result}
                                     </TableCell>
                                     <TableCell component="td" className="interface-table-cell">
+                                        <span className={`badge-pill ${r.StatusId === 2 ? 'badge-success' : 'badge-warning'}`}>{r.Status}</span>
+                                    </TableCell>
+                                    <TableCell component="td" className="interface-table-cell">
                                         {/* <Button >View</Button>
                                         <Button hidden={parseInt(departmentId) !== parseInt(r.DepartmentId) || r.StatusId !== 1}>Edit</Button> */}
 
                                         <div style={{ display: 'flex', padding: 5 }}>
                                             {
-                                                (parseInt(userState.userInfo.acc[0].RoleId) === 1 || (parseInt(departmentId) === parseInt(r.DepartmentId) && userState.userInfo.acc[0].RoleId === 3 && r.StatusId === 1))
-                                                &&  
+                                                hasAccess(userState, 7) &&
+                                                isOfficeAccessible(userState, r.DepartmentId) &&
+                                                r.StatusId === 1
+                                                &&
                                                 <Button className="btn btn-secondary" onClick={() => handleEditOutputStatus(3, r.OutcomeResultId, 2)} >Approve</Button>
                                             }
                                         </div>

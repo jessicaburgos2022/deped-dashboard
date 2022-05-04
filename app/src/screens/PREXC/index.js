@@ -48,7 +48,7 @@ export default () => {
                             <h4>Organizational Outcomes</h4>
                         </div>
                         <div className='col-auto'>
-                            {hasAccess(userState.userInfo.role, 8) && <Button className="btn btn-primary" onClick={() => setInsertOrgOutcomeModalIsOpen(true)}>New Organizational Outcome</Button>}
+                            {hasAccess(userState, 8) && <Button className="btn btn-primary" onClick={() => setInsertOrgOutcomeModalIsOpen(true)}>New Organizational Outcome</Button>}
                         </div>
                     </div>
 

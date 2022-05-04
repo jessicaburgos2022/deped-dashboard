@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const asyncHander = require("express-async-handler");
 const dotenv = require("dotenv");
+const mysql_real_escape_string = require("../utils/sqlhelper");
 dotenv.config();
 
 const pool = mysql.createPool({
@@ -13,7 +14,8 @@ const pool = mysql.createPool({
 });
 
 const searchProject = asyncHander(async (req, res) => {
-  const queryString = `CALL searchProject()`;
+  const { departmentid } = req.params;
+  const queryString = `CALL searchProject(${departmentid})`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -41,7 +43,7 @@ const searchProject = asyncHander(async (req, res) => {
 
 const insertProject = asyncHander(async (req, res) => {
   const { kraid, project } = req.body;
-  const queryString = `CALL InsertProject('${kraid}','${project}')`;
+  const queryString = `CALL InsertProject('${kraid}','${mysql_real_escape_string(project)}')`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -67,9 +69,9 @@ const insertProject = asyncHander(async (req, res) => {
 });
 
 
-const editProject= asyncHander(async (req, res) => {
-  const { kraid, outputtypeid, name, description } = req.body;
-  const queryString = `CALL editProject('${kraid}','${outputtypeid}','${name}','${description}')`;
+const editProject = asyncHander(async (req, res) => {
+  const { kraid, projectid, name } = req.body;
+  const queryString = `CALL editProject('${projectid}','${kraid}','${mysql_real_escape_string(name)}')`;
   console.log(queryString)
   pool.getConnection((err, connection) => {
     if (err) {

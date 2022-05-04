@@ -1,13 +1,13 @@
 import {
-SEARCH_PROJECT_OUTPUT_REQUEST,
-SEARCH_PROJECT_OUTPUT_SUCCESS,
-SEARCH_PROJECT_OUTPUT_FAILED,
-ADD_PROJECT_OUTPUT_REQUEST,
-ADD_PROJECT_OUTPUT_SUCCESS,
-ADD_PROJECT_OUTPUT_FAILED,
-EDIT_PROJECT_OUTPUT_REQUEST,
-EDIT_PROJECT_OUTPUT_SUCCESS,
-EDIT_PROJECT_OUTPUT_FAILED
+    SEARCH_PROJECT_OUTPUT_REQUEST,
+    SEARCH_PROJECT_OUTPUT_SUCCESS,
+    SEARCH_PROJECT_OUTPUT_FAILED,
+    ADD_PROJECT_OUTPUT_REQUEST,
+    ADD_PROJECT_OUTPUT_SUCCESS,
+    ADD_PROJECT_OUTPUT_FAILED,
+    EDIT_PROJECT_OUTPUT_REQUEST,
+    EDIT_PROJECT_OUTPUT_SUCCESS,
+    EDIT_PROJECT_OUTPUT_FAILED
 
 } from "../constants/projectConstants";
 import axios from "../helpers/axios";
@@ -15,7 +15,7 @@ import axios from "../helpers/axios";
 export const searchProject = (param) => async (dispatch) => {
     await dispatch({ type: SEARCH_PROJECT_OUTPUT_REQUEST });
     try {
-        const { data } = await axios.get(`/api/project`);
+        const { data } = await axios.get(`/api/project/${param}`);
         await dispatch({ type: SEARCH_PROJECT_OUTPUT_SUCCESS, payload: data });
 
     } catch (e) {
@@ -28,7 +28,7 @@ export const searchProject = (param) => async (dispatch) => {
 export const addProject = (param) => async (dispatch) => {
     await dispatch({ type: ADD_PROJECT_OUTPUT_REQUEST });
     try {
-        const { data } = await axios.post(`/api/project`,param);
+        const { data } = await axios.post(`/api/project`, param);
         await dispatch({ type: ADD_PROJECT_OUTPUT_SUCCESS, payload: data });
         return data;
     } catch (e) {
@@ -42,7 +42,7 @@ export const addProject = (param) => async (dispatch) => {
 export const editProject = (param) => async (dispatch) => {
     await dispatch({ type: EDIT_PROJECT_OUTPUT_REQUEST });
     try {
-        const { data } = await axios.put(`/api/project`,param);
+        const { data } = await axios.put(`/api/project`, param);
         await dispatch({ type: EDIT_PROJECT_OUTPUT_SUCCESS, payload: data });
         return data;
     } catch (e) {

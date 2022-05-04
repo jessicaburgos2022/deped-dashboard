@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const asyncHander = require("express-async-handler");
 const dotenv = require("dotenv");
+const mysql_real_escape_string = require("../utils/sqlhelper");
 dotenv.config();
 
 const pool = mysql.createPool({
@@ -13,7 +14,8 @@ const pool = mysql.createPool({
 });
 
 const searchKRA = asyncHander(async (req, res) => {
-  const queryString = `CALL searchKRA()`;
+  const { departmentid } = req.params;
+  const queryString = `CALL searchKRA(${mysql_real_escape_string(departmentid)})`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -41,7 +43,7 @@ const searchKRA = asyncHander(async (req, res) => {
 
 const insertKRA = asyncHander(async (req, res) => {
   const { outputtypeid, departmentid, name, description } = req.body;
-  const queryString = `CALL InsertKRA('${outputtypeid}','${departmentid}','${name}','${description}')`;
+  const queryString = `CALL InsertKRA('${mysql_real_escape_string(outputtypeid)}','${mysql_real_escape_string(departmentid)}','${mysql_real_escape_string(name)}','${mysql_real_escape_string(description)}')`;
   console.log(queryString)
   pool.getConnection((err, connection) => {
     if (err) {
@@ -70,7 +72,7 @@ const insertKRA = asyncHander(async (req, res) => {
 
 const editKRA = asyncHander(async (req, res) => {
   const { kraid, outputtypeid, name, description } = req.body;
-  const queryString = `CALL EditKRA('${kraid}','${outputtypeid}','${name}','${description}')`;
+  const queryString = `CALL EditKRA('${mysql_real_escape_string(kraid)}','${mysql_real_escape_string(outputtypeid)}','${mysql_real_escape_string(name)}','${mysql_real_escape_string(description)}')`;
   console.log(queryString)
   pool.getConnection((err, connection) => {
     if (err) {

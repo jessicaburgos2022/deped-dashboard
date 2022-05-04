@@ -11,11 +11,10 @@ import { menu } from "../Menu";
 import { hasChildren } from "../utils";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { hasAccess } from "../../helpers/common";
 
 export default function App() {
-    const userState = useSelector(state => state.user)
     return menu
-        .filter(menu => menu.title !== "Maintenance" || (userState && userState.userInfo && userState.userInfo.acc && Array.isArray(userState.userInfo.acc) && (userState.userInfo.acc[0].RoleId === 3 || userState.userInfo.acc[0].RoleId === 1)))
         .map((item, key) => <MenuItem key={key} item={item} />);
 }
 
@@ -46,6 +45,7 @@ const MultiLevel = ({ item }) => {
         setOpen((prev) => !prev);
     };
 
+    const userState = useSelector(state => state.user)
     return (
         <React.Fragment>
             <li className={`nav-item ${open ? 'menu-open' : ''}`}>
@@ -57,9 +57,13 @@ const MultiLevel = ({ item }) => {
                     </p>
                 </a>
                 <ul className="nav nav-treeview" onClick={handleClick}>
-                    {children.map((child, key) => (
-                        <MenuItem key={key} item={child} />
-                    ))}
+                    {children.filter(c => c.title !== 'KRA' || hasAccess(userState, 15))
+                        .filter(c => c.title !== 'Project' || hasAccess(userState, 16))
+                        .filter(c => c.title !== 'TO-KRA' || hasAccess(userState, 18))
+                        .filter(c => c.title !== 'Account' || hasAccess(userState, 19))
+                        .map((child, key) => (
+                            <MenuItem key={key} item={child} />
+                        ))}
                 </ul>
             </li>
         </React.Fragment>

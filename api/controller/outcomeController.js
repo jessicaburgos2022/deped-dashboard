@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const asyncHander = require("express-async-handler");
 const dotenv = require("dotenv");
+const mysql_real_escape_string = require("../utils/sqlhelper");
 dotenv.config();
 
 const pool = mysql.createPool({
@@ -40,7 +41,7 @@ const listOutcomeType = asyncHander(async (req, res) => {
 
 const listIndicatorsByOutcomeId = asyncHander(async (req, res) => {
     const { outcomeid } = req.params;
-    const queryString = `CALL ListIndicatorsByOutcomeId(${outcomeid})`;
+    const queryString = `CALL ListIndicatorsByOutcomeId(${mysql_real_escape_string(outcomeid)})`;
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -66,7 +67,7 @@ const listIndicatorsByOutcomeId = asyncHander(async (req, res) => {
 });
 const searchOutcome = asyncHander(async (req, res) => {
     const { outcomeyear, departmentid, outcometypeid, title } = req.body;
-    const queryString = `CALL SearchOutcome(${outcomeyear},${departmentid}, ${outcometypeid}, '${title}')`;
+    const queryString = `CALL SearchOutcome(${mysql_real_escape_string(outcomeyear)},${mysql_real_escape_string(departmentid)}, ${mysql_real_escape_string(outcometypeid)}, '${mysql_real_escape_string(title)}')`;
     console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
@@ -94,7 +95,7 @@ const searchOutcome = asyncHander(async (req, res) => {
 
 const insertOutcome = asyncHander(async (req, res) => {
     const { departmentid, outcometypeid, title } = req.body;
-    const queryString = `CALL InsertOutcome( ${outcometypeid}, ${departmentid}, '${title}')`;
+    const queryString = `CALL InsertOutcome( ${mysql_real_escape_string(outcometypeid)}, ${mysql_real_escape_string(departmentid)}, '${mysql_real_escape_string(title)}')`;
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -121,7 +122,7 @@ const insertOutcome = asyncHander(async (req, res) => {
 
 const insertIndicator = asyncHander(async (req, res) => {
     const { outcomeid, indicator, iscomputed } = req.body;
-    const queryString = `CALL InsertIndicator(${outcomeid},'${indicator}',${iscomputed})`;
+    const queryString = `CALL InsertIndicator(${mysql_real_escape_string(outcomeid)},'${mysql_real_escape_string(indicator)}',${iscomputed})`;
     console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
@@ -149,7 +150,7 @@ const insertIndicator = asyncHander(async (req, res) => {
 
 const editIndicator = asyncHander(async (req, res) => {
     const { indicatorid, indicator } = req.body;
-    const queryString = `UPDATE indicator SET indicator = '${indicator}' WHERE Id = ${indicatorid}`;
+    const queryString = `UPDATE indicator SET indicator = '${mysql_real_escape_string(indicator)}' WHERE Id = ${mysql_real_escape_string(indicatorid)}`;
     console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
@@ -176,7 +177,7 @@ const editIndicator = asyncHander(async (req, res) => {
 
 const deleteIndicator = asyncHander(async (req, res) => {
     const { indicatorid } = req.params;
-    const queryString = `DELETE FROM indicator WHERE Id = ${indicatorid}`;
+    const queryString = `DELETE FROM indicator WHERE Id = ${mysql_real_escape_string(indicatorid)}`;
     console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {

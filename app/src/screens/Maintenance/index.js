@@ -8,9 +8,24 @@ import UserManagement from './UserManagement';
 import RoleManagement from './RoleManagement';
 import ChangePassword from './ChangePassword';
 import { Container, FormControl, IconButton, InputLabel, MenuItem, Select } from "@material-ui/core";
+import { fetchDepartmentList, fetchKRAByDepartmentId, fetchOutputTypes, fetchProjectByDepartment } from "../../actions/appActions";
+import { fetchIndicatorsByDeptId } from "../../actions/outputActions";
 export default (props) => {
   const [outputType, setOutputType] = useState('major');
 
+  const dispatch = useDispatch();
+  const accState = useSelector((state) => state.user);
+  useEffect(() => {
+    var departmentId = accState.userInfo.acc[0]
+      ? accState.userInfo.acc[0].DepartmentId
+      : 0;
+    dispatch(fetchKRAByDepartmentId(departmentId));
+    dispatch(fetchOutputTypes());
+    dispatch(fetchIndicatorsByDeptId(departmentId));
+    dispatch(fetchProjectByDepartment(departmentId));
+    dispatch(fetchDepartmentList());
+    // eslint-disable-next-line
+  }, []);
   const RenderOutputView = () => {
     switch (props.location.pathname) {
       case '/maintenance-kra':

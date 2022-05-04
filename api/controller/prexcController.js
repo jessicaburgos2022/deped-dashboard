@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const asyncHander = require("express-async-handler");
 const dotenv = require("dotenv");
+const mysql_real_escape_string = require("../utils/sqlhelper");
 dotenv.config();
 
 const pool = mysql.createPool({
@@ -67,7 +68,7 @@ const listProjectIndicatorsByOrgOutcomeId = asyncHander(async (req, res) => {
 
 const insertOrgOutcome = asyncHander(async (req, res) => {
     const { Year, Quarter, Title } = req.body;
-    const queryString = `INSERT INTO prexc_orgoutcome SET Title = '${Title}', year = ${Year}, quarter = ${Quarter}`;
+    const queryString = `INSERT INTO prexc_orgoutcome SET Title = '${mysql_real_escape_string(Title)}', year = ${Year}, quarter = ${Quarter}`;
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -93,7 +94,7 @@ const insertOrgOutcome = asyncHander(async (req, res) => {
 
 const insertProject = asyncHander(async (req, res) => {
     const { OrgOutcomeId, Title } = req.body;
-    const queryString = `INSERT INTO prexc_program SET OrgOutcomeId = '${OrgOutcomeId}', Title = '${Title}'`;
+    const queryString = `INSERT INTO prexc_program SET OrgOutcomeId = '${OrgOutcomeId}', Title = '${mysql_real_escape_string(Title)}'`;
     console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
@@ -120,7 +121,7 @@ const insertProject = asyncHander(async (req, res) => {
 
 const insertIndicator = asyncHander(async (req, res) => {
     const { ProgramId, DepartmentId, Title, PhysicalTarget, Accountable } = req.body;
-    const queryString = `INSERT INTO prexc_indicator SET ProgramId = '${ProgramId}', DepartmentId = '${DepartmentId}', Title = '${Title}', PhysicalTarget = '${PhysicalTarget}', Accountable = '${Accountable}'`;
+    const queryString = `INSERT INTO prexc_indicator SET ProgramId = '${ProgramId}', DepartmentId = '${DepartmentId}', Title = '${mysql_real_escape_string(Title)}', PhysicalTarget = '${mysql_real_escape_string(PhysicalTarget)}', Accountable = '${mysql_real_escape_string(Accountable)}'`;
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -173,7 +174,7 @@ const getIndicatorValues = asyncHander(async (req, res) => {
 
 const editIndicatorValue = asyncHander(async (req, res) => {
     const { quarter, indicatorid, value } = req.body;
-    const queryString = `CALL EditIndicatorResult(${indicatorid}, ${quarter}, '${value}', ${'1'})`;
+    const queryString = `CALL EditIndicatorResult(${indicatorid}, ${quarter}, '${mysql_real_escape_string(value)}', ${'1'})`;
     console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {

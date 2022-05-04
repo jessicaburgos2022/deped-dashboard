@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@material-ui/core';
 import React, { useState } from 'react';
 import ViewOutput from './viewoutput';
-import ViewEdit from './editOutput';
+import ViewEdit from './editProject';
 import { useDispatch, useSelector } from 'react-redux';
 import { editOutputStatus, searchMinorOutput } from '../../../../actions/outputActions';
 import Swal from 'sweetalert2';
@@ -33,7 +33,7 @@ export default (data) => {
         setIsEditOpen(true)
     }
     const handleRefresh = () => {
-        dispatch(searchProject());
+        dispatch(searchProject(0));
     }
     const handleEditOutputStatus = (oType, hId, sId) => {
         Swal.fire({

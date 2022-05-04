@@ -88,7 +88,7 @@ export default (props) => {
                 fullWidth
             >
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Outcome
+                Target Outputs Along Key Result Areas
                 </DialogTitle>
                 <DialogContent dividers>
                     <b>Department:</b> {data.DepartmentName} <br />

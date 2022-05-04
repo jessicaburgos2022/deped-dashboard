@@ -41,44 +41,6 @@ export default () => {
                         <MenuGenerator />
                     </ul>
                 </nav>
-                <div class="user-panel" style={{position:'absolute', bottom: 0, borderBottom: 'none', borderTop: '1px solid #4f5962', width: '90%', padding: 20}}>
-                    <div className="profile_content">
-                        <div className="profile">
-                            {!user && location.pathname !== "/login" && (
-                                <div style={{ display: "flex", height: "100%" }}>
-                                    <Link to="/login" style={{ color: "#fff", margin: "auto" }}>
-                                        Login
-                                    </Link>
-                                </div>
-                            )}
-                            {user && location.pathname !== "/login" && (
-                                <React.Fragment>
-                                    <div className={`profile_details`}>
-                                        <i className="bx bx-user bx-md"></i>
-                                        {userState &&
-                                            userState.userInfo &&
-                                            userState.userInfo.acc &&
-                                            userState.userInfo.role && (
-                                                <div className="name_job">
-                                                    <div className="name">
-                                                        {userState.userInfo.acc[0].FirstName} {userState.userInfo.acc[0].Surname}
-                                                    </div>
-                                                    <div className="job">
-                                                        [{userState.userInfo.acc[0].DepartmentName}] {userState.userInfo.role[0].RoleDescription}
-                                                    </div>
-                                                </div>
-                                            )}
-                                    </div>
-                                    <i
-                                        className="right bx bx-log-out pointer"
-                                        id="log_out"
-                                        onClick={() => handleLogout()}
-                                    ></i>
-                                </React.Fragment>
-                            )}
-                        </div>
-                    </div>
-                </div>
             </div>
         </aside>
     )

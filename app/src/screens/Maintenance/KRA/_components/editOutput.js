@@ -71,7 +71,7 @@ export default (props) => {
       >
         <form onSubmit={handleSubmit(onSubmit)} id="edit-kra">
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Edit Output
+            Edit Key Result Area
           </DialogTitle>
           <DialogContent dividers>
             <Paper style={{ padding: "2rem" }}>

@@ -15,11 +15,13 @@ import { Link } from "react-router-dom";
 import { searchMajorOutput } from "../../../../actions/outputActions";
 import Table from "./table";
 import "./style.css";
+import { hasAccess } from "../../../../helpers/common";
 export default () => {
   const dispatch = useDispatch();
   const outputManagementState = useSelector(
     (state) => state.majorOutputManagement
   );
+  const userState = useSelector((state) => state.user);
   const appState = useSelector((state) => state.app);
   const [selectedDepartmentId, setSelectedDepartmentId] = useState(0);
   const [selectedYear, setSelectedYear] = useState(0);
@@ -63,12 +65,14 @@ export default () => {
           </div>
         </div>
         <div className="container-fluid" style={{ marginTop: 20 }}>
-          <Link
-            to="/insertoutputmajor"
-            style={{ color: "#fff", margin: "auto" }}
-          >
-            <Button className="btn btn-primary">Insert Major Output </Button>
-          </Link>
+          {
+            hasAccess(userState, 2) && <Link
+              to="/insertoutputmajor"
+              style={{ color: "#fff", margin: "auto" }}
+            >
+              <Button className="btn btn-primary">Insert Major Output </Button>
+            </Link>
+          }
         </div>
       </div>
       <div className="content">

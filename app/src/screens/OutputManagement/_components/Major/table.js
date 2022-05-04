@@ -18,6 +18,7 @@ import {
 } from "../../../../actions/outputActions";
 import Swal from "sweetalert2";
 import CustomPagination from "../../../../components/CustomPagination";
+import { hasAccess, isOfficeAccessible } from "../../../../helpers/common";
 
 export default (data) => {
   const userState = useSelector((state) => state.user);
@@ -29,10 +30,10 @@ export default (data) => {
   const [selectedRow, setSelectedRow] = useState({});
   const perPage = 15;
   const [currentPage, setCurrentPage] = useState(0);
-  const currentData = SearchResult.slice(
+  const currentData = SearchResult && Array.isArray(SearchResult) ? SearchResult.slice(
     currentPage * perPage,
     currentPage * perPage + perPage
-  );
+  ) : [];
 
   const handleViewOpen = (data) => {
     setSelectedRow(data);
@@ -124,7 +125,7 @@ export default (data) => {
                     {r.Project}
                   </TableCell>
                   <TableCell component="td" className="interface-table-cell">
-                    <span className={`badge-pill ${r.StatusId === 2 ? 'badge-success' : 'badge-warning' }`}>{r.Status}</span>
+                    <span className={`badge-pill ${r.StatusId === 2 ? 'badge-success' : 'badge-warning'}`}>{r.Status}</span>
                   </TableCell>
                   <TableCell component="td" className="interface-table-cell">
                     <div style={{ display: "flex", padding: 5 }}>
@@ -135,9 +136,8 @@ export default (data) => {
                       >
                         View
                       </Button>
-                      {(parseInt(userState.userInfo.acc[0].RoleId) === 1 ||
-                        (parseInt(departmentId) === parseInt(r.DepartmentId) &&
-                          userState.userInfo.acc[0].RoleId === 3)) && (
+                      {hasAccess(userState, 13) &&
+                        isOfficeAccessible(userState, r.DepartmentId) &&
                         <Button
                           style={{ marginLeft: 5 }}
                           variant="contained"
@@ -146,11 +146,10 @@ export default (data) => {
                         >
                           Edit
                         </Button>
-                      )}
-                      {(parseInt(userState.userInfo.acc[0].RoleId) === 1 ||
-                        (parseInt(departmentId) === parseInt(r.DepartmentId) &&
-                          userState.userInfo.acc[0].RoleId === 3 &&
-                          r.StatusId === 1)) && (
+                      }
+                      {hasAccess(userState, 3) &&
+                        isOfficeAccessible(userState, r.DepartmentId) &&
+                        r.StatusId === 1 &&
                         <Button
                           style={{ marginLeft: 5 }}
                           variant="contained"
@@ -161,7 +160,7 @@ export default (data) => {
                         >
                           Approve
                         </Button>
-                      )}
+                      }
                     </div>
                   </TableCell>
                 </TableRow>
