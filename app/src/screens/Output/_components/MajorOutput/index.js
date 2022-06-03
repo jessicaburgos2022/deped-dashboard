@@ -14,7 +14,7 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm, useWatch } from "react-hook-form";
@@ -24,9 +24,9 @@ import { Divider } from "@mui/material";
 import { fetchProjectByKRAId } from "../../../../actions/appActions";
 import "../../styles.css";
 import { Grid } from "@mui/material";
-import Target from './Target';
+import Target from "./Target";
 import { padding } from "@mui/system";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 // import { Container, Row, Col } from 'reactstrap';
 // import { Field }
 
@@ -36,17 +36,15 @@ export default () => {
   const dispatch = useDispatch();
   const OutputTypeId = 1; // ID for MAJOR output (refer to ref_outputtype table)
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [targets, setTargets] = useState(
-    [
-      {
-        PlannedTarget: "",
-        TargetType: "",
-        TargetDescription: "",
-        Accomplishment: "",
-        AccomplishmentDescription: ""
-      }
-    ]
-  )
+  const [targets, setTargets] = useState([
+    {
+      PlannedTarget: "",
+      TargetType: "",
+      TargetDescription: "",
+      Accomplishment: "",
+      AccomplishmentDescription: "",
+    },
+  ]);
   const [KRAList, setKRAList] = useState(
     appState.KRA.filter((kra) => kra.OutputTypeId === OutputTypeId)
   );
@@ -60,20 +58,23 @@ export default () => {
   }
 
   const handleTargetIncrease = () => {
-    setTargets(oldArray => [...oldArray, {
-      PlannedTarget: "",
-      TargetType: "",
-      TargetDescription: "",
-      Accomplishment: "",
-      AccomplishmentDescription: ""
-    }]);
-  }
+    setTargets((oldArray) => [
+      ...oldArray,
+      {
+        PlannedTarget: "",
+        TargetType: "",
+        TargetDescription: "",
+        Accomplishment: "",
+        AccomplishmentDescription: "",
+      },
+    ]);
+  };
 
   const handleTargetRemove = (index) => {
-    let newList = [...targets]
-    newList.splice(index, 1)
-    setTargets(newList)
-  }
+    let newList = [...targets];
+    newList.splice(index, 1);
+    setTargets(newList);
+  };
 
   const handleKRAChange = async (event) => {
     setValue("kraid", event.target.value);
@@ -87,13 +88,24 @@ export default () => {
   };
 
   //react hook form
-  const { handleSubmit, errors, control, setValue, getValues, register, reset } = useForm();
+  const {
+    handleSubmit,
+    errors,
+    control,
+    setValue,
+    getValues,
+    register,
+    reset,
+  } = useForm();
 
   function getTargetPercentage(items) {
     return items.reduce(function (a, b) {
-      return Number(a) + ((Number(b['Accomplishment']) / Number(b['PlannedTarget']) * 100));
+      return (
+        Number(a) +
+        (Number(b["Accomplishment"]) / Number(b["PlannedTarget"])) * 100
+      );
     }, 0);
-  };
+  }
   function PhysicalTargetWatch({ control }) {
     // const target = useWatch({
     //   control,
@@ -101,12 +113,12 @@ export default () => {
     //   defaultValue: "0"
     // });
 
-
-    // handleChange 
+    // handleChange
     return (
       // <Grid item xs={4}>
       <Grid item className="col-xl-6">
         <TextField
+          autoComplete="off"
           defaultValue={0}
           disabled={true}
           type="number"
@@ -118,29 +130,26 @@ export default () => {
           value={getTargetPercentage(targets) / targets.length}
           error={errors.accomplishment1 != null}
           helperText={
-            errors.accomplishment1
-              ? errors.accomplishment1.message
-              : ""
+            errors.accomplishment1 ? errors.accomplishment1.message : ""
           }
           InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">%</InputAdornment>
-            ),
+            endAdornment: <InputAdornment position="end">%</InputAdornment>,
           }}
         />
       </Grid>
-    )
+    );
   }
   function UtilizationWatch({ control }) {
     const utilization = useWatch({
       control,
-      name: ['financialrequirement', 'amountutilized'],
-      defaultValue: "0"
+      name: ["financialrequirement", "amountutilized"],
+      defaultValue: "0",
     });
     return (
       <React.Fragment>
         <Grid item xs={6}>
           <TextField
+            autoComplete="off"
             defaultValue={0}
             disabled={true}
             className="output-margin"
@@ -149,7 +158,10 @@ export default () => {
             variant="outlined"
             size="small"
             fullWidth
-            value={Number(parseFloat(utilization['financialrequirement']) - parseFloat(utilization['amountutilized'])).toFixed(2)}
+            value={Number(
+              parseFloat(utilization["financialrequirement"]) -
+                parseFloat(utilization["amountutilized"])
+            ).toFixed(2)}
             error={errors.balance != null}
             helperText={errors.balance ? errors.balance.message : ""}
             InputProps={{
@@ -161,6 +173,7 @@ export default () => {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            autoComplete="off"
             defaultValue={0}
             disabled={true}
             className="output-margin"
@@ -169,36 +182,37 @@ export default () => {
             variant="outlined"
             size="small"
             fullWidth
-            value={Number((parseFloat(utilization['amountutilized']) / parseFloat(utilization['financialrequirement'])) * 100).toFixed(2)}
+            value={Number(
+              (parseFloat(utilization["amountutilized"]) /
+                parseFloat(utilization["financialrequirement"])) *
+                100
+            ).toFixed(2)}
             error={errors.utilizationrate != null}
             helperText={
-              errors.utilizationrate
-                ? errors.utilizationrate.message
-                : ""
+              errors.utilizationrate ? errors.utilizationrate.message : ""
             }
             InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">%</InputAdornment>
-              ),
+              endAdornment: <InputAdornment position="end">%</InputAdornment>,
             }}
           />
         </Grid>
       </React.Fragment>
-    )
+    );
   }
 
   const handleFormReset = () => {
-
-    reset({
-    }, {
-      keepErrors: true,
-      keepDirty: true,
-      keepIsSubmitted: false,
-      keepTouched: false,
-      keepIsValid: false,
-      keepSubmitCount: false,
-    });
-  }
+    reset(
+      {},
+      {
+        keepErrors: true,
+        keepDirty: true,
+        keepIsSubmitted: false,
+        keepTouched: false,
+        keepIsValid: false,
+        keepSubmitCount: false,
+      }
+    );
+  };
 
   const onSubmit = async (data) => {
     setIsSubmitted(true);
@@ -213,8 +227,13 @@ export default () => {
         data.quarter = selectedQuarter;
         data.kraid = selectedKRA;
         data.targets = targets;
-        data.balance = parseFloat(data.financialrequirement) - parseFloat(data.amountutilized);
-        data.utilizationrate = (parseFloat(data['amountutilized']) / parseFloat(data['financialrequirement'])) * 100;
+        data.balance =
+          parseFloat(data.financialrequirement) -
+          parseFloat(data.amountutilized);
+        data.utilizationrate =
+          (parseFloat(data["amountutilized"]) /
+            parseFloat(data["financialrequirement"])) *
+          100;
         data.accomplishment1 = getTargetPercentage(targets) / targets.length;
         var ret = await dispatch(insertMajorOutput(data));
         setIsSubmitted(false);
@@ -223,8 +242,8 @@ export default () => {
           ret.message,
           ret.result === "Success" ? "success" : "error"
         ).finally((r) => {
-          return <Redirect to='/outputmanagement/major' />
-        })
+          return <Redirect to="/outputmanagement/major" />;
+        });
         handleFormReset();
       }
     }
@@ -239,7 +258,9 @@ export default () => {
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item"><a href="#">Insert Output</a></li>
+                <li className="breadcrumb-item">
+                  <a href="#">Insert Output</a>
+                </li>
                 <li className="breadcrumb-item active">Major</li>
               </ol>
             </div>
@@ -251,12 +272,16 @@ export default () => {
           <div className="row">
             <div className="col-12">
               <Paper className="p-3 p-lg-5">
-                <form onSubmit={handleSubmit(onSubmit)} id="insert-major-form" className="custom-form">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  id="insert-major-form"
+                  className="custom-form"
+                >
                   <FormGroup>
                     <div className="row">
                       {/* ***** OPCRF ***** */}
                       <div className="col-xl-6 border-end-1">
-                        <div style={{ paddingRight: '1.5rem' }}>
+                        <div style={{ paddingRight: "1.5rem" }}>
                           <Divider
                             // style={{ padding: "2rem 0 0 0" }}
                             placeholder="OPCRF"
@@ -269,9 +294,11 @@ export default () => {
                             </span>
                           </Divider>
 
-
                           <FormControl variant="standard" className=" w-100">
-                            <InputLabel>Select which quarter should this output be reflected</InputLabel>
+                            <InputLabel>
+                              Select which quarter should this output be
+                              reflected
+                            </InputLabel>
                             <Select
                               className="output-category-margin"
                               name="quarter"
@@ -279,18 +306,10 @@ export default () => {
                               ref={register}
                               onChange={handleQuarterChange}
                             >
-                              <MenuItem value={1}>
-                                First Quarter
-                              </MenuItem>
-                              <MenuItem value={2}>
-                                Second Quarter
-                              </MenuItem>
-                              <MenuItem value={3}>
-                                Third Quarter
-                              </MenuItem>
-                              <MenuItem value={4}>
-                                Fourth Quarter
-                              </MenuItem>
+                              <MenuItem value={1}>First Quarter</MenuItem>
+                              <MenuItem value={2}>Second Quarter</MenuItem>
+                              <MenuItem value={3}>Third Quarter</MenuItem>
+                              <MenuItem value={4}>Fourth Quarter</MenuItem>
                             </Select>
                             <FormHelperText>
                               {errors.quarter ? errors.quarter.message : ""}
@@ -325,24 +344,37 @@ export default () => {
                               control={control}
                               name="projectid"
                               rules={{
-                                required: { value: true, message: "This field is required" },
+                                required: {
+                                  value: true,
+                                  message: "This field is required",
+                                },
                               }}
                               endAdornment={
-                                appState.projectsByKRALoading &&
-                                <InputAdornment position="end" style={{ marginRight: '3rem' }}>
-                                  <CircularProgress size={20} />
-                                </InputAdornment>
+                                appState.projectsByKRALoading && (
+                                  <InputAdornment
+                                    position="end"
+                                    style={{ marginRight: "3rem" }}
+                                  >
+                                    <CircularProgress size={20} />
+                                  </InputAdornment>
+                                )
                               }
                               as={
-                                <Select className="output-margin" label="Select Program/Project" disabled={appState.projectsByKRALoading}>
+                                <Select
+                                  className="output-margin"
+                                  label="Select Program/Project"
+                                  disabled={appState.projectsByKRALoading}
+                                >
                                   {appState.projectsByKRA &&
-                                    appState.projectsByKRA.map((project, id) => {
-                                      return (
-                                        <MenuItem key={id} value={project.Id}>
-                                          {project.Project}
-                                        </MenuItem>
-                                      );
-                                    })}
+                                    appState.projectsByKRA.map(
+                                      (project, id) => {
+                                        return (
+                                          <MenuItem key={id} value={project.Id}>
+                                            {project.Project}
+                                          </MenuItem>
+                                        );
+                                      }
+                                    )}
                                 </Select>
                               }
                             />
@@ -356,10 +388,14 @@ export default () => {
                             control={control}
                             name="objective"
                             rules={{
-                              required: { value: true, message: "This field is required" },
+                              required: {
+                                value: true,
+                                message: "This field is required",
+                              },
                             }}
                             as={
                               <TextField
+                                autoComplete="off"
                                 multiline
                                 rows={3}
                                 maxRows={3}
@@ -369,7 +405,11 @@ export default () => {
                                 variant="outlined"
                                 size="small"
                                 error={errors.objective != null}
-                                helperText={errors.objective ? errors.objective.message : ""}
+                                helperText={
+                                  errors.objective
+                                    ? errors.objective.message
+                                    : ""
+                                }
                               />
                             }
                           />
@@ -378,10 +418,14 @@ export default () => {
                             control={control}
                             name="output"
                             rules={{
-                              required: { value: true, message: "This field is required" },
+                              required: {
+                                value: true,
+                                message: "This field is required",
+                              },
                             }}
                             as={
                               <TextField
+                                autoComplete="off"
                                 multiline
                                 className="output-margin "
                                 rows={3}
@@ -392,7 +436,9 @@ export default () => {
                                 size="small"
                                 fullWidth
                                 error={errors.output != null}
-                                helperText={errors.output ? errors.output.message : ""}
+                                helperText={
+                                  errors.output ? errors.output.message : ""
+                                }
                               />
                             }
                           />
@@ -401,10 +447,14 @@ export default () => {
                             control={control}
                             name="outputindicator"
                             rules={{
-                              required: { value: true, message: "This field is required" },
+                              required: {
+                                value: true,
+                                message: "This field is required",
+                              },
                             }}
                             as={
                               <TextField
+                                autoComplete="off"
                                 multiline
                                 className="output-margin "
                                 rows={3}
@@ -415,7 +465,11 @@ export default () => {
                                 size="small"
                                 fullWidth
                                 error={errors.outputindicator != null}
-                                helperText={errors.outputindicator ? errors.outputindicator.message : ""}
+                                helperText={
+                                  errors.outputindicator
+                                    ? errors.outputindicator.message
+                                    : ""
+                                }
                               />
                             }
                           />
@@ -424,10 +478,14 @@ export default () => {
                             control={control}
                             name="activity"
                             rules={{
-                              required: { value: true, message: "This field is required" },
+                              required: {
+                                value: true,
+                                message: "This field is required",
+                              },
                             }}
                             as={
                               <TextField
+                                autoComplete="off"
                                 multiline
                                 className="output-margin "
                                 rows={3}
@@ -438,7 +496,9 @@ export default () => {
                                 size="small"
                                 fullWidth
                                 error={errors.activity != null}
-                                helperText={errors.activity ? errors.activity.message : ""}
+                                helperText={
+                                  errors.activity ? errors.activity.message : ""
+                                }
                               />
                             }
                           />
@@ -446,7 +506,7 @@ export default () => {
                       </div>
                       <div className="col-xl-6">
                         {/* ***** QAME RATING ***** */}
-                        <div style={{ paddingLeft: '1.5rem' }}>
+                        <div style={{ paddingLeft: "1.5rem" }}>
                           <Divider
                             className="group-title"
                             placeholder="FINANCIAL"
@@ -455,7 +515,9 @@ export default () => {
                             orientation="horizontal"
                           >
                             <span>
-                              <b>QAME RATING DURING IMPLEMENTATION OF ACTIVITY</b>
+                              <b>
+                                QAME RATING DURING IMPLEMENTATION OF ACTIVITY
+                              </b>
                             </span>
                           </Divider>
                           <Controller
@@ -465,6 +527,7 @@ export default () => {
                             rules={{}}
                             as={
                               <TextField
+                                autoComplete="off"
                                 className="output-margin"
                                 type="number"
                                 label="Score"
@@ -472,7 +535,9 @@ export default () => {
                                 size="small"
                                 fullWidth
                                 error={errors.score != null}
-                                helperText={errors.score ? errors.score.message : ""}
+                                helperText={
+                                  errors.score ? errors.score.message : ""
+                                }
                               />
                             }
                           />
@@ -484,6 +549,7 @@ export default () => {
                             rules={{}}
                             as={
                               <TextField
+                                autoComplete="off"
                                 className="output-margin"
                                 label="Descriptive Equivalent"
                                 variant="outlined"
@@ -505,6 +571,7 @@ export default () => {
                             rules={{}}
                             as={
                               <TextField
+                                autoComplete="off"
                                 multiline
                                 rows={2}
                                 maxRows={2}
@@ -515,7 +582,9 @@ export default () => {
                                 size="small"
                                 fullWidth
                                 error={errors.opsissue != null}
-                                helperText={errors.opsissue ? errors.opsissue.message : ""}
+                                helperText={
+                                  errors.opsissue ? errors.opsissue.message : ""
+                                }
                               />
                             }
                           />
@@ -526,6 +595,7 @@ export default () => {
                             rules={{}}
                             as={
                               <TextField
+                                autoComplete="off"
                                 className="output-margin"
                                 label="Policy Issue"
                                 variant="outlined"
@@ -533,7 +603,9 @@ export default () => {
                                 fullWidth
                                 error={errors.policyissue != null}
                                 helperText={
-                                  errors.policyissue ? errors.policyissue.message : ""
+                                  errors.policyissue
+                                    ? errors.policyissue.message
+                                    : ""
                                 }
                               />
                             }
@@ -545,6 +617,7 @@ export default () => {
                             rules={{}}
                             as={
                               <TextField
+                                autoComplete="off"
                                 className="output-margin"
                                 label="Issues needing Management decision and recommendation"
                                 variant="outlined"
@@ -552,7 +625,9 @@ export default () => {
                                 fullWidth
                                 error={errors.recommendation != null}
                                 helperText={
-                                  errors.recommendation ? errors.recommendation.message : ""
+                                  errors.recommendation
+                                    ? errors.recommendation.message
+                                    : ""
                                 }
                               />
                             }
@@ -564,13 +639,16 @@ export default () => {
                             rules={{}}
                             as={
                               <TextField
+                                autoComplete="off"
                                 className="output-margin"
                                 label="Others"
                                 variant="outlined"
                                 size="small"
                                 fullWidth
                                 error={errors.others != null}
-                                helperText={errors.others ? errors.others.message : ""}
+                                helperText={
+                                  errors.others ? errors.others.message : ""
+                                }
                               />
                             }
                           />
@@ -581,6 +659,7 @@ export default () => {
                             rules={{}}
                             as={
                               <TextField
+                                autoComplete="off"
                                 className="output-margin"
                                 label="Planned corrective actions to address slippage before year ends."
                                 variant="outlined"
@@ -599,11 +678,10 @@ export default () => {
                       </div>
                     </div>
 
-
                     <div className="row mb-3">
                       {/* ***** PHYSICAL ***** */}
                       <div className="col-xl-6 border-end-1">
-                        <div style={{ paddingRight: '1.5rem' }}>
+                        <div style={{ paddingRight: "1.5rem" }}>
                           <Divider
                             // style={{ padding: "2rem 0" }}
                             className="group-title"
@@ -616,7 +694,12 @@ export default () => {
                               <b>PHYSICAL</b>
                             </span>
                           </Divider>
-                          <Target data={targets} handleTargetRemove={handleTargetRemove} handleChange={handleChange} handleTargetIncrease={handleTargetIncrease} />
+                          <Target
+                            data={targets}
+                            handleTargetRemove={handleTargetRemove}
+                            handleChange={handleChange}
+                            handleTargetIncrease={handleTargetIncrease}
+                          />
                           <Grid container spacing={3}>
                             {/* <Grid item xs={12} style={{ paddingTop: 5 }}> */}
                             <PhysicalTargetWatch control={control} />
@@ -629,6 +712,7 @@ export default () => {
                                 rules={{}}
                                 as={
                                   <TextField
+                                    autoComplete="off"
                                     className="output-margin"
                                     label="Timeline"
                                     variant="outlined"
@@ -636,7 +720,9 @@ export default () => {
                                     fullWidth
                                     error={errors.timeline != null}
                                     helperText={
-                                      errors.timeline ? errors.timeline.message : ""
+                                      errors.timeline
+                                        ? errors.timeline.message
+                                        : ""
                                     }
                                   />
                                 }
@@ -652,6 +738,7 @@ export default () => {
                                 rules={{}}
                                 as={
                                   <TextField
+                                    autoComplete="off"
                                     className="output-margin"
                                     label="% of Accomplishment according to Timeline"
                                     variant="outlined"
@@ -665,7 +752,9 @@ export default () => {
                                     }
                                     InputProps={{
                                       endAdornment: (
-                                        <InputAdornment position="end">%</InputAdornment>
+                                        <InputAdornment position="end">
+                                          %
+                                        </InputAdornment>
                                       ),
                                     }}
                                   />
@@ -681,6 +770,7 @@ export default () => {
                                 rules={{}}
                                 as={
                                   <TextField
+                                    autoComplete="off"
                                     multiline
                                     rows={3}
                                     maxRows={3}
@@ -690,7 +780,11 @@ export default () => {
                                     size="small"
                                     fullWidth
                                     error={errors.gaingap != null}
-                                    helperText={errors.gaingap ? errors.gaingap.message : ""}
+                                    helperText={
+                                      errors.gaingap
+                                        ? errors.gaingap.message
+                                        : ""
+                                    }
                                   />
                                 }
                               />
@@ -707,7 +801,9 @@ export default () => {
                                       <Checkbox
                                         {...props}
                                         checked={props.value}
-                                        onChange={(e) => props.onChange(e.target.checked)}
+                                        onChange={(e) =>
+                                          props.onChange(e.target.checked)
+                                        }
                                       />
                                     )}
                                   />
@@ -721,8 +817,7 @@ export default () => {
 
                       {/* ***** FINANCIAL ***** */}
                       <div className="col-xl-6">
-                        <div style={{ paddingLeft: '1.5rem' }}>
-
+                        <div style={{ paddingLeft: "1.5rem" }}>
                           <Divider
                             className="group-title"
                             placeholder="FINANCIAL"
@@ -744,6 +839,7 @@ export default () => {
                                 rules={{}}
                                 as={
                                   <TextField
+                                    autoComplete="off"
                                     className="output-margin"
                                     label="Financial Requirement"
                                     variant="outlined"
@@ -757,7 +853,9 @@ export default () => {
                                     }
                                     InputProps={{
                                       startAdornment: (
-                                        <InputAdornment position="start">₱</InputAdornment>
+                                        <InputAdornment position="start">
+                                          ₱
+                                        </InputAdornment>
                                       ),
                                     }}
                                   />
@@ -772,6 +870,7 @@ export default () => {
                                 rules={{}}
                                 as={
                                   <TextField
+                                    autoComplete="off"
                                     className="output-margin"
                                     type="number"
                                     label="Amount Utilized"
@@ -786,7 +885,9 @@ export default () => {
                                     }
                                     InputProps={{
                                       startAdornment: (
-                                        <InputAdornment position="start">₱</InputAdornment>
+                                        <InputAdornment position="start">
+                                          ₱
+                                        </InputAdornment>
                                       ),
                                     }}
                                   />
@@ -820,7 +921,9 @@ export default () => {
                                     >
                                       <MenuItem value="MOOE">MOOE</MenuItem>
                                       <MenuItem value="CO">CO</MenuItem>
-                                      <MenuItem value="Downloaded">Downloaded</MenuItem>
+                                      <MenuItem value="Downloaded">
+                                        Downloaded
+                                      </MenuItem>
                                     </Select>
                                   }
                                 />
@@ -847,7 +950,9 @@ export default () => {
                                     >
                                       <MenuItem value="GASS">GASS</MenuItem>
                                       <MenuItem value="STO">STO</MenuItem>
-                                      <MenuItem value="Operations">Operations</MenuItem>
+                                      <MenuItem value="Operations">
+                                        Operations
+                                      </MenuItem>
                                     </Select>
                                   }
                                 />
@@ -857,15 +962,11 @@ export default () => {
                         </div>
                       </div>
                     </div>
-
-
-
                   </FormGroup>
                   <hr />
                   <div className="row mb-3 justify-content-center">
                     <div className="col-auto col-xl-2">
                       {!isSubmitted ? (
-
                         <Button
                           className="output-margin"
                           variant="contained"
@@ -885,8 +986,7 @@ export default () => {
                         >
                           Save
                         </LoadingButton>
-                      )
-                      }
+                      )}
                     </div>
 
                     <div className="col-auto col-xl-2">
@@ -899,7 +999,6 @@ export default () => {
                         Reset
                       </Button>
                     </div>
-
                   </div>
                 </form>
               </Paper>
@@ -907,6 +1006,6 @@ export default () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
