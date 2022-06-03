@@ -26,6 +26,7 @@ import "../../styles.css";
 import { Grid } from "@mui/material";
 import Target from './Target';
 import { padding } from "@mui/system";
+import LoadingButton from '@mui/lab/LoadingButton';
 // import { Container, Row, Col } from 'reactstrap';
 // import { Field }
 
@@ -34,6 +35,7 @@ export default () => {
   const userState = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const OutputTypeId = 1; // ID for MAJOR output (refer to ref_outputtype table)
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [targets, setTargets] = useState(
     [
       {
@@ -92,6 +94,9 @@ export default () => {
     //   name: ['plannedtarget', 'physicalaccomplishment'],
     //   defaultValue: "0"
     // });
+
+
+    // handleChange 
     return (
       // <Grid item xs={4}>
       <Grid item className="col-xl-6">
@@ -190,6 +195,7 @@ export default () => {
   }
 
   const onSubmit = async (data) => {
+    setIsSubmitted(true);
     if (data) {
       if (
         userState.userInfo &&
@@ -204,6 +210,7 @@ export default () => {
         data.utilizationrate = (parseFloat(data['amountutilized']) / parseFloat(data['financialrequirement'])) * 100;
         data.accomplishment1 = getTargetPercentage(targets) / targets.length;
         var ret = await dispatch(insertMajorOutput(data));
+        setIsSubmitted(false);
         Swal.fire(
           ret.result,
           ret.message,
@@ -777,15 +784,29 @@ export default () => {
                   <hr />
                   <div className="row mb-3 justify-content-center">
                     <div className="col-auto col-xl-2">
-                      <Button
-                        className="output-margin"
-                        variant="contained"
-                        style={{ width: "100%", padding: ".75rem" }}
-                        color="primary"
-                        type="submit"
-                      >
-                        Submit
-                      </Button>
+                      {!isSubmitted ? (
+
+                        <Button
+                          className="output-margin"
+                          variant="contained"
+                          disabled={isSubmitted}
+                          style={{ width: "100%", padding: ".75rem" }}
+                          color="primary"
+                          type="submit"
+                        >
+                          Submit
+                        </Button>
+                      ) : (
+                        <LoadingButton
+                          loading
+                          loadingPosition="start"
+                          // startIcon={<SaveIcon />}
+                          variant="outlined"
+                        >
+                          Save
+                        </LoadingButton>
+                      )
+                      }
                     </div>
 
                     <div className="col-auto col-xl-2">

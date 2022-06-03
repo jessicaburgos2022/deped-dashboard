@@ -30,7 +30,7 @@ export default () => {
   const [departmentList, setdepartmentList] = useState(appState.departments);
   const currentYear = new Date().getFullYear();
   const [selectedKRA, setSelectedKRA] = useState(null);
-
+  
   useEffect(() => {
     dispatch(searchMajorOutput(selectedYear, selectedDepartmentId, kraName));
   }, []);
