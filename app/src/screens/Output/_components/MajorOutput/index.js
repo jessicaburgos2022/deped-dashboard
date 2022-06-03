@@ -51,6 +51,7 @@ export default () => {
     appState.KRA.filter((kra) => kra.OutputTypeId === OutputTypeId)
   );
   const [selectedKRA, setSelectedKRA] = useState(null);
+  const [selectedQuarter, setSelectedQuarter] = useState(1);
 
   function handleChange(i, event) {
     const values = [...targets];
@@ -78,6 +79,11 @@ export default () => {
     setValue("kraid", event.target.value);
     setSelectedKRA(event.target.value);
     dispatch(fetchProjectByKRAId(event.target.value));
+  };
+
+  const handleQuarterChange = async (event) => {
+    setValue("quarter", event.target.value);
+    setSelectedQuarter(event.target.value);
   };
 
   //react hook form
@@ -204,6 +210,7 @@ export default () => {
         userState.userInfo.acc[0].Id
       ) {
         data.userId = userState.userInfo.acc[0].Id;
+        data.quarter = selectedQuarter;
         data.kraid = selectedKRA;
         data.targets = targets;
         data.balance = parseFloat(data.financialrequirement) - parseFloat(data.amountutilized);
@@ -262,6 +269,33 @@ export default () => {
                             </span>
                           </Divider>
 
+
+                          <FormControl variant="standard" className=" w-100">
+                            <InputLabel>Select which quarter should this output be reflected</InputLabel>
+                            <Select
+                              className="output-category-margin"
+                              name="quarter"
+                              label="Select Which Quarter should this output be reflected"
+                              ref={register}
+                              onChange={handleQuarterChange}
+                            >
+                              <MenuItem value={1}>
+                                First Quarter
+                              </MenuItem>
+                              <MenuItem value={2}>
+                                Second Quarter
+                              </MenuItem>
+                              <MenuItem value={3}>
+                                Third Quarter
+                              </MenuItem>
+                              <MenuItem value={4}>
+                                Fourth Quarter
+                              </MenuItem>
+                            </Select>
+                            <FormHelperText>
+                              {errors.quarter ? errors.quarter.message : ""}
+                            </FormHelperText>
+                          </FormControl>
 
                           <FormControl variant="standard" className=" w-100">
                             <InputLabel>KRA</InputLabel>
@@ -352,13 +386,59 @@ export default () => {
                                 className="output-margin "
                                 rows={3}
                                 maxRows={3}
-                                placeholder="Output/Output Indicator/Activity"
-                                label="Output/Output Indicator/Activity"
+                                placeholder="Output"
+                                label="Output"
                                 variant="outlined"
                                 size="small"
                                 fullWidth
                                 error={errors.output != null}
                                 helperText={errors.output ? errors.output.message : ""}
+                              />
+                            }
+                          />
+                          <Controller
+                            defaultValue=""
+                            control={control}
+                            name="outputindicator"
+                            rules={{
+                              required: { value: true, message: "This field is required" },
+                            }}
+                            as={
+                              <TextField
+                                multiline
+                                className="output-margin "
+                                rows={3}
+                                maxRows={3}
+                                placeholder="Output Indicator"
+                                label="Output Indicator"
+                                variant="outlined"
+                                size="small"
+                                fullWidth
+                                error={errors.outputindicator != null}
+                                helperText={errors.outputindicator ? errors.outputindicator.message : ""}
+                              />
+                            }
+                          />
+                          <Controller
+                            defaultValue=""
+                            control={control}
+                            name="activity"
+                            rules={{
+                              required: { value: true, message: "This field is required" },
+                            }}
+                            as={
+                              <TextField
+                                multiline
+                                className="output-margin "
+                                rows={3}
+                                maxRows={3}
+                                placeholder="Activity"
+                                label="Activity"
+                                variant="outlined"
+                                size="small"
+                                fullWidth
+                                error={errors.activity != null}
+                                helperText={errors.activity ? errors.activity.message : ""}
                               />
                             }
                           />

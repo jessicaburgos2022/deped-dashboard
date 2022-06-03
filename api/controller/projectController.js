@@ -96,4 +96,7 @@ const editProject = asyncHander(async (req, res) => {
     connection.release();
   });
 });
+
+
+
 module.exports = { searchProject, insertProject, editProject };

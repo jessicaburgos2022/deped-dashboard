@@ -15,8 +15,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { getTargetById } from '../../../../actions/outputActions';
 export default (props) => {
+  const dispatch = useDispatch();
+  const outputStore = useSelector(state => state.majorOutputManagement);
+  const targetState = outputStore ? outputStore.targetByOutputId : [];
   const { open, handleClose, data } = props;
+  useEffect(() => {
+    dispatch(getTargetById(data.OutputMajorHeaderId))
+  }, []);
   return (
     <React.Fragment>
       <Dialog
@@ -60,6 +67,14 @@ export default (props) => {
                 </tr>
 
                 <tr>
+                  <th className="w-25 text-nowrap">Output Indicator:</th>
+                  <td className="w-75">{data.OutputIndicator}</td>
+                </tr>
+                <tr>
+                  <th className="w-25 text-nowrap">Activity:</th>
+                  <td className="w-75">{data.Activity}</td>
+                </tr>
+                <tr>
                   <th className="w-25 text-nowrap">Planned Target:</th>
                   <td className="w-75">{data.PlannedTarget}</td>
                 </tr>
@@ -71,7 +86,32 @@ export default (props) => {
 
                 <tr>
                   <th className="w-25 text-nowrap">Physical Accomplishment:</th>
-                  <td className="w-75">{data.PhysicalAccomplishment}</td>
+                  <td className="w-75">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Accomplishment</th>
+                          <th>Description</th>
+                          <th>PlannedTarget</th>
+                          <th>TargetType</th>
+                          <th>Target Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {targetState.map((r) => {
+                          return (
+                            <tr>
+                              <td>{r.Accomplishment}</td>
+                              <td>{r.AccomplishmentDescription}</td>
+                              <td>{r.PlannedTarget}</td>
+                              <td>{r.TargetDescription}</td>
+                              <td>{r.TargetType}</td>
+                            </tr>
+                          )
+                        })}
+                      </tbody>
+                    </table>
+                  </td>
                 </tr>
 
                 <tr>
@@ -119,7 +159,7 @@ export default (props) => {
                     Budget Utilization Rate (%):
                   </th>
                   <td className="w-75">
-                    {data.UtilizationRate.toFixed(2) + "%"}
+                    {data.UtilizationRate ? data.UtilizationRate.toFixed(2) + "%" : "Data Unavailable"}
                   </td>
                 </tr>
 

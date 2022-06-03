@@ -174,7 +174,7 @@ export default () => {
                               <div className="card">
                                 <div className="card-header">
                                   <h5 className="card-title">
-                                    {outcome.OutcomeTitle}
+                                    {outcome.OutcomeTitle} - {outcome.DepartmentName}
                                   </h5>
                                 </div>
                                 <div className="card-body">

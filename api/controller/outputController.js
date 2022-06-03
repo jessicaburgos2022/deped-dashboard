@@ -15,7 +15,7 @@ const pool = mysql.createPool({
 
 
 const insertMajorOutput = asyncHander(async (req, res) => {
-    const { kraid, objective, projectid, output, plannedtarget, targettype, targetdescription, timeline, physicalaccomplishment, accomplishmentdescription, accomplishment1, accomplishment2, withinTimeframe,
+    const { kraid, objective, projectid, quarter, output, outputindicator, activity, plannedtarget, targettype, targetdescription, timeline, physicalaccomplishment, accomplishmentdescription, accomplishment1, accomplishment2, withinTimeframe,
         gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingsource, budgetstructure, score, scoredescription, opsissue, policyissue,
         recommendation, others, correctiveaction, userId, targets
     } = req.body;
@@ -23,8 +23,11 @@ const insertMajorOutput = asyncHander(async (req, res) => {
         `CALL InsertMajorOutput(
         '${mysql_real_escape_string(kraid)}', 
         '${mysql_real_escape_string(projectid)}',
+        '${mysql_real_escape_string(quarter)}',
         '${mysql_real_escape_string(objective)}', 
         '${mysql_real_escape_string(output)}', 
+        '${mysql_real_escape_string(outputindicator)}', 
+        '${mysql_real_escape_string(activity)}', 
         '${mysql_real_escape_string(timeline)}', 
         '${mysql_real_escape_string(accomplishment1)}', 
         '${mysql_real_escape_string(accomplishment2)}', 
@@ -416,4 +419,5 @@ const getTargetById = asyncHander(async (req, res) => {
         connection.release();
     });
 });
+
 module.exports = { insertMajorOutput, editMajorOutput, insertMinorOutput, editMinorOutput, insertContributoryOutput, searchMajorOutput, searchMinorOutput, searchContributoryOutput, ListIndicatorsByDepartmentId, editOutputStatus, getTargetById, deletePhysicalTarget };

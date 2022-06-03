@@ -4,7 +4,7 @@ import "./styles.css";
 import exportFromJSON, { ExportType } from 'export-from-json'
 import { ReactComponent as ExcelSvg } from '../../media/svg/excel-svgrepo-com.svg'
 import { ReactComponent as PDFSvg } from '../../media/svg/pdf-svgrepo-com.svg'
-import { Card, CardContent, Grid, Typography } from "@material-ui/core";
+import { Card, CardContent, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -49,26 +49,33 @@ export default () => {
   const accState = useSelector((state) => state.user);
   const dashboardState = useSelector((state) => state.dashboard);
   const currentYear = new Date().getFullYear();
+  const [totalPPACount, setTotalPPACount] = useState(0);
+  const [Chart1ActiveYear, setChart1ActiveYear] = useState(currentYear);
+  const [Chart2ActiveYear, setChart2ActiveYear] = useState(currentYear);
+  const [Chart3ActiveYear, setChart3ActiveYear] = useState(currentYear);
+  const [Chart4ActiveYear, setChart4ActiveYear] = useState(currentYear);
+  const [Chart1ActiveQuarter, setChart1ActiveQuarter] = useState(1);
+  const [Chart2ActiveQuarter, setChart2ActiveQuarter] = useState(1);
+  const [Chart3ActiveQuarter, setChart3ActiveQuarter] = useState(1);
+  const [Chart4ActiveQuarter, setChart4ActiveQuarter] = useState(1);
+
+
   useEffect(() => {
     var departmentId = accState.userInfo.acc[0]
       ? accState.userInfo.acc[0].DepartmentId
       : 0;
     dispatch(fetchKRAByDepartmentId(departmentId));
     dispatch(fetchOutputTypes());
-    dispatch(fetchChart1(currentYear));
-    dispatch(fetchChart2(currentYear));
-    dispatch(fetchChart3(currentYear));
-    dispatch(fetchChart4(currentYear));
+    dispatch(fetchChart1(currentYear, Chart1ActiveQuarter));
+    dispatch(fetchChart2(currentYear, Chart2ActiveQuarter));
+    dispatch(fetchChart3(currentYear, Chart3ActiveQuarter));
+    dispatch(fetchChart4(currentYear, Chart4ActiveQuarter));
     dispatch(fetchIndicatorsByDeptId(departmentId));
     dispatch(fetchProjectByDepartment(departmentId));
     dispatch(fetchDepartmentList());
     // eslint-disable-next-line
   }, []);
-  const [totalPPACount, setTotalPPACount] = useState(0);
-  const [Chart1ActiveYear, setChart1ActiveYear] = useState(currentYear);
-  const [Chart2ActiveYear, setChart2ActiveYear] = useState(currentYear);
-  const [Chart3ActiveYear, setChart3ActiveYear] = useState(currentYear);
-  const [Chart4ActiveYear, setChart4ActiveYear] = useState(currentYear);
+
 
   useEffect(() => {
     setTotalPPACount(dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) && Array.isArray(dashboardState.MonitoredPPA.map(item => item.PPACount)) && dashboardState.MonitoredPPA.map(item => item.PPACount).length > 0 ? dashboardState.MonitoredPPA.map(item => item.PPACount).reduce((prev, cur) => prev + cur) : 0);
@@ -76,40 +83,62 @@ export default () => {
 
   const chart1YearOnChange = (year) => {
     setChart1ActiveYear(year);
-    dispatch(fetchChart1(year));
+    dispatch(fetchChart1(year, Chart1ActiveQuarter));
   }
 
   const chart2YearOnChange = (year) => {
     setChart2ActiveYear(year);
-    dispatch(fetchChart4(year));
+    dispatch(fetchChart4(year, Chart2ActiveQuarter));
   }
 
   const chart3YearOnChange = (year) => {
     setChart3ActiveYear(year);
-    dispatch(fetchChart2(year));
+    dispatch(fetchChart2(year, Chart3ActiveQuarter));
   }
 
   const chart4YearOnChange = (year) => {
     setChart4ActiveYear(year);
-    dispatch(fetchChart3(year));
+    dispatch(fetchChart3(year, Chart4ActiveQuarter));
   }
+
+  const chart1QuarterOnChange = (quarter) => {
+    setChart1ActiveQuarter(quarter);
+    dispatch(fetchChart1(Chart1ActiveYear, quarter));
+  }
+
+  const chart2QuarterOnChange = (quarter) => {
+    setChart2ActiveQuarter(quarter);
+    dispatch(fetchChart4(Chart2ActiveYear, quarter));
+  }
+
+  const chart3QuarterOnChange = (quarter) => {
+    setChart3ActiveQuarter(quarter);
+    dispatch(fetchChart2(Chart3ActiveYear, quarter));
+  }
+
+  const chart4QuarterOnChange = (quarter) => {
+    setChart4ActiveQuarter(quarter);
+    dispatch(fetchChart3(Chart4ActiveYear, quarter));
+  }
+
+
   const colors = ['blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow', 'green', 'cyan'];
   const graph1Colors = [];
   const data1 = {
-    labels: dashboardState.MonitoredPPA.map((r) => {
+    labels: dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) ? dashboardState.MonitoredPPA.map((r) => {
       return r.DepartmentName;
-    }),
+    }) : [],
     datasets: [
       {
         label: "PAPs Monitored and Analyzed",
-        data: dashboardState.MonitoredPPA.map((r) => {
+        data: dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) ? dashboardState.MonitoredPPA.map((r) => {
           var color = colors[Math.floor(Math.random() * colors.length)];
           while (graph1Colors.filter(c => c === color).length > 0) {
             color = colors[Math.floor(Math.random() * colors.length)];
           }
           graph1Colors.push(color)
           return r.PPACount;
-        }),
+        }) : [],
         backgroundColor: graph1Colors,
         borderColor: graph1Colors,
         borderWidth: 1,
@@ -357,6 +386,22 @@ export default () => {
                       <li class="nav-item c-pointer">
                         <a class={`nav-link ${Chart1ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart1YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
                       </li>
+                      <li class="nav-item c-pointer">
+                        <FormControl variant="standard" className="w-100">
+                          <Select
+                            fullWidth
+                            label="Quarter"
+                            name="selectedQuarter"
+                            onChange={(e) => chart1QuarterOnChange(e.target.value)}
+                            value={Chart1ActiveQuarter}
+                          >
+                            <MenuItem value={1}>Quarter 1</MenuItem>
+                            <MenuItem value={2}>Quarter 2</MenuItem>
+                            <MenuItem value={3}>Quarter 3</MenuItem>
+                            <MenuItem value={4}>Quarter 4</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -369,7 +414,7 @@ export default () => {
                       </div>
                       <div className="col-md-5">
                         {
-                          dashboardState.MonitoredPPA.map((item, i) => {
+                          dashboardState.MonitoredPPA && Array.isArray(dashboardState.MonitoredPPA) && dashboardState.MonitoredPPA.map((item, i) => {
                             return (
                               <div className="progress-group" style={{ marginBottom: '0.1rem' }}>
                                 {item.DepartmentName}
@@ -408,6 +453,22 @@ export default () => {
                       <li class="nav-item c-pointer">
                         <a class={`nav-link ${Chart2ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart2YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
                       </li>
+                      <li class="nav-item c-pointer">
+                        <FormControl variant="standard" className="w-100">
+                          <Select
+                            fullWidth
+                            label="Quarter"
+                            name="selectedQuarter"
+                            onChange={(e) => chart2QuarterOnChange(e.target.value)}
+                            value={Chart2ActiveQuarter}
+                          >
+                            <MenuItem value={1}>Quarter 1</MenuItem>
+                            <MenuItem value={2}>Quarter 2</MenuItem>
+                            <MenuItem value={3}>Quarter 3</MenuItem>
+                            <MenuItem value={4}>Quarter 4</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -441,6 +502,22 @@ export default () => {
                       </li>
                       <li class="nav-item c-pointer">
                         <a class={`nav-link ${Chart3ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart3YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
+                      </li>
+                      <li class="nav-item c-pointer">
+                        <FormControl variant="standard" className="w-100">
+                          <Select
+                            fullWidth
+                            label="Quarter"
+                            name="selectedQuarter"
+                            onChange={(e) => chart3QuarterOnChange(e.target.value)}
+                            value={Chart3ActiveQuarter}
+                          >
+                            <MenuItem value={1}>Quarter 1</MenuItem>
+                            <MenuItem value={2}>Quarter 2</MenuItem>
+                            <MenuItem value={3}>Quarter 3</MenuItem>
+                            <MenuItem value={4}>Quarter 4</MenuItem>
+                          </Select>
+                        </FormControl>
                       </li>
                     </ul>
                   </div>
@@ -477,6 +554,22 @@ export default () => {
                       </li>
                       <li class="nav-item c-pointer">
                         <a class={`nav-link ${Chart4ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart4YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
+                      </li>
+                      <li class="nav-item c-pointer">
+                        <FormControl variant="standard" className="w-100">
+                          <Select
+                            fullWidth
+                            label="Quarter"
+                            name="selectedQuarter"
+                            onChange={(e) => chart4QuarterOnChange(e.target.value)}
+                            value={Chart4ActiveQuarter}
+                          >
+                            <MenuItem value={1}>Quarter 1</MenuItem>
+                            <MenuItem value={2}>Quarter 2</MenuItem>
+                            <MenuItem value={3}>Quarter 3</MenuItem>
+                            <MenuItem value={4}>Quarter 4</MenuItem>
+                          </Select>
+                        </FormControl>
                       </li>
                     </ul>
                   </div>

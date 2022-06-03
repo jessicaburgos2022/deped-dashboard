@@ -23,10 +23,10 @@ import {
 
 import axios from "../helpers/axios";
 
-export const fetchChart1 = (year) => async (dispatch) => {
+export const fetchChart1 = (year, quarter) => async (dispatch) => {
   await dispatch({ type: GET_MONITOREDPPA_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/chart1/${year}`);
+    const { data } = await axios.get(`/api/dashboard/chart1/${year}/${quarter}`);
     dispatch({
       type: GET_MONITOREDPPA_SUCCESS,
       payload: data,
@@ -39,10 +39,10 @@ export const fetchChart1 = (year) => async (dispatch) => {
   }
 };
 
-export const fetchChart2 = (year) => async (dispatch) => {
+export const fetchChart2 = (year, quarter) => async (dispatch) => {
   await dispatch({ type: GET_SATISFACTORYRESULT_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/chart2/${year}`);
+    const { data } = await axios.get(`/api/dashboard/chart2/${year}/${quarter}`);
     dispatch({
       type: GET_SATISFACTORYRESULT_SUCCESS,
       payload: data,
@@ -55,10 +55,10 @@ export const fetchChart2 = (year) => async (dispatch) => {
   }
 };
 
-export const fetchChart3 = (year) => async (dispatch) => {
+export const fetchChart3 = (year, quarter) => async (dispatch) => {
   await dispatch({ type: GET_CONDUCTEDWITHINTIMEFRAME_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/chart3/${year}`);
+    const { data } = await axios.get(`/api/dashboard/chart3/${year}/${quarter}`);
     dispatch({
       type: GET_CONDUCTEDWITHINTIMEFRAME_SUCCESS,
       payload: data,
@@ -71,10 +71,10 @@ export const fetchChart3 = (year) => async (dispatch) => {
   }
 };
 
-export const fetchChart4 = (year) => async (dispatch) => {
+export const fetchChart4 = (year, quarter) => async (dispatch) => {
   await dispatch({ type: GET_BudgetUtilizationRate_REQUEST });
   try {
-    const { data } = await axios.get(`/api/dashboard/chart4/${year}`);
+    const { data } = await axios.get(`/api/dashboard/chart4/${year}/${quarter}`);
     dispatch({
       type: GET_BudgetUtilizationRate_SUCCESS,
       payload: data,
