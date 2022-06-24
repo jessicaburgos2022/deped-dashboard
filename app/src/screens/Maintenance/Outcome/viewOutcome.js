@@ -94,6 +94,7 @@ export default (props) => {
                     <b>Department:</b> {data.DepartmentName} <br />
                     <b>Outcome Type:</b> {data.OutcomeType} <br />
                     <b>Outcome:</b> {data.OutcomeTitle} <br />
+                    <b>Quarter:</b> {data.Quarter} <br />
 
                     <Divider
                         style={{ padding: "2rem 0 0 0" }}

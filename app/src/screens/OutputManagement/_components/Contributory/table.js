@@ -53,6 +53,9 @@ export default (data) => {
                             Year
                         </TableCell>
                         <TableCell className="interface-table-header">
+                            Quarter
+                        </TableCell>
+                        <TableCell className="interface-table-header">
                             Type
                         </TableCell>
                         <TableCell className="interface-table-header">
@@ -85,6 +88,9 @@ export default (data) => {
                                     </TableCell>
                                     <TableCell component="td" className="interface-table-cell text-center">
                                         {r.KRAYear}
+                                    </TableCell>
+                                    <TableCell component="td" className="interface-table-cell text-center">
+                                        {r.Quarter}
                                     </TableCell>
                                     <TableCell component="td" className="interface-table-cell">
                                         {r.OutcomeType}

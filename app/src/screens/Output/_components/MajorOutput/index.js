@@ -50,6 +50,8 @@ export default () => {
   );
   const [selectedKRA, setSelectedKRA] = useState(null);
   const [selectedQuarter, setSelectedQuarter] = useState(1);
+  const [selectedFundingSource, setSelectedFundingSource] = useState("");
+  const [otherFundingSource, setOtherFundingSource] = useState("");
 
   function handleChange(i, event) {
     const values = [...targets];
@@ -160,7 +162,7 @@ export default () => {
             fullWidth
             value={Number(
               parseFloat(utilization["financialrequirement"]) -
-                parseFloat(utilization["amountutilized"])
+              parseFloat(utilization["amountutilized"])
             ).toFixed(2)}
             error={errors.balance != null}
             helperText={errors.balance ? errors.balance.message : ""}
@@ -185,7 +187,7 @@ export default () => {
             value={Number(
               (parseFloat(utilization["amountutilized"]) /
                 parseFloat(utilization["financialrequirement"])) *
-                100
+              100
             ).toFixed(2)}
             error={errors.utilizationrate != null}
             helperText={
@@ -226,6 +228,7 @@ export default () => {
         data.userId = userState.userInfo.acc[0].Id;
         data.quarter = selectedQuarter;
         data.kraid = selectedKRA;
+        data.fundingSource = selectedFundingSource;
         data.targets = targets;
         data.balance =
           parseFloat(data.financialrequirement) -
@@ -902,32 +905,53 @@ export default () => {
                                 <InputLabel id="funding-source-label">
                                   Funding Source
                                 </InputLabel>
-                                <Controller
-                                  defaultValue=""
-                                  control={control}
-                                  name="fundingsource"
-                                  defaultValue={0}
-                                  rules={{
-                                    required: {
-                                      value: true,
-                                      message: "This field is required",
-                                    },
-                                  }}
-                                  as={
-                                    <Select
-                                      variant="standard"
-                                      className="output-margin"
-                                      labelId="funding-source-label"
-                                    >
-                                      <MenuItem value="MOOE">MOOE</MenuItem>
-                                      <MenuItem value="CO">CO</MenuItem>
-                                      <MenuItem value="Downloaded">
-                                        Downloaded
-                                      </MenuItem>
-                                    </Select>
-                                  }
-                                />
+                                <Select
+                                  variant="standard"
+                                  className="output-margin"
+                                  labelId="funding-source-label"
+                                  value={selectedFundingSource}
+                                  onChange={(e) => setSelectedFundingSource(e.target.value)}
+                                >
+                                  <MenuItem value="MOOE">MOOE</MenuItem>
+                                  <MenuItem value="CO">CO</MenuItem>
+                                  <MenuItem value="Downloaded">
+                                    Downloaded
+                                  </MenuItem>
+                                  <MenuItem value="Other">
+                                    Other
+                                  </MenuItem>
+                                </Select>
                               </FormControl>
+                            </Grid>
+                            <Grid item className="col-xl-6" hidden={selectedFundingSource !== 'Other'}>
+                              <Controller
+                                defaultValue=""
+                                control={control}
+                                name="otherFundingSource"
+                                rules={{
+                                  required: {
+                                    value: selectedFundingSource === 'Other',
+                                    message: "This field is required",
+                                  },
+                                }}
+                                as={
+                                  <TextField
+                                    name="otherFundingSource"
+                                    autoComplete="off"
+                                    className="output-margin"
+                                    label="Please Specify Funding Source"
+                                    variant="outlined"
+                                    size="small"
+                                    fullWidth
+                                    error={errors.otherFundingSource != null}
+                                    helperText={
+                                      errors.otherFundingSource
+                                        ? errors.otherFundingSource.message
+                                        : ""
+                                    }
+                                  />
+                                }
+                              />
                             </Grid>
                             <Grid item className="col-xl-6">
                               <FormControl variant="standard" fullWidth>
@@ -936,7 +960,6 @@ export default () => {
                                   defaultValue=""
                                   control={control}
                                   name="budgetstructure"
-                                  defaultValue={0}
                                   rules={{
                                     required: {
                                       value: true,
@@ -945,6 +968,7 @@ export default () => {
                                   }}
                                   as={
                                     <Select
+                                      variant="outlined"
                                       className="output-margin"
                                       label="Budget Structure"
                                     >

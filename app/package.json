@@ -29,6 +29,7 @@
     "react": "^16.14.0",
     "react-bootstrap": "^2.0.3",
     "react-chartjs-2": "^3.3.0",
+    "react-data-export": "^0.6.0",
     "react-dom": "^16.14.0",
     "react-export-excel": "^0.5.3",
     "react-hook-form": "^6.15.8",
@@ -67,7 +68,6 @@
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "server.js",
-  "devDependencies": {},
   "author": "",
   "license": ""
 }

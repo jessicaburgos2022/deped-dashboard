@@ -8,21 +8,128 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import exportFromJSON, { ExportType } from 'export-from-json'
+import { ReactComponent as ExcelSvg } from '../../../../media/svg/excel-svgrepo-com.svg'
 import { getTargetById } from '../../../../actions/outputActions';
+import ReactExport from "react-data-export";
+import Download from "./ExcelReport";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 export default (props) => {
   const dispatch = useDispatch();
   const outputStore = useSelector(state => state.majorOutputManagement);
   const targetState = outputStore ? outputStore.targetByOutputId : [];
   const { open, handleClose, data } = props;
+  const [report, setReport] = useState([]);
+  const [report2, setReport2] = useState([])
   useEffect(() => {
+    console.log(data)
     dispatch(getTargetById(data.OutputMajorHeaderId))
+    setReport2(targetState)
+    // setReport([{
+    //   Department: ['KRA', 'Objective', 'Program/Project:', 'Output:', 'Output Indicator:', 'Activity:', 'Planned Target:', 'Timeline:', '% of Accomplishment vs Targets:', '% of Accomplishment according to Timeline:', 'Gains/Gaps:', 'Financial Requirement:', 'Amount Utilized:', 'Balance:', 'Budget Utilization Rate (%):', 'Funding Source:', 'Budget Structure:',
+    //     'SCORE:', 'Descriptive Equivalent:', 'Operational Issue:', 'Policy Issue:', 'Recommendation:', 'Others:', 'Corrective Action:']
+    // },
+    setReport([
+      {
+        field: "Department",
+        value: data.DepartmentDescription
+      },
+      {
+        field: "KRA",
+        value: data.KRAName
+      },
+      {
+        field: "Objective",
+        value: data.Objective
+      },
+      {
+        field: "Program/Project",
+        value: data.Project
+      },
+      {
+        field: "Output",
+        value: data.Output
+      },
+      {
+        field: "Output Indicator",
+        value: data.OutputIndicator
+      },
+      {
+        field: "Activity",
+        value: data.Activity
+      },
+      {
+        field: "Timeline",
+        value: data.Timeline
+      },
+      {
+        field: "% of Accomplishment vs Targets",
+        value: data.Accomplishment1
+      },
+      {
+        field: "% of Accomplishment according to Timeline",
+        value: data.Accomplishment2
+      },
+      {
+        field: "Gains/Gaps",
+        value: data.GainGap
+      },
+      {
+        field: "Financial Requirement",
+        value: data.FinancialRequirement.toLocaleString("en-US")
+      },
+      {
+        field: "Amount Utilized",
+        value: data.AmountUtilized.toLocaleString("en-US")
+      },
+      {
+        field: "Balance",
+        value: data.Balance.toLocaleString("en-US")
+      },
+      {
+        field: "Budget Utilization Rate (%)",
+        value: data.UtilizationRate ? data.UtilizationRate.toFixed(2) + "%" : "Data Unavailable"
+      },
+      {
+        field: "Funding Source",
+        value: data.FundingSource
+      },
+      {
+        field: "Budget Structure",
+        value: data.BurdgetStructure
+      },
+      {
+        field: "Score",
+        value: data.Score
+      },
+      {
+        field: "Descriptive Equivalent",
+        value: data.Description
+      },
+      {
+        field: "Operational Issue",
+        value: data.OpsIssue
+      },
+      {
+        field: "Policy Issue",
+        value: data.PolicyIssue
+      },
+      {
+        field: "Recommendation",
+        value: data.Recommendation
+      },
+      {
+        field: "Others",
+        value: data.Others
+      },
+      {
+        field: "Corrective Action",
+        value: data.CorrectiveAction
+      }
+    ])
   }, []);
   return (
     <React.Fragment>
@@ -35,6 +142,9 @@ export default (props) => {
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           View Major Output
+          <li class="nav-item c-pointer pr-5">
+            <Download dataSet={report} dataSet2={report2} element={<ExcelSvg onClick={() => { return }} style={{ height: 30 }} />} />
+          </li>
         </DialogTitle>
 
         <DialogContent dividers className="p-4">
@@ -74,31 +184,31 @@ export default (props) => {
                   <th className="w-25 text-nowrap">Activity:</th>
                   <td className="w-75">{data.Activity}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <th className="w-25 text-nowrap">Planned Target:</th>
                   <td className="w-75">{data.PlannedTarget}</td>
-                </tr>
+                </tr> */}
 
                 <tr>
                   <th className="w-25 text-nowrap">Timeline:</th>
-                  <td className="w-75">{data.PlannedTarget}</td>
+                  <td className="w-75">{data.Timeline}</td>
                 </tr>
 
                 <tr>
-                  <th className="w-25 text-nowrap">Physical Accomplishment:</th>
+                  <th className="w-25 text-nowrap">Physical Accomplishment/s:</th>
                   <td className="w-75">
                     <table>
                       <thead>
                         <tr>
                           <th>Accomplishment</th>
                           <th>Description</th>
-                          <th>PlannedTarget</th>
-                          <th>TargetType</th>
+                          <th>Planned Target</th>
+                          <th>Target Type</th>
                           <th>Target Description</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {targetState.map((r) => {
+                        {targetState && Array.isArray(targetState) && targetState.map((r) => {
                           return (
                             <tr>
                               <td>{r.Accomplishment}</td>
@@ -174,7 +284,7 @@ export default (props) => {
                 </tr>
 
                 <tr>
-                  <th className="w-25 text-nowrap">SCORE:</th>
+                  <th className="w-25 text-nowrap">Score:</th>
                   <td className="w-75">{data.Score}</td>
                 </tr>
 

@@ -48,7 +48,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={LoginScreen} />
           <PrivateRoute path="/insertoutputmajor" component={Output} />
-          <PrivateRoute path="/insertoutputminor" component={Output} />
+          {/* <PrivateRoute path="/insertoutputminor" component={Output} /> */}
           <PrivateRoute path="/insertoutputoo" component={Output} />
           <Route path="/login" component={LoginScreen} />
           <PrivateRoute path="/dashboard" component={Dashboard} />

@@ -198,9 +198,12 @@ export default () => {
                           const oTitle = ooState.indicators.find(
                             (ind) => ind.OutcomeId === outcomeId
                           ).OutcomeTitle;
+                          const quarter = ooState.indicators.find(
+                            (ind) => ind.OutcomeId === outcomeId
+                          ).Quarter;
                           return (
                             <div style={{ marginBottom: 25 }}>
-                              <h6>{oTitle}</h6>
+                              <h6>{oTitle} - Quarter {quarter}</h6>
                               <Grid container spacing={3} padding={2}>
                                 {ooState.indicators
                                   .filter((ind) => ind.OutcomeId === outcomeId)

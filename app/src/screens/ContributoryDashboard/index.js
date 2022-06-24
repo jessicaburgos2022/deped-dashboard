@@ -9,7 +9,10 @@ import {
   CardContent,
   Container,
   Divider,
+  FormControl,
   Grid,
+  MenuItem,
+  Select,
   Typography,
 } from "@material-ui/core";
 
@@ -43,6 +46,7 @@ export default () => {
   const dashboardState = useSelector((state) => state.dashboard);
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [selectedQuarter, setSelectedQuarter] = useState(1);
   useEffect(() => {
     // var departmentId = accState.userInfo.acc[0] ? accState.userInfo.acc[0].DepartmentId : 0;
     dispatch(fetchDashboardOO(currentYear));
@@ -50,7 +54,12 @@ export default () => {
   }, []);
   const setDashboardYear = (year) => {
     setSelectedYear(year)
-    dispatch(fetchDashboardOO(year));
+    dispatch(fetchDashboardOO(year, selectedQuarter));
+  }
+  const setDashboardQuarter = (quarter) => {
+    setSelectedQuarter(quarter);
+    dispatch(fetchDashboardOO(selectedYear, quarter));
+
   }
   const GenerateBarGraph = (props) => {
     const { data, type } = props;
@@ -101,7 +110,7 @@ export default () => {
       <div className="content-header">
         <div className="container-fluid">
           <div className="row mb-2">
-            <div className="col-sm-6 d-flex">
+            <div className="col-sm-7 d-flex">
               <h1 className="m-0">
                 Target Outputs Along Key Result Areas (KRAs)
               </h1>
@@ -114,9 +123,25 @@ export default () => {
                 <li class="nav-item c-pointer">
                   <a class={`nav-link ${selectedYear === currentYear - 1 ? 'active' : ''}`} onClick={() => setDashboardYear(currentYear - 1)}>{currentYear - 1}</a>
                 </li>
+                <li class="nav-item c-pointer">
+                  <FormControl variant="standard" className="w-100">
+                    <Select
+                      fullWidth
+                      label="Quarter"
+                      name="selectedQuarter"
+                      onChange={(e) => setDashboardQuarter(e.target.value)}
+                      value={selectedQuarter}
+                    >
+                      <MenuItem value={1}>Quarter 1</MenuItem>
+                      <MenuItem value={2}>Quarter 2</MenuItem>
+                      <MenuItem value={3}>Quarter 3</MenuItem>
+                      <MenuItem value={4}>Quarter 4</MenuItem>
+                    </Select>
+                  </FormControl>
+                </li>
               </ul>
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-5">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
                   <a href="#">Home</a>

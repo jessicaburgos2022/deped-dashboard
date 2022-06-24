@@ -25,10 +25,10 @@ export const menu = [
                 title: "Major",
                 to: "/outputmajor"
             },
-            {
-                title: "Minor",
-                to: "/outputminor"
-            },
+            // {
+            //     title: "Minor",
+            //     to: "/outputminor"
+            // },
             {
                 title: "TO-KRAs",
                 to: "/outputtokra"

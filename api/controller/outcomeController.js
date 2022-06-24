@@ -94,8 +94,8 @@ const searchOutcome = asyncHander(async (req, res) => {
 });
 
 const insertOutcome = asyncHander(async (req, res) => {
-    const { departmentid, outcometypeid, title } = req.body;
-    const queryString = `CALL InsertOutcome( ${mysql_real_escape_string(outcometypeid)}, ${mysql_real_escape_string(departmentid)}, '${mysql_real_escape_string(title)}')`;
+    const { departmentid, outcometypeid, quarter, title } = req.body;
+    const queryString = `CALL InsertOutcome( ${mysql_real_escape_string(outcometypeid)}, ${mysql_real_escape_string(departmentid)}, ${mysql_real_escape_string(quarter)}, '${mysql_real_escape_string(title)}')`;
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });

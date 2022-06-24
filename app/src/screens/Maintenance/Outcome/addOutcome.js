@@ -128,6 +128,31 @@ export default (props) => {
                                         </Select>
                                     } />
                             </FormGroup>
+                            <FormGroup>
+                                <InputLabel>Quarter</InputLabel>
+                                <Controller
+                                    control={control}
+                                    name="quarter"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "This field is required",
+                                        },
+                                    }}
+                                    as={
+                                        <Select
+                                            label="Quarter"
+                                            fullWidth
+                                            className="output-category-margin"
+                                            name="quarter"
+                                        >
+                                            <MenuItem value={1}>Quarter 1</MenuItem>
+                                            <MenuItem value={2}>Quarter 2</MenuItem>
+                                            <MenuItem value={3}>Quarter 3</MenuItem>
+                                            <MenuItem value={4}>Quarter 4</MenuItem>
+                                        </Select>
+                                    } />
+                            </FormGroup>
                             <Controller
                                 control={control}
                                 name="title"

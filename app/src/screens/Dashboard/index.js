@@ -168,7 +168,7 @@ export default () => {
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
-        label: "Minor Output Rate",
+        label: "Other Output Rate",
         data: dashboardState.ConductedWithinTimeframe.map((r) => {
           return r.AverageAccomplishmentRateMinor;
         }),
@@ -227,13 +227,13 @@ export default () => {
   };
 
   const SatisfactoryResult = {
-    labels: dashboardState.SatisfactoryResult.map((r) => {
+    labels: dashboardState.SatisfactoryResult  && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
       return r.DepartmentName;
     }),
     datasets: [
       {
         label: "Satisfactory Rate - Physical",
-        data: dashboardState.SatisfactoryResult.map((r) => {
+        data: dashboardState.SatisfactoryResult  && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
           return r.AverageAccomplishmentRatePhysical
             ? r.AverageAccomplishmentRatePhysical
             : 0;
@@ -243,7 +243,7 @@ export default () => {
       },
       {
         label: "Satisfactory Rate - Financial",
-        data: dashboardState.SatisfactoryResult.map((r) => {
+        data: dashboardState.SatisfactoryResult  && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
           return r.AverageAccomplishmentRateFinancial
             ? r.AverageAccomplishmentRateFinancial
             : 0;
@@ -462,6 +462,7 @@ export default () => {
                             onChange={(e) => chart2QuarterOnChange(e.target.value)}
                             value={Chart2ActiveQuarter}
                           >
+                            <MenuItem value={0}>Annual</MenuItem>
                             <MenuItem value={1}>Quarter 1</MenuItem>
                             <MenuItem value={2}>Quarter 2</MenuItem>
                             <MenuItem value={3}>Quarter 3</MenuItem>
@@ -512,6 +513,7 @@ export default () => {
                             onChange={(e) => chart3QuarterOnChange(e.target.value)}
                             value={Chart3ActiveQuarter}
                           >
+                            <MenuItem value={0}>Annual</MenuItem>
                             <MenuItem value={1}>Quarter 1</MenuItem>
                             <MenuItem value={2}>Quarter 2</MenuItem>
                             <MenuItem value={3}>Quarter 3</MenuItem>
@@ -564,6 +566,7 @@ export default () => {
                             onChange={(e) => chart4QuarterOnChange(e.target.value)}
                             value={Chart4ActiveQuarter}
                           >
+                            <MenuItem value={0}>Annual</MenuItem>
                             <MenuItem value={1}>Quarter 1</MenuItem>
                             <MenuItem value={2}>Quarter 2</MenuItem>
                             <MenuItem value={3}>Quarter 3</MenuItem>

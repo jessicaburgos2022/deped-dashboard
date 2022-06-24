@@ -16,9 +16,10 @@ const pool = mysql.createPool({
 
 const insertMajorOutput = asyncHander(async (req, res) => {
     const { kraid, objective, projectid, quarter, output, outputindicator, activity, plannedtarget, targettype, targetdescription, timeline, physicalaccomplishment, accomplishmentdescription, accomplishment1, accomplishment2, withinTimeframe,
-        gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingsource, budgetstructure, score, scoredescription, opsissue, policyissue,
-        recommendation, others, correctiveaction, userId, targets
+        gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingSource, budgetstructure, score, scoredescription, opsissue, policyissue,
+        recommendation, others, correctiveaction, userId, targets , otherFundingSource
     } = req.body;
+    console.log(req.body)
     const queryString =
         `CALL InsertMajorOutput(
         '${mysql_real_escape_string(kraid)}', 
@@ -37,7 +38,8 @@ const insertMajorOutput = asyncHander(async (req, res) => {
         '${mysql_real_escape_string(amountutilized)}', 
         '${mysql_real_escape_string(balance)}', 
         '${mysql_real_escape_string(utilizationrate)}', 
-        '${mysql_real_escape_string(fundingsource)}', 
+        '${mysql_real_escape_string(fundingSource)}', 
+        '${mysql_real_escape_string(otherFundingSource)}', 
         '${mysql_real_escape_string(budgetstructure)}', 
         '${mysql_real_escape_string(score)}', 
         '${mysql_real_escape_string(scoredescription)}',
@@ -239,7 +241,7 @@ const insertContributoryOutput = asyncHander(async (req, res) => {
         }
         try {
             indicators.map(i => {
-                const queryString = `CALL InsertContributoryOutput(${mysql_real_escape_string(i.id)}, ${mysql_real_escape_string(projectid)}, '${mysql_real_escape_string(i.value)}', '${mysql_real_escape_string(outputs)}', ${userId})`;
+                const queryString = `CALL InsertContributoryOutput(${mysql_real_escape_string(i.id)}, ${mysql_real_escape_string(projectid)},'${mysql_real_escape_string(i.quarter)}', '${mysql_real_escape_string(i.value)}', '${mysql_real_escape_string(outputs)}', ${userId})`;
                 connection.query(queryString)
             })
             res.json({ result: 'Success', message: 'Contributory Outputs saved!' });

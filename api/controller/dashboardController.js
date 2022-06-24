@@ -15,7 +15,6 @@ const pool = mysql.createPool({
 const DashboardPPAMonitored = asyncHander(async (req, res) => {
   const { year, quarter } = req.params;
   const queryString = `call DashboardPPAMonitored(${year},${quarter});`;
-  console.log(queryString)
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -41,8 +40,8 @@ const DashboardPPAMonitored = asyncHander(async (req, res) => {
 });
 
 const ConductedWithinTimeframe = asyncHander(async (req, res) => {
-  const { year } = req.params;
-  const queryString = `call ConductedWithinTimeframe(${year});`;
+  const { year, quarter } = req.params;
+  const queryString = `call ConductedWithinTimeframe(${year},${quarter});`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -70,8 +69,8 @@ const ConductedWithinTimeframe = asyncHander(async (req, res) => {
 
 
 const BudgetUtilizationRate = asyncHander(async (req, res) => {
-  const { year } = req.params;
-  const queryString = `call BudgetUtilizationRate(${year});`;
+  const { year, quarter } = req.params;
+  const queryString = `call BudgetUtilizationRate(${year},${quarter});`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -99,8 +98,9 @@ const BudgetUtilizationRate = asyncHander(async (req, res) => {
 
 
 const SatisfactoryResult = asyncHander(async (req, res) => {
-  const { year } = req.params;
-  const queryString = `call SatisfactoryResult(${year});`;
+  const { year, quarter } = req.params;
+  const queryString = `call SatisfactoryResult(${year},${quarter});`;
+  console.log(queryString)
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
@@ -126,8 +126,8 @@ const SatisfactoryResult = asyncHander(async (req, res) => {
 });
 
 const DashboardOO = asyncHander(async (req, res) => {
-  const { year } = req.params;
-  const queryString = `call DashboardOO(${year});`;
+  const { year, quarter } = req.params;
+  const queryString = `call DashboardOO(${year},${quarter});`;
   pool.getConnection((err, connection) => {
     if (err) {
       res.json({ result: 'Failed', message: 'Query Failed' });
