@@ -34,7 +34,10 @@ import {
     GET_TARGETBYOUTPUTID_FAILED,
     DELETE_TARGETBYID_REQUEST,
     DELETE_TARGETBYID_SUCCESS,
-    DELETE_TARGETBYID_FAILED
+    DELETE_TARGETBYID_FAILED,
+    GET_PREVIOUS_DATA_REQUEST,
+    GET_PREVIOUS_DATA_SUCCESS,
+    GET_PREVIOUS_DATA_FAILED
 } from "../constants/outputConstants";
 import axios from "../helpers/axios";
 export const getTargetById = (id) => async (dispatch) => {
@@ -49,6 +52,21 @@ export const getTargetById = (id) => async (dispatch) => {
         });
     }
 };
+
+export const getPreviousData = (kraid, projectid) => async (dispatch) => {
+    await dispatch({ type: GET_PREVIOUS_DATA_REQUEST });
+    try {
+        const { data } = await axios.get(`/api/output/major/previous/${kraid}/${projectid}`);
+        await dispatch({ type: GET_PREVIOUS_DATA_SUCCESS, payload: data });
+        return data;
+    } catch (e) {
+        dispatch({
+            type: GET_PREVIOUS_DATA_FAILED,
+            payload: ""
+        });
+    }
+}
+
 export const deleteTargetById = (id) => async (dispatch) => {
     await dispatch({ type: DELETE_TARGETBYID_REQUEST });
     try {
@@ -137,10 +155,10 @@ export const insertContributoryOutput = (param) => async (dispatch) => {
 
 };
 
-export const searchMajorOutput = (kraYear, selectedDepartmentId,kraName) => async (dispatch) => {
+export const searchMajorOutput = (kraYear, selectedDepartmentId, kraName) => async (dispatch) => {
     await dispatch({ type: SEARCH_MAJOR_OUTPUT_REQUEST });
     try {
-        const { data } = await axios.post(`/api/output/major/search`, {krayear: kraYear, departmentid:selectedDepartmentId, kraname: kraName});
+        const { data } = await axios.post(`/api/output/major/search`, { krayear: kraYear, departmentid: selectedDepartmentId, kraname: kraName });
         await dispatch({ type: SEARCH_MAJOR_OUTPUT_SUCCESS, payload: data });
 
     } catch (e) {
@@ -152,10 +170,10 @@ export const searchMajorOutput = (kraYear, selectedDepartmentId,kraName) => asyn
 
 };
 
-export const searchMinorOutput = (selectedYear, selectedDepartmentId,kraName) => async (dispatch) => {
+export const searchMinorOutput = (selectedYear, selectedDepartmentId, kraName) => async (dispatch) => {
     await dispatch({ type: SEARCH_MINOR_OUTPUT_REQUEST });
     try {
-        const { data } = await axios.post(`/api/output/minor/search`,{krayear: selectedYear, departmentid:selectedDepartmentId, kraname: kraName});
+        const { data } = await axios.post(`/api/output/minor/search`, { krayear: selectedYear, departmentid: selectedDepartmentId, kraname: kraName });
         await dispatch({ type: SEARCH_MINOR_OUTPUT_SUCCESS, payload: data });
     } catch (e) {
         dispatch({

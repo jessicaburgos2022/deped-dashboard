@@ -18,7 +18,7 @@ import { Redirect } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm, useWatch } from "react-hook-form";
-import { insertMajorOutput } from "../../../../actions/outputActions";
+import { getPreviousData, insertMajorOutput } from "../../../../actions/outputActions";
 import Swal from "sweetalert2";
 import { Divider } from "@mui/material";
 import { fetchProjectByKRAId } from "../../../../actions/appActions";
@@ -49,6 +49,7 @@ export default () => {
     appState.KRA.filter((kra) => kra.OutputTypeId === OutputTypeId)
   );
   const [selectedKRA, setSelectedKRA] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
   const [selectedQuarter, setSelectedQuarter] = useState(1);
   const [selectedFundingSource, setSelectedFundingSource] = useState("");
   const [otherFundingSource, setOtherFundingSource] = useState("");
@@ -88,6 +89,46 @@ export default () => {
     setValue("quarter", event.target.value);
     setSelectedQuarter(event.target.value);
   };
+  const handleProjectChange = async (event) => {
+    setSelectedProject(event.target.value)
+    const data = await dispatch(getPreviousData(selectedKRA, event.target.value));
+    if (data && data.length > 0) {
+      Swal.fire({
+        title: "Confirmation",
+        text: "Do you want to use previous data?",
+        icon: "question",
+        buttons: true,
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No"
+      }).then(async (r) => {
+        if (r.isConfirmed) {
+          setSelectedKRA(data[0].KRAId);
+          setSelectedProject(data[0].ProjectId);
+          setValue("kraid", data[0].KRAId);
+          setValue("projectid", data[0].ProjectId);
+          setValue("objective", data[0].Objective);
+          setValue("output", data[0].Output);
+          setValue("outputindicator", data[0].OutputIndicator);
+          setValue("activity", data[0].Activity);
+          setValue("score", data[0].Score);
+          setValue("scoredescription", data[0].ScoreDescription);
+          setValue("opsissue", data[0].OpsIssue);
+          setValue("policyissue", data[0].PolicyIssue);
+          setValue("recommendation", data[0].Recommendation);
+          setValue("others", data[0].Others);
+          setValue("correctiveaction", data[0].CorrectiveAction);
+          setValue("correctiveaction", data[0].CorrectiveAction);
+          setValue("financialrequirement", data[0].FinancialRequirement);
+          setValue("amountutilized", data[0].AmountUtilized);
+          setValue("timeline", data[0].Timeline);
+          setValue("accomplishment2", data[0].Accomplishment2);
+          setValue("gaingap", data[0].GainGap);
+          setValue("budgetstructure", data[0].BurdgetStructure);
+        }
+      });
+    }
+  }
 
   //react hook form
   const {
@@ -217,39 +258,52 @@ export default () => {
   };
 
   const onSubmit = async (data) => {
-    setIsSubmitted(true);
-    if (data) {
-      if (
-        userState.userInfo &&
-        userState.userInfo.acc &&
-        userState.userInfo.acc[0] &&
-        userState.userInfo.acc[0].Id
-      ) {
-        data.userId = userState.userInfo.acc[0].Id;
-        data.quarter = selectedQuarter;
-        data.kraid = selectedKRA;
-        data.fundingSource = selectedFundingSource;
-        data.targets = targets;
-        data.balance =
-          parseFloat(data.financialrequirement) -
-          parseFloat(data.amountutilized);
-        data.utilizationrate =
-          (parseFloat(data["amountutilized"]) /
-            parseFloat(data["financialrequirement"])) *
-          100;
-        data.accomplishment1 = getTargetPercentage(targets) / targets.length;
-        var ret = await dispatch(insertMajorOutput(data));
-        setIsSubmitted(false);
-        Swal.fire(
-          ret.result,
-          ret.message,
-          ret.result === "Success" ? "success" : "error"
-        ).finally((r) => {
-          return <Redirect to="/outputmanagement/major" />;
-        });
-        handleFormReset();
+    Swal.fire({
+      title: "Confirmation",
+      text: "Do you want to continue?",
+      icon: "question",
+      buttons: true,
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No"
+    }).then(async (r) => {
+      if (r.isConfirmed) {
+        setIsSubmitted(true);
+        if (data) {
+          if (
+            userState.userInfo &&
+            userState.userInfo.acc &&
+            userState.userInfo.acc[0] &&
+            userState.userInfo.acc[0].Id
+          ) {
+            data.userId = userState.userInfo.acc[0].Id;
+            data.quarter = selectedQuarter;
+            data.kraid = selectedKRA;
+            data.projectid = selectedProject;
+            data.fundingSource = selectedFundingSource;
+            data.targets = targets;
+            data.balance =
+              parseFloat(data.financialrequirement) -
+              parseFloat(data.amountutilized);
+            data.utilizationrate =
+              (parseFloat(data["amountutilized"]) /
+                parseFloat(data["financialrequirement"])) *
+              100;
+            data.accomplishment1 = getTargetPercentage(targets) / targets.length;
+            var ret = await dispatch(insertMajorOutput(data));
+            setIsSubmitted(false);
+            Swal.fire(
+              ret.result,
+              ret.message,
+              ret.result === "Success" ? "success" : "error"
+            ).finally((r) => {
+              return <Redirect to="/outputmanagement/major" />;
+            });
+            handleFormReset();
+          }
+        }
       }
-    }
+    });
   };
   return (
     <div className="content-wrapper">
@@ -343,15 +397,18 @@ export default () => {
 
                           <FormControl variant="standard" className=" w-100">
                             <InputLabel>Program/Project</InputLabel>
-                            <Controller
-                              control={control}
-                              name="projectid"
+                            <Select
+                              className="output-margin"
+                              label="Select Program/Project"
+                              disabled={appState.projectsByKRALoading}
                               rules={{
                                 required: {
                                   value: true,
                                   message: "This field is required",
                                 },
                               }}
+                              onChange={handleProjectChange}
+                              value={selectedProject}
                               endAdornment={
                                 appState.projectsByKRALoading && (
                                   <InputAdornment
@@ -362,25 +419,18 @@ export default () => {
                                   </InputAdornment>
                                 )
                               }
-                              as={
-                                <Select
-                                  className="output-margin"
-                                  label="Select Program/Project"
-                                  disabled={appState.projectsByKRALoading}
-                                >
-                                  {appState.projectsByKRA &&
-                                    appState.projectsByKRA.map(
-                                      (project, id) => {
-                                        return (
-                                          <MenuItem key={id} value={project.Id}>
-                                            {project.Project}
-                                          </MenuItem>
-                                        );
-                                      }
-                                    )}
-                                </Select>
-                              }
-                            />
+                            >
+                              {appState.projectsByKRA &&
+                                appState.projectsByKRA.map(
+                                  (project, id) => {
+                                    return (
+                                      <MenuItem key={id} value={project.Id}>
+                                        {project.Project}
+                                      </MenuItem>
+                                    );
+                                  }
+                                )}
+                            </Select>
                             <FormHelperText>
                               {errors.projectid ? errors.projectid.message : ""}
                             </FormHelperText>

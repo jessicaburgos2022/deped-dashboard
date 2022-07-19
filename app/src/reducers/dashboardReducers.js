@@ -16,7 +16,10 @@ import {
     GET_DASHBOARDOO_INFO_FAILED,
     GET_MONITOREDPPA_PREVIOUSYEAR_REQUEST,
     GET_MONITOREDPPA_PREVIOUSYEAR_SUCCESS,
-    GET_MONITOREDPPA_PREVIOUSYEAR_FAILED
+    GET_MONITOREDPPA_PREVIOUSYEAR_FAILED,
+    GET_BudgetUtilizationRateOtherFunding_REQUEST,
+    GET_BudgetUtilizationRateOtherFunding_SUCCESS,
+    GET_BudgetUtilizationRateOtherFunding_FAILED
 }
     from '../constants/dashboardConstants';
 
@@ -27,6 +30,7 @@ const dashboardState = {
     PreviousYearMonitoredPPA: [],
     ConductedWithinTimeframe: [],
     BudgetUtilizationRate: [],
+    BudgetUtilizationRateOtherFunding: [],
     SatisfactoryResult: [],
     oo: []
 };
@@ -89,7 +93,24 @@ export const dashboardReducer = (state = dashboardState, action) => {
                 loading: false,
                 ConductedWithinTimeframe: []
             }
-
+        case GET_BudgetUtilizationRateOtherFunding_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                BudgetUtilizationRateOtherFunding: []
+            }
+        case GET_BudgetUtilizationRateOtherFunding_SUCCESS:
+            return {
+                ...state,
+                loading: true,
+                BudgetUtilizationRateOtherFunding: payload
+            }
+        case GET_BudgetUtilizationRateOtherFunding_FAILED:
+            return {
+                ...state,
+                loading: true,
+                BudgetUtilizationRateOtherFunding: []
+            }
         case GET_BudgetUtilizationRate_REQUEST:
             return {
                 ...state,

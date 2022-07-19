@@ -16,7 +16,10 @@ import {
   GET_DASHBOARDOO_INFO_FAILED,
   GET_MONITOREDPPA_PREVIOUSYEAR_REQUEST,
   GET_MONITOREDPPA_PREVIOUSYEAR_SUCCESS,
-  GET_MONITOREDPPA_PREVIOUSYEAR_FAILED
+  GET_MONITOREDPPA_PREVIOUSYEAR_FAILED,
+  GET_BudgetUtilizationRateOtherFunding_REQUEST,
+  GET_BudgetUtilizationRateOtherFunding_SUCCESS,
+  GET_BudgetUtilizationRateOtherFunding_FAILED
 }
   from '../constants/dashboardConstants';
 
@@ -82,6 +85,22 @@ export const fetchChart4 = (year, quarter) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_BudgetUtilizationRate_FAILED,
+      payload: ""
+    });
+  }
+};
+
+export const fetchChart5 = (year, quarter) => async (dispatch) => {
+  await dispatch({ type: GET_BudgetUtilizationRateOtherFunding_REQUEST });
+  try {
+    const { data } = await axios.get(`/api/dashboard/chart4/${year}/${quarter}`);
+    dispatch({
+      type: GET_BudgetUtilizationRateOtherFunding_SUCCESS,
+      payload: data,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_BudgetUtilizationRateOtherFunding_FAILED,
       payload: ""
     });
   }

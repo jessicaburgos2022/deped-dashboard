@@ -17,7 +17,7 @@ const pool = mysql.createPool({
 const insertMajorOutput = asyncHander(async (req, res) => {
     const { kraid, objective, projectid, quarter, output, outputindicator, activity, plannedtarget, targettype, targetdescription, timeline, physicalaccomplishment, accomplishmentdescription, accomplishment1, accomplishment2, withinTimeframe,
         gaingap, financialrequirement, amountutilized, balance, utilizationrate, fundingSource, budgetstructure, score, scoredescription, opsissue, policyissue,
-        recommendation, others, correctiveaction, userId, targets , otherFundingSource
+        recommendation, others, correctiveaction, userId, targets, otherFundingSource
     } = req.body;
     console.log(req.body)
     const queryString =
@@ -138,7 +138,6 @@ const editMajorOutput = asyncHander(async (req, res) => {
         '${mysql_real_escape_string(others)}', 
         '${mysql_real_escape_string(correctiveaction)}', 
         ${userId})`;
-    console.log(queryString)
     pool.getConnection((err, connection) => {
         if (err) {
             res.json({ result: 'Failed', message: 'Query Failed' });
@@ -422,4 +421,31 @@ const getTargetById = asyncHander(async (req, res) => {
     });
 });
 
-module.exports = { insertMajorOutput, editMajorOutput, insertMinorOutput, editMinorOutput, insertContributoryOutput, searchMajorOutput, searchMinorOutput, searchContributoryOutput, ListIndicatorsByDepartmentId, editOutputStatus, getTargetById, deletePhysicalTarget };
+const getPreviousOutput = asyncHander(async (req, res) => {
+    const { kraid, projectid } = req.params;
+    const queryString = `CALL GetPreviousOutput(${mysql_real_escape_string(kraid)},${mysql_real_escape_string(projectid)})`;
+    pool.getConnection((err, connection) => {
+        if (err) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            return;
+        }
+        try {
+            connection.query(queryString, (error, results) => {
+                if (error) {
+                    res.json({ result: 'Failed', message: 'Query Failed' });
+                }
+                else {
+                    var qResult = JSON.parse(JSON.stringify(results[0]));
+                    res.json(qResult);
+                    res.end();
+                }
+            })
+        } catch (error) {
+            res.json({ result: 'Failed', message: 'Query Failed' });
+            res.end();
+        }
+        connection.release();
+    });
+});
+
+module.exports = { getPreviousOutput, insertMajorOutput, editMajorOutput, insertMinorOutput, editMinorOutput, insertContributoryOutput, searchMajorOutput, searchMinorOutput, searchContributoryOutput, ListIndicatorsByDepartmentId, editOutputStatus, getTargetById, deletePhysicalTarget };

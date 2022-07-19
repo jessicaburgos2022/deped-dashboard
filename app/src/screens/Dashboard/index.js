@@ -31,6 +31,7 @@ import {
   fetchChart2,
   fetchChart3,
   fetchChart4,
+  fetchChart5
 } from "../../actions/dashboardActions";
 
 import { fetchIndicatorsByDeptId } from "../../actions/outputActions";
@@ -54,10 +55,12 @@ export default () => {
   const [Chart2ActiveYear, setChart2ActiveYear] = useState(currentYear);
   const [Chart3ActiveYear, setChart3ActiveYear] = useState(currentYear);
   const [Chart4ActiveYear, setChart4ActiveYear] = useState(currentYear);
+  const [Chart5ActiveYear, setChart5ActiveYear] = useState(currentYear);
   const [Chart1ActiveQuarter, setChart1ActiveQuarter] = useState(1);
   const [Chart2ActiveQuarter, setChart2ActiveQuarter] = useState(1);
   const [Chart3ActiveQuarter, setChart3ActiveQuarter] = useState(1);
   const [Chart4ActiveQuarter, setChart4ActiveQuarter] = useState(1);
+  const [Chart5ActiveQuarter, setChart5ActiveQuarter] = useState(1);
 
 
   useEffect(() => {
@@ -70,6 +73,7 @@ export default () => {
     dispatch(fetchChart2(currentYear, Chart2ActiveQuarter));
     dispatch(fetchChart3(currentYear, Chart3ActiveQuarter));
     dispatch(fetchChart4(currentYear, Chart4ActiveQuarter));
+    dispatch(fetchChart5(currentYear, Chart5ActiveQuarter));
     dispatch(fetchIndicatorsByDeptId(departmentId));
     dispatch(fetchProjectByDepartment(departmentId));
     dispatch(fetchDepartmentList());
@@ -101,6 +105,11 @@ export default () => {
     dispatch(fetchChart3(year, Chart4ActiveQuarter));
   }
 
+  const chart5YearOnChange = (year) => {
+    setChart5ActiveYear(year);
+    dispatch(fetchChart5(year, Chart5ActiveQuarter));
+  }
+
   const chart1QuarterOnChange = (quarter) => {
     setChart1ActiveQuarter(quarter);
     dispatch(fetchChart1(Chart1ActiveYear, quarter));
@@ -119,6 +128,11 @@ export default () => {
   const chart4QuarterOnChange = (quarter) => {
     setChart4ActiveQuarter(quarter);
     dispatch(fetchChart3(Chart4ActiveYear, quarter));
+  }
+
+  const chart5QuarterOnChange = (quarter) => {
+    setChart5ActiveQuarter(quarter);
+    dispatch(fetchChart5(Chart5ActiveYear, quarter));
   }
 
 
@@ -226,14 +240,47 @@ export default () => {
     ],
   };
 
+  const footerOtherFunding = (tooltipItems) => {
+    return 'Total Amount Utilized (Php): ' + dashboardState.BudgetUtilizationRateOtherFunding.find(ur => ur.DepartmentName === tooltipItems[0].label).TotalAmountUtilizedOtherFunding;
+  };
+  const BudgetUtilizationRateForOtherFunding = {
+    labels: dashboardState.BudgetUtilizationRateOtherFunding.map((r) => {
+      return r.DepartmentName;
+    }),
+    datasets: [
+      {
+        label: "Utilization Rate",
+        fill: false,
+        data: dashboardState.BudgetUtilizationRateOtherFunding.map((r) => {
+          return r.AverageUtilizationRateOtherFunding ? r.AverageUtilizationRateOtherFunding : 0;
+        }),
+        options: {
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                footer: footerOtherFunding,
+              }
+            }
+          }
+        },
+        borderColor: "rgb(1,32,96)",
+        backgroundColor: "rgb(255,192,0)",
+      },
+    ],
+  };
+
   const SatisfactoryResult = {
-    labels: dashboardState.SatisfactoryResult  && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
+    labels: dashboardState.SatisfactoryResult && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
       return r.DepartmentName;
     }),
     datasets: [
       {
         label: "Satisfactory Rate - Physical",
-        data: dashboardState.SatisfactoryResult  && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
+        data: dashboardState.SatisfactoryResult && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
           return r.AverageAccomplishmentRatePhysical
             ? r.AverageAccomplishmentRatePhysical
             : 0;
@@ -243,7 +290,7 @@ export default () => {
       },
       {
         label: "Satisfactory Rate - Financial",
-        data: dashboardState.SatisfactoryResult  && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
+        data: dashboardState.SatisfactoryResult && Array.isArray(dashboardState.SatisfactoryResult) && dashboardState.SatisfactoryResult.map((r) => {
           return r.AverageAccomplishmentRateFinancial
             ? r.AverageAccomplishmentRateFinancial
             : 0;
@@ -395,6 +442,7 @@ export default () => {
                             onChange={(e) => chart1QuarterOnChange(e.target.value)}
                             value={Chart1ActiveQuarter}
                           >
+                            <MenuItem value={0}>Annual</MenuItem>
                             <MenuItem value={1}>Quarter 1</MenuItem>
                             <MenuItem value={2}>Quarter 2</MenuItem>
                             <MenuItem value={3}>Quarter 3</MenuItem>
@@ -486,6 +534,56 @@ export default () => {
               </div>
             </section>
 
+            <section className="col-lg-6 connectedSortable ui-sortable">
+              <div className="card">
+                <div className="card-header border-0">
+                  <h3 className="card-title">
+                    <i className="fas fa-th mr-1"></i>
+                    Budget Utilization Rate For Other Funding Sources
+                  </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item c-pointer pr-5">
+                        <ExcelSvg onClick={() => exportFromJSON({ data: dashboardState.BudgetUtilizationRate, fileName: 'Budget Utilization Rate For Other Funding Sources', exportType: 'xls' })} style={{ height: 30 }} />
+                      </li>
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart5ActiveYear === currentYear ? 'active' : ''}`} onClick={() => chart5YearOnChange(currentYear)}>{currentYear}</a>
+                      </li>
+                      <li class="nav-item c-pointer">
+                        <a class={`nav-link ${Chart5ActiveYear === currentYear - 1 ? 'active' : ''}`} onClick={() => chart5YearOnChange(currentYear - 1)}>{currentYear - 1}</a>
+                      </li>
+                      <li class="nav-item c-pointer">
+                        <FormControl variant="standard" className="w-100">
+                          <Select
+                            fullWidth
+                            label="Quarter"
+                            name="selectedQuarter"
+                            onChange={(e) => chart5QuarterOnChange(e.target.value)}
+                            value={Chart5ActiveQuarter}
+                          >
+                            <MenuItem value={0}>Annual</MenuItem>
+                            <MenuItem value={1}>Quarter 1</MenuItem>
+                            <MenuItem value={2}>Quarter 2</MenuItem>
+                            <MenuItem value={3}>Quarter 3</MenuItem>
+                            <MenuItem value={4}>Quarter 4</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="card-body">
+                  <div className="tab-content p-0">
+                    <div className="chart tab-pane active" id="utilization-chart"
+                      style={{ position: 'relative', display: 'flex' }}>
+                      <div className="col-md-12">
+                        <Bar options={{ ...BudgetUtilizationRateOptions }} data={BudgetUtilizationRateForOtherFunding} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
             <section className="col-lg-6 connectedSortable">
               <div className="card">
                 <div className="card-header">

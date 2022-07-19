@@ -21,3 +21,7 @@ export const GET_SATISFACTORYRESULT_FAILED = "GET_SATISFACTORYRESULT_FAILED";
 export const GET_DASHBOARDOO_INFO_REQUEST = "GET_DASHBOARDOO_INFO_REQUEST";
 export const GET_DASHBOARDOO_INFO_SUCCESS = "GET_DASHBOARDOO_INFO_SUCCESS";
 export const GET_DASHBOARDOO_INFO_FAILED = "GET_DASHBOARDOO_INFO_FAILED";
+
+export const GET_BudgetUtilizationRateOtherFunding_REQUEST = "GET_BudgetUtilizationRateOtherFunding_REQUEST";
+export const GET_BudgetUtilizationRateOtherFunding_SUCCESS = "GET_BudgetUtilizationRateOtherFunding_SUCCESS";
+export const GET_BudgetUtilizationRateOtherFunding_FAILED = "GET_BudgetUtilizationRateOtherFunding_FAILED";
