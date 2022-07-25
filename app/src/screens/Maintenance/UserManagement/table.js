@@ -26,7 +26,7 @@ export default () => {
                 autocapitalize: 'off'
             },
             showCancelButton: true,
-            confirmButtonText: 'Look up',
+            confirmButtonText: 'Continue',
             showLoaderOnConfirm: true,
             preConfirm: (newpassword) => {
                 dispatch(resetPassword({ accountId: accountId, newpassword: newpassword }))
