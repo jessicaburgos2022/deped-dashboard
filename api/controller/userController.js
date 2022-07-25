@@ -281,5 +281,53 @@ const changePassword = asyncHander(async (req, res) => {
   });
 });
 
+const resetPassword = asyncHander(async (req, res) => {
+  const { accountId, newpassword } = req.body;
+  console.log(req.body)
+  const queryString = `SELECT Id, Username, Password FROM accounts WHERE Id='${accountId}';`;
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.json({ result: 'Failed', message: "An error occurred while processing your request, Please contact your system administrator" });
+    }
+    connection.query(queryString, (error, results) => {
+      if (error) {
+        res.json({ result: 'Failed', message: "An error occurred while processing your request, Please contact your system administrator" });
+        res.end();
+      } else {
+        if (!_.isEmpty(results)) {
+          const user = _.mapValues(JSON.parse(JSON.stringify(results)))[0];
+          const { Id, Username, Password, IsActive } = user;
+          console.log(user)
+          const isMatch = true
+          if (!isMatch) {
+            res.status(200).json({ result: 'Failed', message: "Invalid Password" });
+          } else {
+            const saltRounds = 10;
+            const hashPassword = bcrypt.hashSync(newpassword, saltRounds);
 
-module.exports = { userController, loadUser, searchUserAccounts, changePassword };
+            const queryStringUP = `UPDATE accounts SET Password='${hashPassword}' WHERE Id='${Id}'`;
+
+            pool.getConnection((err, connection) => {
+              if (err) {
+                res.json({ result: 'Failed', message: "An error occurred while processing your request, Please contact your system administrator" });
+              }
+              connection.query(queryStringUP, (error, results, fields) => {
+                if (error) {
+                  res.json({ result: 'Failed', message: "An error occurred while processing your request, Please contact your system administrator" });
+                  res.end();
+                } else {
+                  res.json({ result: 'Success', message: "Password successfully changed" });
+                  connection.release();
+                }
+              });
+            });
+          }
+        }
+        connection.release();
+      }
+    });
+  });
+});
+
+
+module.exports = { userController, loadUser, searchUserAccounts, changePassword, resetPassword };

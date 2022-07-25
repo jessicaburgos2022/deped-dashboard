@@ -10,6 +10,8 @@ import ChangePassword from './ChangePassword';
 import { Container, FormControl, IconButton, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { fetchDepartmentList, fetchKRAByDepartmentId, fetchOutputTypes, fetchProjectByDepartment } from "../../actions/appActions";
 import { fetchIndicatorsByDeptId } from "../../actions/outputActions";
+import { searchUsers } from '../../actions/userActions';
+import { fetchRoleList } from '../../actions/appActions';
 export default (props) => {
   const [outputType, setOutputType] = useState('major');
 
@@ -24,6 +26,8 @@ export default (props) => {
     dispatch(fetchIndicatorsByDeptId(departmentId));
     dispatch(fetchProjectByDepartment(departmentId));
     dispatch(fetchDepartmentList());
+    dispatch(searchUsers());
+    dispatch(fetchRoleList());
     // eslint-disable-next-line
   }, []);
   const RenderOutputView = () => {

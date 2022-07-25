@@ -2,23 +2,13 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import Register from './register';
 import Table from './table';
-import { searchUsers } from '../../../actions/userActions';
-import { fetchRoleList } from '../../../actions/appActions';
-import { useDispatch, useSelector } from 'react-redux';
 export default () => {
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-    const dispatch = useDispatch();
-    const userState = useSelector(state => state.user);
     const handleRegisterClick = () => {
         setIsRegisterOpen(true);
     }
     const handleUserLoad = () => {
-
     }
-    useEffect(() => {
-        dispatch(searchUsers());
-        dispatch(fetchRoleList());
-    }, [])
     return (
         <div className="content-wrapper">
             {
@@ -44,7 +34,7 @@ export default () => {
             </div>
             <div className="content">
                 <div className="container-fluid">
-                    <Table SearchResult={userState.users} />
+                    <Table />
                 </div>
             </div>
         </div>

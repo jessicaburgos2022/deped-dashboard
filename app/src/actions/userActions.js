@@ -37,7 +37,19 @@ export const changePassword = (param) => async (dispatch) => {
   }
 };
 
-export const searchUsers = (param) => async (dispatch) => {
+
+export const resetPassword = (param) => async (dispatch) => {
+  try {
+    const { data } = await service.post(
+      '/api/users/password/reset',
+      param
+    );
+    return data;
+  } catch (error) {
+  }
+};
+
+export const searchUsers = () => async (dispatch) => {
   await dispatch({ type: SEARCH_USER_REQUEST });
   try {
     const { data } = await service.get(`/api/users/search`);

@@ -32,7 +32,7 @@ const insertMajorOutput = asyncHander(async (req, res) => {
         '${mysql_real_escape_string(timeline)}', 
         '${mysql_real_escape_string(accomplishment1)}', 
         '${mysql_real_escape_string(accomplishment2)}', 
-        '${mysql_real_escape_string(withinTimeframe)}',
+        1,
         '${mysql_real_escape_string(gaingap)}', 
         '${mysql_real_escape_string(financialrequirement)}', 
         '${mysql_real_escape_string(amountutilized)}', 

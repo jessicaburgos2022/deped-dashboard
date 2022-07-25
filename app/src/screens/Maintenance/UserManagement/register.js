@@ -66,7 +66,7 @@ export default (props) => {
                         User Registration
                     </DialogTitle>
                     <DialogContent dividers>
-                        <FormGroup>
+                        <FormGroup style={{ padding: '10px 0 10px 0' }}>
                             <FormGroup>
                                 <InputLabel>Department</InputLabel>
                                 <Select
@@ -88,7 +88,7 @@ export default (props) => {
                                     {errors.departmentid ? errors.departmentid.message : ""}
                                 </FormHelperText>
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup style={{ padding: '10px 0 10px 0' }}>
                                 <InputLabel>Unit</InputLabel>
                                 <Controller
                                     control={control}
@@ -122,7 +122,7 @@ export default (props) => {
                                     {errors.departmentid ? errors.departmentid.message : ""}
                                 </FormHelperText>
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup style={{ padding: '10px 0 10px 0' }}>
                                 <InputLabel>Role</InputLabel>
                                 <Controller
                                     control={control}
@@ -153,7 +153,7 @@ export default (props) => {
                                 </FormHelperText>
                             </FormGroup>
 
-                            <Controller
+                            <Controller style={{ padding: '10px 0 10px 0' }}
                                 control={control}
                                 name="username"
                                 rules={{
@@ -175,7 +175,7 @@ export default (props) => {
                                 }
                             />
 
-                            <Controller
+                            <Controller style={{ padding: '10px 0 10px 0' }}
                                 control={control}
                                 name="password"
                                 rules={{
@@ -197,7 +197,7 @@ export default (props) => {
                                     />
                                 }
                             />
-                            <Controller
+                            <Controller style={{ padding: '10px 0 10px 0' }}
                                 control={control}
                                 name="firstname"
                                 rules={{
@@ -218,7 +218,7 @@ export default (props) => {
                                     />
                                 }
                             />
-                            <Controller
+                            <Controller style={{ padding: '10px 0 10px 0' }}
                                 control={control}
                                 name="middlename"
                                 rules={{
@@ -239,7 +239,7 @@ export default (props) => {
                                     />
                                 }
                             />
-                            <Controller
+                            <Controller style={{ padding: '10px 0 10px 0' }}
                                 control={control}
                                 name="surname"
                                 rules={{

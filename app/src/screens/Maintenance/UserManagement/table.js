@@ -1,16 +1,46 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 import CustomPagination from '../../../components/CustomPagination';
+import ResetPasswordModal from './forms/resetPassword';
+import { resetPassword } from '../../../actions/userActions';
 
-export default (data) => {
-    const { SearchResult } = data;
+
+export default () => {
+    const dispatch = useDispatch();
     const perPage = 15;
     const [currentPage, setCurrentPage] = useState(0);
+    const userState = useSelector(state => state.user);
+    const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
 
-    const currentData = SearchResult
-        .slice(currentPage * perPage, currentPage * perPage + perPage);
+    const currentData = userState.users ? userState.users
+        .slice(currentPage * perPage, currentPage * perPage + perPage) : [];
 
+    const handleResetPassword = (accountId) => {
+        Swal.fire({
+            title: 'Please input your preferred password',
+            input: 'text',
+            icon: 'warning',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Look up',
+            showLoaderOnConfirm: true,
+            preConfirm: (newpassword) => {
+                dispatch(resetPassword({ accountId: accountId, newpassword: newpassword }))
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Account has been updated`
+                })
+            }
+        })
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -50,7 +80,9 @@ export default (data) => {
                                         {r.RoleName}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
-                                        
+                                        <div style={{ display: 'flex', padding: 5 }}>
+                                            <Button className="btn btn-secondary" onClick={() => handleResetPassword(r.AccountId)} >Reset Password</Button>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             )
@@ -61,11 +93,13 @@ export default (data) => {
             <CustomPagination
                 perPage={perPage}
                 total={
-                    SearchResult.length
+                    userState.length
                 }
                 paginate={(e, pageNumber) => setCurrentPage(pageNumber - 1)}
                 currentPage={currentPage + 1}
             />
-        </TableContainer>
+
+            {isResetPasswordOpen && <ResetPasswordModal openResetPassword={isResetPasswordOpen} setResetPasswordOpen={setIsResetPasswordOpen} />}
+        </TableContainer >
     )
 }
