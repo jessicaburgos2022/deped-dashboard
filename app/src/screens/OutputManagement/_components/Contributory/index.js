@@ -120,6 +120,7 @@ export default () => {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={3} >
+                                {console.log("test")}
                                 <Button
                                     className="output-margin"
                                     variant="contained"
