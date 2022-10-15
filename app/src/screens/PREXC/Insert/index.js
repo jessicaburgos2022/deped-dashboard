@@ -7,6 +7,7 @@ import {
     FormControl,
     FormGroup,
     FormHelperText,
+    IconButton,
     InputLabel,
     MenuItem,
     Select,
@@ -18,6 +19,7 @@ import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { insertOrgOutcome } from '../../../actions/prexcActions';
 import { fetchUnitByDepartmentId } from '../../../actions/appActions';
+import { CloseOutlined } from "@material-ui/icons";
 
 
 export default (props) => {
@@ -63,7 +65,12 @@ export default (props) => {
             >
                 <form onSubmit={handleSubmit(onSubmit)} id="register-user">
                     <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                        New Organizational Outcome
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div style={{ display: 'flex' }}>
+                                New Organizational Outcome
+                            </div>
+                            <IconButton onClick={() => handleClose()}><CloseOutlined></CloseOutlined> </IconButton>
+                        </div>
                     </DialogTitle>
                     <DialogContent dividers>
                         <FormGroup>

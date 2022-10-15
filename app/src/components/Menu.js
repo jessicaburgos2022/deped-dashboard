@@ -1,24 +1,20 @@
 import { AddCircleOutlineOutlined } from "@material-ui/icons";
-import { BubbleChartOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined, AssessmentOutlined, SupervisedUserCircleOutlined } from '@mui/icons-material';
+import { TopicOutlined, InsightsOutlined, SettingsOutlined, DashboardOutlined, AssessmentOutlined, SupervisedUserCircleOutlined, StackedBarChartOutlined, FeedOutlined } from '@mui/icons-material';
 import React from "react";
 
 export const menu = [
     {
         icon: <InsightsOutlined />,
-        title: "Dashboard",
-        items: [
-            {
-                title: "PPA",
-                to: '/dashboard'
-            },
-            {
-                title: "TO-KRAs",
-                to: '/contributorydashboard'
-            },
-        ]
+        title: "PPA",
+        to: '/dashboard'
     },
     {
-        icon: <DashboardOutlined />,
+        icon: <StackedBarChartOutlined />,
+        title: "CASPRO",
+        to: '/contributorydashboard'
+    },
+    {
+        icon: <TopicOutlined />,
         title: "Output Management",
         items: [
             {
@@ -30,11 +26,18 @@ export const menu = [
             //     to: "/outputminor"
             // },
             {
-                title: "TO-KRAs",
+                title: "CASPRO",
                 to: "/outputtokra"
             },
         ]
     },
+    {
+        icon: <FeedOutlined />,
+        title: "OPEX",
+        to: "/opex"
+       
+    },
+
     {
         icon: <AssessmentOutlined />,
         title: "PREXC",
@@ -53,7 +56,7 @@ export const menu = [
                 to: "/maintenance-project"
             },
             {
-                title: "TO-KRA",
+                title: "CASPRO",
                 to: "/maintenance-outcome"
             },
             {

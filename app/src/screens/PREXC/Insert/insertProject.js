@@ -1,10 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormGroup, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormGroup, IconButton, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import SvgIcon from '@mui/material/SvgIcon';
 import { insertProject } from '../../../actions/prexcActions';
+import { CloseOutlined } from '@material-ui/icons';
 
 
 export default (props) => {
@@ -55,7 +56,12 @@ export default (props) => {
         >
             <form onSubmit={handleSubmit(onSubmit)} id="register-user">
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    New Project
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex' }}>
+                            New Project
+                        </div>
+                        <IconButton onClick={() => handleClose()}><CloseOutlined></CloseOutlined> </IconButton>
+                    </div>
                 </DialogTitle>
                 <DialogContent dividers>
                     <FormGroup>

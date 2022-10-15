@@ -19,26 +19,11 @@ import Maintenance from "./screens/Maintenance";
 import Output from "./screens/Output";
 import OutputManagement from "./screens/OutputManagement";
 import PREXC from "./screens/PREXC";
-
-
 import NavBar from "./components/AdminLTE/navbar";
 import SideBar from "./components/AdminLTE/sidebar";
-
-//Required States
-// import { fetchOutputTypes } from "./actions/appActions";
-
+import OPEX from "./screens/OPEX";
 
 const App = () => {
-  // const dispatch = useDispatch();
-  // const appState = useSelector(state => state.app)
-  //load all required states
-  // useEffect(() => {
-  //   if (appState.OutputTypes.length === 0) {
-  //     setInterval(dispatch(fetchOutputTypes(), 2000));
-  //   }
-  // });
-
-
   return (
     <Router>
       <MuiThemeProvider theme={theme}>
@@ -56,6 +41,7 @@ const App = () => {
           <PrivateRoute path="/outputmajor" component={OutputManagement} />
           <PrivateRoute path="/outputminor" component={OutputManagement} />
           <PrivateRoute path="/outputtokra" component={OutputManagement} />
+          <PrivateRoute path="/opex" component={OPEX} />
           <PrivateRoute path="/prexc" component={PREXC} />
           <PrivateRoute path="/maintenance-kra" component={Maintenance} />
           <PrivateRoute path="/maintenance-project" component={Maintenance} />

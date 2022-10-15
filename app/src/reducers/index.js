@@ -13,6 +13,7 @@ import { PrexcReducer } from './prexcReducers';
 import { outcomeReducer } from './outcomeReducers';
 import roleManagementReducer from './roleManagementReducer';
 import alertReducer from './alertReducer';
+import { OpexRecordReducer } from './opexReducer';
 
 
 const combinedReducer = combineReducers({
@@ -27,10 +28,11 @@ const combinedReducer = combineReducers({
   ooManagement: contributoryOutput,
   kra: KraReducer,
   project: ProjectReducer,
-  outcome: outcomeReducer,
+  outcome: outcomeReducer,  
   roles: roleManagementReducer,
   alert: alertReducer,
-  prexc: PrexcReducer
+  prexc: PrexcReducer,
+  opex: OpexRecordReducer
 });
 
 export default combinedReducer;

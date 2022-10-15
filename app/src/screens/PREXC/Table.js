@@ -27,6 +27,7 @@ import {
   isOfficeAccessible,
   isUserSuperAdmin,
 } from "../../helpers/common";
+import { Tooltip } from "@material-ui/core";
 
 function TransitionComponent(props) {
   const style = useSpring({
@@ -139,13 +140,23 @@ export default function CustomizedTreeView(props) {
       headerStyle: (column, colIndex) => {
         return { width: "70vh" };
       },
+      formatter: (value, row) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      )
     },
     {
       dataField: "PhysicalTarget",
-      text: "Physical Target",
+      text: "P. Target",
       headerStyle: (column, colIndex) => {
         return { width: "50" };
       },
+      formatter: (value, row) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      )
     },
     {
       dataField: "DepartmentName",
@@ -153,13 +164,23 @@ export default function CustomizedTreeView(props) {
       headerStyle: (column, colIndex) => {
         return { width: "50" };
       },
+      formatter: (value, row) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      )
     },
     {
       dataField: "AccountableOffice",
-      text: "Accountable Office/Unit",
+      text: "Unit",
       headerStyle: (column, colIndex) => {
         return { width: "50" };
       },
+      formatter: (value, row) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      )
     },
     {
       dataField: "Quarter1",
@@ -170,13 +191,15 @@ export default function CustomizedTreeView(props) {
           quarter1.Q1StatusId && quarter1.Q1StatusId === 1
             ? "#FFF8E8"
             : quarter1.Q1StatusId && quarter1.Q1StatusId === 2
-            ? "#E6F8F3"
-            : "#FFEBF1",
+              ? "#E6F8F3"
+              : "#FFEBF1",
       }),
 
       formatter: (value, row) => (
         <span className="d-block position-relative quarter-column">
-          <span>{row.Q1Result}</span>
+          <Tooltip title={row.Q1Result}>
+            <span>{row.Q1Result}</span>
+          </Tooltip>
           <span className="button-wrapper">
             {isOfficeAccessible(userState, row.DepartmentId) &&
               hasAccess(userState, 11) && (
@@ -211,13 +234,15 @@ export default function CustomizedTreeView(props) {
           quarter2.Q2StatusId && quarter2.Q2StatusId === 1
             ? "#FFF8E8"
             : quarter2.Q2StatusId && quarter2.Q2StatusId === 2
-            ? "#E6F8F3"
-            : "#FFEBF1",
+              ? "#E6F8F3"
+              : "#FFEBF1",
       }),
 
       formatter: (value, row) => (
         <span className="d-block position-relative quarter-column">
-          <span>{row.Q2Result}</span>
+          <Tooltip title={row.Q2Result}>
+            <span>{row.Q2Result}</span>
+          </Tooltip>
           <span className="button-wrapper">
             {/* edit button */}
             {isOfficeAccessible(userState, row.DepartmentId) &&
@@ -254,12 +279,14 @@ export default function CustomizedTreeView(props) {
           quarter3.Q3StatusId && quarter3.Q3StatusId === 1
             ? "#FFF8E8"
             : quarter3.Q3StatusId && quarter3.Q3StatusId === 2
-            ? "#E6F8F3"
-            : "#FFEBF1",
+              ? "#E6F8F3"
+              : "#FFEBF1",
       }),
       formatter: (value, row) => (
         <span className="d-block position-relative quarter-column">
-          <span>{row.Q3Result}</span>
+          <Tooltip title={row.Q3Result}>
+            <span>{row.Q3Result}</span>
+          </Tooltip>
           <span className="button-wrapper">
             {/* edit button */}
             {isOfficeAccessible(userState, row.DepartmentId) &&
@@ -296,12 +323,14 @@ export default function CustomizedTreeView(props) {
           quarter4.Q4StatusId && quarter4.Q4StatusId === 1
             ? "#FFF8E8"
             : quarter4.Q4StatusId && quarter4.Q4StatusId === 2
-            ? "#E6F8F3"
-            : "#FFEBF1",
+              ? "#E6F8F3"
+              : "#FFEBF1",
       }),
       formatter: (value, row) => (
         <span className="d-block position-relative quarter-column">
-          <span>{row.Q4Result}</span>
+          <Tooltip title={row.Q4Result}>
+            <span>{row.Q4Result}</span>
+          </Tooltip>
           <span className="button-wrapper">
             {/* edit button */}
             {isOfficeAccessible(userState, row.DepartmentId) &&
@@ -365,11 +394,11 @@ export default function CustomizedTreeView(props) {
                         i.IndicatorTitle
                     )
                       ? prexcState.projectIndicators.filter(
-                          (i) =>
-                            i.OrgOutcomeId === row.OrganizationalOutcomeId &&
-                            i.ProgramId === pi.ProgramId &&
-                            i.IndicatorTitle
-                        )
+                        (i) =>
+                          i.OrgOutcomeId === row.OrganizationalOutcomeId &&
+                          i.ProgramId === pi.ProgramId &&
+                          i.IndicatorTitle
+                      )
                       : []
                   }
                   columns={indicatorColumns}

@@ -244,16 +244,16 @@ export default () => {
     return 'Total Amount Utilized (Php): ' + dashboardState.BudgetUtilizationRateOtherFunding.find(ur => ur.DepartmentName === tooltipItems[0].label).TotalAmountUtilizedOtherFunding;
   };
   const BudgetUtilizationRateForOtherFunding = {
-    labels: dashboardState.BudgetUtilizationRateOtherFunding.map((r) => {
+    labels: dashboardState.BudgetUtilizationRateOtherFunding && Array.isArray(dashboardState.BudgetUtilizationRateOtherFunding) ? dashboardState.BudgetUtilizationRateOtherFunding.map((r) => {
       return r.DepartmentName;
-    }),
+    }) : [],
     datasets: [
       {
         label: "Utilization Rate",
         fill: false,
-        data: dashboardState.BudgetUtilizationRateOtherFunding.map((r) => {
+        data: dashboardState.BudgetUtilizationRateOtherFunding && Array.isArray(dashboardState.BudgetUtilizationRateOtherFunding) ? dashboardState.BudgetUtilizationRateOtherFunding.map((r) => {
           return r.AverageUtilizationRateOtherFunding ? r.AverageUtilizationRateOtherFunding : 0;
-        }),
+        }) : 0,
         options: {
           interaction: {
             intersect: false,

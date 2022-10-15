@@ -17,10 +17,29 @@ import {
   SEARCH_USER_FAILED,
   CHANGEPASSWORD_REQUEST,
   CHANGEPASSWORD_SUCCESS,
-  CHANGEPASSWORD_FAILED
+  CHANGEPASSWORD_FAILED,
+  FORGOTPASSWORD_REQUEST,
+  FORGOTPASSWORD_SUCCESS,
+  FORGOTPASSWORD_FAILED
 } from "../constants/userConstants";
 import service from "../helpers/axios";
 import Swal from 'sweetalert2';
+
+export const forgotPassword = (param) => async (dispatch) => {
+  try {
+    dispatch({ type: FORGOTPASSWORD_REQUEST });
+    const { data } = await service.post(
+      '/api/auth/forgotpassword',
+      param
+    );
+    dispatch({ type: FORGOTPASSWORD_SUCCESS });
+    return data;
+  } catch (error) {
+    dispatch({
+      type: CHANGEPASSWORD_FAILED
+    });
+  }
+}
 
 export const changePassword = (param) => async (dispatch) => {
   try {

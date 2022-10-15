@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   FormGroup,
   FormHelperText,
+  IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -17,25 +18,22 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
+import { insertOpexRecord } from '../../../actions/opexActions';
 import Swal from "sweetalert2";
-import { Checkbox, Divider } from "@mui/material";
-import { Grid } from "@mui/material";
-
-import { addKRA } from "../../../../actions/kraActions";
+import { CloseOutlined } from "@material-ui/icons";
 
 export default (props) => {
   const { open, handleClose, handleRefresh } = props;
-
   //react hook form
   const { handleSubmit, errors, control, setValue, register } = useForm();
   const appState = useSelector((state) => state.app);
   const userState = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [outputTypeId, setOutputTypeId] = useState(0);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedQuarter, setSelectedQuarter] = useState(1);
 
   const onSubmit = async (input) => {
     if (input) {
@@ -46,8 +44,10 @@ export default (props) => {
         userState.userInfo.acc[0].Id
       ) {
         input.departmentid = userState.userInfo.acc[0].DepartmentId;
-        input.outputtypeid = outputTypeId;
-        var ret = await dispatch(addKRA(input));
+        input.year = selectedYear;
+        input.quarter = selectedQuarter;
+        input.userId = userState.userInfo.userid
+        var ret = await dispatch(insertOpexRecord(input));
         Swal.fire(
           ret.result,
           ret.message,
@@ -69,28 +69,42 @@ export default (props) => {
       >
         <form onSubmit={handleSubmit(onSubmit)} id="add-kra">
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Add Output
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              Add OP EX record
+              <IconButton onClick={() => handleClose()}><CloseOutlined></CloseOutlined> </IconButton>
+            </div>
           </DialogTitle>
-
           <DialogContent dividers>
-            {/* JBURGOS start */}
             <div className="row">
               <div className="col-12 mb-3">
                 <Select
                   className="form-control"
-                  placeholder="Select Output Type"
-                  name="outputtype"
-                  onChange={(e) => setOutputTypeId(e.target.value)}
+                  placeholder="Year"
+                  name="year"
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(e.target.value)}
                 >
-                  <MenuItem value={1}>Major Output</MenuItem>
-                  <MenuItem value={2}>Minor Output</MenuItem>
+                  <MenuItem value={new Date().getFullYear()}>{new Date().getFullYear()}</MenuItem>
                 </Select>
               </div>
 
-
+              <div className="col-12 mb-3">
+                <Select
+                  className="form-control"
+                  placeholder="Quarter"
+                  name="quarter"
+                  value={selectedQuarter}
+                  onChange={(e) => setSelectedQuarter(e.target.value)}
+                >
+                  <MenuItem value={1}>First Quarter</MenuItem>
+                  <MenuItem value={2}>Second Quarter</MenuItem>
+                  <MenuItem value={3}>Third Quarter</MenuItem>
+                  <MenuItem value={4}>Fourth Quarter</MenuItem>
+                </Select>
+              </div>
               <div className="col-12 mb-3">
                 <Controller
-                  control={control} name="name"
+                  control={control} name="title"
                   rules={{
                     required: {
                       value: true,
@@ -99,8 +113,8 @@ export default (props) => {
                   }}
                   as={
                     <TextField
-                      label="Name"
-                      name="name"
+                      label="Title"
+                      name="title"
                       rows={4}
                       maxRows={4}
                       className="output-margin form-control"
@@ -110,11 +124,10 @@ export default (props) => {
                   }
                 />
               </div>
-
               <div className="col-12 mb-3">
                 <Controller
                   control={control}
-                  name="description"
+                  name="budget"
                   rules={{
                     required: {
                       value: true,
@@ -123,8 +136,33 @@ export default (props) => {
                   }}
                   as={
                     <TextField
-                      label="Description"
-                      name="description"
+                      label="Budget"
+                      name="budget"
+                      type="number"
+                      rows={4}
+                      maxRows={4}
+                      className="output-margin form-control"
+                      variant="outlined"
+                      size="small"
+                    />
+                  }
+                />
+              </div>
+              <div className="col-12 mb-3">
+                <Controller
+                  control={control}
+                  name="utilizedamount"
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "This field is required",
+                    },
+                  }}
+                  as={
+                    <TextField
+                      label="Utilized Amount"
+                      name="utilizedamount"
+                      type="number"
                       rows={4}
                       maxRows={4}
                       className="output-margin form-control"
@@ -135,11 +173,7 @@ export default (props) => {
                 />
               </div>
             </div>
-
-            {/* JBURGOS end */}
-
             <DialogActions>
-
               <div class="float-right d-inline-flex">
                 <Button
                   className="output-margin btn mr-3"
@@ -149,22 +183,10 @@ export default (props) => {
                   type="submit">
                   Submit
                 </Button>
-
-                <Button
-                  className="output-margin btn"
-                  variant="contained"
-                  color="dark">
-                  Cancel
-                </Button>
               </div>
 
             </DialogActions>
-
           </DialogContent>
-
-
-
-
         </form>
       </Dialog>
     </React.Fragment >

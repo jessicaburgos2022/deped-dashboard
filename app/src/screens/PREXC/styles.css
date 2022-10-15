@@ -1,9 +1,7 @@
 /*JBurgos*/
-.table{
+.table {
 	background-color: white;
 }
-
-
 
 .table-sm th,
 .table-sm td {
@@ -30,7 +28,7 @@
 	background-color: transparent;
 }
 
-.thead th, 
+.thead th,
 .table-head-custom th {
 	font-weight: 700;
 	vertical-align: middle;
@@ -59,11 +57,11 @@
 
 .quarter-column svg {
 	color: #5d78ff;
-    padding: 5px;
-    border-radius: 50%;
-    /* background-color: #ffffff; */
-    color: #5d78ff;
-    border: 1px solid #dee2e6;
+	padding: 5px;
+	border-radius: 50%;
+	/* background-color: #ffffff; */
+	color: #5d78ff;
+	border: 1px solid #dee2e6;
 }
 
 .quarter-column svg:hover {
@@ -75,63 +73,60 @@
 	color: #212529 !important;
 } */
 
-.edit-icon{
+.edit-icon {
 	font-size: 28px !important;
 }
 
-.check-icon{
+.check-icon {
 	font-size: 30px !important;
 }
 
-
-
 /*Backgrounds*/
-.bg-success{
-	background-color: #E6F8F3 !important;
+.bg-success {
+	background-color: #e6f8f3 !important;
 }
 
-.bg-info{
-	background-color: #EEF1FF  !important;
+.bg-info {
+	background-color: #eef1ff !important;
 }
 
-.bg-warning{
-	background-color: #FFF8E8  !important;
+.bg-warning {
+	background-color: #fff8e8 !important;
 }
 
-.bg-danger{
-	background-color: #FFEBF1  !important;
+.bg-danger {
+	background-color: #ffebf1 !important;
 }
 
-.bg-dark{
-	background-color: #E8E7EA  !important;
+.bg-dark {
+	background-color: #e8e7ea !important;
 }
 
 /* Buttons*/
-.btn-success{
-	background-color: #E6F8F3;
+.btn-success {
+	background-color: #e6f8f3;
 	color: #0abb87;
 }
 
-.btn-info{
-	background-color: #EEF1FF;
+.btn-info {
+	background-color: #eef1ff;
 	color: #5d78ff;
 }
 
-.btn-warning{
-	background-color: #FFF8E8;
+.btn-warning {
+	background-color: #fff8e8;
 	color: #ffb822;
 }
 
-.btn-danger{
-	background-color: #FFEBF1;
+.btn-danger {
+	background-color: #ffebf1;
 	color: #fd397a;
 }
 
-.btn-dark{
-	background-color: #E8E7EA;
+.btn-dark {
+	background-color: #e8e7ea;
 	color: #282a3c;
 }
-
 
 .button-wrapper {
 	vertical-align: middle;
@@ -143,18 +138,15 @@
 
 .head-title {
 	font-size: 1.2rem;
-    font-weight: 500;
-    color: #48465b;
+	font-weight: 500;
+	color: #48465b;
 }
 
-
 table thead tr th.expand-cell-header,
-table tbody tr td.expand-cell{
+table tbody tr td.expand-cell {
 	width: 50px !important;
 	text-align: center;
 }
-
-
 
 /* .pulse {
 	overflow: visible;
@@ -190,3 +182,11 @@ table tbody tr td.expand-cell{
 	}
   } */
 
+.react-bootstrap-table > .table > thead > tr > th {
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.react-bootstrap-table > .table > tbody > tr > td {
+	text-overflow: ellipsis;
+	overflow: hidden;
+}

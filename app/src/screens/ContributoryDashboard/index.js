@@ -31,6 +31,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar, PolarArea } from "react-chartjs-2";
+import DashboardSkeleton from './skeleton-dashboard';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -43,13 +44,14 @@ ChartJS.register(
 export default () => {
   const dispatch = useDispatch();
   const accState = useSelector((state) => state.user);
+  const isFetching = useState(false);
   const dashboardState = useSelector((state) => state.dashboard);
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedQuarter, setSelectedQuarter] = useState(1);
   useEffect(() => {
     // var departmentId = accState.userInfo.acc[0] ? accState.userInfo.acc[0].DepartmentId : 0;
-    dispatch(fetchDashboardOO(currentYear));
+    dispatch(fetchDashboardOO(currentYear, selectedQuarter));
     // eslint-disable-next-line
   }, []);
   const setDashboardYear = (year) => {
@@ -112,7 +114,7 @@ export default () => {
           <div className="row mb-2">
             <div className="col-sm-7 d-flex">
               <h1 className="m-0">
-                Target Outputs Along Key Result Areas (KRAs)
+                Cascaded Programs Project and Activities
               </h1>
               <ul class="nav nav-pills ml-auto">
                 <li class="nav-item c-pointer pr-5">
@@ -156,6 +158,18 @@ export default () => {
       </div>
       <div className="content">
         <div className="container-fluid">
+          {
+            !dashboardState.loading ||
+            (dashboardState && !dashboardState.oo) ||
+            (dashboardState && dashboardState.oo && Array.isArray(dashboardState.oo) && dashboardState.oo.length === 0) &&
+            <div>
+              No approved CASPRO records yet.
+            </div>
+          }
+          {
+            dashboardState.loading &&
+            <DashboardSkeleton />
+          }
           {dashboardState &&
             dashboardState.oo &&
             Array.isArray(dashboardState.oo) &&

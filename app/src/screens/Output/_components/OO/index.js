@@ -92,7 +92,7 @@ export default () => {
           <div className="row mb-2">
             <div className="col-sm-6">
               <h1 className="m-0">
-                Insert Target Outputs Along Key Result Areas
+                Cascaded Programs Project and Activities
               </h1>
             </div>
             <div className="col-sm-6">
@@ -101,7 +101,7 @@ export default () => {
                   <a href="#">Insert Output</a>
                 </li>
                 <li className="breadcrumb-item active">
-                  Target Outputs Along Key Result Areas
+                  Cascaded Programs Project and Activities
                 </li>
               </ol>
             </div>

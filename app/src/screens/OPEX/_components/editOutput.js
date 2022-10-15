@@ -25,29 +25,31 @@ import Swal from "sweetalert2";
 import { Checkbox, Divider } from "@mui/material";
 import { Grid } from "@mui/material";
 
-import { addKRA } from "../../../../actions/kraActions";
-
+import {
+  editKRA
+} from "../../../../actions/kraActions";
 export default (props) => {
-  const { open, handleClose, handleRefresh } = props;
+  const { open, handleClose, handleRefresh, data } = props;
 
+  console.log(data);
   //react hook form
   const { handleSubmit, errors, control, setValue, register } = useForm();
   const appState = useSelector((state) => state.app);
   const userState = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [outputTypeId, setOutputTypeId] = useState(0);
+  const OutputTypeId = 2; // ID for MINOR output (refer to ref_outputtype table)
 
   const onSubmit = async (input) => {
-    if (input) {
+    if (data) {
       if (
         userState.userInfo &&
         userState.userInfo.acc &&
         userState.userInfo.acc[0] &&
         userState.userInfo.acc[0].Id
       ) {
-        input.departmentid = userState.userInfo.acc[0].DepartmentId;
-        input.outputtypeid = outputTypeId;
-        var ret = await dispatch(addKRA(input));
+        input.userId = userState.userInfo.acc[0].Id;
+        input.kraid = data.KRAId;
+        var ret = await dispatch(editKRA(input));
         Swal.fire(
           ret.result,
           ret.message,
@@ -64,33 +66,42 @@ export default (props) => {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        maxWidth="sm"
+        maxWidth="lg"
         fullWidth
       >
-        <form onSubmit={handleSubmit(onSubmit)} id="add-kra">
+        <form onSubmit={handleSubmit(onSubmit)} id="edit-kra">
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Add Output
+            Edit Key Result Area
           </DialogTitle>
-
           <DialogContent dividers>
-            {/* JBURGOS start */}
-            <div className="row">
-              <div className="col-12 mb-3">
-                <Select
-                  className="form-control"
-                  placeholder="Select Output Type"
-                  name="outputtype"
-                  onChange={(e) => setOutputTypeId(e.target.value)}
-                >
-                  <MenuItem value={1}>Major Output</MenuItem>
-                  <MenuItem value={2}>Minor Output</MenuItem>
-                </Select>
-              </div>
-
-
-              <div className="col-12 mb-3">
+            <Paper style={{ padding: "2rem" }}>
+              <FormGroup>
                 <Controller
-                  control={control} name="name"
+                  control={control}
+                  name="outputtypeid"
+                  defaultValue={data["OutputTypeId"]}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "This field is required",
+                    },
+                  }}
+                  as={
+                    <Select
+                      className="output-category-margin"
+                      name="outputtypeid"
+                      label="Select Output Type"
+                    >
+                      <MenuItem value={1}>Major Output</MenuItem>
+                      <MenuItem value={2}>Minor Output</MenuItem>
+                    </Select>
+                  }
+                />
+
+                <Controller
+                  control={control}
+                  name="name"
+                  defaultValue={data["KRAName"]}
                   rules={{
                     required: {
                       value: true,
@@ -100,21 +111,22 @@ export default (props) => {
                   as={
                     <TextField
                       label="Name"
-                      name="name"
+                      defaultValue={data["KRAName"]}
                       rows={4}
                       maxRows={4}
-                      className="output-margin form-control"
+                      name="name"
+                      className="output-margin"
                       variant="outlined"
                       size="small"
+
                     />
                   }
                 />
-              </div>
 
-              <div className="col-12 mb-3">
                 <Controller
                   control={control}
                   name="description"
+                  defaultValue={data["KRADescription"]}
                   rules={{
                     required: {
                       value: true,
@@ -125,48 +137,31 @@ export default (props) => {
                     <TextField
                       label="Description"
                       name="description"
+                      defaultValue={data["KRADescription"]}
                       rows={4}
                       maxRows={4}
-                      className="output-margin form-control"
+                      className="output-margin"
                       variant="outlined"
                       size="small"
                     />
                   }
                 />
-              </div>
-            </div>
-
-            {/* JBURGOS end */}
-
-            <DialogActions>
-
-              <div class="float-right d-inline-flex">
-                <Button
-                  className="output-margin btn mr-3"
-                  variant="contained"
-
-                  color="primary"
-                  type="submit">
-                  Submit
-                </Button>
-
-                <Button
-                  className="output-margin btn"
-                  variant="contained"
-                  color="dark">
-                  Cancel
-                </Button>
-              </div>
-
-            </DialogActions>
-
+              </FormGroup>
+            </Paper>
           </DialogContent>
-
-
-
-
+          <DialogActions>
+            <Button
+              className="output-margin"
+              variant="contained"
+              style={{ width: "100%" }}
+              color="primary"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </DialogActions>
         </form>
       </Dialog>
-    </React.Fragment >
+    </React.Fragment>
   );
 };

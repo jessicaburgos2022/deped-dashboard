@@ -19,7 +19,7 @@ export default () => {
 
     const handleResetPassword = (accountId) => {
         Swal.fire({
-            title: 'Please input your preferred password',
+            title: 'Please input the new password',
             input: 'text',
             icon: 'warning',
             inputAttributes: {
@@ -54,6 +54,9 @@ export default () => {
                             Username
                         </TableCell>
                         <TableCell className="interface-table-header">
+                            Email Address
+                        </TableCell>
+                        <TableCell className="interface-table-header">
                             Department
                         </TableCell>
                         <TableCell className="interface-table-header">
@@ -72,6 +75,9 @@ export default () => {
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.Username}
+                                    </TableCell>
+                                    <TableCell component="th" className="interface-table-cell">
+                                        {r.EmailAddress}
                                     </TableCell>
                                     <TableCell component="th" className="interface-table-cell">
                                         {r.DepartmentName}

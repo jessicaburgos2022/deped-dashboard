@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   MenuItem,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ import { ReactComponent as ExcelSvg } from '../../../../media/svg/excel-svgrepo-
 import { getTargetById } from '../../../../actions/outputActions';
 import ReactExport from "react-data-export";
 import Download from "./ExcelReport";
+import { CloseOutlined } from "@material-ui/icons";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -24,8 +26,21 @@ export default (props) => {
   const { open, handleClose, data } = props;
   const [report, setReport] = useState([]);
   const [report2, setReport2] = useState([])
+  function ordinal_suffix_of(i) {
+    var j = i % 10,
+      k = i % 100;
+    if (j == 1 && k != 11) {
+      return i + "st";
+    }
+    if (j == 2 && k != 12) {
+      return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+      return i + "rd";
+    }
+    return i + "th";
+  }
   useEffect(() => {
-    console.log(data)
     dispatch(getTargetById(data.OutputMajorHeaderId))
     setReport2(targetState)
     // setReport([{
@@ -33,6 +48,10 @@ export default (props) => {
     //     'SCORE:', 'Descriptive Equivalent:', 'Operational Issue:', 'Policy Issue:', 'Recommendation:', 'Others:', 'Corrective Action:']
     // },
     setReport([
+      {
+        field: "Quarter",
+        value: ordinal_suffix_of(data.Quarter)
+      },
       {
         field: "Department",
         value: data.DepartmentDescription
@@ -140,17 +159,27 @@ export default (props) => {
         maxWidth="md"
         fullWidth
       >
+
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          View Major Output
-          <li class="nav-item c-pointer pr-5">
-            <Download dataSet={report} dataSet2={report2} element={<ExcelSvg onClick={() => { return }} style={{ height: 30 }} />} />
-          </li>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex' }}>
+              View Major Output
+              <div style={{ paddingLeft: 20 }}>
+                <Download dataSet={report} dataSet2={report2} element={<ExcelSvg onClick={() => { return }} style={{ height: 30 }} />} />
+              </div>
+            </div>
+            <IconButton onClick={() => handleClose()}><CloseOutlined></CloseOutlined> </IconButton>
+          </div>
         </DialogTitle>
 
         <DialogContent dividers className="p-4">
           <div class="table-responsive">
             <table className="table table-striped table-bordered">
               <tbody>
+                <tr>
+                  <th className="w-25 text-nowrap">Quarter</th>
+                  <td className="w-75">{ordinal_suffix_of(data.Quarter)}</td>
+                </tr>
                 <tr>
                   <th className="w-25 text-nowrap">Department</th>
                   <td className="w-75">{data.Department}</td>
@@ -317,16 +346,15 @@ export default (props) => {
                   <th className="w-25 text-nowrap">Corrective Action:</th>
                   <td className="w-75">{data.CorrectiveAction}</td>
                 </tr>
+
+                <tr>
+                  <th className="w-25 text-nowrap">Remarks:</th>
+                  <td className="w-75">{data.Remarks}</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </DialogContent>
-
-        <DialogActions>
-          <Button autoFocus color="primary" onClick={() => handleClose()}>
-            Close
-          </Button>
-        </DialogActions>
       </Dialog>
     </React.Fragment>
   );

@@ -155,50 +155,6 @@ export default (props) => {
 
                             <Controller style={{ padding: '10px 0 10px 0' }}
                                 control={control}
-                                name="username"
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: "This field is required",
-                                    },
-                                }}
-                                as={
-                                    <TextField
-                                        label="Username"
-                                        name="username"
-                                        className="output-margin"
-                                        variant="outlined"
-                                        size="small"
-                                        error={errors.username != null}
-                                        helperText={errors.username ? errors.username.message : ""}
-                                    />
-                                }
-                            />
-
-                            <Controller style={{ padding: '10px 0 10px 0' }}
-                                control={control}
-                                name="password"
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: "This field is required",
-                                    },
-                                }}
-                                as={
-                                    <TextField
-                                        label="Password"
-                                        type="password"
-                                        name="password"
-                                        className="output-margin"
-                                        variant="outlined"
-                                        size="small"
-                                        error={errors.password != null}
-                                        helperText={errors.password ? errors.password.message : ""}
-                                    />
-                                }
-                            />
-                            <Controller style={{ padding: '10px 0 10px 0' }}
-                                control={control}
                                 name="firstname"
                                 rules={{
                                     required: {
@@ -257,6 +213,71 @@ export default (props) => {
                                         size="small"
                                         error={errors.surname != null}
                                         helperText={errors.surname ? errors.surname.message : ""}
+                                    />
+                                }
+                            />
+                            <Controller style={{ padding: '10px 0 10px 0' }}
+                                control={control}
+                                name="email"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "This field is required",
+                                    },
+                                }}
+                                as={
+                                    <TextField
+                                        label="Email Address"
+                                        name="email"
+                                        className="output-margin"
+                                        variant="outlined"
+                                        size="small"
+                                        error={errors.email != null}
+                                        helperText={errors.email ? errors.email.message : ""}
+                                    />
+                                }
+                            />
+                            <Controller style={{ padding: '10px 0 10px 0' }}
+                                control={control}
+                                name="username"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "This field is required",
+                                    },
+                                }}
+                                as={
+                                    <TextField
+                                        label="Username"
+                                        name="username"
+                                        className="output-margin"
+                                        variant="outlined"
+                                        size="small"
+                                        error={errors.username != null}
+                                        helperText={errors.username ? errors.username.message : ""}
+                                    />
+                                }
+                            />
+
+                            <Controller style={{ padding: '10px 0 10px 0' }}
+                                control={control}
+                                name="password"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "This field is required",
+                                    },
+                                }}
+                                as={
+                                    <TextField
+                                        label="Password"
+                                        type="password"
+                                        name="password"
+                                        className="output-margin"
+                                        variant="outlined"
+                                        size="small"
+                                        error={errors.password != null}
+                                        helperText={errors.password ? errors.password.message : ""}
                                     />
                                 }
                             />
